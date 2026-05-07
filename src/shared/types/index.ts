@@ -1,0 +1,50 @@
+export interface GameInfo {
+	id: string;
+	name: string;
+	nameBel: string;
+	description: string;
+	descriptionBel: string;
+	path: string;
+	color: string;
+	colorDark: string;
+	icon: string;
+	enabled: boolean;
+}
+
+export interface PlayerStats {
+	totalGamesPlayed: number;
+	currentStreak: number;
+	longestStreak: number;
+}
+
+export interface HubGameStatus {
+	hasPlayedToday: boolean;
+	quickStats: PlayerStats;
+}
+
+export const GAMES: GameInfo[] = [
+	{
+		id: "valoshka",
+		name: "Valoshka",
+		nameBel: "Валошка",
+		description: "Spelling Bee-style word puzzle",
+		descriptionBel: "Складайце словы з 7 прапанаваных літар",
+		path: "/valoshka",
+		color: "#5b6fa8",
+		colorDark: "#7a8fc8",
+		icon: "🌸",
+		enabled: true,
+	},
+	{
+		id: "pobach",
+		name: "Pobach",
+		nameBel: "Побач",
+		description: "Semantic word guessing game",
+		descriptionBel: "Здагадайцеся слова па сэнсавай блізкасці",
+		path: "/pobach",
+		color: "#E58E3F",
+		colorDark: "#F5A848",
+		icon: "🔍",
+		enabled: true,
+	},
+];

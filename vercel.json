@@ -1,0 +1,23 @@
+{
+	"buildCommand": "npm run build",
+	"outputDirectory": ".next",
+	"regions": ["fra1"],
+	"functions": {
+		"src/app/api/pobach/guess/route.ts": {
+			"maxDuration": 30,
+			"includeFiles": "src/data/**"
+		},
+		"src/app/api/pobach/hint/route.ts": {
+			"maxDuration": 30,
+			"includeFiles": "src/data/**"
+		},
+		"src/app/api/pobach/target-word/route.ts": {
+			"maxDuration": 30,
+			"includeFiles": "src/data/**"
+		},
+		"src/app/api/pobach/top-words/route.ts": {
+			"maxDuration": 30,
+			"includeFiles": "src/data/**"
+		}
+	}
+}
