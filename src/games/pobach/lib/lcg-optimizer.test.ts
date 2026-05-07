@@ -5,15 +5,15 @@ import {
   findOptimalLCGParams,
   generateDirectSequence,
   generateLCGSequence,
-} from "../lcg-optimizer";
+} from "./lcg-optimizer";
 import {
-  gcd,
-  hullDobellValidate,
-  isCoprime,
-  lcgPeriod,
-  multiplicativeOrder,
-  primeFactors,
-} from "../math-utils";
+	gcd,
+	hullDobellValidate,
+	isCoprime,
+	lcgPeriod,
+	multiplicativeOrder,
+	primeFactors,
+} from "./math-utils";
 
 describe("Math Utils", () => {
   describe("gcd", () => {

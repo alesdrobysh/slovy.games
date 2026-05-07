@@ -1,11 +1,11 @@
 import type {
-  CurrentGame,
-  GameStats,
-  Guess,
-  HistoryRecord,
-  StorageV2,
-} from "@/core/entities/game";
-import { calculateStats } from "@/lib/stats";
+	CurrentGame,
+	GameStats,
+	Guess,
+	HistoryRecord,
+	StorageV2,
+} from "@/games/pobach/core/entities/game";
+import { calculateStats } from "@/games/pobach/lib/stats";
 
 const STORAGE_KEY = "pobach_storage";
 
@@ -278,7 +278,9 @@ export function getHistory(): HistoryRecord[] {
     const data: StorageV2 = JSON.parse(stored);
     if (data.version !== 2 || !data.history) return [];
 
-    return Object.values(data.history).sort((a, b) => b.dayIndex - a.dayIndex);
+		return (Object.values(data.history) as HistoryRecord[]).sort(
+			(a, b) => b.dayIndex - a.dayIndex,
+		);
   } catch (error) {
     console.error("Failed to get history:", error);
     return [];

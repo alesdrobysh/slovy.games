@@ -1,12 +1,12 @@
 "use client";
 
 import Header from "@/games/pobach/components/Header";
-import { Footer } from "@/games/pobach/components/Footer";
+import Footer from "@/games/pobach/components/Footer";
 
 export default function PobachAboutPage() {
 	return (
 		<main style={{ minHeight: "100vh", background: "var(--color-bg)" }}>
-			<Header title="Пра гульню" />
+			<Header />
 			<div
 				className="mx-auto max-w-[600px] px-4 py-8 text-sm leading-relaxed"
 				style={{ color: "var(--color-text)", fontFamily: "var(--font-sans)" }}

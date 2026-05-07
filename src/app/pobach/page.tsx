@@ -17,10 +17,12 @@ export default function PobachPage() {
 			guesses,
 			loading,
 			error,
+			errorWord,
 			won,
 			gameOver,
 			targetWord,
 			dayIndex,
+			sessionDayIndex,
 		},
 		actions: {
 			setInput,
@@ -48,7 +50,6 @@ export default function PobachPage() {
 			/>
 
 			<div className="mx-auto max-w-[600px] px-4 pt-4">
-				{/* Day badge */}
 				<div className="text-center mb-6">
 					<span
 						className="text-xs font-bold tracking-widest uppercase rounded-full px-3 py-1"
@@ -64,19 +65,23 @@ export default function PobachPage() {
 
 				{won || gameOver ? (
 					<FinishCard
-						won={won}
+						mode={won ? "win" : "lose"}
 						targetWord={targetWord}
 						guesses={guesses}
-						dayIndex={dayIndex}
+						dayIndex={dayIndex ?? 0}
+						sessionDayIndex={sessionDayIndex}
 					/>
 				) : (
 					<>
 						<GuessInput
-							value={input}
-							onChange={setInput}
+							input={input}
+							setInput={setInput}
 							onSubmit={handleSubmit}
-							isLoading={loading}
+							loading={loading}
+							won={won}
+							gameOver={gameOver}
 							error={error}
+							errorWord={errorWord}
 							onHint={getHint}
 							onGiveUp={() => setShowGiveUp(true)}
 							guessCount={guesses.length}
@@ -88,10 +93,8 @@ export default function PobachPage() {
 
 						{guesses.length > 0 && (
 							<>
-								{/* Latest guess card */}
 								<GuessCard
 									guess={guesses[guesses.length - 1]}
-									isLatest
 								/>
 								{guesses.length > 1 && (
 									<GuessList guesses={guesses.slice(0, -1)} />
@@ -103,13 +106,13 @@ export default function PobachPage() {
 			</div>
 
 			{showHelp && (
-				<RulesComponent inline={false} onClose={() => setShowHelp(false)} />
+				<RulesComponent inline={false} />
 			)}
 
 			{showGiveUp && (
 				<GiveUpModal
 					onConfirm={handleGiveUpConfirm}
-					onCancel={() => setShowGiveUp(false)}
+					onClose={() => setShowGiveUp(false)}
 				/>
 			)}
 		</main>

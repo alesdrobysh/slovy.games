@@ -1,5 +1,5 @@
 import type { HistoryRecord } from "@/games/pobach/core/entities/game";
-import { calculateDistribution, calculateStreaks } from "../stats";
+import { calculateDistribution, calculateStreaks } from "./stats";
 
 describe("calculateDistribution", () => {
   it("should return empty distribution for empty array", () => {

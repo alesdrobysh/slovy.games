@@ -1,5 +1,5 @@
 import type { HistoryRecord } from "@/games/pobach/core/entities/game";
-import { calculateStats } from "../stats";
+import { calculateStats } from "./stats";
 
 describe("Defeat Impact on Statistics", () => {
   it("should correctly calculate stats when defeat is added to history", () => {

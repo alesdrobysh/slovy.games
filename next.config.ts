@@ -12,7 +12,6 @@ const nextConfig: NextConfig = {
 			},
 		];
 	},
-	serverExternalPackages: ["belmorph"],
 };
 
 export default nextConfig;

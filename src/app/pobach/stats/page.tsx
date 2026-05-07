@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import Header from "@/games/pobach/components/Header";
-import { getStats, getHistory, type HistoryRecord } from "@/games/pobach/lib/storage";
-import { calculateStats } from "@/games/pobach/lib/stats";
-import { ShareButton } from "@/games/pobach/components/ShareButton";
-import { formatRelativeDate } from "@/games/pobach/lib/stats";
+import { getStats, getHistory } from "@/games/pobach/lib/storage";
+import { calculateStats, formatRelativeDate } from "@/games/pobach/lib/stats";
+import type { HistoryRecord } from "@/games/pobach/core/entities/game";
+import ShareButton from "@/games/pobach/components/ShareButton";
 
 function StatCard({ label, value }: { label: string; value: string | number }) {
 	return (
@@ -38,9 +38,13 @@ export default function PobachStatsPage() {
 
 	if (!stats) return null;
 
+	const distEntries = Object.entries(stats.distribution).sort(
+		([a], [b]) => Number(a) - Number(b),
+	);
+
 	return (
 		<main style={{ minHeight: "100vh", background: "var(--color-bg)" }}>
-			<Header title="Статыстыка" />
+			<Header />
 			<div className="mx-auto max-w-[600px] px-4 py-8">
 				<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 mb-8">
 					<StatCard label="Гульняў зыграна" value={stats.gamesPlayed} />
@@ -49,36 +53,34 @@ export default function PobachStatsPage() {
 					<StatCard label="Найлепшая серыя" value={stats.maxStreak} />
 				</div>
 
-				{/* Distribution */}
-				{stats.distribution.length > 0 && (
+				{distEntries.length > 0 && (
 					<div className="mb-8">
 						<h3 className="text-sm font-bold mb-3" style={{ color: "var(--color-text)" }}>
 							Размеркаванне спробаў
 						</h3>
-						{stats.distribution.map((d) => (
-							<div key={d.label} className="flex items-center gap-3 mb-2">
+						{distEntries.map(([label, count]) => (
+							<div key={label} className="flex items-center gap-3 mb-2">
 								<span className="text-xs w-20 text-right" style={{ color: "var(--color-text-muted)" }}>
-									{d.label}
+									{label} спроб
 								</span>
 								<div className="flex-1 h-5 rounded-sm relative overflow-hidden" style={{ background: "var(--color-bg-surface)" }}>
 									<div
 										className="h-full rounded-sm absolute left-0 top-0"
 										style={{
-											width: `${(d.games / stats.gamesWon) * 100}%`,
+											width: `${(count / stats.gamesWon) * 100}%`,
 											background: "var(--color-accent)",
 											opacity: 0.8,
 										}}
 									/>
 								</div>
 								<span className="text-xs font-semibold" style={{ color: "var(--color-text)" }}>
-									{d.games}
+									{count}
 								</span>
 							</div>
 						))}
 					</div>
 				)}
 
-				{/* History */}
 				{history.length > 0 && (
 					<div className="mb-8">
 						<h3 className="text-sm font-bold mb-3" style={{ color: "var(--color-text)" }}>
@@ -97,13 +99,13 @@ export default function PobachStatsPage() {
 									{h.won ? "🏆" : "💔"}
 								</span>
 								<span className="text-sm" style={{ color: "var(--color-text)" }}>
-									{h.word}
+									{formatRelativeDate(h.dayIndex)}
 								</span>
 								<span
 									className="text-xs ml-auto"
 									style={{ color: "var(--color-text-muted)" }}
 								>
-									{h.won ? `${h.attempts} спр.` : formatRelativeDate(h.dayIndex)}
+									{h.won ? `${h.attempts} спр.` : "—"}
 								</span>
 							</div>
 						))}

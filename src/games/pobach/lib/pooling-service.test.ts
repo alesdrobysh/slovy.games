@@ -1,4 +1,4 @@
-import { PoolingService } from "../pooling-service";
+import { PoolingService } from "./pooling-service";
 
 describe("PoolingService", () => {
   describe("constructor - duplicate handling", () => {

@@ -1,5 +1,5 @@
-import type { GameStats, HistoryRecord } from "@/core/entities/game";
-import { getCurrentDayIndex } from "@/lib/storage";
+import type { GameStats, HistoryRecord } from "@/games/pobach/core/entities/game";
+import { getCurrentDayIndex } from "@/games/pobach/lib/storage";
 
 export function calculateStats(history: HistoryRecord[]): GameStats {
   const gamesPlayed = history.length;
