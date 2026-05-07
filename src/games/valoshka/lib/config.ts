@@ -1,0 +1,6 @@
+export const UNWANTED_FORM_ACTION =
+	process.env.NEXT_PUBLIC_UNWANTED_FORM_ACTION ?? "";
+export const UNWANTED_WORD_ENTRY =
+	process.env.NEXT_PUBLIC_UNWANTED_WORD_ENTRY ?? "";
+export const UNWANTED_DATE_ENTRY =
+	process.env.NEXT_PUBLIC_UNWANTED_DATE_ENTRY ?? "";
