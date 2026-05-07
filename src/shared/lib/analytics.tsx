@@ -1,51 +1,81 @@
 "use client";
 
 import posthog from "posthog-js";
-import { PostHogProvider as PHP } from "posthog-js/react";
-import { useEffect, useState } from "react";
+import { PostHogProvider as PHProvider } from "posthog-js/react";
+import {
+	createContext,
+	useCallback,
+	useContext,
+	useEffect,
+	useState,
+} from "react";
 import { useTheme } from "@/shared/hooks/useTheme";
 
-function getPostHogKey(): string {
-	if (typeof window === "undefined") return "";
-	return process.env.NEXT_PUBLIC_POSTHOG_KEY ?? "";
+const CONSENT_KEY = "cookie_consent";
+
+export interface AnalyticsContextValue {
+	isInitialized: boolean;
+	hasConsented: boolean | null;
+	giveConsent: () => void;
 }
 
-function PostHogInit({ children }: { children: React.ReactNode }) {
-	const { theme } = useTheme();
-	const [ready, setReady] = useState(false);
+export const AnalyticsContext = createContext<AnalyticsContextValue | null>(
+	null,
+);
 
-	useEffect(() => {
-		const key = getPostHogKey();
-		if (!key) {
-			setReady(true);
-			return;
-		}
+export function useAnalytics(): AnalyticsContextValue {
+	const ctx = useContext(AnalyticsContext);
+	if (!ctx) throw new Error("useAnalytics must be used within PostHogProvider");
+	return ctx;
+}
 
-		posthog.init(key, {
-			api_host: "/a",
-			ui_host: "https://eu.i.posthog.com",
-			person_profiles: "identified_only",
-			persistence: "localStorage",
-			loaded: () => {
-				posthog.register({ theme });
-			},
-		});
-
-		setReady(true);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [theme]);
-
-	useEffect(() => {
-		if (ready) {
-			posthog.register({ theme });
-		}
-	}, [theme, ready]);
-
-	if (!ready) return children;
-
-	return <PHP client={posthog}>{children}</PHP>;
+function initPostHog(): boolean {
+	const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
+	if (!key) return false;
+	// biome-ignore lint/suspicious/noExplicitAny: posthog internal property
+	if ((posthog as any).__loaded) return true;
+	posthog.init(key, {
+		api_host: "/a",
+		ui_host: "https://eu.i.posthog.com",
+		person_profiles: "identified_only",
+		persistence: "localStorage",
+		autocapture: true,
+		capture_pageview: true,
+		capture_pageleave: true,
+	});
+	return true;
 }
 
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
-	return <PostHogInit>{children}</PostHogInit>;
+	const { theme } = useTheme();
+	const [isInitialized, setIsInitialized] = useState(false);
+	const [hasConsented, setHasConsented] = useState<boolean | null>(null);
+
+	useEffect(() => {
+		const consented = localStorage.getItem(CONSENT_KEY) === "1";
+		setHasConsented(consented);
+		if (consented && initPostHog()) {
+			setIsInitialized(true);
+		}
+	}, []);
+
+	useEffect(() => {
+		if (isInitialized) {
+			posthog.register({ theme });
+		}
+	}, [theme, isInitialized]);
+
+	const giveConsent = useCallback(() => {
+		localStorage.setItem(CONSENT_KEY, "1");
+		setHasConsented(true);
+		if (initPostHog()) {
+			setIsInitialized(true);
+		}
+	}, []);
+
+	return (
+		<AnalyticsContext.Provider value={{ isInitialized, hasConsented, giveConsent }}>
+			<PHProvider client={posthog}>{children}</PHProvider>
+		</AnalyticsContext.Provider>
+	);
 }

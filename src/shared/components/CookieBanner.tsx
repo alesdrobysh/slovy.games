@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
-import { useAnalytics } from "@/games/pobach/providers/AnalyticsContext";
-import { useBannerSlot } from "@/games/pobach/providers/BannerContext";
-import { BottomBanner } from "./BottomBanner";
+import { useBannerSlot } from "@/shared/components/BannerContext";
+import { BottomBanner } from "@/shared/components/BottomBanner";
+import { useAnalytics } from "@/shared/lib/analytics";
 
 export default function CookieBanner() {
 	const { hasConsented, giveConsent } = useAnalytics();

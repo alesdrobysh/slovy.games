@@ -22,6 +22,15 @@
 	--color-accent-light: #8094c8;
 	--color-accent-dark: #3a4f80;
 
+	--accent: var(--color-neutral-accent);
+	--bg: var(--color-neutral-bg);
+	--bg-card: var(--color-neutral-bg-card);
+	--bg-surface: var(--color-neutral-bg-surface);
+	--text: var(--color-neutral-text);
+	--text-muted: var(--color-neutral-text-muted);
+	--border: var(--color-neutral-border);
+	--card: var(--color-neutral-bg-card);
+
 	--font-display: "EB Garamond", serif;
 	--font-sans: "Manrope", sans-serif;
 }
@@ -47,6 +56,15 @@ html.dark {
 	--color-accent-border: rgba(122, 143, 200, 0.25);
 	--color-accent-light: #9aaee0;
 	--color-accent-dark: #5b6fa8;
+
+	--accent: var(--color-neutral-accent);
+	--bg: var(--color-neutral-bg);
+	--bg-card: var(--color-neutral-bg-card);
+	--bg-surface: var(--color-neutral-bg-surface);
+	--text: var(--color-neutral-text);
+	--text-muted: var(--color-neutral-text-muted);
+	--border: var(--color-neutral-border);
+	--card: var(--color-neutral-bg-card);
 }
 
 /* === Valoshka theme overrides === */
@@ -69,6 +87,26 @@ html:not(.dark) .theme-valoshka {
 	--color-accent-light: #8094c8;
 	--color-accent-dark: #3a4f80;
 	--font-display: "EB Garamond", serif;
+
+	--accent: var(--valoshka-blue);
+	--bg: var(--valoshka-paper);
+	--bg-card: var(--color-bg-card);
+	--bg-surface: var(--color-bg-surface);
+	--text: var(--color-text);
+	--text-muted: var(--color-text-muted);
+	--border: var(--color-border);
+	--card: var(--color-bg-card);
+	--cornflower: #5b6fa8;
+	--cornflower-dark: #3a4f80;
+	--cornflower-light: #8094c8;
+	--cornflower-bg-subtle: rgba(91, 111, 168, 0.1);
+	--cornflower-border-subtle: rgba(91, 111, 168, 0.22);
+	--cell-center: #252850;
+	--cell-outer: #7b9cf0;
+	--cell-center-hover: #2a3670;
+	--cell-outer-hover: #6a88e0;
+	--cell-letter-center: #fff;
+	--cell-letter-outer: #fff;
 }
 
 html.dark .theme-valoshka {
@@ -83,6 +121,26 @@ html.dark .theme-valoshka {
 	--color-accent-border: rgba(122, 143, 200, 0.25);
 	--color-accent-light: #9aaee0;
 	--color-accent-dark: #5b6fa8;
+
+	--accent: var(--color-accent);
+	--bg: var(--color-bg);
+	--bg-card: var(--color-bg-card);
+	--bg-surface: var(--color-bg-surface);
+	--text: var(--color-text);
+	--text-muted: var(--color-text-muted);
+	--border: var(--color-border);
+	--card: var(--color-bg-card);
+	--cornflower: #7a8fc8;
+	--cornflower-dark: #5b6fa8;
+	--cornflower-light: #9aaee0;
+	--cornflower-bg-subtle: rgba(122, 143, 200, 0.12);
+	--cornflower-border-subtle: rgba(122, 143, 200, 0.25);
+	--cell-center: #141e50;
+	--cell-outer: #4a62a8;
+	--cell-center-hover: #1c2a68;
+	--cell-outer-hover: #5a72b8;
+	--cell-letter-center: #fff;
+	--cell-letter-outer: #fff;
 }
 
 /* === Pobach theme overrides === */
@@ -98,27 +156,55 @@ html:not(.dark) .theme-pobach {
 	--color-bg-card: #ede3d5;
 	--color-bg-surface: #e0d5c5;
 	--color-text: #1b120e;
-	--color-text-muted: #7a6a5c;
-	--color-border: #d4c4b0;
+	--color-text-muted: #6b5a51;
+	--color-border: #e8e0d5;
 	--color-accent-subtle: rgba(229, 142, 63, 0.1);
 	--color-accent-border: rgba(229, 142, 63, 0.22);
 	--color-accent-light: #f0a860;
 	--color-accent-dark: #c07030;
 	--font-display: "Roboto Slab", serif;
+
+	--accent: var(--pobach-orange);
+	--bg: var(--pobach-bg);
+	--bg-card: var(--color-bg-card);
+	--bg-surface: var(--color-bg-surface);
+	--text: var(--color-text);
+	--text-muted: var(--color-text-muted);
+	--border: var(--color-border);
+	--card: #fff;
+	--rank-1: #16a34a;
+	--rank-10: #16a34a;
+	--rank-100: #84cc16;
+	--rank-1000: #f58d3d;
+	--rank-default: #4b83c8;
 }
 
 html.dark .theme-pobach {
-	--color-accent: #f5a848;
+	--color-accent: #e58e3f;
 	--color-bg: #1a1410;
-	--color-bg-card: #241c15;
+	--color-bg-card: #251e18;
 	--color-bg-surface: #2e241c;
-	--color-text: #e8e0d8;
-	--color-text-muted: #8a7a6a;
-	--color-border: #3a2a1a;
-	--color-accent-subtle: rgba(245, 168, 72, 0.12);
-	--color-accent-border: rgba(245, 168, 72, 0.25);
-	--color-accent-light: #f8c070;
-	--color-accent-dark: #d48530;
+	--color-text: #f0eae0;
+	--color-text-muted: #9a8a7e;
+	--color-border: #3a3028;
+	--color-accent-subtle: rgba(229, 142, 63, 0.12);
+	--color-accent-border: rgba(229, 142, 63, 0.25);
+	--color-accent-light: #f0a860;
+	--color-accent-dark: #c07030;
+
+	--accent: var(--color-accent);
+	--bg: var(--color-bg);
+	--bg-card: var(--color-bg-card);
+	--bg-surface: var(--color-bg-surface);
+	--text: var(--color-text);
+	--text-muted: var(--color-text-muted);
+	--border: var(--color-border);
+	--card: var(--color-bg-card);
+	--rank-1: #16a34a;
+	--rank-10: #16a34a;
+	--rank-100: #84cc16;
+	--rank-1000: #f58d3d;
+	--rank-default: #4b83c8;
 }
 
 /* === Base styles === */
@@ -264,4 +350,39 @@ body {
 
 .cursor-blink {
 	animation: cursor-blink 1s step-start infinite;
+}
+
+@keyframes blobFloat {
+	0%,
+	100% {
+		transform: translate(0, 0) scale(1);
+	}
+	25% {
+		transform: translate(30px, -40px) scale(1.05);
+	}
+	50% {
+		transform: translate(-20px, -80px) scale(0.95);
+	}
+	75% {
+		transform: translate(40px, -20px) scale(1.02);
+	}
+}
+
+.btn-primary {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 9999px;
+	padding: 8px 20px;
+	font-size: 14px;
+	font-weight: 600;
+	background: var(--accent);
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	transition: opacity 0.15s;
+}
+
+.btn-primary:hover {
+	opacity: 0.9;
 }

@@ -1,4 +1,4 @@
-const THEME_KEY = "slovy_theme";
+const THEME_KEY = "theme";
 
 export type Theme = "light" | "dark";
 

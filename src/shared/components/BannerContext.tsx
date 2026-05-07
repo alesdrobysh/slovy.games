@@ -22,9 +22,7 @@ interface BannerContextValue {
 const BannerContext = createContext<BannerContextValue | null>(null);
 
 export function BannerProvider({ children }: { children: React.ReactNode }) {
-	// Registration stored in a ref — mutations don't trigger re-renders
 	const registryRef = useRef<Map<BannerId, number>>(new Map());
-	// Only "wants" set drives re-renders
 	const [wants, setWants] = useState<Set<BannerId>>(new Set());
 
 	const activeBannerId = useMemo(() => {
@@ -66,7 +64,7 @@ export function BannerProvider({ children }: { children: React.ReactNode }) {
 
 	const value = useMemo(
 		() => ({ register, unregister, setWantsToShow, activeBannerId }),
-		[register, unregister, setWantsToShow, activeBannerId]
+		[register, unregister, setWantsToShow, activeBannerId],
 	);
 
 	return (
@@ -79,10 +77,6 @@ export function useBannerSlot(id: BannerId, priority: number) {
 	if (!ctx) throw new Error("useBannerSlot must be used within BannerProvider");
 
 	const { register, unregister, setWantsToShow, activeBannerId } = ctx;
-
-	// Local mirror of wants-state so we can derive isPreempted without exposing
-	// the full wants Set from context (which would cause all slots to re-render
-	// whenever any slot changes).
 	const [localWants, setLocalWants] = useState(false);
 
 	useEffect(() => {
@@ -100,12 +94,9 @@ export function useBannerSlot(id: BannerId, priority: number) {
 		setWantsToShow(id, false);
 	}, [id, setWantsToShow]);
 
-	const isVisible = activeBannerId === id;
-
 	return {
-		isVisible,
-		// true when this slot wants to show but a higher-priority banner is active
-		isPreempted: localWants && !isVisible,
+		isVisible: activeBannerId === id,
+		isPreempted: localWants && activeBannerId !== id,
 		show,
 		dismiss,
 	};

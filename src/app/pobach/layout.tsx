@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { BannerProvider } from "@/games/pobach/providers/BannerContext";
 
 export const metadata: Metadata = {
 	title: "Побач",
@@ -12,9 +11,5 @@ export default function PobachLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	return (
-		<div className="theme-pobach">
-			<BannerProvider>{children}</BannerProvider>
-		</div>
-	);
+	return <div className="theme-pobach">{children}</div>;
 }

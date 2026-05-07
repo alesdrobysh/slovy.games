@@ -97,7 +97,7 @@ export function useGame(): UseGameReturn {
 					triggerConfetti();
 				} else {
 					// Fetch target word for "gave up" games
-					fetch("/api/target-word", {
+					fetch("/api/pobach/target-word", {
 						method: "POST",
 						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify({ dayIndex: currentGame.dayIndex }),
@@ -164,7 +164,7 @@ export function useGame(): UseGameReturn {
 					word: wordToGuess,
 					dayIndex: String(sessionDayIndex),
 				});
-				const res = await fetch(`/api/guess?${guessParams}`);
+				const res = await fetch(`/api/pobach/guess?${guessParams}`);
 
 				const data = await res.json();
 
@@ -277,7 +277,7 @@ export function useGame(): UseGameReturn {
 		setError(null);
 
 		try {
-			const res = await fetch("/api/hint", {
+			const res = await fetch("/api/pobach/hint", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
@@ -365,7 +365,7 @@ export function useGame(): UseGameReturn {
 		if (dayIndex === null) return;
 
 		try {
-			const response = await fetch("/api/target-word", {
+			const response = await fetch("/api/pobach/target-word", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ dayIndex: sessionDayIndex }),

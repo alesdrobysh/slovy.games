@@ -7,21 +7,24 @@ import { useTheme } from "@/shared/hooks/useTheme";
 
 const PAGE_TITLES: Record<string, string> = {
 	"/": "ПОБАЧ",
+	"/pobach": "ПОБАЧ",
 	"/stats": "Статыстыка",
+	"/pobach/stats": "Статыстыка",
 	"/about": "Пра гульню",
+	"/pobach/about": "Пра гульню",
 	"/privacy": "Прыватнасць",
+	"/pobach/privacy": "Прыватнасць",
 };
 
 export default function Header({ onHelpClick }: { onHelpClick?: () => void }) {
 	const { theme, toggleTheme } = useTheme();
 	const pathname = usePathname();
-	const isHome = pathname === "/";
+	const isHome = pathname === "/" || pathname === "/pobach";
 	const title = PAGE_TITLES[pathname] ?? "ПОБАЧ";
 
 	return (
 		<header className="border-b border-[var(--border)] bg-[var(--bg)]">
 			<div className="flex items-center justify-between px-4 py-3 max-w-[600px] mx-auto">
-				{/* Left: back button (non-home) or logo */}
 				{!isHome ? (
 					<div className="flex items-center gap-2">
 						<Link
@@ -41,7 +44,6 @@ export default function Header({ onHelpClick }: { onHelpClick?: () => void }) {
 					</span>
 				)}
 
-				{/* Right: icon group */}
 				<div className="flex items-center gap-1">
 					{onHelpClick && (
 						<button

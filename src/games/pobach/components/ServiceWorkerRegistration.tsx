@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import { useBannerSlot } from "@/games/pobach/providers/BannerContext";
-import { BottomBanner } from "./BottomBanner";
+import { useBannerSlot } from "@/shared/components/BannerContext";
+import { BottomBanner } from "@/shared/components/BottomBanner";
 
 export default function ServiceWorkerRegistration() {
 	const { isVisible, isPreempted, show } = useBannerSlot("sw-update", 2);
