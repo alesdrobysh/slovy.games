@@ -7,8 +7,8 @@ import {
 	useEffect,
 	useState,
 } from "react";
-import { computeInitialTheme, setStoredTheme } from "@/shared/lib/storage";
 import type { Theme } from "@/shared/lib/storage";
+import { computeInitialTheme, setStoredTheme } from "@/shared/lib/storage";
 
 interface ThemeContextType {
 	theme: Theme;
@@ -40,10 +40,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 		setStoredTheme(theme);
 		const meta = document.querySelector('meta[name="theme-color"]');
 		if (meta) {
-			meta.setAttribute(
-				"content",
-				theme === "dark" ? "#0e0f1a" : "#f5f0e8"
-			);
+			meta.setAttribute("content", theme === "dark" ? "#0e0f1a" : "#f5f0e8");
 		}
 	}, [theme, mounted]);
 

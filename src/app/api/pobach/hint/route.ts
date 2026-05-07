@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
-import { gameService, initializeGameService } from "@/games/pobach/lib/container";
+import {
+	gameService,
+	initializeGameService,
+} from "@/games/pobach/lib/container";
 import { validateDayIndex } from "@/games/pobach/lib/utils";
 
 const MIN_HINT_RANK = 1000;
@@ -12,7 +15,7 @@ export async function POST(request: Request) {
 			console.error("Failed to initialize game service:", initError);
 			return NextResponse.json(
 				{ error: "Failed to initialize game service" },
-				{ status: 500 },
+				{ status: 500 }
 			);
 		}
 
@@ -28,21 +31,21 @@ export async function POST(request: Request) {
 		if (typeof bestRank !== "number" || bestRank < 1) {
 			return NextResponse.json(
 				{ error: "Няправільны параметр bestRank" },
-				{ status: 400 },
+				{ status: 400 }
 			);
 		}
 
 		if (!Array.isArray(usedRanks)) {
 			return NextResponse.json(
 				{ error: "Няправільны параметр usedRanks" },
-				{ status: 400 },
+				{ status: 400 }
 			);
 		}
 
 		if (!dayIndex || typeof dayIndex !== "number") {
 			return NextResponse.json(
 				{ error: "Патрабуецца dayIndex" },
-				{ status: 400 },
+				{ status: 400 }
 			);
 		}
 
@@ -73,7 +76,7 @@ export async function POST(request: Request) {
 			console.error("Failed to get word for rank:", targetRank);
 			return NextResponse.json(
 				{ error: "Не ўдалося знайсці падказку" },
-				{ status: 500 },
+				{ status: 500 }
 			);
 		}
 

@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { GAMES } from "@/shared/types";
 
 interface CombinedStats {
@@ -48,7 +48,10 @@ function loadPobachStats() {
 		return {
 			gamesPlayed: history.length,
 			gamesWon: won.length,
-			winRate: history.length > 0 ? Math.round((won.length / history.length) * 100) : 0,
+			winRate:
+				history.length > 0
+					? Math.round((won.length / history.length) * 100)
+					: 0,
 			currentStreak: s.stats?.currentStreak ?? 0,
 			longestStreak: s.stats?.maxStreak ?? 0,
 		};
@@ -57,13 +60,7 @@ function loadPobachStats() {
 	}
 }
 
-function StatCard({
-	label,
-	value,
-}: {
-	label: string;
-	value: number | string;
-}) {
+function StatCard({ label, value }: { label: string; value: number | string }) {
 	return (
 		<div
 			className="flex flex-col gap-1 p-4 rounded-xl"
@@ -72,10 +69,19 @@ function StatCard({
 				border: "1px solid var(--color-border)",
 			}}
 		>
-			<span className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--color-text-muted)" }}>
+			<span
+				className="text-xs font-semibold uppercase tracking-wider"
+				style={{ color: "var(--color-text-muted)" }}
+			>
 				{label}
 			</span>
-			<span className="text-2xl font-bold" style={{ fontFamily: "var(--font-display)", color: "var(--color-text)" }}>
+			<span
+				className="text-2xl font-bold"
+				style={{
+					fontFamily: "var(--font-display)",
+					color: "var(--color-text)",
+				}}
+			>
 				{value}
 			</span>
 		</div>
@@ -83,7 +89,10 @@ function StatCard({
 }
 
 export default function CombinedStatsPage() {
-	const [stats, setStats] = useState<CombinedStats>({ valoshka: null, pobach: null });
+	const [stats, setStats] = useState<CombinedStats>({
+		valoshka: null,
+		pobach: null,
+	});
 
 	useEffect(() => {
 		setStats({
@@ -97,7 +106,10 @@ export default function CombinedStatsPage() {
 			<div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-12">
 				<h1
 					className="text-3xl font-bold mb-8"
-					style={{ fontFamily: "var(--font-display)", color: "var(--color-text)" }}
+					style={{
+						fontFamily: "var(--font-display)",
+						color: "var(--color-text)",
+					}}
 				>
 					Статыстыка
 				</h1>
@@ -106,10 +118,12 @@ export default function CombinedStatsPage() {
 					<section className="mb-10">
 						<h2
 							className="text-xl font-bold mb-4"
-							style={{ color: GAMES[0].color, fontFamily: "var(--font-display)" }}
+							style={{
+								color: GAMES[0].color,
+								fontFamily: "var(--font-display)",
+							}}
 						>
-							{GAMES[0].nameBel}
-							{" "}
+							{GAMES[0].nameBel}{" "}
 							<Link
 								href="/valoshka/stats"
 								className="text-xs font-normal"
@@ -119,10 +133,22 @@ export default function CombinedStatsPage() {
 							</Link>
 						</h2>
 						<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-							<StatCard label="Гульняў зыграна" value={stats.valoshka.gamesPlayed} />
-							<StatCard label="Бягучая серыя" value={stats.valoshka.currentStreak} />
-							<StatCard label="Найлепшая серыя" value={stats.valoshka.longestStreak} />
-							<StatCard label="Слоў знойдзена" value={stats.valoshka.totalWordsFound} />
+							<StatCard
+								label="Гульняў зыграна"
+								value={stats.valoshka.gamesPlayed}
+							/>
+							<StatCard
+								label="Бягучая серыя"
+								value={stats.valoshka.currentStreak}
+							/>
+							<StatCard
+								label="Найлепшая серыя"
+								value={stats.valoshka.longestStreak}
+							/>
+							<StatCard
+								label="Слоў знойдзена"
+								value={stats.valoshka.totalWordsFound}
+							/>
 						</div>
 					</section>
 				)}
@@ -131,10 +157,12 @@ export default function CombinedStatsPage() {
 					<section className="mb-10">
 						<h2
 							className="text-xl font-bold mb-4"
-							style={{ color: GAMES[1].color, fontFamily: "var(--font-display)" }}
+							style={{
+								color: GAMES[1].color,
+								fontFamily: "var(--font-display)",
+							}}
 						>
-							{GAMES[1].nameBel}
-							{" "}
+							{GAMES[1].nameBel}{" "}
 							<Link
 								href="/pobach/stats"
 								className="text-xs font-normal"
@@ -144,10 +172,19 @@ export default function CombinedStatsPage() {
 							</Link>
 						</h2>
 						<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-							<StatCard label="Гульняў зыграна" value={stats.pobach.gamesPlayed} />
+							<StatCard
+								label="Гульняў зыграна"
+								value={stats.pobach.gamesPlayed}
+							/>
 							<StatCard label="Перамог" value={`${stats.pobach.winRate}%`} />
-							<StatCard label="Бягучая серыя" value={stats.pobach.currentStreak} />
-							<StatCard label="Найлепшая серыя" value={stats.pobach.longestStreak} />
+							<StatCard
+								label="Бягучая серыя"
+								value={stats.pobach.currentStreak}
+							/>
+							<StatCard
+								label="Найлепшая серыя"
+								value={stats.pobach.longestStreak}
+							/>
 						</div>
 					</section>
 				)}

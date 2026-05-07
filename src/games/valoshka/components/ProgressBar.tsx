@@ -16,8 +16,8 @@ export function ProgressBar({
 	score,
 	maxScore,
 	date,
-	foundCount,
-	totalWords,
+	foundCount: _foundCount,
+	totalWords: _totalWords,
 }: ProgressBarProps) {
 	const rank = getRank(score, maxScore);
 	const rankIdx = getRankIndex(score, maxScore);

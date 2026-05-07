@@ -33,7 +33,7 @@ function PostHogInit({ children }: { children: React.ReactNode }) {
 
 		setReady(true);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [theme]);
 
 	useEffect(() => {
 		if (ready) {

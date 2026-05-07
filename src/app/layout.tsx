@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
+import type { Metadata } from "next";
 import { EB_Garamond, Manrope, Roboto_Slab } from "next/font/google";
-import { ThemeProvider } from "@/shared/hooks/useTheme";
-import { HubNav } from "@/shared/components/HubNav";
 import { Footer } from "@/shared/components/Footer";
+import { HubNav } from "@/shared/components/HubNav";
+import { ThemeProvider } from "@/shared/hooks/useTheme";
 import { PostHogProvider } from "@/shared/lib/analytics";
 import "./globals.css";
 
@@ -36,8 +36,7 @@ export const metadata: Metadata = {
 		"Валошка і Побач — штодзённыя беларускія слоўныя гульні. Складайце словы і здагадвайцеся па сэнсе.",
 	openGraph: {
 		title: "Словы — Беларускія слоўныя гульні",
-		description:
-			"Валошка і Побач — штодзённыя беларускія слоўныя гульні.",
+		description: "Валошка і Побач — штодзённыя беларускія слоўныя гульні.",
 		type: "website",
 	},
 };

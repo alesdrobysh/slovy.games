@@ -1,7 +1,7 @@
 "use client";
 
-import Header from "@/games/pobach/components/Header";
 import Footer from "@/games/pobach/components/Footer";
+import Header from "@/games/pobach/components/Header";
 
 export default function PobachPrivacyPage() {
 	return (
@@ -11,7 +11,10 @@ export default function PobachPrivacyPage() {
 				className="mx-auto max-w-[600px] px-4 py-8 text-sm leading-relaxed"
 				style={{ color: "var(--color-text)", fontFamily: "var(--font-sans)" }}
 			>
-				<h2 className="text-xl font-bold mb-4" style={{ fontFamily: "var(--font-display)" }}>
+				<h2
+					className="text-xl font-bold mb-4"
+					style={{ fontFamily: "var(--font-display)" }}
+				>
 					Палітыка прыватнасці
 				</h2>
 				<p className="mb-4">
@@ -35,18 +38,24 @@ export default function PobachPrivacyPage() {
 
 				<h3 className="text-lg font-bold mb-2">Доступ да дадзеных</h3>
 				<p className="mb-4">
-					Усе дадзеныя захоўваюцца лакальна ў вашым браўзэры.
-					Аналітычныя дадзеныя даступныя толькі распрацоўшчыку для аналізу выкарыстання.
+					Усе дадзеныя захоўваюцца лакальна ў вашым браўзэры. Аналітычныя
+					дадзеныя даступныя толькі распрацоўшчыку для аналізу выкарыстання.
 				</p>
 
 				<h3 className="text-lg font-bold mb-2">Захаванне дадзеных</h3>
 				<p className="mb-4">
-					Лакальныя дадзеныя захоўваюцца пакуль вы не ачысціце дадзеныя браўзэра.
-					Вы можаце выдаліць іх праз налады браўзэра.
+					Лакальныя дадзеныя захоўваюцца пакуль вы не ачысціце дадзеныя
+					браўзэра. Вы можаце выдаліць іх праз налады браўзэра.
 				</p>
 
 				<p style={{ color: "var(--color-text-muted)" }}>
-					Пытанні: <a href="mailto:support@pobach.app" style={{ color: "var(--color-accent)" }}>support@pobach.app</a>
+					Пытанні:{" "}
+					<a
+						href="mailto:support@pobach.app"
+						style={{ color: "var(--color-accent)" }}
+					>
+						support@pobach.app
+					</a>
 				</p>
 			</div>
 			<Footer />

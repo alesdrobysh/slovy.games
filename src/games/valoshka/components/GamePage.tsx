@@ -2,7 +2,11 @@
 
 import { useCallback, useEffect, useReducer, useState } from "react";
 import { getRankIndex, scoreWord } from "@/games/valoshka/lib/scoring";
-import { loadProgress, saveProgress, updateStatsForDate } from "@/games/valoshka/lib/storage";
+import {
+	loadProgress,
+	saveProgress,
+	updateStatsForDate,
+} from "@/games/valoshka/lib/storage";
 import { validateWord } from "@/games/valoshka/lib/validation";
 import type { GameAction, GameState, Puzzle } from "@/games/valoshka/types";
 import { ActionButtons } from "./ActionButtons";

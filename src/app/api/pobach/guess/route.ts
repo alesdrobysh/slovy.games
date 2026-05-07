@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
-import { gameService, initializeGameService } from "@/games/pobach/lib/container";
+import {
+	gameService,
+	initializeGameService,
+} from "@/games/pobach/lib/container";
 import { validateDayIndex } from "@/games/pobach/lib/utils";
 
 export async function GET(request: Request) {
@@ -15,7 +18,7 @@ export async function GET(request: Request) {
 		if (!dayIndexStr) {
 			return NextResponse.json(
 				{ error: "Патрабуецца dayIndex" },
-				{ status: 400 },
+				{ status: 400 }
 			);
 		}
 
@@ -23,7 +26,7 @@ export async function GET(request: Request) {
 		if (Number.isNaN(dayIndex)) {
 			return NextResponse.json(
 				{ error: "Няправільны індэкс дня" },
-				{ status: 400 },
+				{ status: 400 }
 			);
 		}
 
@@ -33,7 +36,7 @@ export async function GET(request: Request) {
 			console.error("Failed to initialize game service:", initError);
 			return NextResponse.json(
 				{ error: "Failed to initialize game service" },
-				{ status: 500 },
+				{ status: 500 }
 			);
 		}
 
@@ -41,7 +44,7 @@ export async function GET(request: Request) {
 		if (!validateDayIndex(dayIndex, currentDayIndex)) {
 			return NextResponse.json(
 				{ error: "Недапушчальны індэкс дня" },
-				{ status: 400 },
+				{ status: 400 }
 			);
 		}
 
@@ -53,7 +56,7 @@ export async function GET(request: Request) {
 				headers: {
 					"Cache-Control": "public, s-maxage=86400",
 				},
-			},
+			}
 		);
 	} catch (error) {
 		console.error("API /api/pobach/guess Error:", error);

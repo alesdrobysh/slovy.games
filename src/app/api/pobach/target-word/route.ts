@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
-import { gameService, initializeGameService } from "@/games/pobach/lib/container";
+import {
+	gameService,
+	initializeGameService,
+} from "@/games/pobach/lib/container";
 import { validateDayIndex } from "@/games/pobach/lib/utils";
 
 export async function POST(request: Request) {
@@ -10,7 +13,7 @@ export async function POST(request: Request) {
 			console.error("Failed to initialize game service:", initError);
 			return NextResponse.json(
 				{ error: "Failed to initialize game service" },
-				{ status: 500 },
+				{ status: 500 }
 			);
 		}
 
@@ -26,7 +29,7 @@ export async function POST(request: Request) {
 		if (!dayIndex || typeof dayIndex !== "number") {
 			return NextResponse.json(
 				{ error: "Патрабуецца dayIndex" },
-				{ status: 400 },
+				{ status: 400 }
 			);
 		}
 

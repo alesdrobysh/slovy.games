@@ -7,7 +7,10 @@ import {
 	UNWANTED_WORD_ENTRY,
 } from "@/games/valoshka/lib/config";
 import { getPuzzleForDate } from "@/games/valoshka/lib/puzzles";
-import { getYesterdayDateString, loadProgress } from "@/games/valoshka/lib/storage";
+import {
+	getYesterdayDateString,
+	loadProgress,
+} from "@/games/valoshka/lib/storage";
 import type { Puzzle, SavedProgress } from "@/games/valoshka/types";
 
 type FlagState = "idle" | "confirming" | "sending" | "sent";

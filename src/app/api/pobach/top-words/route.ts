@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
-import { gameService, initializeGameService } from "@/games/pobach/lib/container";
+import {
+	gameService,
+	initializeGameService,
+} from "@/games/pobach/lib/container";
 
 export async function GET(request: Request) {
 	try {
@@ -9,7 +12,7 @@ export async function GET(request: Request) {
 		if (!dayIndexStr) {
 			return NextResponse.json(
 				{ error: "Патрабуецца dayIndex" },
-				{ status: 400 },
+				{ status: 400 }
 			);
 		}
 
@@ -17,7 +20,7 @@ export async function GET(request: Request) {
 		if (Number.isNaN(dayIndex)) {
 			return NextResponse.json(
 				{ error: "Няправільны dayIndex" },
-				{ status: 400 },
+				{ status: 400 }
 			);
 		}
 
@@ -27,7 +30,7 @@ export async function GET(request: Request) {
 		if (dayIndex > currentDayIndex) {
 			return NextResponse.json(
 				{ error: "Недапушчальны dayIndex" },
-				{ status: 403 },
+				{ status: 403 }
 			);
 		}
 

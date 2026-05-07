@@ -2,10 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Header from "@/games/pobach/components/Header";
-import { getStats, getHistory } from "@/games/pobach/lib/storage";
-import { calculateStats, formatRelativeDate } from "@/games/pobach/lib/stats";
 import type { HistoryRecord } from "@/games/pobach/core/entities/game";
-import ShareButton from "@/games/pobach/components/ShareButton";
+import { calculateStats, formatRelativeDate } from "@/games/pobach/lib/stats";
+import { getHistory } from "@/games/pobach/lib/storage";
 
 function StatCard({ label, value }: { label: string; value: string | number }) {
 	return (
@@ -16,10 +15,16 @@ function StatCard({ label, value }: { label: string; value: string | number }) {
 				border: "1px solid var(--color-border)",
 			}}
 		>
-			<span className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--color-text-muted)" }}>
+			<span
+				className="text-xs font-semibold uppercase tracking-wider"
+				style={{ color: "var(--color-text-muted)" }}
+			>
 				{label}
 			</span>
-			<span className="text-2xl font-bold" style={{ color: "var(--color-text)" }}>
+			<span
+				className="text-2xl font-bold"
+				style={{ color: "var(--color-text)" }}
+			>
 				{value}
 			</span>
 		</div>
@@ -27,7 +32,9 @@ function StatCard({ label, value }: { label: string; value: string | number }) {
 }
 
 export default function PobachStatsPage() {
-	const [stats, setStats] = useState<ReturnType<typeof calculateStats> | null>(null);
+	const [stats, setStats] = useState<ReturnType<typeof calculateStats> | null>(
+		null
+	);
 	const [history, setHistory] = useState<HistoryRecord[]>([]);
 
 	useEffect(() => {
@@ -39,7 +46,7 @@ export default function PobachStatsPage() {
 	if (!stats) return null;
 
 	const distEntries = Object.entries(stats.distribution).sort(
-		([a], [b]) => Number(a) - Number(b),
+		([a], [b]) => Number(a) - Number(b)
 	);
 
 	return (
@@ -55,15 +62,24 @@ export default function PobachStatsPage() {
 
 				{distEntries.length > 0 && (
 					<div className="mb-8">
-						<h3 className="text-sm font-bold mb-3" style={{ color: "var(--color-text)" }}>
+						<h3
+							className="text-sm font-bold mb-3"
+							style={{ color: "var(--color-text)" }}
+						>
 							Размеркаванне спробаў
 						</h3>
 						{distEntries.map(([label, count]) => (
 							<div key={label} className="flex items-center gap-3 mb-2">
-								<span className="text-xs w-20 text-right" style={{ color: "var(--color-text-muted)" }}>
+								<span
+									className="text-xs w-20 text-right"
+									style={{ color: "var(--color-text-muted)" }}
+								>
 									{label} спроб
 								</span>
-								<div className="flex-1 h-5 rounded-sm relative overflow-hidden" style={{ background: "var(--color-bg-surface)" }}>
+								<div
+									className="flex-1 h-5 rounded-sm relative overflow-hidden"
+									style={{ background: "var(--color-bg-surface)" }}
+								>
 									<div
 										className="h-full rounded-sm absolute left-0 top-0"
 										style={{
@@ -73,7 +89,10 @@ export default function PobachStatsPage() {
 										}}
 									/>
 								</div>
-								<span className="text-xs font-semibold" style={{ color: "var(--color-text)" }}>
+								<span
+									className="text-xs font-semibold"
+									style={{ color: "var(--color-text)" }}
+								>
 									{count}
 								</span>
 							</div>
@@ -83,7 +102,10 @@ export default function PobachStatsPage() {
 
 				{history.length > 0 && (
 					<div className="mb-8">
-						<h3 className="text-sm font-bold mb-3" style={{ color: "var(--color-text)" }}>
+						<h3
+							className="text-sm font-bold mb-3"
+							style={{ color: "var(--color-text)" }}
+						>
 							Апошнія гульні
 						</h3>
 						{history.map((h) => (
@@ -94,11 +116,18 @@ export default function PobachStatsPage() {
 							>
 								<span
 									className="text-sm font-semibold"
-									style={{ color: h.won ? "var(--color-accent)" : "var(--color-text-muted)" }}
+									style={{
+										color: h.won
+											? "var(--color-accent)"
+											: "var(--color-text-muted)",
+									}}
 								>
 									{h.won ? "🏆" : "💔"}
 								</span>
-								<span className="text-sm" style={{ color: "var(--color-text)" }}>
+								<span
+									className="text-sm"
+									style={{ color: "var(--color-text)" }}
+								>
 									{formatRelativeDate(h.dayIndex)}
 								</span>
 								<span

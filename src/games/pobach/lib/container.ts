@@ -11,16 +11,16 @@ const gameService = new GameService(repository);
 let isInitialized = false;
 
 const initializeGameService = async (): Promise<void> => {
-  if (isInitialized) return;
+	if (isInitialized) return;
 
-  try {
-    await gameService.initialize();
-    isInitialized = true;
-    console.log("✅ GameService initialized successfully");
-  } catch (error) {
-    console.error("❌ Failed to initialize GameService:", error);
-    throw error;
-  }
+	try {
+		await gameService.initialize();
+		isInitialized = true;
+		console.log("✅ GameService initialized successfully");
+	} catch (error) {
+		console.error("❌ Failed to initialize GameService:", error);
+		throw error;
+	}
 };
 
 // Export the service and initialization function

@@ -29,9 +29,7 @@ export function HubNav() {
 						className="text-xl font-bold no-underline tracking-tight"
 						style={{
 							fontFamily: "var(--font-display)",
-							color: isHub
-								? "var(--color-accent)"
-								: "var(--color-text-muted)",
+							color: isHub ? "var(--color-accent)" : "var(--color-text-muted)",
 						}}
 					>
 						Словы
@@ -63,9 +61,10 @@ export function HubNav() {
 						className="text-sm font-semibold no-underline"
 						style={{
 							fontFamily: "var(--font-sans)",
-							color: pathname === "/stats"
-								? "var(--color-accent)"
-								: "var(--color-text-muted)",
+							color:
+								pathname === "/stats"
+									? "var(--color-accent)"
+									: "var(--color-text-muted)",
 						}}
 					>
 						Статыстыка

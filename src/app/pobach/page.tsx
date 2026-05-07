@@ -1,14 +1,14 @@
 "use client";
 
-import { useGame } from "@/games/pobach/hooks/useGame";
-import Header from "@/games/pobach/components/Header";
-import GuessInput from "@/games/pobach/components/GuessInput";
-import FinishCard from "@/games/pobach/components/FinishCard";
-import GuessCard from "@/games/pobach/components/GuessCard";
-import RulesComponent from "@/games/pobach/components/RulesComponent";
-import GuessList from "@/games/pobach/components/GuessList";
-import GiveUpModal from "@/games/pobach/components/GiveUpModal";
 import { useState } from "react";
+import FinishCard from "@/games/pobach/components/FinishCard";
+import GiveUpModal from "@/games/pobach/components/GiveUpModal";
+import GuessCard from "@/games/pobach/components/GuessCard";
+import GuessInput from "@/games/pobach/components/GuessInput";
+import GuessList from "@/games/pobach/components/GuessList";
+import Header from "@/games/pobach/components/Header";
+import RulesComponent from "@/games/pobach/components/RulesComponent";
+import { useGame } from "@/games/pobach/hooks/useGame";
 
 export default function PobachPage() {
 	const {
@@ -24,12 +24,7 @@ export default function PobachPage() {
 			dayIndex,
 			sessionDayIndex,
 		},
-		actions: {
-			setInput,
-			handleSubmit,
-			getHint,
-			handleGiveUp,
-		},
+		actions: { setInput, handleSubmit, getHint, handleGiveUp },
 	} = useGame();
 
 	const [showHelp, setShowHelp] = useState(false);
@@ -45,9 +40,7 @@ export default function PobachPage() {
 			className="min-h-screen pb-20"
 			style={{ background: "var(--color-bg)" }}
 		>
-			<Header
-				onHelpClick={() => setShowHelp(true)}
-			/>
+			<Header onHelpClick={() => setShowHelp(true)} />
 
 			<div className="mx-auto max-w-[600px] px-4 pt-4">
 				<div className="text-center mb-6">
@@ -87,15 +80,11 @@ export default function PobachPage() {
 							guessCount={guesses.length}
 						/>
 
-						{guesses.length === 0 && !error && (
-							<RulesComponent inline />
-						)}
+						{guesses.length === 0 && !error && <RulesComponent inline />}
 
 						{guesses.length > 0 && (
 							<>
-								<GuessCard
-									guess={guesses[guesses.length - 1]}
-								/>
+								<GuessCard guess={guesses[guesses.length - 1]} />
 								{guesses.length > 1 && (
 									<GuessList guesses={guesses.slice(0, -1)} />
 								)}
@@ -105,9 +94,7 @@ export default function PobachPage() {
 				)}
 			</div>
 
-			{showHelp && (
-				<RulesComponent inline={false} />
-			)}
+			{showHelp && <RulesComponent inline={false} />}
 
 			{showGiveUp && (
 				<GiveUpModal

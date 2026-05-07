@@ -5,37 +5,37 @@ import { useBannerSlot } from "@/games/pobach/providers/BannerContext";
 import { BottomBanner } from "./BottomBanner";
 
 export default function ServiceWorkerRegistration() {
-  const { isVisible, isPreempted, show } = useBannerSlot("sw-update", 2);
+	const { isVisible, isPreempted, show } = useBannerSlot("sw-update", 2);
 
-  useEffect(() => {
-    if (
-      !("serviceWorker" in navigator) ||
-      process.env.NODE_ENV !== "production"
-    )
-      return;
+	useEffect(() => {
+		if (
+			!("serviceWorker" in navigator) ||
+			process.env.NODE_ENV !== "production"
+		)
+			return;
 
-    const hadController = !!navigator.serviceWorker.controller;
+		const hadController = !!navigator.serviceWorker.controller;
 
-    navigator.serviceWorker.register("/sw.js");
+		navigator.serviceWorker.register("/sw.js");
 
-    const listener = () => {
-      if (hadController) show();
-    };
-    navigator.serviceWorker.addEventListener("controllerchange", listener);
-    return () =>
-      navigator.serviceWorker.removeEventListener("controllerchange", listener);
-  }, [show]);
+		const listener = () => {
+			if (hadController) show();
+		};
+		navigator.serviceWorker.addEventListener("controllerchange", listener);
+		return () =>
+			navigator.serviceWorker.removeEventListener("controllerchange", listener);
+	}, [show]);
 
-  return (
-    <BottomBanner
-      ariaLabel="Даступна абнаўленне"
-      message="Даступна новая версія гульні"
-      buttonLabel="Абнавіць"
-      onAction={() => window.location.reload()}
-      isVisible={isVisible}
-      instant={isPreempted}
-      role="status"
-      focusOnShow
-    />
-  );
+	return (
+		<BottomBanner
+			ariaLabel="Даступна абнаўленне"
+			message="Даступна новая версія гульні"
+			buttonLabel="Абнавіць"
+			onAction={() => window.location.reload()}
+			isVisible={isVisible}
+			instant={isPreempted}
+			role="status"
+			focusOnShow
+		/>
+	);
 }

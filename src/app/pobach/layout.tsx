@@ -3,7 +3,8 @@ import { BannerProvider } from "@/games/pobach/providers/BannerContext";
 
 export const metadata: Metadata = {
 	title: "Побач",
-	description: "Здагадайцеся слова па сэнсавай блізкасці. Штодзённая беларуская слоўная гульня.",
+	description:
+		"Здагадайцеся слова па сэнсавай блізкасці. Штодзённая беларуская слоўная гульня.",
 };
 
 export default function PobachLayout({
@@ -13,9 +14,7 @@ export default function PobachLayout({
 }) {
 	return (
 		<div className="theme-pobach">
-			<BannerProvider>
-				{children}
-			</BannerProvider>
+			<BannerProvider>{children}</BannerProvider>
 		</div>
 	);
 }

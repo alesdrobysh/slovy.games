@@ -1,7 +1,7 @@
 "use client";
 
-import { GAMES } from "@/shared/types";
 import { GameCard } from "@/shared/components/GameCard";
+import { GAMES } from "@/shared/types";
 
 export default function HubPage() {
 	return (
@@ -30,11 +30,7 @@ export default function HubPage() {
 
 				<div className="grid gap-4 sm:gap-6 sm:grid-cols-2 max-w-2xl mx-auto">
 					{GAMES.filter((g) => g.enabled).map((game) => (
-						<GameCard
-							key={game.id}
-							game={game}
-							hasPlayedToday={false}
-						/>
+						<GameCard key={game.id} game={game} hasPlayedToday={false} />
 					))}
 				</div>
 			</div>
