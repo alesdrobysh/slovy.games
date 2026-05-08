@@ -5,53 +5,103 @@ import Header from "@/games/pobach/components/Header";
 
 export default function PobachAboutPage() {
 	return (
-		<main style={{ minHeight: "100vh", background: "var(--color-bg)" }}>
+		<main className="min-h-screen flex flex-col">
 			<Header />
-			<div
-				className="mx-auto max-w-[600px] px-4 py-8 text-sm leading-relaxed"
-				style={{ color: "var(--color-text)", fontFamily: "var(--font-sans)" }}
-			>
-				<h2
-					className="text-xl font-bold mb-4"
-					style={{ fontFamily: "var(--font-display)" }}
-				>
-					Што такое Побач?
-				</h2>
-				<p className="mb-4">
-					Побач — гэта штодзённая гульня, у якой трэба адгадаць слова па
-					сэнсавай блізкасці. Кожны дзень новае слова. Чым бліжэй ваша здагадка
-					да мэтавага слова — тым вышэй яна ў рэйтынгу.
-				</p>
 
-				<h3 className="text-lg font-bold mb-2">Як гуляць</h3>
-				<ul className="list-disc pl-5 mb-4 space-y-2">
-					<li>Увядзіце беларускае слова і націсніце Enter.</li>
-					<li>Гульня пакажа, наколькі яно блізкае да мэтавага слова.</li>
-					<li>Ранг паказвае пазіцыю сярод усіх слоў слоўніка.</li>
-					<li>Працягвайце ўводзіць новыя словы, пакуль не здагадаецеся.</li>
-				</ul>
+			<div className="flex-1 w-full max-w-[600px] mx-auto px-4 py-8 space-y-8">
+				<section>
+					<h2 className="font-serif text-xl font-semibold text-[var(--text)] mb-3">
+						Як гэта працуе?
+					</h2>
+					<p className="text-sm text-[var(--text-muted)] leading-relaxed">
+						Побач выкарыстоўвае алгарытмы машыннага навучання для вызначэння
+						семантычнай блізкасці слоў. Мадэль аналізуе, як часта словы
+						ўжываюцца разам у тэкстах, і будуе &ldquo;карту&rdquo; іх сэнсаў.
+					</p>
+				</section>
 
-				<h3 className="text-lg font-bold mb-2">Крыніцы</h3>
-				<p className="mb-4">
-					Натхнёна гульнямі Contexto і Semantle. Слоўнік на аснове GrammarDB і
-					verbum.by/slouniki. Аўтар:{" "}
-					<a
-						href="https://alesdrobysh.com"
-						style={{ color: "var(--color-accent)" }}
-					>
-						alesdrobysh
-					</a>
-					. Сувязь:{" "}
-					<a
-						href="mailto:support@pobach.app"
-						style={{ color: "var(--color-accent)" }}
-					>
-						support@pobach.app
-					</a>
-					.
-				</p>
+				<section>
+					<h2 className="font-serif text-xl font-semibold text-[var(--text)] mb-3">
+						Стваральнік
+					</h2>
+					<p className="text-sm text-[var(--text-muted)] mb-2">
+						Зроблена з ❤️ да роднай мовы
+					</p>
+					<p className="text-sm text-[var(--text-muted)] mb-2">
+						Натхненнем сталі{" "}
+						<a
+							href="https://contexto.me"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="text-[var(--accent)] hover:underline"
+						>
+							Contexto
+						</a>{" "}
+						і{" "}
+						<a
+							href="https://semantle.com"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="text-[var(--accent)] hover:underline"
+						>
+							Semantle
+						</a>
+					</p>
+					<p className="text-sm text-[var(--text-muted)] mb-3">
+						Аўтар:{" "}
+						<a
+							href="https://github.com/alesdrobysh"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="text-[var(--accent)] hover:underline"
+						>
+							alesdrobysh
+						</a>
+					</p>
+					<p className="text-sm text-[var(--text-muted)] mb-2">База слоў:</p>
+					<ul className="text-sm text-[var(--text-muted)] space-y-1 ml-4">
+						<li>
+							<a
+								href="https://github.com/Belarus/GrammarDB"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="text-[var(--accent)] hover:underline"
+							>
+								Belarus/GrammarDB
+							</a>
+						</li>
+						<li>
+							<a
+								href="https://github.com/verbumby/slouniki"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="text-[var(--accent)] hover:underline"
+							>
+								verbumby/slouniki
+							</a>
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2 className="font-serif text-xl font-semibold text-[var(--text)] mb-3">
+						Кантакт
+					</h2>
+					<p className="text-sm text-[var(--text-muted)]">
+						Маеце пытанні або прапановы? Напішыце нам па пошце{" "}
+						<a
+							href="mailto:support@pobach.app"
+							className="text-[var(--accent)] hover:underline"
+						>
+							support@pobach.app
+						</a>
+					</p>
+				</section>
 			</div>
-			<Footer />
+
+			<div className="w-full max-w-[600px] mx-auto px-4">
+				<Footer />
+			</div>
 		</main>
 	);
 }

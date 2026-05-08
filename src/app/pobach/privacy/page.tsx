@@ -5,60 +5,116 @@ import Header from "@/games/pobach/components/Header";
 
 export default function PobachPrivacyPage() {
 	return (
-		<main style={{ minHeight: "100vh", background: "var(--color-bg)" }}>
+		<main className="min-h-screen flex flex-col">
 			<Header />
-			<div
-				className="mx-auto max-w-[600px] px-4 py-8 text-sm leading-relaxed"
-				style={{ color: "var(--color-text)", fontFamily: "var(--font-sans)" }}
-			>
-				<h2
-					className="text-xl font-bold mb-4"
-					style={{ fontFamily: "var(--font-display)" }}
-				>
-					Палітыка прыватнасці
-				</h2>
-				<p className="mb-4">
-					Мы збіраем мінімальныя дадзеныя для функцыянавання гульні:
-					ідэнтыфікатар сесіі, гісторыю здагадак і статыстыку гульні.
-				</p>
 
-				<h3 className="text-lg font-bold mb-2">Якія дадзеныя збіраюцца</h3>
-				<ul className="list-disc pl-5 mb-4 space-y-1">
-					<li>Унікальны ідэнтыфікатар сесіі (згенераваны выпадкова)</li>
-					<li>Гісторыя здагадак для бягучай гульні</li>
-					<li>Статыстыка перамог і серый</li>
-				</ul>
+			<div className="flex-1 w-full max-w-[600px] mx-auto px-4 py-8 space-y-8 text-sm text-[var(--text-muted)] leading-relaxed">
+				<section>
+					<h2 className="font-serif text-xl font-semibold text-[var(--text)] mb-3">
+						Збор дадзеных
+					</h2>
+					<p className="mb-3">
+						Мы збіраем толькі мінімальныя дадзеныя, неабходныя для працы гульні:
+					</p>
+					<ul className="space-y-1 ml-4 list-disc">
+						<li>Ідэнтыфікатар сесіі (для захавання прагрэсу)</li>
+						<li>Гісторыя вашых спробаў і здагадак</li>
+						<li>Статыстыка гульні (колькасць спробаў, час)</li>
+					</ul>
+					<p className="mt-3">
+						Усе дадзеныя захоўваюцца ананімна і не змяшчаюць асабістай
+						інфармацыі.
+					</p>
+				</section>
 
-				<h3 className="text-lg font-bold mb-2">Як выкарыстоўваюцца дадзеныя</h3>
-				<ul className="list-disc pl-5 mb-4 space-y-1">
-					<li>Захаванне прагрэсу гульні ў браўзэры</li>
-					<li>Паляпшэнне гульнявога досведу</li>
-					<li>Аналітыка наведвання (Vercel Analytics + PostHog)</li>
-				</ul>
+				<section>
+					<h2 className="font-serif text-xl font-semibold text-[var(--text)] mb-3">
+						Мэта выкарыстання
+					</h2>
+					<p className="mb-3">Дадзеныя выкарыстоўваюцца выключна для:</p>
+					<ul className="space-y-1 ml-4 list-disc">
+						<li>Захавання вашага прагрэсу ў гульні</li>
+						<li>Паказу статыстыкі і дасягненняў</li>
+						<li>Аналізу папулярнасці слоў для паляпшэння слоўніка</li>
+						<li>Тэхнічнай падтрымкі працы сайта</li>
+					</ul>
+				</section>
 
-				<h3 className="text-lg font-bold mb-2">Доступ да дадзеных</h3>
-				<p className="mb-4">
-					Усе дадзеныя захоўваюцца лакальна ў вашым браўзэры. Аналітычныя
-					дадзеныя даступныя толькі распрацоўшчыку для аналізу выкарыстання.
-				</p>
+				<section>
+					<h2 className="font-serif text-xl font-semibold text-[var(--text)] mb-3">
+						Аналітыка
+					</h2>
+					<p className="mb-3">
+						Мы выкарыстоўваем Vercel Analytics для збору агульнай статыстыкі
+						наведванняў сайта. Гэта дазваляе нам разумець, як карыстальнікі
+						выкарыстоўваюць гульню, і паляпшаць яе.
+					</p>
+					<p className="mb-3">
+						Vercel Analytics не збірае асабістых дадзеных і не выкарыстоўвае
+						cookies.
+					</p>
+					<p>
+						Мы таксама выкарыстоўваем PostHog для аналізу гульнявой актыўнасці:
+						колькасць спробаў, выкарыстанне падказак, водгукі пра словы. Усе
+						дадзеныя ананімныя і не ўтрымліваюць асабістай інфармацыі.
+					</p>
+				</section>
 
-				<h3 className="text-lg font-bold mb-2">Захаванне дадзеных</h3>
-				<p className="mb-4">
-					Лакальныя дадзеныя захоўваюцца пакуль вы не ачысціце дадзеныя
-					браўзэра. Вы можаце выдаліць іх праз налады браўзэра.
-				</p>
+				<section>
+					<h2 className="font-serif text-xl font-semibold text-[var(--text)] mb-3">
+						Доступ да дадзеных
+					</h2>
+					<p className="mb-3">
+						Вашы дадзеныя не перадаюцца трэцім асобам. Мы не выкарыстоўваем
+						рэкламу і не прадаем інфармацыю знешнім сэрвісам.
+					</p>
+					<p>
+						Толькі адміністратары сайта маюць доступ да тэхнічных дадзеных для
+						падтрымкі працы сістэмы.
+					</p>
+				</section>
 
-				<p style={{ color: "var(--color-text-muted)" }}>
-					Пытанні:{" "}
-					<a
-						href="mailto:support@pobach.app"
-						style={{ color: "var(--color-accent)" }}
-					>
-						support@pobach.app
-					</a>
-				</p>
+				<section>
+					<h2 className="font-serif text-xl font-semibold text-[var(--text)] mb-3">
+						Захаванне дадзеных
+					</h2>
+					<p className="mb-3">
+						Дадзеныя захоўваюцца ананімна без IP-адрасоў або іншай
+						ідэнтыфікуючай інфармацыі. Вы можаце ачысціць свой прагрэс у любы
+						момант праз налады браўзера.
+					</p>
+					<p className="mb-3">
+						Мы не захоўваем IP-адрасы, геалакацыю або іншую тэхнічную інфармацыю
+						пра карыстальнікаў.
+					</p>
+					<p>
+						Мы не збіраем дакладную геалакацыю (GPS). Мы вызначаем толькі
+						прыблізнае месцазнаходжанне (Краіна, Горад) на аснове IP-адраса для
+						агульнай статыстыкі. Самі IP-адрасы мы не захоўваем.
+					</p>
+				</section>
+
+				<section>
+					<h2 className="font-serif text-xl font-semibold text-[var(--text)] mb-3">
+						Кантакт
+					</h2>
+					<p>
+						Калі ў вас ёсць пытанні пра прыватнасць або вы хочаце выдаліць свае
+						дадзеныя, звяжыцеся з намі па пошце{" "}
+						<a
+							href="mailto:support@pobach.app"
+							className="text-[var(--accent)] hover:underline"
+						>
+							support@pobach.app
+						</a>
+						.
+					</p>
+				</section>
 			</div>
-			<Footer />
+
+			<div className="w-full max-w-[600px] mx-auto px-4">
+				<Footer />
+			</div>
 		</main>
 	);
 }

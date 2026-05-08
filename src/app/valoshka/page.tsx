@@ -20,6 +20,9 @@ export default function ValoshkaPage() {
 			className="min-h-screen"
 			style={{
 				background: "var(--color-bg)",
+				backgroundImage:
+					"radial-gradient(ellipse 90% 55% at 50% 10%, var(--color-bg-card) 0%, var(--color-bg) 65%)",
+				backgroundAttachment: "fixed",
 				minHeight: "100lvh",
 				overflowX: "hidden",
 			}}

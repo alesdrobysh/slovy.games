@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-	title: "Побач - Беларуская гульня ў словы",
+	title: {
+		absolute: "Побач - Беларуская гульня ў словы",
+	},
 	description:
 		"Здагадайцеся слова па сэнсавай блізкасці. Штодзённая беларуская слоўная гульня.",
+	openGraph: {
+		title: "Побач - Беларуская гульня ў словы",
+		description:
+			"Здагадайцеся слова па сэнсавай блізкасці. Штодзённая беларуская слоўная гульня.",
+	},
 };
 
 export default function PobachLayout({

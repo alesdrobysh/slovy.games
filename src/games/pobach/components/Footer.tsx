@@ -4,9 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const LINKS = [
-	{ href: "/about", label: "Пра гульню" },
-	{ href: "/privacy", label: "Прыватнасць" },
-	{ href: "/stats", label: "Статыстыка" },
+	{ href: "/pobach/about", label: "Пра гульню" },
+	{ href: "/pobach/privacy", label: "Прыватнасць" },
+	{ href: "/pobach/stats", label: "Статыстыка" },
 ];
 
 export default function Footer() {

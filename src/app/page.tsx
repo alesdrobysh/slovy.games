@@ -1,6 +1,7 @@
 "use client";
 
 import { GameCard } from "@/shared/components/GameCard";
+import { Footer } from "@/shared/components/Footer";
 import { GAMES } from "@/shared/types";
 
 export default function HubPage() {
@@ -34,6 +35,7 @@ export default function HubPage() {
 					))}
 				</div>
 			</div>
+			<Footer />
 		</div>
 	);
 }

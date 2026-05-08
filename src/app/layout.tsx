@@ -72,7 +72,6 @@ export default function RootLayout({
 						<BannerProvider>
 							<ConditionalHubNav />
 							<main className="flex-1">{children}</main>
-							<Footer />
 							<CookieBanner />
 							<Analytics />
 						</BannerProvider>

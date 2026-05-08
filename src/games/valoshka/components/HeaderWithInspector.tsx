@@ -54,7 +54,7 @@ export function HeaderWithInspector({ displayDate, currentDate }: Props) {
 					<div className="flex items-baseline gap-3 flex-1">
 						{/* biome-ignore lint/a11y/useKeyWithClickEvents: hidden dev trigger */}
 						<h1
-							className="text-[32px] tracking-tight"
+							className="text-3xl tracking-tight"
 							style={{
 								fontFamily: "var(--font-eb-garamond), serif",
 								color: "var(--cornflower)",
