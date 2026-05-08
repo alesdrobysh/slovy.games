@@ -12,6 +12,7 @@ interface BottomBannerProps {
 	instant?: boolean;
 	role?: "status" | "alert";
 	focusOnShow?: boolean;
+	themeClass?: string;
 }
 
 export function BottomBanner({
@@ -23,6 +24,7 @@ export function BottomBanner({
 	instant = false,
 	role,
 	focusOnShow = false,
+	themeClass = "",
 }: BottomBannerProps) {
 	const buttonRef = useRef<HTMLButtonElement>(null);
 	const prevFocusRef = useRef<HTMLElement | null>(null);
@@ -51,7 +53,7 @@ export function BottomBanner({
 			role={role}
 			aria-label={ariaLabel}
 			aria-hidden={!isVisible}
-			className={`fixed bottom-0 left-0 right-0 z-40 transition-all duration-300 ${isVisible ? "translate-y-0 opacity-100 visible" : "translate-y-full opacity-0 invisible"}`}
+			className={`${themeClass} fixed bottom-0 left-0 right-0 z-40 transition-all duration-300 ${isVisible ? "translate-y-0 opacity-100 visible" : "translate-y-full opacity-0 invisible"}`}
 		>
 			<div className="w-full bg-[var(--card)] border-t border-[var(--border)] px-5 py-4 flex items-center justify-between gap-4">
 				<p className="text-sm text-[var(--text-muted)] flex-1">{message}</p>

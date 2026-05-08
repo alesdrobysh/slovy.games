@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-	title: "Валошка",
+	title: "Валошка — Слоўная гульня",
 	description:
 		"Складайце словы з 7 прапанаваных літар. Штодзённая беларуская слоўная гульня.",
 };

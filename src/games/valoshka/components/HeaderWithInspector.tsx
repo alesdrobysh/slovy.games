@@ -54,7 +54,7 @@ export function HeaderWithInspector({ displayDate, currentDate }: Props) {
 					<div className="flex items-baseline gap-3 flex-1">
 						{/* biome-ignore lint/a11y/useKeyWithClickEvents: hidden dev trigger */}
 						<h1
-							className="text-3xl tracking-tight"
+							className="text-[32px] tracking-tight"
 							style={{
 								fontFamily: "var(--font-eb-garamond), serif",
 								color: "var(--cornflower)",
@@ -89,7 +89,7 @@ export function HeaderWithInspector({ displayDate, currentDate }: Props) {
 					<div className="flex-1 flex justify-end items-center gap-3">
 						<YesterdayModal currentDate={currentDate} />
 						<a
-							href="/stats"
+							href="/valoshka/stats"
 							style={{
 								color: "var(--text-muted)",
 								textDecoration: "none",

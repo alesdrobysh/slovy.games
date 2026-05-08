@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-	title: "Побач",
+	title: "Побач - Беларуская гульня ў словы",
 	description:
 		"Здагадайцеся слова па сэнсавай блізкасці. Штодзённая беларуская слоўная гульня.",
 };

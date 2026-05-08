@@ -56,7 +56,7 @@ export default function Header({ onHelpClick }: { onHelpClick?: () => void }) {
 						</button>
 					)}
 					<Link
-						href="/stats"
+						href="/pobach/stats"
 						aria-label="Статыстыка"
 						className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[var(--border)] transition-colors text-[var(--text)]"
 					>

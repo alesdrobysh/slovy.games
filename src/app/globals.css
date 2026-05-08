@@ -150,6 +150,16 @@ html.dark .theme-valoshka {
 	--pobach-dark-bg: #1a1410;
 }
 
+.theme-pobach {
+	font-family: var(--font-fira-sans), sans-serif;
+	color: var(--color-text);
+	background-color: var(--color-bg);
+}
+
+.theme-pobach .font-serif {
+	font-family: var(--font-roboto-slab), serif;
+}
+
 html:not(.dark) .theme-pobach {
 	--color-accent: var(--pobach-orange);
 	--color-bg: var(--pobach-bg);
