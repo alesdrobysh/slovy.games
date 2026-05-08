@@ -54,7 +54,7 @@ export function ProgressBar({
 								background: "var(--cornflower-bg-subtle)",
 								color: "var(--cornflower)",
 								border: "1px solid var(--cornflower-border-subtle)",
-								fontFamily: "var(--font-manrope), sans-serif",
+								fontFamily: "var(--font-sans)",
 								cursor: "pointer",
 							}}
 						>
@@ -68,7 +68,7 @@ export function ProgressBar({
 								border: "none",
 								cursor: "pointer",
 								color: copied ? "var(--cornflower)" : "var(--text-muted)",
-								fontFamily: "var(--font-manrope), sans-serif",
+								fontFamily: "var(--font-sans)",
 								fontSize: "12px",
 								fontWeight: "600",
 								padding: "2px 6px",
@@ -83,7 +83,7 @@ export function ProgressBar({
 						className="text-sm font-semibold tabular-nums"
 						style={{
 							color: "var(--text-muted)",
-							fontFamily: "var(--font-manrope), sans-serif",
+							fontFamily: "var(--font-sans)",
 						}}
 					>
 						<span style={{ color: "var(--text)" }}>{score}</span>

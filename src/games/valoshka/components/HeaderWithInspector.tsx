@@ -56,7 +56,7 @@ export function HeaderWithInspector({ displayDate, currentDate }: Props) {
 						<h1
 							className="text-3xl tracking-tight"
 							style={{
-								fontFamily: "var(--font-eb-garamond), serif",
+								fontFamily: "var(--font-display)",
 								color: "var(--cornflower)",
 								letterSpacing: "-0.01em",
 								userSelect: "none",
@@ -68,7 +68,7 @@ export function HeaderWithInspector({ displayDate, currentDate }: Props) {
 						<span
 							className="hidden sm:inline text-sm"
 							style={{
-								fontFamily: "var(--font-manrope), sans-serif",
+								fontFamily: "var(--font-sans)",
 								fontStyle: "italic",
 								color: "var(--text-muted)",
 							}}
@@ -93,7 +93,7 @@ export function HeaderWithInspector({ displayDate, currentDate }: Props) {
 							style={{
 								color: "var(--text-muted)",
 								textDecoration: "none",
-								fontFamily: "var(--font-manrope), sans-serif",
+								fontFamily: "var(--font-sans)",
 								fontSize: "13px",
 								fontWeight: "600",
 							}}

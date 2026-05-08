@@ -1,6 +1,6 @@
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
-import { EB_Garamond, Fira_Sans, Manrope, Roboto_Slab } from "next/font/google";
+import { EB_Garamond, Manrope } from "next/font/google";
 import { BannerProvider } from "@/shared/components/BannerContext";
 import CookieBanner from "@/shared/components/CookieBanner";
 import { ConditionalHubNav } from "@/shared/components/ConditionalHubNav";
@@ -11,7 +11,7 @@ import "./globals.css";
 
 const manrope = Manrope({
 	subsets: ["latin", "cyrillic"],
-	variable: "--font-manrope",
+	variable: "--font-sans",
 	display: "swap",
 });
 
@@ -19,20 +19,7 @@ const ebGaramond = EB_Garamond({
 	subsets: ["latin", "cyrillic"],
 	weight: ["400", "700"],
 	style: ["normal", "italic"],
-	variable: "--font-eb-garamond",
-	display: "swap",
-});
-
-const robotoSlab = Roboto_Slab({
-	subsets: ["latin", "cyrillic"],
-	variable: "--font-roboto-slab",
-	display: "swap",
-});
-
-const firaSans = Fira_Sans({
-	subsets: ["latin", "cyrillic"],
-	weight: ["400", "500", "600", "700"],
-	variable: "--font-fira-sans",
+	variable: "--font-display",
 	display: "swap",
 });
 
@@ -59,7 +46,7 @@ export default function RootLayout({
 		<html
 			lang="be"
 			suppressHydrationWarning
-			className={`${manrope.variable} ${ebGaramond.variable} ${robotoSlab.variable} ${firaSans.variable}`}
+			className={`${manrope.variable} ${ebGaramond.variable}`}
 		>
 			<body className="min-h-screen flex flex-col">
 				<script

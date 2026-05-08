@@ -44,7 +44,7 @@ export function InputDisplay({
 						style={{
 							background: "var(--error)",
 							color: "#fff",
-							fontFamily: "var(--font-manrope), sans-serif",
+							fontFamily: "var(--font-sans)",
 							letterSpacing: "0.01em",
 							zIndex: 100,
 						}}
@@ -58,7 +58,7 @@ export function InputDisplay({
 						style={{
 							background: "var(--cornflower)",
 							color: "#fff",
-							fontFamily: "var(--font-manrope), sans-serif",
+							fontFamily: "var(--font-sans)",
 							letterSpacing: "0.01em",
 							zIndex: 100,
 						}}
@@ -94,7 +94,7 @@ export function InputDisplay({
 								<span
 									key={posKey}
 									style={{
-										fontFamily: "var(--font-eb-garamond), serif",
+										fontFamily: "var(--font-display)",
 										fontSize: "40px",
 										color: isCenter ? "var(--cornflower)" : "var(--text)",
 										fontWeight: "400",

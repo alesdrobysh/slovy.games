@@ -99,7 +99,7 @@ export function YesterdayModal({ currentDate }: YesterdayModalProps) {
 					border: "none",
 					cursor: "pointer",
 					color: "var(--text-muted)",
-					fontFamily: "var(--font-manrope), sans-serif",
+					fontFamily: "var(--font-sans)",
 					fontSize: "13px",
 					fontWeight: "600",
 					padding: 0,
@@ -140,7 +140,7 @@ export function YesterdayModal({ currentDate }: YesterdayModalProps) {
 							maxHeight: "80vh",
 							display: "flex",
 							flexDirection: "column",
-							fontFamily: "var(--font-manrope), sans-serif",
+							fontFamily: "var(--font-sans)",
 						}}
 					>
 						{/* Modal header */}

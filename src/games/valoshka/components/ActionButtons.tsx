@@ -33,7 +33,7 @@ const btnBase: React.CSSProperties = {
 	background: "transparent",
 	color: "var(--text-muted)",
 	borderRadius: "9999px",
-	fontFamily: "var(--font-manrope), sans-serif",
+	fontFamily: "var(--font-sans)",
 	fontSize: "14px",
 	fontWeight: "600",
 	cursor: "pointer",

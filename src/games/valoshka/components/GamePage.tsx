@@ -305,7 +305,7 @@ export function GamePage({ puzzle }: GamePageProps) {
 	return (
 		<div
 			className="mx-auto max-w-5xl px-4 select-none"
-			style={{ fontFamily: "var(--font-manrope), sans-serif" }}
+			style={{ fontFamily: "var(--font-sans)" }}
 		>
 			{/* Mobile: collapsible words toggle */}
 			<div
@@ -320,7 +320,7 @@ export function GamePage({ puzzle }: GamePageProps) {
 						border: "none",
 						cursor: "pointer",
 						color: "var(--text-muted)",
-						fontFamily: "var(--font-manrope), sans-serif",
+						fontFamily: "var(--font-sans)",
 						fontSize: "14px",
 						fontWeight: "600",
 						padding: "4px 0",
@@ -431,7 +431,7 @@ export function GamePage({ puzzle }: GamePageProps) {
 								border: "none",
 								cursor: "pointer",
 								color: "var(--text-muted)",
-								fontFamily: "var(--font-manrope), sans-serif",
+								fontFamily: "var(--font-sans)",
 								fontSize: "13px",
 								fontWeight: "500",
 								padding: "4px 8px",

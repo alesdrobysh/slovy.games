@@ -56,7 +56,7 @@ export function StatsPage() {
 					<h1
 						className="text-3xl"
 						style={{
-							fontFamily: "var(--font-eb-garamond), serif",
+							fontFamily: "var(--font-display)",
 							color: "var(--cornflower)",
 						}}
 					>
@@ -87,7 +87,7 @@ export function StatsPage() {
 							<span
 								className="text-3xl font-bold"
 								style={{
-									fontFamily: "var(--font-eb-garamond), serif",
+									fontFamily: "var(--font-display)",
 									color: "var(--text)",
 								}}
 							>

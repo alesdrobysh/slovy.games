@@ -136,7 +136,7 @@ export function PetalCell({
 				textAnchor="middle"
 				dominantBaseline="central"
 				style={{
-					fontFamily: "Manrope, 'Helvetica Neue', sans-serif",
+					fontFamily: "var(--font-sans)",
 					fontSize: isCenter ? `${r * 0.52}px` : "22px",
 					fontWeight: "700",
 					fill: isCenter

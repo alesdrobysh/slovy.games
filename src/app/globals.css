@@ -65,6 +65,9 @@ html.dark {
 	--text-muted: var(--color-neutral-text-muted);
 	--border: var(--color-neutral-border);
 	--card: var(--color-neutral-bg-card);
+
+	--font-display: "EB Garamond", serif;
+	--font-sans: "Manrope", sans-serif;
 }
 
 /* === Valoshka theme overrides === */
@@ -151,13 +154,13 @@ html.dark .theme-valoshka {
 }
 
 .theme-pobach {
-	font-family: var(--font-fira-sans), sans-serif;
+	font-family: var(--font-sans), sans-serif;
 	color: var(--color-text);
 	background-color: var(--color-bg);
 }
 
 .theme-pobach .font-serif {
-	font-family: var(--font-roboto-slab), serif;
+	font-family: var(--font-display), serif;
 }
 
 html:not(.dark) .theme-pobach {
@@ -172,7 +175,7 @@ html:not(.dark) .theme-pobach {
 	--color-accent-border: rgba(229, 142, 63, 0.22);
 	--color-accent-light: #f0a860;
 	--color-accent-dark: #c07030;
-	--font-display: "Roboto Slab", serif;
+	--font-display: "EB Garamond", serif;
 
 	--accent: var(--pobach-orange);
 	--bg: var(--pobach-bg);
@@ -239,7 +242,7 @@ html.dark .theme-pobach {
 body {
 	background: var(--color-bg);
 	color: var(--color-text);
-	font-family: var(--font-sans), "Helvetica Neue", sans-serif;
+	font-family: var(--font-sans), sans-serif;
 	-webkit-font-smoothing: antialiased;
 	transition:
 		background 0.25s ease,

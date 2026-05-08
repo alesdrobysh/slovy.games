@@ -34,7 +34,7 @@ export function FoundWordsList({
 					className="text-sm font-semibold"
 					style={{
 						color: "var(--text)",
-						fontFamily: "var(--font-manrope), sans-serif",
+						fontFamily: "var(--font-sans)",
 					}}
 				>
 					{count === 0
@@ -49,7 +49,7 @@ export function FoundWordsList({
 						style={{
 							background: "var(--cornflower)",
 							color: "var(--cell-letter-center)",
-							fontFamily: "var(--font-manrope), sans-serif",
+							fontFamily: "var(--font-sans)",
 						}}
 					>
 						{count}
@@ -64,7 +64,7 @@ export function FoundWordsList({
 						className="text-sm italic"
 						style={{
 							color: "var(--text-muted)",
-							fontFamily: "var(--font-manrope), sans-serif",
+							fontFamily: "var(--font-sans)",
 						}}
 					>
 						Пачніце ўводзіць словы...
@@ -79,7 +79,7 @@ export function FoundWordsList({
 									key={word}
 									className={`${isNew ? "word-pop" : ""} group`}
 									style={{
-										fontFamily: "var(--font-manrope), sans-serif",
+										fontFamily: "var(--font-sans)",
 										fontSize: "14px",
 										fontWeight: isPangram ? "700" : "400",
 										color: isPangram ? "var(--cornflower)" : "var(--text)",

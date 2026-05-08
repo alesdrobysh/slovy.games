@@ -75,7 +75,7 @@ export function RankingModal({
 					maxHeight: "85vh",
 					display: "flex",
 					flexDirection: "column",
-					fontFamily: "var(--font-manrope), sans-serif",
+					fontFamily: "var(--font-sans)",
 					overflowY: "auto",
 				}}
 			>
@@ -93,7 +93,7 @@ export function RankingModal({
 						<h2
 							style={{
 								margin: 0,
-								fontFamily: "var(--font-eb-garamond), serif",
+								fontFamily: "var(--font-display)",
 								fontSize: "26px",
 								fontWeight: "700",
 								color: "var(--text)",
