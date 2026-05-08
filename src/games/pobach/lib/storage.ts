@@ -287,11 +287,21 @@ export function getHistory(): HistoryRecord[] {
 	}
 }
 
+function generateUUID(): string {
+	if (typeof crypto !== "undefined" && crypto.randomUUID) {
+		return crypto.randomUUID();
+	}
+	return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+		const r = (Math.random() * 16) | 0;
+		return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
+	});
+}
+
 // Get or create session ID
 export function getSessionId(): string {
 	let sessionId = localStorage.getItem(SESSION_KEY);
 	if (!sessionId) {
-		sessionId = crypto.randomUUID();
+		sessionId = generateUUID();
 		localStorage.setItem(SESSION_KEY, sessionId);
 	}
 	return sessionId;
