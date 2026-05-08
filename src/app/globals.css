@@ -302,7 +302,7 @@ body {
 }
 
 .word-pop {
-	animation: word-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+	animation: word-pop 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 @keyframes petal-rise {
@@ -349,7 +349,7 @@ body {
 .cell-shuffling {
 	transform-box: fill-box;
 	transform-origin: center;
-	animation: cell-shuffle 0.48s cubic-bezier(0.34, 1.56, 0.64, 1);
+	animation: cell-shuffle 0.48s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes rank-up {
@@ -379,22 +379,6 @@ body {
 
 .cursor-blink {
 	animation: cursor-blink 1s step-start infinite;
-}
-
-@keyframes blobFloat {
-	0%,
-	100% {
-		transform: translate(0, 0) scale(1);
-	}
-	25% {
-		transform: translate(30px, -40px) scale(1.05);
-	}
-	50% {
-		transform: translate(-20px, -80px) scale(0.95);
-	}
-	75% {
-		transform: translate(40px, -20px) scale(1.02);
-	}
 }
 
 .btn-primary {

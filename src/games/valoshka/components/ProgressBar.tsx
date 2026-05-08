@@ -111,12 +111,12 @@ export function ProgressBar({
 						style={{ height: "3px", background: "var(--border)" }}
 					>
 						<div
-							className="h-full rounded-full"
+							className="h-full rounded-full origin-left"
 							style={{
-								width: `${pct}%`,
+								transform: `scaleX(${pct / 100})`,
 								background:
 									"linear-gradient(90deg, var(--cornflower-dark), var(--cornflower-light))",
-								transition: "width 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+								transition: "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
 							}}
 						/>
 					</div>

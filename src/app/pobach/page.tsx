@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import AuroraBackground from "@/games/pobach/components/AuroraBackground";
 import FinishCard from "@/games/pobach/components/FinishCard";
 import Footer from "@/games/pobach/components/Footer";
 import GiveUpModal from "@/games/pobach/components/GiveUpModal";
@@ -42,7 +41,6 @@ export default function PobachPage() {
 
 	return (
 		<main className="min-h-screen flex flex-col">
-			<AuroraBackground />
 			<Header onHelpClick={() => setShowHelp(true)} />
 
 			<div className="flex-1 w-full max-w-[600px] mx-auto px-4 pb-20 pt-8 gap-y-6 flex flex-col">
