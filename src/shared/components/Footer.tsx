@@ -8,6 +8,7 @@ export function Footer() {
 
 	const isPobach = pathname?.startsWith("/pobach");
 	const isValoshka = pathname?.startsWith("/valoshka");
+	const isHub = pathname === "/";
 	const themeClass = isPobach ? "theme-pobach" : isValoshka ? "theme-valoshka" : "";
 
 	if (isPobach) {
@@ -22,13 +23,13 @@ export function Footer() {
 				<p className="mb-3">Зроблена з ❤️ да роднай мовы</p>
 				<nav className="flex justify-center flex-wrap">
 					<span className="flex items-center">
-						<Link href="/pobach/about" style={{ color: "var(--color-text-muted)", textDecoration: "none" }}>
+						<Link href="/about" style={{ color: "var(--color-text-muted)", textDecoration: "none" }}>
 							Пра гульню
 						</Link>
 					</span>
 					<span className="flex items-center">
 						<span className="mx-2">/</span>
-						<Link href="/pobach/privacy" style={{ color: "var(--color-text-muted)", textDecoration: "none" }}>
+						<Link href="/privacy" style={{ color: "var(--color-text-muted)", textDecoration: "none" }}>
 							Прыватнасць
 						</Link>
 					</span>
@@ -53,6 +54,22 @@ export function Footer() {
 				<span style={{ color: "var(--color-text-muted)" }}>
 					Зроблена з ❤️ да роднай мовы
 				</span>
+				{isHub && (
+					<nav className="flex items-center gap-3">
+						<Link
+							href="/about"
+							style={{ color: "var(--color-text-muted)", textDecoration: "none" }}
+						>
+							Пра гульні
+						</Link>
+						<Link
+							href="/privacy"
+							style={{ color: "var(--color-text-muted)", textDecoration: "none" }}
+						>
+							Прыватнасць
+						</Link>
+					</nav>
+				)}
 			</div>
 		</footer>
 	);
