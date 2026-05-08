@@ -352,6 +352,13 @@ body {
 	animation: cell-shuffle 0.48s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Focus indicator for game cells */
+g[tabindex="0"]:focus-visible {
+	outline: 3px solid var(--cornflower);
+	outline-offset: 3px;
+	border-radius: 6px;
+}
+
 @keyframes rank-up {
 	0%,
 	100% {
@@ -379,6 +386,25 @@ body {
 
 .cursor-blink {
 	animation: cursor-blink 1s step-start infinite;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+	.shake,
+	.word-pop,
+	.petal-rise,
+	.cell-shuffling,
+	.rank-up,
+	.cursor-blink {
+		animation: none !important;
+	}
+	.shake {
+		opacity: 1;
+	}
+	.word-pop {
+		opacity: 1;
+		transform: none;
+	}
 }
 
 .btn-primary {

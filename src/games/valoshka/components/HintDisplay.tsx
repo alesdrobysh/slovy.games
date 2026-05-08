@@ -29,7 +29,7 @@ export function HintDisplay({ hint, onCancel }: HintDisplayProps) {
 			}}
 		>
 			<div className="flex items-baseline gap-1.5 min-w-0 flex-1">
-				<div className="flex items-baseline gap-[2px]">
+				<div className="flex items-baseline gap-0.5">
 					{chars.map((c, idx) =>
 						c.revealed || c.isLast ? (
 							<span

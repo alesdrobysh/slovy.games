@@ -92,6 +92,7 @@ export function PetalCell({
 		// biome-ignore lint/a11y/noStaticElementInteractions: SVG cell uses pointer events for game input
 		<g
 			ref={groupRef}
+			tabIndex={0}
 			onKeyDown={(e) => e.key === "Enter" && onClick()}
 			onPointerDown={handlePointerDown}
 			onPointerUp={handlePointerUp}
