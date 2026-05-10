@@ -25,7 +25,7 @@ async function shareText(
 export function useShare(text: string) {
 	const [isSharing, setIsSharing] = useState(false);
 	const [showToast, setShowToast] = useState(false);
-	const timerRef = useRef<ReturnType<typeof setTimeout>>();
+	const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
 	useEffect(() => {
 		return () => {
