@@ -7,11 +7,9 @@ import { render, screen } from "@testing-library/react";
 import FinishCard from "@/games/pobach/components/FinishCard";
 
 // Mock the dependencies
-jest.mock("@/games/pobach/components/CountdownTimer", () => {
-	return function MockCountdownTimer() {
-		return <div data-testid="countdown-timer">Next game in: 23:45:12</div>;
-	};
-});
+jest.mock("@/shared/hooks/useCountdown", () => ({
+	useCountdown: () => "23:45:12",
+}));
 
 jest.mock("@/games/pobach/components/ShareButton", () => {
 	return function MockShareButton({
@@ -75,7 +73,7 @@ describe("FinishCard Component", () => {
 			expect(screen.getByTestId("share-button")).toBeInTheDocument();
 
 			// Check countdown timer is still present
-			expect(screen.getByTestId("countdown-timer")).toBeInTheDocument();
+			expect(screen.getByText("23:45:12")).toBeInTheDocument();
 		});
 
 		it("should not show target word when not provided", () => {
@@ -113,7 +111,7 @@ describe("FinishCard Component", () => {
 			expect(screen.getByTestId("share-button")).toBeInTheDocument();
 
 			// Check countdown timer is present
-			expect(screen.getByTestId("countdown-timer")).toBeInTheDocument();
+			expect(screen.getByText("23:45:12")).toBeInTheDocument();
 		});
 
 		it("should not show target word in win mode", () => {

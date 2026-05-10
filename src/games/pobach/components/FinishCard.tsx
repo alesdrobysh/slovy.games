@@ -10,7 +10,7 @@ import {
 	pluralizeHintsInstrumental,
 	pluralizeStreak,
 } from "@/games/pobach/lib/utils";
-import CountdownTimer from "./CountdownTimer";
+import { useCountdown } from "@/shared/hooks/useCountdown";
 import DictionaryLink from "./DictionaryLink";
 import ShareButton from "./ShareButton";
 import TopWordsList from "./TopWordsList";
@@ -30,6 +30,7 @@ export default function FinishCard({
 	mode,
 	targetWord,
 }: FinishCardProps) {
+	const countdown = useCountdown();
 	const attempts = guesses.length;
 	const hintsCount = guesses.filter((g) => g.isHint).length;
 	const streak = mode === "win" ? getStats().currentStreak : 0;
@@ -124,7 +125,7 @@ export default function FinishCard({
 						<div className="flex items-center gap-2">
 							<span>Наступнае слова праз</span>
 							<span className="font-mono text-[var(--text)]">
-								<CountdownTimer />
+								<span className="font-mono tabular-nums">{countdown}</span>
 							</span>
 						</div>
 					)}
