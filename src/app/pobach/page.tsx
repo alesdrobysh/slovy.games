@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import FinishCard from "@/games/pobach/components/FinishCard";
-import Footer from "@/games/pobach/components/Footer";
+import { Footer } from "@/shared/components/Footer";
 import GiveUpModal from "@/games/pobach/components/GiveUpModal";
 import GuessCard from "@/games/pobach/components/GuessCard";
 import GuessInput from "@/games/pobach/components/GuessInput";

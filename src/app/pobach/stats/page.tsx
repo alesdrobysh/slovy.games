@@ -2,7 +2,7 @@
 
 import { Share2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import Footer from "@/games/pobach/components/Footer";
+import { Footer } from "@/shared/components/Footer";
 import Header from "@/games/pobach/components/Header";
 import type { HistoryRecord } from "@/games/pobach/core/entities/game";
 import { formatRelativeDate } from "@/games/pobach/lib/stats";
