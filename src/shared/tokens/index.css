@@ -46,7 +46,7 @@
   --sly-orange-dark-border:     #3a3028;
 
   /* --- Green (Success / Rank) --- */
-  --sly-green-400: #84cc16;
+  --sly-lime-400: #84cc16;
   --sly-green-500: #16a34a;
 
   /* --- Info blue --- */
@@ -145,8 +145,6 @@ html.dark {
 .theme-pobach {
   --sly-pobach-orange: var(--sly-orange-500);
   --sly-pobach-bg:    #f7f3ed;
-}
-.theme-pobach {
   --sly-accent:     var(--sly-orange-500);
   --sly-accent-subtle:  rgba(229, 142, 63, 0.1);
   --sly-accent-border:   rgba(229, 142, 63, 0.22);
@@ -214,7 +212,7 @@ html.dark .theme-valoshka {
 html:not(.dark) .theme-pobach {
   --sly-rank-1:       var(--sly-green-500);
   --sly-rank-10:      var(--sly-green-500);
-  --sly-rank-100:     var(--sly-green-400);
+  --sly-rank-100:     var(--sly-lime-400);
   --sly-rank-1000:    var(--sly-orange-500);
   --sly-rank-default: var(--sly-info-500);
   --sly-attempts-base:  var(--sly-orange-500);
@@ -226,17 +224,6 @@ html:not(.dark) .theme-pobach {
   --sly-card-override:  #fff;
 }
 html.dark .theme-pobach {
-  --sly-rank-1:       var(--sly-green-500);
-  --sly-rank-10:      var(--sly-green-500);
-  --sly-rank-100:     var(--sly-green-400);
-  --sly-rank-1000:    var(--sly-orange-500);
-  --sly-rank-default: var(--sly-info-500);
-  --sly-attempts-base:  var(--sly-orange-500);
-  --sly-attempts-1:     color-mix(in oklab, var(--sly-attempts-base) 100%, black 0%);
-  --sly-attempts-10:    color-mix(in oklab, var(--sly-attempts-base) 85%, black 15%);
-  --sly-attempts-50:    color-mix(in oklab, var(--sly-attempts-base) 70%, black 30%);
-  --sly-attempts-100:   color-mix(in oklab, var(--sly-attempts-base) 55%, black 45%);
-  --sly-attempts-many:  color-mix(in oklab, var(--sly-attempts-base) 40%, black 60%);
   --sly-card-override:  var(--sly-bg-card);
 }
 
