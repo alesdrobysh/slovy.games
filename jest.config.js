@@ -8,5 +8,5 @@ module.exports = {
 		"\\.(css|less|scss|sass)$": "identity-obj-proxy",
 		"\\.(jpg|jpeg|png|gif|webp|svg)$": "<rootDir>/src/__mocks__/fileMock.ts",
 	},
-	setupFilesAfterSetup: ["<rootDir>/src/setupTests.ts"],
+	setupFilesAfterEnv: ["<rootDir>/src/setupTests.ts"],
 };
