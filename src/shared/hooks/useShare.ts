@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 async function shareText(
 	text: string,
@@ -25,6 +25,13 @@ async function shareText(
 export function useShare(text: string) {
 	const [isSharing, setIsSharing] = useState(false);
 	const [showToast, setShowToast] = useState(false);
+	const timerRef = useRef<ReturnType<typeof setTimeout>>();
+
+	useEffect(() => {
+		return () => {
+			if (timerRef.current) clearTimeout(timerRef.current);
+		};
+	}, []);
 
 	const doShare = useCallback(async () => {
 		if (isSharing) return;
@@ -34,7 +41,7 @@ export function useShare(text: string) {
 
 		if (result === "clipboard") {
 			setShowToast(true);
-			setTimeout(() => setShowToast(false), 2000);
+			timerRef.current = setTimeout(() => setShowToast(false), 2000);
 		}
 
 		setIsSharing(false);
