@@ -4,13 +4,13 @@ export default function AboutPage() {
 	return (
 		<div
 			className="min-h-screen flex flex-col"
-			style={{ background: "var(--color-bg)" }}
+			style={{ background: "var(--sly-bg)" }}
 		>
 			<div className="mx-auto w-full max-w-[600px] px-4 py-8 flex-1">
 				<Link
 					href="/"
 					className="inline-flex items-center gap-1 text-sm mb-6 hover:opacity-70 transition-opacity"
-					style={{ color: "var(--color-text-muted)" }}
+					style={{ color: "var(--sly-text-muted)" }}
 				>
 					← Назад
 				</Link>
@@ -18,8 +18,8 @@ export default function AboutPage() {
 				<h1
 					className="text-2xl font-bold mb-8"
 					style={{
-						fontFamily: "var(--font-display)",
-						color: "var(--color-text)",
+						fontFamily: "var(--sly-font-display)",
+						color: "var(--sly-text)",
 					}}
 				>
 					Пра гульні
@@ -27,12 +27,12 @@ export default function AboutPage() {
 
 				<div
 					className="space-y-8 text-sm leading-relaxed"
-					style={{ color: "var(--color-text-muted)" }}
+					style={{ color: "var(--sly-text-muted)" }}
 				>
 					<section>
 						<h2
 							className="font-serif text-xl font-semibold mb-3"
-							style={{ color: "var(--color-text)" }}
+							style={{ color: "var(--sly-text)" }}
 						>
 							Што такое Словы?
 						</h2>
@@ -56,7 +56,7 @@ export default function AboutPage() {
 					<section>
 						<h2
 							className="font-serif text-xl font-semibold mb-3"
-							style={{ color: "var(--color-text)" }}
+							style={{ color: "var(--sly-text)" }}
 						>
 							Як гэта працуе?
 						</h2>
@@ -70,7 +70,7 @@ export default function AboutPage() {
 					<section>
 						<h2
 							className="font-serif text-xl font-semibold mb-3"
-							style={{ color: "var(--color-text)" }}
+							style={{ color: "var(--sly-text)" }}
 						>
 							Стваральнік
 						</h2>
@@ -82,7 +82,7 @@ export default function AboutPage() {
 								target="_blank"
 								rel="noopener noreferrer"
 								className="hover:underline"
-								style={{ color: "var(--color-accent)" }}
+								style={{ color: "var(--sly-accent)" }}
 							>
 								Contexto
 							</a>{" "}
@@ -92,7 +92,7 @@ export default function AboutPage() {
 								target="_blank"
 								rel="noopener noreferrer"
 								className="hover:underline"
-								style={{ color: "var(--color-accent)" }}
+								style={{ color: "var(--sly-accent)" }}
 							>
 								Semantle
 							</a>
@@ -104,7 +104,7 @@ export default function AboutPage() {
 								target="_blank"
 								rel="noopener noreferrer"
 								className="hover:underline"
-								style={{ color: "var(--color-accent)" }}
+								style={{ color: "var(--sly-accent)" }}
 							>
 								alesdrobysh
 							</a>
@@ -117,7 +117,7 @@ export default function AboutPage() {
 									target="_blank"
 									rel="noopener noreferrer"
 									className="hover:underline"
-									style={{ color: "var(--color-accent)" }}
+									style={{ color: "var(--sly-accent)" }}
 								>
 									Belarus/GrammarDB
 								</a>
@@ -128,7 +128,7 @@ export default function AboutPage() {
 									target="_blank"
 									rel="noopener noreferrer"
 									className="hover:underline"
-									style={{ color: "var(--color-accent)" }}
+									style={{ color: "var(--sly-accent)" }}
 								>
 									verbumby/slouniki
 								</a>
@@ -139,7 +139,7 @@ export default function AboutPage() {
 					<section>
 						<h2
 							className="font-serif text-xl font-semibold mb-3"
-							style={{ color: "var(--color-text)" }}
+							style={{ color: "var(--sly-text)" }}
 						>
 							Кантакт
 						</h2>
@@ -148,7 +148,7 @@ export default function AboutPage() {
 							<a
 								href="mailto:support@pobach.app"
 								className="hover:underline"
-								style={{ color: "var(--color-accent)" }}
+								style={{ color: "var(--sly-accent)" }}
 							>
 								support@pobach.app
 							</a>

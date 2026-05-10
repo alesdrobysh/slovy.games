@@ -16,7 +16,7 @@ export default function HubPage() {
 	const games = GAMES.filter((g) => g.enabled);
 
 	return (
-		<div className="min-h-screen" style={{ background: "var(--color-bg)" }}>
+		<div className="min-h-screen" style={{ background: "var(--sly-bg)" }}>
 			<div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-16">
 				{/* ── Hero: date + streak ── */}
 				<div className="mb-8 sm:mb-12 text-center">
@@ -24,8 +24,8 @@ export default function HubPage() {
 						<p
 							className="text-xs sm:text-sm font-semibold tracking-wider uppercase mb-4"
 							style={{
-								color: "var(--color-text-muted)",
-								fontFamily: "var(--font-sans)",
+								color: "var(--sly-text-muted)",
+								fontFamily: "var(--sly-font-sans)",
 							}}
 						>
 							{hub.todayLabel}
@@ -35,8 +35,8 @@ export default function HubPage() {
 					<h1
 						className="text-4xl sm:text-5xl font-bold mb-4 tracking-tight"
 						style={{
-							fontFamily: "var(--font-display)",
-							color: "var(--color-accent)",
+							fontFamily: "var(--sly-font-display)",
+							color: "var(--sly-accent)",
 						}}
 					>
 						Словы
@@ -45,8 +45,8 @@ export default function HubPage() {
 					<p
 						className="text-sm sm:text-base max-w-md mx-auto mb-4"
 						style={{
-							color: "var(--color-text-muted)",
-							fontFamily: "var(--font-sans)",
+							color: "var(--sly-text-muted)",
+							fontFamily: "var(--sly-font-sans)",
 						}}
 					>
 						Штодзённыя беларускія слоўныя гульні
@@ -57,16 +57,16 @@ export default function HubPage() {
 						<div
 							className="inline-flex items-center gap-3 text-xs sm:text-sm rounded-full px-4 py-1.5"
 							style={{
-								background: "var(--color-bg-surface)",
-								color: "var(--color-text-muted)",
-								fontFamily: "var(--font-sans)",
+								background: "var(--sly-bg-surface)",
+								color: "var(--sly-text-muted)",
+								fontFamily: "var(--sly-font-sans)",
 							}}
 						>
 							{hub.currentStreak > 0 ? (
 								<>
 									<span
 										style={{
-											color: "var(--color-accent)",
+											color: "var(--sly-accent)",
 											fontWeight: 700,
 										}}
 									>
@@ -102,7 +102,7 @@ export default function HubPage() {
 					{games.length === 0 && (
 						<p
 							className="text-center text-sm"
-							style={{ color: "var(--color-text-muted)" }}
+							style={{ color: "var(--sly-text-muted)" }}
 						>
 							Хутка тут з’явяцца новыя гульні.
 						</p>

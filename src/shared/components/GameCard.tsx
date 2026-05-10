@@ -25,8 +25,8 @@ export function GameCard({
 			href={game.path}
 			className="group relative block no-underline rounded-2xl border transition-all duration-200 hover:scale-[1.02] hover:shadow-lg"
 			style={{
-				background: "var(--color-bg-card)",
-				borderColor: "var(--color-border)",
+				background: "var(--sly-bg-card)",
+				borderColor: "var(--sly-border)",
 			}}
 		>
 			<div className="p-6 sm:p-8">
@@ -46,9 +46,9 @@ export function GameCard({
 						<span
 							className="text-xs font-bold uppercase tracking-wider rounded-full px-2.5 py-1"
 							style={{
-								background: "var(--color-accent-subtle)",
-								color: "var(--color-accent)",
-								border: "1px solid var(--color-accent-border)",
+								background: "var(--sly-accent-subtle)",
+								color: "var(--sly-accent)",
+								border: "1px solid var(--sly-accent-border)",
 							}}
 						>
 							✓ Сёння
@@ -59,7 +59,7 @@ export function GameCard({
 				<h2
 					className="text-2xl font-bold mb-2"
 					style={{
-						fontFamily: "var(--font-display)",
+						fontFamily: "var(--sly-font-display)",
 						color: game.color,
 					}}
 				>
@@ -68,8 +68,8 @@ export function GameCard({
 				<p
 					className="text-sm leading-relaxed"
 					style={{
-						color: "var(--color-text-muted)",
-						fontFamily: "var(--font-sans)",
+						color: "var(--sly-text-muted)",
+						fontFamily: "var(--sly-font-sans)",
 					}}
 				>
 					{game.descriptionBel}
@@ -78,7 +78,7 @@ export function GameCard({
 				{progressText && (
 					<div
 						className="mt-3 text-sm font-medium"
-						style={{ color: "var(--color-text-muted)" }}
+						style={{ color: "var(--sly-text-muted)" }}
 					>
 						{progressText}
 					</div>
@@ -88,8 +88,8 @@ export function GameCard({
 					<span
 						className="inline-flex items-center gap-1 text-sm font-semibold rounded-full px-4 py-2 transition-colors"
 						style={{
-							background: isCompleted ? "var(--color-bg-surface)" : game.color,
-							color: isCompleted ? "var(--color-text)" : "#fff",
+							background: isCompleted ? "var(--sly-bg-surface)" : game.color,
+							color: isCompleted ? "var(--sly-text)" : "#fff",
 						}}
 					>
 						{ctaLabel}

@@ -17,8 +17,8 @@ export function HubNav() {
 		<nav
 			className="w-full border-b"
 			style={{
-				background: "var(--color-bg)",
-				borderColor: "var(--color-border)",
+				background: "var(--sly-bg)",
+				borderColor: "var(--sly-border)",
 			}}
 		>
 			<div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3 sm:px-6">
@@ -27,8 +27,8 @@ export function HubNav() {
 						href="/"
 						className="text-xl font-bold no-underline tracking-tight"
 						style={{
-							fontFamily: "var(--font-display)",
-							color: isHub ? "var(--color-accent)" : "var(--color-text-muted)",
+							fontFamily: "var(--sly-font-display)",
+							color: isHub ? "var(--sly-accent)" : "var(--sly-text-muted)",
 						}}
 					>
 						Словы
@@ -42,10 +42,10 @@ export function HubNav() {
 								href={link.href}
 								className="text-sm font-semibold no-underline transition-colors"
 								style={{
-									fontFamily: "var(--font-sans)",
+									fontFamily: "var(--sly-font-sans)",
 									color: isActive
-										? "var(--color-accent)"
-										: "var(--color-text-muted)",
+										? "var(--sly-accent)"
+										: "var(--sly-text-muted)",
 								}}
 							>
 								{link.label}

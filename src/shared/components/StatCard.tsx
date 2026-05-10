@@ -25,7 +25,7 @@ export function StatCard({ label, value }: StatCardProps) {
 			<span
 				className="text-3xl font-bold"
 				style={{
-					fontFamily: "var(--font-display)",
+					fontFamily: "var(--sly-font-display)",
 					color: "var(--text)",
 				}}
 			>

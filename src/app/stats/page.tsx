@@ -65,21 +65,21 @@ function StatCard({ label, value }: { label: string; value: number | string }) {
 		<div
 			className="flex flex-col gap-1 p-4 rounded-xl"
 			style={{
-				background: "var(--color-bg-card)",
-				border: "1px solid var(--color-border)",
+				background: "var(--sly-bg-card)",
+				border: "1px solid var(--sly-border)",
 			}}
 		>
 			<span
 				className="text-xs font-semibold uppercase tracking-wider"
-				style={{ color: "var(--color-text-muted)" }}
+				style={{ color: "var(--sly-text-muted)" }}
 			>
 				{label}
 			</span>
 			<span
 				className="text-2xl font-bold"
 				style={{
-					fontFamily: "var(--font-display)",
-					color: "var(--color-text)",
+					fontFamily: "var(--sly-font-display)",
+					color: "var(--sly-text)",
 				}}
 			>
 				{value}
@@ -102,13 +102,13 @@ export default function CombinedStatsPage() {
 	}, []);
 
 	return (
-		<div style={{ minHeight: "100vh", background: "var(--color-bg)" }}>
+		<div style={{ minHeight: "100vh", background: "var(--sly-bg)" }}>
 			<div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-12">
 				<h1
 					className="text-3xl font-bold mb-8"
 					style={{
-						fontFamily: "var(--font-display)",
-						color: "var(--color-text)",
+						fontFamily: "var(--sly-font-display)",
+						color: "var(--sly-text)",
 					}}
 				>
 					Статыстыка
@@ -120,14 +120,14 @@ export default function CombinedStatsPage() {
 							className="text-xl font-bold mb-4"
 							style={{
 								color: GAMES[0].color,
-								fontFamily: "var(--font-display)",
+								fontFamily: "var(--sly-font-display)",
 							}}
 						>
 							{GAMES[0].nameBel}{" "}
 							<Link
 								href="/valoshka/stats"
 								className="text-xs font-normal"
-								style={{ color: "var(--color-text-muted)" }}
+								style={{ color: "var(--sly-text-muted)" }}
 							>
 								падрабязней →
 							</Link>
@@ -159,14 +159,14 @@ export default function CombinedStatsPage() {
 							className="text-xl font-bold mb-4"
 							style={{
 								color: GAMES[1].color,
-								fontFamily: "var(--font-display)",
+								fontFamily: "var(--sly-font-display)",
 							}}
 						>
 							{GAMES[1].nameBel}{" "}
 							<Link
 								href="/pobach/stats"
 								className="text-xs font-normal"
-								style={{ color: "var(--color-text-muted)" }}
+								style={{ color: "var(--sly-text-muted)" }}
 							>
 								падрабязней →
 							</Link>
@@ -190,7 +190,7 @@ export default function CombinedStatsPage() {
 				)}
 
 				{!stats.valoshka && !stats.pobach && (
-					<p style={{ color: "var(--color-text-muted)" }}>
+					<p style={{ color: "var(--sly-text-muted)" }}>
 						Няма дадзеных. Згуляйце некалькі гульняў, каб убачыць статыстыку.
 					</p>
 				)}
