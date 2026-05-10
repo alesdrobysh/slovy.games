@@ -1,3 +1,4 @@
+@import "../shared/tokens/index.css";
 @import "tailwindcss";
 
 /* === Shared neutral theme (light) === */
