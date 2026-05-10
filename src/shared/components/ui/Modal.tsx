@@ -29,13 +29,11 @@ export function Modal({
 	}, [isOpen, onClose]);
 
 	useEffect(() => {
-		if (isOpen) {
-			document.body.style.overflow = "hidden";
-		} else {
-			document.body.style.overflow = "";
-		}
+		if (!isOpen) return;
+		const prev = document.body.style.overflow;
+		document.body.style.overflow = "hidden";
 		return () => {
-			document.body.style.overflow = "";
+			document.body.style.overflow = prev;
 		};
 	}, [isOpen]);
 
@@ -49,9 +47,6 @@ export function Modal({
 		>
 			<div
 				onClick={(e) => e.stopPropagation()}
-				onKeyDown={(e) => {
-					if (e.key === "Escape") onClose();
-				}}
 				role="dialog"
 				aria-modal="true"
 				aria-labelledby={title ? "modal-title" : undefined}
@@ -62,7 +57,7 @@ export function Modal({
 					<div className="flex items-center justify-between px-6 py-4 border-b border-[var(--sly-border)]">
 						<h2
 							id="modal-title"
-							className="text-[var(--sly-font-display)] text-xl font-semibold text-[var(--sly-text)]"
+							className="[font-family:var(--sly-font-display)] text-xl font-semibold text-[var(--sly-text)]"
 						>
 							{title}
 						</h2>
