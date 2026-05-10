@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Modal } from "@/shared/components/ui/Modal";
+import { useModal } from "@/shared/hooks/useModal";
 import {
 	UNWANTED_DATE_ENTRY,
 	UNWANTED_FORM_ACTION,
@@ -20,7 +22,7 @@ interface YesterdayModalProps {
 }
 
 export function YesterdayModal({ currentDate }: YesterdayModalProps) {
-	const [open, setOpen] = useState(false);
+	const yesterdayModal = useModal(false);
 	const [puzzle, setPuzzle] = useState<Puzzle | null>(null);
 	const [progress, setProgress] = useState<SavedProgress | null>(null);
 	const [flagStates, setFlagStates] = useState<Record<string, FlagState>>({});
@@ -66,24 +68,6 @@ export function YesterdayModal({ currentDate }: YesterdayModalProps) {
 		setProgress(loadProgress(yesterday));
 	}, [currentDate]);
 
-	// Close on Escape
-	useEffect(() => {
-		if (!open) return;
-		const handler = (e: KeyboardEvent) => {
-			if (e.key === "Escape") setOpen(false);
-		};
-		document.addEventListener("keydown", handler);
-		return () => document.removeEventListener("keydown", handler);
-	}, [open]);
-
-	// Lock body scroll when open
-	useEffect(() => {
-		document.body.style.overflow = open ? "hidden" : "";
-		return () => {
-			document.body.style.overflow = "";
-		};
-	}, [open]);
-
 	if (!puzzle) return null;
 
 	const sorted = [...puzzle.answers].sort((a, b) => a.localeCompare(b, "be"));
@@ -93,13 +77,13 @@ export function YesterdayModal({ currentDate }: YesterdayModalProps) {
 			{/* Header trigger */}
 			<button
 				type="button"
-				onClick={() => setOpen(true)}
+				onClick={yesterdayModal.open}
 				style={{
 					background: "none",
 					border: "none",
 					cursor: "pointer",
-					color: "var(--text-muted)",
-					fontFamily: "var(--font-sans)",
+					color: "var(--sly-text-muted)",
+					fontFamily: "var(--sly-font-sans)",
 					fontSize: "13px",
 					fontWeight: "600",
 					padding: 0,
@@ -108,264 +92,195 @@ export function YesterdayModal({ currentDate }: YesterdayModalProps) {
 				Учора
 			</button>
 
-			{/* Modal overlay */}
-			{open && (
-				// biome-ignore lint/a11y/noStaticElementInteractions: presentation role backdrop
-				<div
-					role="presentation"
-					onClick={() => setOpen(false)}
-					style={{
-						position: "fixed",
-						inset: 0,
-						zIndex: 50,
-						background: "rgba(0,0,0,0.5)",
-						display: "flex",
-						alignItems: "center",
-						justifyContent: "center",
-						padding: "16px",
-					}}
-				>
+			<Modal
+				isOpen={yesterdayModal.isOpen}
+				onClose={yesterdayModal.close}
+				title="Учарашнія адказы"
+			>
+				{/* Progress summary */}
+				{progress && (
 					<div
-						role="dialog"
-						aria-modal="true"
-						aria-label="Учарашнія адказы"
-						onClick={(e) => e.stopPropagation()}
-						onKeyDown={(e) => e.stopPropagation()}
 						style={{
-							background: "var(--bg-card)",
-							border: "1px solid var(--border)",
-							borderRadius: "16px",
-							width: "100%",
-							maxWidth: "480px",
-							maxHeight: "80vh",
-							display: "flex",
-							flexDirection: "column",
-							fontFamily: "var(--font-sans)",
+							padding: "0 0 12px",
+							borderBottom: "1px solid var(--sly-border)",
+							fontSize: "13px",
+							color: "var(--sly-text-muted)",
 						}}
 					>
-						{/* Modal header */}
-						<div
-							style={{
-								display: "flex",
-								alignItems: "center",
-								justifyContent: "space-between",
-								padding: "16px 20px",
-								borderBottom: "1px solid var(--border)",
-								flexShrink: 0,
-							}}
-						>
-							<span
-								style={{
-									fontWeight: "700",
-									fontSize: "15px",
-									color: "var(--text)",
-								}}
-							>
-								Учарашнія адказы
-							</span>
-							<button
-								type="button"
-								onClick={() => setOpen(false)}
-								style={{
-									background: "none",
-									border: "none",
-									cursor: "pointer",
-									color: "var(--text-muted)",
-									fontSize: "20px",
-									lineHeight: 1,
-									padding: "0 2px",
-								}}
-							>
-								✕
-							</button>
-						</div>
+						Вы знайшлі {progress.foundWords.length} з{" "}
+						{puzzle.answers.length} слоў ({progress.score} пт)
+					</div>
+				)}
 
-						{/* Progress summary */}
-						{progress && (
-							<div
+				{/* Word list */}
+				<ul
+					style={{
+						margin: 0,
+						padding: "8px 0 0",
+						listStyle: "none",
+						overflowY: "auto",
+						maxHeight: "60vh",
+					}}
+				>
+					{sorted.map((word) => {
+						const isPangram = puzzle.pangrams.includes(word);
+						const wasFound = progress
+							? progress.foundWords.includes(word)
+							: true;
+						return (
+							<li
+								key={word}
+								className="group"
 								style={{
-									padding: "12px 20px",
-									borderBottom: "1px solid var(--border)",
-									fontSize: "13px",
-									color: "var(--text-muted)",
-									flexShrink: 0,
+									fontSize: "14px",
+									fontWeight: isPangram ? "700" : "400",
+									color: isPangram
+										? "var(--sly-cornflower)"
+										: wasFound
+											? "var(--sly-text)"
+											: "var(--sly-text-muted)",
+									opacity: wasFound ? 1 : 0.45,
+									padding: "6px 0",
+									borderBottom: "1px solid var(--sly-border)",
+									display: "flex",
+									alignItems: "center",
+									gap: "8px",
 								}}
 							>
-								Вы знайшлі {progress.foundWords.length} з{" "}
-								{puzzle.answers.length} слоў ({progress.score} пт)
-							</div>
-						)}
-
-						{/* Word list */}
-						<ul
-							style={{
-								margin: 0,
-								padding: "8px 20px 20px",
-								listStyle: "none",
-								overflowY: "auto",
-							}}
-						>
-							{sorted.map((word) => {
-								const isPangram = puzzle.pangrams.includes(word);
-								const wasFound = progress
-									? progress.foundWords.includes(word)
-									: true;
-								return (
-									<li
-										key={word}
-										className="group"
+								{word}
+								{isPangram && (
+									<span
 										style={{
-											fontSize: "14px",
-											fontWeight: isPangram ? "700" : "400",
-											color: isPangram
-												? "var(--cornflower)"
-												: wasFound
-													? "var(--text)"
-													: "var(--text-muted)",
-											opacity: wasFound ? 1 : 0.45,
-											padding: "6px 0",
-											borderBottom: "1px solid var(--border)",
-											display: "flex",
-											alignItems: "center",
-											gap: "8px",
+											fontSize: "9px",
+											background: "var(--sly-cornflower-bg-subtle)",
+											color: "var(--sly-cornflower)",
+											border: "1px solid var(--sly-cornflower-border-subtle)",
+											borderRadius: "4px",
+											padding: "1px 6px",
+											fontWeight: "700",
+											letterSpacing: "0.08em",
+											textTransform: "uppercase",
 										}}
 									>
-										{word}
-										{isPangram && (
-											<span
-												style={{
-													fontSize: "9px",
-													background: "var(--cornflower-bg-subtle)",
-													color: "var(--cornflower)",
-													border: "1px solid var(--cornflower-border-subtle)",
-													borderRadius: "4px",
-													padding: "1px 6px",
-													fontWeight: "700",
-													letterSpacing: "0.08em",
-													textTransform: "uppercase",
-												}}
-											>
-												панграма
-											</span>
-										)}
-										<span
-											style={{
-												marginLeft: "auto",
-												display: "flex",
-												alignItems: "center",
-												gap: "4px",
-												flexShrink: 0,
-											}}
-										>
-											{showFlags &&
-												(() => {
-													const fs = getFlagState(word);
-													if (fs === "confirming") {
-														return (
-															<>
-																<span
-																	style={{
-																		fontSize: "11px",
-																		color: "var(--text-muted)",
-																	}}
-																>
-																	адправіць?
-																</span>
-																<button
-																	type="button"
-																	onClick={() =>
-																		handleConfirm(word, puzzle.date)
-																	}
-																	style={{
-																		background: "none",
-																		border: "none",
-																		cursor: "pointer",
-																		color: "var(--cornflower)",
-																		fontSize: "24px",
-																		lineHeight: 1,
-																		padding: "0 2px",
-																	}}
-																	title="Пацвердзіць"
-																>
-																	✓
-																</button>
-																<button
-																	type="button"
-																	onClick={() => setWordFlagState(word, "idle")}
-																	style={{
-																		background: "none",
-																		border: "none",
-																		cursor: "pointer",
-																		color: "var(--text-muted)",
-																		fontSize: "24px",
-																		lineHeight: 1,
-																		padding: "0 2px",
-																	}}
-																	title="Адмяніць"
-																>
-																	✕
-																</button>
-															</>
-														);
-													}
-													return (
+										панграма
+									</span>
+								)}
+								<span
+									style={{
+										marginLeft: "auto",
+										display: "flex",
+										alignItems: "center",
+										gap: "4px",
+										flexShrink: 0,
+									}}
+								>
+									{showFlags &&
+										(() => {
+											const fs = getFlagState(word);
+											if (fs === "confirming") {
+												return (
+													<>
+														<span
+															style={{
+																fontSize: "11px",
+																color: "var(--sly-text-muted)",
+															}}
+														>
+															адправіць?
+														</span>
 														<button
 															type="button"
-															onClick={() => handleFlagClick(word)}
-															disabled={fs === "sending"}
-															className="opacity-0 group-hover:opacity-100"
+															onClick={() =>
+																handleConfirm(word, puzzle.date)
+															}
 															style={{
 																background: "none",
 																border: "none",
-																cursor: fs === "sent" ? "default" : "pointer",
-																color: "var(--text-muted)",
+																cursor: "pointer",
+																color: "var(--sly-cornflower)",
 																fontSize: "24px",
 																lineHeight: 1,
 																padding: "0 2px",
-																opacity:
-																	fs === "sent"
-																		? 0.6
-																		: fs === "sending"
-																			? 0.4
-																			: undefined,
 															}}
-															title={
-																fs === "sent"
-																	? "Адпраўлена"
-																	: "Адзначыць як непажаданае"
-															}
+															title="Пацвердзіць"
 														>
-															{fs === "sent"
-																? "✓"
-																: fs === "sending"
-																	? "…"
-																	: "⚑"}
+															✓
 														</button>
-													);
-												})()}
-											<a
-												href={`https://verbum.by/tsblm2022/${encodeURIComponent(word)}`}
-												target="_blank"
-												rel="noreferrer"
-												className="opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
-												style={{
-													color: "var(--text-muted)",
-													fontSize: "12px",
-													lineHeight: 1,
-													textDecoration: "none",
-												}}
-												title={`Знайсці "${word}" у слоўніку`}
-											>
-												↗
-											</a>
-										</span>
-									</li>
-								);
-							})}
-						</ul>
-					</div>
-				</div>
-			)}
+														<button
+															type="button"
+															onClick={() => setWordFlagState(word, "idle")}
+															style={{
+																background: "none",
+																border: "none",
+																cursor: "pointer",
+																color: "var(--sly-text-muted)",
+																fontSize: "24px",
+																lineHeight: 1,
+																padding: "0 2px",
+															}}
+															title="Адмяніць"
+														>
+															✕
+														</button>
+													</>
+												);
+											}
+											return (
+												<button
+													type="button"
+													onClick={() => handleFlagClick(word)}
+													disabled={fs === "sending"}
+													className="opacity-0 group-hover:opacity-100"
+													style={{
+														background: "none",
+														border: "none",
+														cursor: fs === "sent" ? "default" : "pointer",
+														color: "var(--sly-text-muted)",
+														fontSize: "24px",
+														lineHeight: 1,
+														padding: "0 2px",
+														opacity:
+															fs === "sent"
+																? 0.6
+																: fs === "sending"
+																	? 0.4
+																	: undefined,
+													}}
+													title={
+														fs === "sent"
+															? "Адпраўлена"
+															: "Адзначыць як непажаданае"
+													}
+												>
+													{fs === "sent"
+														? "✓"
+														: fs === "sending"
+															? "…"
+															: "⚑"}
+												</button>
+											);
+										})()}
+									<a
+										href={`https://verbum.by/tsblm2022/${encodeURIComponent(word)}`}
+										target="_blank"
+										rel="noreferrer"
+										className="opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
+										style={{
+											color: "var(--sly-text-muted)",
+											fontSize: "12px",
+											lineHeight: 1,
+											textDecoration: "none",
+										}}
+										title={`Знайсці "${word}" у слоўніку`}
+									>
+										↗
+									</a>
+								</span>
+							</li>
+						);
+					})}
+				</ul>
+			</Modal>
 		</>
 	);
 }
