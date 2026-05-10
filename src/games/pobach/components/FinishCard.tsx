@@ -44,7 +44,7 @@ export default function FinishCard({
 	return (
 		<div
 			data-testid="finish-card"
-			className="mb-6 rounded-2xl bg-[var(--card)] border border-[var(--border)] overflow-hidden"
+			className="mb-6 rounded-2xl bg-[var(--sly-bg-card)] border border-[var(--sly-border)] overflow-hidden"
 		>
 			<div className="px-6 py-8 flex flex-col items-center text-center gap-6">
 				{/* Icon */}
@@ -69,11 +69,11 @@ export default function FinishCard({
 				{/* Heading + description */}
 				<div className="space-y-2">
 					<h2
-						className={`font-serif text-2xl font-bold ${isWin ? "text-[var(--accent)]" : "text-[var(--text)]"}`}
+						className={`font-serif text-2xl font-bold ${isWin ? "text-[var(--sly-accent)]" : "text-[var(--sly-text)]"}`}
 					>
 						{isWin ? "Віншуем!" : "Таямніца раскрыта!"}
 					</h2>
-					<p className="text-sm text-[var(--text-muted)] leading-relaxed max-w-xs">
+					<p className="text-sm text-[var(--sly-text-muted)] leading-relaxed max-w-xs">
 						{isWin
 							? `Вы адгадалі слова за ${attempts} ${pluralize(attempts)}${hintsCount > 0 ? ` з ${hintsCount} ${pluralizeHintsInstrumental(hintsCount)}` : ""}. Заўтра будзе новае слова.`
 							: `Дзякуй за гульню.${hintsCount > 0 ? ` Выкарыстана ${hintsCount} ${pluralizeHintsAccusative(hintsCount)}.` : ""} Заўтра будзе новае слова.`}
@@ -81,7 +81,7 @@ export default function FinishCard({
 					{!isWin && targetWord && (
 						<p className="text-sm">
 							Правільнае слова:{" "}
-							<strong className="text-[var(--accent)] font-semibold">
+							<strong className="text-[var(--sly-accent)] font-semibold">
 								<DictionaryLink word={targetWord} />
 							</strong>
 						</p>
@@ -95,7 +95,7 @@ export default function FinishCard({
 				{isWin && streak > 0 && (
 					<Link
 						href="/stats"
-						className="flex items-center gap-1.5 text-[var(--accent)] text-sm font-medium hover:opacity-80 transition-opacity"
+						className="flex items-center gap-1.5 text-[var(--sly-accent)] text-sm font-medium hover:opacity-80 transition-opacity"
 					>
 						<Flame size={16} />
 						{streak} {pluralizeStreak(streak)}
@@ -105,14 +105,14 @@ export default function FinishCard({
 				<div className="flex justify-center mt-2">
 					<Link
 						href="/stats"
-						className="text-xs text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
+						className="text-xs text-[var(--sly-text-muted)] hover:text-[var(--sly-accent)] transition-colors"
 					>
 						Паглядзець статыстыку
 					</Link>
 				</div>
 
 				{/* Countdown / new day */}
-				<div className="text-sm text-[var(--text-muted)]">
+				<div className="text-sm text-[var(--sly-text-muted)]">
 					{isNewDayAvailable ? (
 						<button
 							onClick={() => window.location.reload()}
@@ -124,7 +124,7 @@ export default function FinishCard({
 					) : (
 						<div className="flex items-center gap-2">
 							<span>Наступнае слова праз</span>
-							<span className="font-mono text-[var(--text)]">
+							<span className="font-mono text-[var(--sly-text)]">
 								<span className="font-mono tabular-nums">{countdown}</span>
 							</span>
 						</div>

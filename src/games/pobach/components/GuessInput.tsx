@@ -61,7 +61,7 @@ export default function GuessInput({
 			{/* Row 1: input + submit */}
 			<div className="flex gap-2">
 				<button
-					className="flex-1 h-12 border border-[var(--border)] rounded-xl px-4 flex items-center bg-[var(--card)] focus-within:border-[var(--accent)] focus-within:ring-2 focus-within:ring-[var(--accent)]/20 transition-all cursor-text text-left"
+					className="flex-1 h-12 border border-[var(--sly-border)] rounded-xl px-4 flex items-center bg-[var(--sly-bg-card)] focus-within:border-[var(--sly-accent)] focus-within:ring-2 focus-within:ring-[var(--sly-accent)]/20 transition-all cursor-text text-left"
 					onClick={() => !isDisabled && divRef.current?.focus()}
 					onKeyDown={(e) =>
 						e.key === "Enter" && !isDisabled && divRef.current?.focus()
@@ -88,7 +88,7 @@ export default function GuessInput({
 						inputMode="text"
 						enterKeyHint="send"
 						suppressContentEditableWarning
-						className="text-lg text-[var(--text)] outline-none min-h-[1.5rem] w-full empty:before:content-['Увядзіце_слова...'] empty:before:text-[var(--text-muted)] text-left"
+						className="text-lg text-[var(--sly-text)] outline-none min-h-[1.5rem] w-full empty:before:content-['Увядзіце_слова...'] empty:before:text-[var(--sly-text-muted)] text-left"
 					/>
 				</button>
 				{!isDisabled && (
@@ -97,7 +97,7 @@ export default function GuessInput({
 						disabled={loading}
 						aria-label="Адправіць здагадку"
 						type="button"
-						className="hidden sm:flex w-12 h-12 items-center justify-center rounded-xl bg-[var(--accent)] text-white hover:opacity-90 transition-opacity disabled:opacity-50 shrink-0"
+						className="hidden sm:flex w-12 h-12 items-center justify-center rounded-xl bg-[var(--sly-accent)] text-white hover:opacity-90 transition-opacity disabled:opacity-50 shrink-0"
 					>
 						<svg
 							width="16"
@@ -142,7 +142,7 @@ export default function GuessInput({
 						aria-label="Атрымаць падказку"
 						aria-disabled={loading}
 						type="button"
-						className="flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-[var(--accent)] border border-[var(--accent)] rounded-full hover:bg-[var(--accent)]/5 transition-colors disabled:opacity-50"
+						className="flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-[var(--sly-accent)] border border-[var(--sly-accent)] rounded-full hover:bg-[var(--sly-accent)]/5 transition-colors disabled:opacity-50"
 					>
 						<Lightbulb size={12} />
 						Падказка
@@ -156,7 +156,7 @@ export default function GuessInput({
 						aria-disabled={loading}
 						type="button"
 						data-testid="give-up-button"
-						className="flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-[var(--text-muted)] border border-[var(--border)] rounded-full hover:bg-[var(--border)] transition-colors disabled:opacity-50"
+						className="flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-[var(--sly-text-muted)] border border-[var(--sly-border)] rounded-full hover:bg-[var(--sly-border)] transition-colors disabled:opacity-50"
 					>
 						<Flag size={12} />
 						Здацца

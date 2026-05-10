@@ -28,7 +28,7 @@ export function HeaderIconButtons({
 					type="button"
 					onClick={onHelpClick}
 					aria-label="Як гуляць?"
-					className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[var(--border)] transition-colors text-[var(--text)]"
+					className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[var(--sly-border)] transition-colors text-[var(--sly-text)]"
 				>
 					<HelpCircle size={18} />
 				</button>
@@ -36,7 +36,7 @@ export function HeaderIconButtons({
 			<Link
 				href={statsHref}
 				aria-label="Статыстыка"
-				className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[var(--border)] transition-colors text-[var(--text)]"
+				className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[var(--sly-border)] transition-colors text-[var(--sly-text)]"
 			>
 				<BarChart2 size={18} />
 			</Link>
@@ -44,7 +44,7 @@ export function HeaderIconButtons({
 				onClick={toggleTheme}
 				aria-label={`Пераключыць на ${theme === "light" ? "цёмную" : "светлую"} тэму`}
 				type="button"
-				className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[var(--border)] transition-colors text-[var(--text)]"
+				className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[var(--sly-border)] transition-colors text-[var(--sly-text)]"
 			>
 				{theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
 			</button>

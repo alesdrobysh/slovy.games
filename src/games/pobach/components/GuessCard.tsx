@@ -23,17 +23,17 @@ export default function GuessCard({ guess, isWin = false }: GuessCardProps) {
 		>
 			<div className="flex-1 min-w-0">
 				<div className="flex items-center gap-2 mb-1.5">
-					<span className="font-semibold text-[var(--text)] truncate">
+					<span className="font-semibold text-[var(--sly-text)] truncate">
 						<DictionaryLink word={guess.word} />
 					</span>
 					{guess.isHint && (
-						<span className="text-xs italic text-[var(--text-muted)] shrink-0">
+						<span className="text-xs italic text-[var(--sly-text-muted)] shrink-0">
 							(падказка)
 						</span>
 					)}
 				</div>
 				<div
-					className="h-1 rounded-full bg-[var(--border)]"
+					className="h-1 rounded-full bg-[var(--sly-border)]"
 					role="progressbar"
 					aria-valuenow={barPercentage}
 					aria-valuemin={0}

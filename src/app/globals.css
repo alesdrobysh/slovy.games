@@ -1,249 +1,15 @@
 @import "../shared/tokens/index.css";
 @import "tailwindcss";
 
-/* === Shared neutral theme (light) === */
-:root {
-	--color-neutral-accent: #5b6fa8;
-	--color-neutral-bg: #f5f0e8;
-	--color-neutral-bg-card: #ede6d4;
-	--color-neutral-bg-surface: #e2d8c4;
-	--color-neutral-text: #2c1f0e;
-	--color-neutral-text-muted: #7a6848;
-	--color-neutral-border: #d4c8ac;
-
-	--color-accent: var(--color-neutral-accent);
-	--color-bg: var(--color-neutral-bg);
-	--color-bg-card: var(--color-neutral-bg-card);
-	--color-bg-surface: var(--color-neutral-bg-surface);
-	--color-text: var(--color-neutral-text);
-	--color-text-muted: var(--color-neutral-text-muted);
-	--color-border: var(--color-neutral-border);
-	--color-accent-subtle: rgba(91, 111, 168, 0.1);
-	--color-accent-border: rgba(91, 111, 168, 0.22);
-	--color-accent-light: #8094c8;
-	--color-accent-dark: #3a4f80;
-
-	--accent: var(--color-neutral-accent);
-	--bg: var(--color-neutral-bg);
-	--bg-card: var(--color-neutral-bg-card);
-	--bg-surface: var(--color-neutral-bg-surface);
-	--text: var(--color-neutral-text);
-	--text-muted: var(--color-neutral-text-muted);
-	--border: var(--color-neutral-border);
-	--card: var(--color-neutral-bg-card);
-
-	--font-display: "EB Garamond", serif;
-	--font-sans: "Manrope", sans-serif;
-}
-
-/* === Shared neutral theme (dark) === */
-html.dark {
-	--color-neutral-accent: #7a8fc8;
-	--color-neutral-bg: #0e0f1a;
-	--color-neutral-bg-card: #161828;
-	--color-neutral-bg-surface: #1e2138;
-	--color-neutral-text: #e8e4d8;
-	--color-neutral-text-muted: #7a7a9a;
-	--color-neutral-border: #2a2d48;
-
-	--color-accent: var(--color-neutral-accent);
-	--color-bg: var(--color-neutral-bg);
-	--color-bg-card: var(--color-neutral-bg-card);
-	--color-bg-surface: var(--color-neutral-bg-surface);
-	--color-text: var(--color-neutral-text);
-	--color-text-muted: var(--color-neutral-text-muted);
-	--color-border: var(--color-neutral-border);
-	--color-accent-subtle: rgba(122, 143, 200, 0.12);
-	--color-accent-border: rgba(122, 143, 200, 0.25);
-	--color-accent-light: #9aaee0;
-	--color-accent-dark: #5b6fa8;
-
-	--accent: var(--color-neutral-accent);
-	--bg: var(--color-neutral-bg);
-	--bg-card: var(--color-neutral-bg-card);
-	--bg-surface: var(--color-neutral-bg-surface);
-	--text: var(--color-neutral-text);
-	--text-muted: var(--color-neutral-text-muted);
-	--border: var(--color-neutral-border);
-	--card: var(--color-neutral-bg-card);
-
-	--font-display: "EB Garamond", serif;
-	--font-sans: "Manrope", sans-serif;
-}
-
-/* === Valoshka theme overrides === */
-.theme-valoshka {
-	--valoshka-blue: #5b6fa8;
-	--valoshka-paper: #f5f0e8;
-	--valoshka-dark-bg: #0e0f1a;
-}
-
-html:not(.dark) .theme-valoshka {
-	--color-accent: var(--valoshka-blue);
-	--color-bg: var(--valoshka-paper);
-	--color-bg-card: #ede6d4;
-	--color-bg-surface: #e2d8c4;
-	--color-text: #2c1f0e;
-	--color-text-muted: #7a6848;
-	--color-border: #d4c8ac;
-	--color-accent-subtle: rgba(91, 111, 168, 0.1);
-	--color-accent-border: rgba(91, 111, 168, 0.22);
-	--color-accent-light: #8094c8;
-	--color-accent-dark: #3a4f80;
-	--font-display: "EB Garamond", serif;
-
-	--accent: var(--valoshka-blue);
-	--bg: var(--valoshka-paper);
-	--bg-card: var(--color-bg-card);
-	--bg-surface: var(--color-bg-surface);
-	--text: var(--color-text);
-	--text-muted: var(--color-text-muted);
-	--border: var(--color-border);
-	--card: var(--color-bg-card);
-	--cornflower: #5b6fa8;
-	--cornflower-dark: #3a4f80;
-	--cornflower-light: #8094c8;
-	--cornflower-bg-subtle: rgba(91, 111, 168, 0.1);
-	--cornflower-border-subtle: rgba(91, 111, 168, 0.22);
-	--cell-center: #252850;
-	--cell-outer: #7b9cf0;
-	--cell-center-hover: #2a3670;
-	--cell-outer-hover: #6a88e0;
-	--cell-letter-center: #fff;
-	--cell-letter-outer: #fff;
-}
-
-html.dark .theme-valoshka {
-	--color-accent: #7a8fc8;
-	--color-bg: #0e0f1a;
-	--color-bg-card: #161828;
-	--color-bg-surface: #1e2138;
-	--color-text: #e8e4d8;
-	--color-text-muted: #7a7a9a;
-	--color-border: #2a2d48;
-	--color-accent-subtle: rgba(122, 143, 200, 0.12);
-	--color-accent-border: rgba(122, 143, 200, 0.25);
-	--color-accent-light: #9aaee0;
-	--color-accent-dark: #5b6fa8;
-
-	--accent: var(--color-accent);
-	--bg: var(--color-bg);
-	--bg-card: var(--color-bg-card);
-	--bg-surface: var(--color-bg-surface);
-	--text: var(--color-text);
-	--text-muted: var(--color-text-muted);
-	--border: var(--color-border);
-	--card: var(--color-bg-card);
-	--cornflower: #7a8fc8;
-	--cornflower-dark: #5b6fa8;
-	--cornflower-light: #9aaee0;
-	--cornflower-bg-subtle: rgba(122, 143, 200, 0.12);
-	--cornflower-border-subtle: rgba(122, 143, 200, 0.25);
-	--cell-center: #141e50;
-	--cell-outer: #4a62a8;
-	--cell-center-hover: #1c2a68;
-	--cell-outer-hover: #5a72b8;
-	--cell-letter-center: #fff;
-	--cell-letter-outer: #fff;
-}
-
-/* === Pobach theme overrides === */
-.theme-pobach {
-	--pobach-orange: #e58e3f;
-	--pobach-bg: #f7f3ed;
-	--pobach-dark-bg: #1a1410;
-}
-
-.theme-pobach {
-	font-family: var(--font-sans), sans-serif;
-	color: var(--color-text);
-	background-color: var(--color-bg);
-}
-
-.theme-pobach .font-serif {
-	font-family: var(--font-display), serif;
-}
-
-html:not(.dark) .theme-pobach {
-	--color-accent: var(--pobach-orange);
-	--color-bg: var(--pobach-bg);
-	--color-bg-card: #ede3d5;
-	--color-bg-surface: #e0d5c5;
-	--color-text: #1b120e;
-	--color-text-muted: #6b5a51;
-	--color-border: #e8e0d5;
-	--color-accent-subtle: rgba(229, 142, 63, 0.1);
-	--color-accent-border: rgba(229, 142, 63, 0.22);
-	--color-accent-light: #f0a860;
-	--color-accent-dark: #c07030;
-	--font-display: "EB Garamond", serif;
-
-	--accent: var(--pobach-orange);
-	--bg: var(--pobach-bg);
-	--bg-card: var(--color-bg-card);
-	--bg-surface: var(--color-bg-surface);
-	--text: var(--color-text);
-	--text-muted: var(--color-text-muted);
-	--border: var(--color-border);
-	--card: #fff;
-	--rank-1: #16a34a;
-	--rank-10: #16a34a;
-	--rank-100: #84cc16;
-	--rank-1000: #f58d3d;
-	--rank-default: #4b83c8;
-
-	--attempts-base: var(--pobach-orange);
-	--attempts-1: color-mix(in oklab, var(--attempts-base) 100%, black 0%);
-	--attempts-10: color-mix(in oklab, var(--attempts-base) 85%, black 15%);
-	--attempts-50: color-mix(in oklab, var(--attempts-base) 70%, black 30%);
-	--attempts-100: color-mix(in oklab, var(--attempts-base) 55%, black 45%);
-	--attempts-many: color-mix(in oklab, var(--attempts-base) 40%, black 60%);
-}
-
-html.dark .theme-pobach {
-	--color-accent: #e58e3f;
-	--color-bg: #1a1410;
-	--color-bg-card: #251e18;
-	--color-bg-surface: #2e241c;
-	--color-text: #f0eae0;
-	--color-text-muted: #9a8a7e;
-	--color-border: #3a3028;
-	--color-accent-subtle: rgba(229, 142, 63, 0.12);
-	--color-accent-border: rgba(229, 142, 63, 0.25);
-	--color-accent-light: #f0a860;
-	--color-accent-dark: #c07030;
-
-	--accent: var(--color-accent);
-	--bg: var(--color-bg);
-	--bg-card: var(--color-bg-card);
-	--bg-surface: var(--color-bg-surface);
-	--text: var(--color-text);
-	--text-muted: var(--color-text-muted);
-	--border: var(--color-border);
-	--card: var(--color-bg-card);
-	--rank-1: #16a34a;
-	--rank-10: #16a34a;
-	--rank-100: #84cc16;
-	--rank-1000: #f58d3d;
-	--rank-default: #4b83c8;
-
-	--attempts-base: var(--pobach-orange);
-	--attempts-1: color-mix(in oklab, var(--attempts-base) 100%, black 0%);
-	--attempts-10: color-mix(in oklab, var(--attempts-base) 85%, black 15%);
-	--attempts-50: color-mix(in oklab, var(--attempts-base) 70%, black 30%);
-	--attempts-100: color-mix(in oklab, var(--attempts-base) 55%, black 45%);
-	--attempts-many: color-mix(in oklab, var(--attempts-base) 40%, black 60%);
-}
-
 /* === Base styles === */
 * {
 	box-sizing: border-box;
 }
 
 body {
-	background: var(--color-bg);
-	color: var(--color-text);
-	font-family: var(--font-sans), sans-serif;
+	background: var(--sly-bg);
+	color: var(--sly-text);
+	font-family: var(--sly-font-sans), sans-serif;
 	-webkit-font-smoothing: antialiased;
 	transition:
 		background 0.25s ease,
@@ -252,7 +18,7 @@ body {
 
 /* Selection */
 ::selection {
-	background: var(--color-accent);
+	background: var(--sly-accent);
 	color: #fff;
 }
 
@@ -353,7 +119,7 @@ body {
 
 /* Focus indicator for game cells */
 g[tabindex="0"]:focus-visible {
-	outline: 3px solid var(--cornflower);
+	outline: 3px solid var(--sly-cornflower);
 	outline-offset: 3px;
 	border-radius: 6px;
 }
@@ -414,7 +180,7 @@ g[tabindex="0"]:focus-visible {
 	padding: 8px 20px;
 	font-size: 14px;
 	font-weight: 600;
-	background: var(--accent);
+	background: var(--sly-accent);
 	color: #fff;
 	border: none;
 	cursor: pointer;
@@ -429,9 +195,9 @@ g[tabindex="0"]:focus-visible {
 	display: flex;
 	align-items: center;
 	gap: 0.75rem;
-	background-color: var(--card);
+	background-color: var(--sly-bg-card);
 	border-radius: 0.5rem;
-	border: 1px solid var(--border);
+	border: 1px solid var(--sly-border);
 	padding: 0.75rem 1rem;
 	animation: slideUp 0.2s ease-out;
 }

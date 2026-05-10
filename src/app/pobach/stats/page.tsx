@@ -16,11 +16,11 @@ type StatCardProps = {
 
 function StatCard({ label, value }: StatCardProps) {
 	return (
-		<div className="bg-[var(--card)] rounded-2xl p-3 text-center border border-[var(--border)] min-w-0">
-			<div className="text-3xl font-bold text-[var(--text)] leading-none mb-1.5 font-serif">
+		<div className="bg-[var(--sly-bg-card)] rounded-2xl p-3 text-center border border-[var(--sly-border)] min-w-0">
+			<div className="text-3xl font-bold text-[var(--sly-text)] leading-none mb-1.5 font-serif">
 				{value}
 			</div>
-			<div className="text-[9px] text-[var(--text-muted)] font-medium tracking-wider uppercase leading-tight">
+			<div className="text-[9px] text-[var(--sly-text-muted)] font-medium tracking-wider uppercase leading-tight">
 				{label}
 			</div>
 		</div>
@@ -29,7 +29,7 @@ function StatCard({ label, value }: StatCardProps) {
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
 	return (
-		<h2 className="text-lg font-bold text-[var(--text)] mt-8 mb-4 font-serif">
+		<h2 className="text-lg font-bold text-[var(--sly-text)] mt-8 mb-4 font-serif">
 			{children}
 		</h2>
 	);
@@ -43,11 +43,11 @@ type DistributionRange = {
 };
 
 const DISTRIBUTION_RANGES: DistributionRange[] = [
-	{ label: "1", min: 1, max: 1, color: "var(--attempts-1)" },
-	{ label: "2–10", min: 2, max: 10, color: "var(--attempts-10)" },
-	{ label: "11–50", min: 11, max: 50, color: "var(--attempts-50)" },
-	{ label: "51–100", min: 51, max: 100, color: "var(--attempts-100)" },
-	{ label: "100+", min: 101, max: Infinity, color: "var(--attempts-many)" },
+	{ label: "1", min: 1, max: 1, color: "var(--sly-attempts-1)" },
+	{ label: "2–10", min: 2, max: 10, color: "var(--sly-attempts-10)" },
+	{ label: "11–50", min: 11, max: 50, color: "var(--sly-attempts-50)" },
+	{ label: "51–100", min: 51, max: 100, color: "var(--sly-attempts-100)" },
+	{ label: "100+", min: 101, max: Infinity, color: "var(--sly-attempts-many)" },
 ];
 
 function getCountForRange(
@@ -91,10 +91,10 @@ function DistributionChart({
 
 				return (
 					<div key={range.label} className="flex items-center gap-3 text-sm">
-						<div className="w-14 text-right text-[var(--text-muted)] shrink-0 whitespace-nowrap">
+						<div className="w-14 text-right text-[var(--sly-text-muted)] shrink-0 whitespace-nowrap">
 							{range.label}
 						</div>
-						<div className="flex-1 h-10 bg-[var(--border)] rounded-lg overflow-hidden relative">
+						<div className="flex-1 h-10 bg-[var(--sly-border)] rounded-lg overflow-hidden relative">
 							{range.count > 0 ? (
 								<div
 									className="h-full min-w-12 rounded-lg flex items-center justify-end pr-3 transition-all duration-500"
@@ -135,14 +135,14 @@ type HistoryItemProps = {
 
 function HistoryItem({ game }: HistoryItemProps) {
 	return (
-		<div className="flex items-center gap-3 py-3.5 border-b border-[var(--border)] last:border-0">
+		<div className="flex items-center gap-3 py-3.5 border-b border-[var(--sly-border)] last:border-0">
 			<span
-				className={`w-2.5 h-2.5 rounded-full shrink-0 ${game.won ? "bg-[var(--rank-1)]" : "bg-red-400"}`}
+				className={`w-2.5 h-2.5 rounded-full shrink-0 ${game.won ? "bg-[var(--sly-rank-1)]" : "bg-red-400"}`}
 			/>
-			<div className="font-semibold text-sm text-[var(--text)] flex-1">
+			<div className="font-semibold text-sm text-[var(--sly-text)] flex-1">
 				<span className="font-serif">#{game.dayIndex + 1}</span> Дзень
 			</div>
-			<div className="text-xs text-[var(--text-muted)] flex items-center gap-3">
+			<div className="text-xs text-[var(--sly-text-muted)] flex items-center gap-3">
 				{game.won ? (
 					<span>
 						<span className="font-serif">{game.attempts}</span>{" "}
@@ -247,9 +247,9 @@ export default function PobachStatsPage() {
 				/>
 
 				<SectionTitle>Гісторыя гульняў</SectionTitle>
-				<div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] px-4">
+				<div className="bg-[var(--sly-bg-card)] rounded-2xl border border-[var(--sly-border)] px-4">
 					{history.length === 0 ? (
-						<div className="py-6 text-center text-sm text-[var(--text-muted)]">
+						<div className="py-6 text-center text-sm text-[var(--sly-text-muted)]">
 							Пакуль няма гісторыі гульняў
 						</div>
 					) : (
@@ -272,7 +272,7 @@ export default function PobachStatsPage() {
 					{showToast && (
 						<div
 							aria-live="polite"
-							className="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-lg bg-[var(--text)] text-[var(--bg)] text-xs font-medium whitespace-nowrap shadow-lg"
+							className="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-lg bg-[var(--sly-text)] text-[var(--sly-bg)] text-xs font-medium whitespace-nowrap shadow-lg"
 						>
 							Скапіравана!
 						</div>

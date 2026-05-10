@@ -46,7 +46,7 @@ export default function PobachPage() {
 			<div className="flex-1 w-full max-w-[600px] mx-auto px-4 pb-20 pt-8 gap-y-6 flex flex-col">
 				{/* Day badge */}
 				<div className="flex justify-start">
-					<span className="inline-flex items-center px-3 py-1 text-[0.75rem] font-medium text-[var(--accent)] bg-[var(--border)] rounded-full">
+					<span className="inline-flex items-center px-3 py-1 text-[0.75rem] font-medium text-[var(--sly-accent)] bg-[var(--sly-border)] rounded-full">
 						Дзень #{getCurrentDayIndex() + 1}
 					</span>
 				</div>
@@ -76,7 +76,7 @@ export default function PobachPage() {
 				) : (
 					lastGuess && (
 						<output aria-live="polite" className="block mb-4">
-							<p className="text-xs text-[var(--text-muted)] mb-2">
+							<p className="text-xs text-[var(--sly-text-muted)] mb-2">
 								Апошняе слова:
 							</p>
 							<GuessCard guess={lastGuess} />
@@ -86,8 +86,8 @@ export default function PobachPage() {
 
 				{guesses.length === 0 ? (
 					<div className="mt-6">
-						<div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-8">
-							<h2 className="font-serif text-3xl font-bold text-[var(--text)] mb-6">
+						<div className="rounded-2xl border border-[var(--sly-border)] bg-[var(--sly-bg-card)] p-8">
+							<h2 className="font-serif text-3xl font-bold text-[var(--sly-text)] mb-6">
 								Як гуляць?
 							</h2>
 							<RulesComponent />
