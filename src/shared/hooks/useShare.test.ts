@@ -11,7 +11,10 @@ describe("useShare", () => {
 
 	afterEach(() => {
 		jest.useRealTimers();
-		Object.defineProperty(navigator, "share", { value: originalShare, writable: true });
+		Object.defineProperty(navigator, "share", {
+			value: originalShare,
+			writable: true,
+		});
 		Object.assign(navigator, { clipboard: originalClipboard });
 	});
 
@@ -25,7 +28,10 @@ describe("useShare", () => {
 		const writeText = jest.fn().mockResolvedValue(undefined);
 		Object.assign(navigator, { clipboard: { writeText } });
 
-		Object.defineProperty(navigator, "share", { value: undefined, writable: true });
+		Object.defineProperty(navigator, "share", {
+			value: undefined,
+			writable: true,
+		});
 
 		const { result } = renderHook(() => useShare("test text"));
 
@@ -55,9 +61,11 @@ describe("useShare", () => {
 	});
 
 	it("does not fall back to clipboard on AbortError", async () => {
-		const share = jest.fn().mockRejectedValue(
-			Object.assign(new Error("User dismissed"), { name: "AbortError" })
-		);
+		const share = jest
+			.fn()
+			.mockRejectedValue(
+				Object.assign(new Error("User dismissed"), { name: "AbortError" })
+			);
 		Object.defineProperty(navigator, "share", { value: share, writable: true });
 		const writeText = jest.fn().mockResolvedValue(undefined);
 		Object.assign(navigator, { clipboard: { writeText } });
@@ -73,7 +81,10 @@ describe("useShare", () => {
 	});
 
 	it("does not show toast on clipboard failure", async () => {
-		Object.defineProperty(navigator, "share", { value: undefined, writable: true });
+		Object.defineProperty(navigator, "share", {
+			value: undefined,
+			writable: true,
+		});
 		const writeText = jest.fn().mockRejectedValue(new Error("denied"));
 		Object.assign(navigator, { clipboard: { writeText } });
 

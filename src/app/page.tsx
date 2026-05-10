@@ -70,8 +70,7 @@ export default function HubPage() {
 											fontWeight: 700,
 										}}
 									>
-										🔥 {hub.currentStreak}{" "}
-										{dayOrdinal(hub.currentStreak)}
+										🔥 {hub.currentStreak} {dayOrdinal(hub.currentStreak)}
 									</span>
 									<span>·</span>
 								</>

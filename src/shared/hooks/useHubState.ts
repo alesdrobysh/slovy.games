@@ -78,7 +78,9 @@ function getValoshkaStatus(): {
 		const raw = localStorage.getItem(`vulej_${today}`);
 		if (raw) {
 			const progress = JSON.parse(raw);
-			hasPlayedToday = !!(progress.foundWords && progress.foundWords.length > 0);
+			hasPlayedToday = !!(
+				progress.foundWords && progress.foundWords.length > 0
+			);
 			foundWords = progress.foundWords?.length ?? 0;
 			score = progress.score ?? 0;
 		}
@@ -94,7 +96,14 @@ function getValoshkaStatus(): {
 		// localStorage unavailable or corrupted
 	}
 
-	return { hasPlayedToday, foundWords, score, streak, longestStreak, totalPlayed };
+	return {
+		hasPlayedToday,
+		foundWords,
+		score,
+		streak,
+		longestStreak,
+		totalPlayed,
+	};
 }
 
 // ─── Pobach state ──────────────────────────────────────────────────
@@ -155,10 +164,7 @@ function getPobachStatus(): {
 		const todayIdx = pobachTodayIndex();
 
 		// Check if there's an active current game for *today*
-		if (
-			data.currentGame &&
-			data.currentGame.dayIndex === todayIdx
-		) {
+		if (data.currentGame && data.currentGame.dayIndex === todayIdx) {
 			if (data.currentGame.won) {
 				won = true;
 				hasPlayedToday = true;
@@ -205,7 +211,7 @@ function getPobachStatus(): {
 function buildGameStatusFromRaw(
 	game: GameInfo,
 	v: ReturnType<typeof getValoshkaStatus>,
-	p: ReturnType<typeof getPobachStatus>,
+	p: ReturnType<typeof getPobachStatus>
 ): GameHubStatus {
 	if (game.id === "valoshka") {
 		let progressText = "";
@@ -234,8 +240,7 @@ function buildGameStatusFromRaw(
 			p.attempts > 0 ? `Разгадана за ${p.attempts} спроб` : "Разгадана";
 		ctaLabel = "Вынік";
 	} else if (p.isInProgress) {
-		progressText =
-			p.guessCount > 0 ? `Здагадка №${p.guessCount + 1}` : "";
+		progressText = p.guessCount > 0 ? `Здагадка №${p.guessCount + 1}` : "";
 		ctaLabel = "Працягнуць";
 	}
 

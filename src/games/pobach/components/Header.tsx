@@ -43,7 +43,10 @@ export default function Header({ onHelpClick }: { onHelpClick?: () => void }) {
 					</span>
 				)}
 
-				<HeaderIconButtons onHelpClick={onHelpClick} statsHref="/pobach/stats" />
+				<HeaderIconButtons
+					onHelpClick={onHelpClick}
+					statsHref="/pobach/stats"
+				/>
 			</div>
 		</header>
 	);

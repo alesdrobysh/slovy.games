@@ -40,11 +40,13 @@ export function Modal({
 	if (!isOpen) return null;
 
 	return (
+		// biome-ignore lint/a11y/noStaticElementInteractions: presentation backdrop
 		<div
 			onClick={onClose}
 			role="presentation"
 			className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--sly-bg)]/70 backdrop-blur-sm p-4"
 		>
+			{/* biome-ignore lint/a11y/useKeyWithClickEvents: stopPropagation only */}
 			<div
 				onClick={(e) => e.stopPropagation()}
 				role="dialog"

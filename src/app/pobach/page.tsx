@@ -98,7 +98,11 @@ export default function PobachPage() {
 				)}
 			</div>
 
-			<Modal isOpen={showHelp} title="Як гуляць?" onClose={() => setShowHelp(false)}>
+			<Modal
+				isOpen={showHelp}
+				title="Як гуляць?"
+				onClose={() => setShowHelp(false)}
+			>
 				<RulesComponent />
 			</Modal>
 

@@ -104,10 +104,7 @@ export function HeaderWithInspector({ displayDate, currentDate }: Props) {
 			/>
 
 			{showHelp && (
-				<HowToPlay
-					isOpen={showHelp}
-					onClose={() => setShowHelp(false)}
-				/>
+				<HowToPlay isOpen={showHelp} onClose={() => setShowHelp(false)} />
 			)}
 		</>
 	);

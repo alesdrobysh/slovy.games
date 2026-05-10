@@ -20,7 +20,7 @@ export default function ShareButton({
 }: ShareButtonProps) {
 	const text = useMemo(
 		() => generateShareText({ dayIndex, guesses, won }),
-		[dayIndex, guesses, won],
+		[dayIndex, guesses, won]
 	);
 	const { share, isSharing, showToast } = useShare(text);
 

@@ -4,7 +4,6 @@ import { EB_Garamond, Manrope } from "next/font/google";
 import { BannerProvider } from "@/shared/components/BannerContext";
 import CookieBanner from "@/shared/components/CookieBanner";
 import { ConditionalHubNav } from "@/shared/components/ConditionalHubNav";
-import { Footer } from "@/shared/components/Footer";
 import { ThemeProvider } from "@/shared/hooks/useTheme";
 import { PostHogProvider } from "@/shared/lib/analytics";
 import "./globals.css";

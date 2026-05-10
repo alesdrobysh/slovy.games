@@ -15,7 +15,7 @@ describe("useAnimatedValue", () => {
 					window.setTimeout(() => {
 						timers.delete(id);
 						cb(performance.now());
-					}, 16),
+					}, 16)
 				);
 				return id;
 			});
@@ -42,19 +42,23 @@ describe("useAnimatedValue", () => {
 		expect(result.current).toBe(0);
 
 		// At ~halfway, should be between 0 and target
-		act(() => { jest.advanceTimersByTime(450); });
+		act(() => {
+			jest.advanceTimersByTime(450);
+		});
 		expect(result.current).toBeGreaterThan(0);
 		expect(result.current).toBeLessThan(42);
 
 		// After full animation duration
-		act(() => { jest.advanceTimersByTime(600); });
+		act(() => {
+			jest.advanceTimersByTime(600);
+		});
 		expect(result.current).toBe(42);
 	});
 
 	it("updates when target changes", () => {
 		const { result, rerender } = renderHook(
 			({ target }) => useAnimatedValue(target, 900),
-			{ initialProps: { target: 10 } },
+			{ initialProps: { target: 10 } }
 		);
 
 		expect(result.current).toBe(0);

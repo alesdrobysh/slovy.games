@@ -8,7 +8,9 @@ describe("Toast", () => {
 	});
 
 	it("renders nothing when not visible", () => {
-		const { container } = render(<Toast message="Скапіравана!" visible={false} />);
+		const { container } = render(
+			<Toast message="Скапіравана!" visible={false} />
+		);
 		expect(container.firstChild).toBeNull();
 	});
 });

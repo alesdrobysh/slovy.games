@@ -17,7 +17,11 @@ describe("PillButton", () => {
 
 	it("does not call onClick when disabled", async () => {
 		const onClick = jest.fn();
-		render(<PillButton onClick={onClick} disabled>Click</PillButton>);
+		render(
+			<PillButton onClick={onClick} disabled>
+				Click
+			</PillButton>
+		);
 		await userEvent.click(screen.getByRole("button"));
 		expect(onClick).not.toHaveBeenCalled();
 	});

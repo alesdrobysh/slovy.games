@@ -8,7 +8,11 @@ type GiveUpModalProps = {
 	onClose: () => void;
 };
 
-export default function GiveUpModal({ isOpen, onConfirm, onClose }: GiveUpModalProps) {
+export default function GiveUpModal({
+	isOpen,
+	onConfirm,
+	onClose,
+}: GiveUpModalProps) {
 	return (
 		<Modal isOpen={isOpen} onClose={onClose} title="Ўпэўнены?">
 			<p className="text-sm text-[var(--sly-text-muted)] mb-5">

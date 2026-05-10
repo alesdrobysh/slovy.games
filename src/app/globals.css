@@ -250,8 +250,6 @@ body {
 		color 0.25s ease;
 }
 
-
-
 /* Selection */
 ::selection {
 	background: var(--color-accent);

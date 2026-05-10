@@ -53,7 +53,7 @@ const DISTRIBUTION_RANGES: DistributionRange[] = [
 function getCountForRange(
 	distribution: Record<number, number>,
 	min: number,
-	max: number,
+	max: number
 ): number {
 	let count = 0;
 	for (const [attempts, value] of Object.entries(distribution)) {
@@ -166,7 +166,7 @@ function HistoryItem({ game }: HistoryItemProps) {
 }
 
 async function handleShare(
-	text: string,
+	text: string
 ): Promise<"share" | "clipboard" | false> {
 	if (navigator.share) {
 		try {

@@ -2,9 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-async function shareText(
-	text: string,
-): Promise<"share" | "clipboard" | false> {
+async function shareText(text: string): Promise<"share" | "clipboard" | false> {
 	if (navigator.share) {
 		try {
 			await navigator.share({ text });

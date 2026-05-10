@@ -64,7 +64,7 @@ export function BannerProvider({ children }: { children: React.ReactNode }) {
 
 	const value = useMemo(
 		() => ({ register, unregister, setWantsToShow, activeBannerId }),
-		[register, unregister, setWantsToShow, activeBannerId],
+		[register, unregister, setWantsToShow, activeBannerId]
 	);
 
 	return (

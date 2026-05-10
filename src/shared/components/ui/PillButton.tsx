@@ -11,8 +11,10 @@ export interface PillButtonProps {
 
 const variantClasses = {
 	primary: "bg-[var(--sly-accent)] text-white hover:opacity-90",
-	accent: "text-[var(--sly-accent)] border border-[var(--sly-accent)] hover:bg-[var(--sly-accent)]/5",
-	ghost: "text-[var(--sly-text-muted)] border border-[var(--sly-border)] hover:bg-[var(--sly-border)]",
+	accent:
+		"text-[var(--sly-accent)] border border-[var(--sly-accent)] hover:bg-[var(--sly-accent)]/5",
+	ghost:
+		"text-[var(--sly-text-muted)] border border-[var(--sly-border)] hover:bg-[var(--sly-border)]",
 } as const;
 
 const sizeClasses = {

@@ -17,7 +17,6 @@ describe("useCountdown", () => {
 
 	it("updates every second", () => {
 		const { result } = renderHook(() => useCountdown());
-		const firstValue = result.current;
 
 		act(() => jest.advanceTimersByTime(1000));
 

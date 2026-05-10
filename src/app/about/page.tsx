@@ -25,7 +25,10 @@ export default function AboutPage() {
 					Пра гульні
 				</h1>
 
-				<div className="space-y-8 text-sm leading-relaxed" style={{ color: "var(--color-text-muted)" }}>
+				<div
+					className="space-y-8 text-sm leading-relaxed"
+					style={{ color: "var(--color-text-muted)" }}
+				>
 					<section>
 						<h2
 							className="font-serif text-xl font-semibold mb-3"

@@ -45,16 +45,25 @@ export function Footer() {
 	return (
 		<footer
 			className="w-full border-t mt-auto text-xs sm:text-sm"
-			style={{ borderColor: "var(--sly-border)", color: "var(--sly-text-muted)" }}
+			style={{
+				borderColor: "var(--sly-border)",
+				color: "var(--sly-text-muted)",
+			}}
 		>
 			<div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4 sm:px-6">
 				<span>Зроблена з ❤️ да роднай мовы</span>
 				{isHub && (
 					<nav className="flex items-center gap-3">
-						<Link href="/about" className="hover:text-[var(--sly-accent)] transition-colors">
+						<Link
+							href="/about"
+							className="hover:text-[var(--sly-accent)] transition-colors"
+						>
 							Пра гульні
 						</Link>
-						<Link href="/privacy" className="hover:text-[var(--sly-accent)] transition-colors">
+						<Link
+							href="/privacy"
+							className="hover:text-[var(--sly-accent)] transition-colors"
+						>
 							Прыватнасць
 						</Link>
 					</nav>

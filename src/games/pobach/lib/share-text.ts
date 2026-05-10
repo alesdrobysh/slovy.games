@@ -44,7 +44,10 @@ export function generateShareText({
 	const emojiLines = colorGroups
 		.filter((group) => group.count > 0)
 		.map((group) => {
-			const scaledCount = Math.max(1, Math.round((group.count / maxGroupCount) * 10));
+			const scaledCount = Math.max(
+				1,
+				Math.round((group.count / maxGroupCount) * 10)
+			);
 			const emojiCount = Math.min(scaledCount, group.count, 10);
 			return `${group.emoji.repeat(emojiCount)} ${group.count}`;
 		})

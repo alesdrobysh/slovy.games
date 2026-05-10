@@ -20,7 +20,7 @@ export interface AnalyticsContextValue {
 }
 
 export const AnalyticsContext = createContext<AnalyticsContextValue | null>(
-	null,
+	null
 );
 
 export function useAnalytics(): AnalyticsContextValue {
@@ -74,7 +74,9 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
 	}, []);
 
 	return (
-		<AnalyticsContext.Provider value={{ isInitialized, hasConsented, giveConsent }}>
+		<AnalyticsContext.Provider
+			value={{ isInitialized, hasConsented, giveConsent }}
+		>
 			<PHProvider client={posthog}>{children}</PHProvider>
 		</AnalyticsContext.Provider>
 	);
