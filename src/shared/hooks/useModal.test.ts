@@ -7,6 +7,11 @@ describe("useModal", () => {
 		expect(result.current.isOpen).toBe(false);
 	});
 
+	it("respects initialOpen=true", () => {
+		const { result } = renderHook(() => useModal(true));
+		expect(result.current.isOpen).toBe(true);
+	});
+
 	it("opens and closes", () => {
 		const { result } = renderHook(() => useModal());
 
@@ -29,13 +34,15 @@ describe("useModal", () => {
 
 	it("provides ModalProps for component binding", () => {
 		const { result } = renderHook(() => useModal());
-		const props = result.current.ModalProps;
 
-		expect(props.isOpen).toBe(false);
-		expect(typeof props.onClose).toBe("function");
+		expect(result.current.ModalProps.isOpen).toBe(false);
+		expect(typeof result.current.ModalProps.onClose).toBe("function");
 
 		act(() => result.current.open());
-
 		expect(result.current.ModalProps.isOpen).toBe(true);
+		expect(result.current.isOpen).toBe(true);
+
+		act(() => result.current.ModalProps.onClose());
+		expect(result.current.isOpen).toBe(false);
 	});
 });
