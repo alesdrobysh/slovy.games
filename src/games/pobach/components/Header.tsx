@@ -1,9 +1,9 @@
 "use client";
 
-import { ArrowLeft, BarChart2, HelpCircle, Moon, Sun } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useTheme } from "@/shared/hooks/useTheme";
+import { HeaderIconButtons } from "@/shared/components/HeaderIconButtons";
 
 const PAGE_TITLES: Record<string, string> = {
 	"/": "ПОБАЧ",
@@ -17,7 +17,6 @@ const PAGE_TITLES: Record<string, string> = {
 };
 
 export default function Header({ onHelpClick }: { onHelpClick?: () => void }) {
-	const { theme, toggleTheme } = useTheme();
 	const pathname = usePathname();
 	const isHome = pathname === "/" || pathname === "/pobach";
 	const title = PAGE_TITLES[pathname] ?? "ПОБАЧ";
@@ -44,33 +43,7 @@ export default function Header({ onHelpClick }: { onHelpClick?: () => void }) {
 					</span>
 				)}
 
-				<div className="flex items-center gap-1">
-					{onHelpClick && (
-						<button
-							type="button"
-							onClick={onHelpClick}
-							aria-label="Як гуляць?"
-							className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[var(--border)] transition-colors text-[var(--text)]"
-						>
-							<HelpCircle size={18} />
-						</button>
-					)}
-					<Link
-						href="/pobach/stats"
-						aria-label="Статыстыка"
-						className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[var(--border)] transition-colors text-[var(--text)]"
-					>
-						<BarChart2 size={18} />
-					</Link>
-					<button
-						onClick={toggleTheme}
-						aria-label={`Пераключыць на ${theme === "light" ? "цёмную" : "светлую"} тэму`}
-						type="button"
-						className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[var(--border)] transition-colors text-[var(--text)]"
-					>
-						{theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
-					</button>
-				</div>
+				<HeaderIconButtons onHelpClick={onHelpClick} statsHref="/pobach/stats" />
 			</div>
 		</header>
 	);

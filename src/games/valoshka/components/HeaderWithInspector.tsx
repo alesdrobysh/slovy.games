@@ -1,9 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { HowToPlay } from "@/games/valoshka/components/HowToPlay";
 import { StorageInspector } from "@/games/valoshka/components/StorageInspector";
-import { ThemeToggle } from "@/games/valoshka/components/ThemeToggle";
 import { YesterdayModal } from "@/games/valoshka/components/YesterdayModal";
+import { HeaderIconButtons } from "@/shared/components/HeaderIconButtons";
 
 interface Props {
 	displayDate: string;
@@ -12,6 +13,7 @@ interface Props {
 
 export function HeaderWithInspector({ displayDate, currentDate }: Props) {
 	const [inspectorOpen, setInspectorOpen] = useState(false);
+	const [showHelp, setShowHelp] = useState(false);
 	const tapCountRef = useRef(0);
 	const tapTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -85,22 +87,13 @@ export function HeaderWithInspector({ displayDate, currentDate }: Props) {
 						{displayDate}
 					</span>
 
-					{/* Right: yesterday + stats link + theme toggle */}
-					<div className="flex-1 flex justify-end items-center gap-3">
+					{/* Right: yesterday + icon buttons */}
+					<div className="flex-1 flex justify-end items-center gap-2">
 						<YesterdayModal currentDate={currentDate} />
-						<a
-							href="/valoshka/stats"
-							style={{
-								color: "var(--text-muted)",
-								textDecoration: "none",
-								fontFamily: "var(--font-sans)",
-								fontSize: "13px",
-								fontWeight: "600",
-							}}
-						>
-							Статыстыка
-						</a>
-						<ThemeToggle />
+						<HeaderIconButtons
+							onHelpClick={() => setShowHelp(true)}
+							statsHref="/valoshka/stats"
+						/>
 					</div>
 				</div>
 			</header>
@@ -109,6 +102,13 @@ export function HeaderWithInspector({ displayDate, currentDate }: Props) {
 				open={inspectorOpen}
 				onClose={() => setInspectorOpen(false)}
 			/>
+
+			{showHelp && (
+				<HowToPlay
+					isOpen={showHelp}
+					onClose={() => setShowHelp(false)}
+				/>
+			)}
 		</>
 	);
 }

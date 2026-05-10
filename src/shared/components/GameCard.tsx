@@ -6,9 +6,20 @@ import type { GameInfo } from "@/shared/types";
 interface GameCardProps {
 	game: GameInfo;
 	hasPlayedToday: boolean;
+	/** Optional progress line shown below description, e.g. "12 слоў знойдзена" */
+	progressText?: string;
+	/** Custom CTA label, defaults to "Гуляць" */
+	ctaLabel?: string;
 }
 
-export function GameCard({ game, hasPlayedToday }: GameCardProps) {
+export function GameCard({
+	game,
+	hasPlayedToday,
+	progressText,
+	ctaLabel = "Гуляць",
+}: GameCardProps) {
+	const isCompleted = ctaLabel === "Вынік";
+
 	return (
 		<Link
 			href={game.path}
@@ -64,15 +75,24 @@ export function GameCard({ game, hasPlayedToday }: GameCardProps) {
 					{game.descriptionBel}
 				</p>
 
+				{progressText && (
+					<div
+						className="mt-3 text-sm font-medium"
+						style={{ color: "var(--color-text-muted)" }}
+					>
+						{progressText}
+					</div>
+				)}
+
 				<div className="mt-6">
 					<span
 						className="inline-flex items-center gap-1 text-sm font-semibold rounded-full px-4 py-2 transition-colors"
 						style={{
-							background: game.color,
-							color: "#fff",
+							background: isCompleted ? "var(--color-bg-surface)" : game.color,
+							color: isCompleted ? "var(--color-text)" : "#fff",
 						}}
 					>
-						Гуляць
+						{ctaLabel}
 						<svg
 							width="14"
 							height="14"
@@ -82,8 +102,8 @@ export function GameCard({ game, hasPlayedToday }: GameCardProps) {
 							strokeWidth="2"
 							strokeLinecap="round"
 							strokeLinejoin="round"
+							aria-hidden="true"
 						>
-							<title>Гуляць</title>
 							<line x1="5" y1="12" x2="19" y2="12" />
 							<polyline points="12 5 19 12 12 19" />
 						</svg>
