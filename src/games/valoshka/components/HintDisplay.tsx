@@ -23,8 +23,8 @@ export function HintDisplay({ hint, onCancel }: HintDisplayProps) {
 		<div
 			className="flex items-center gap-2 px-3 py-1.5 w-full max-w-sm"
 			style={{
-				background: "var(--hint-bg, rgba(91, 111, 168, 0.06))",
-				border: "1px solid var(--cornflower-border-subtle)",
+				background: "var(--sly-cornflower-bg-subtle, rgba(91, 111, 168, 0.06))",
+				border: "1px solid var(--sly-cornflower-border-subtle)",
 				borderRadius: "10px",
 			}}
 		>
@@ -35,7 +35,7 @@ export function HintDisplay({ hint, onCancel }: HintDisplayProps) {
 							<span
 								key={`${idx}-${c.char}`}
 								className="font-serif text-sm font-semibold"
-								style={{ color: "var(--text)", letterSpacing: "0.03em" }}
+								style={{ color: "var(--sly-text)", letterSpacing: "0.03em" }}
 							>
 								{c.char}
 							</span>
@@ -46,7 +46,7 @@ export function HintDisplay({ hint, onCancel }: HintDisplayProps) {
 								style={{
 									width: "8px",
 									height: "1px",
-									background: "var(--text-muted)",
+									background: "var(--sly-text-muted)",
 									opacity: 0.4,
 									borderRadius: "1px",
 									marginBottom: "3px",
@@ -58,7 +58,7 @@ export function HintDisplay({ hint, onCancel }: HintDisplayProps) {
 				</div>
 				<span
 					style={{
-						color: "var(--text-muted)",
+						color: "var(--sly-text-muted)",
 						opacity: 0.55,
 						fontSize: "9px",
 						letterSpacing: "0.06em",
@@ -80,8 +80,8 @@ export function HintDisplay({ hint, onCancel }: HintDisplayProps) {
 						height: "24px",
 						borderRadius: "50%",
 						background: "transparent",
-						border: "1px solid var(--border)",
-						color: "var(--text-muted)",
+						border: "1px solid var(--sly-border)",
+						color: "var(--sly-text-muted)",
 						cursor: "pointer",
 						opacity: 0.6,
 					}}

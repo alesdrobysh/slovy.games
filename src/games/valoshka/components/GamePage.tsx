@@ -305,12 +305,12 @@ export function GamePage({ puzzle }: GamePageProps) {
 	return (
 		<div
 			className="mx-auto max-w-5xl px-4 select-none"
-			style={{ fontFamily: "var(--font-sans)" }}
+			style={{ fontFamily: "var(--sly-font-sans)" }}
 		>
 			{/* Mobile: collapsible words toggle */}
 			<div
 				className="lg:hidden border-b py-2"
-				style={{ borderColor: "var(--border)" }}
+				style={{ borderColor: "var(--sly-border)" }}
 			>
 				<button
 					type="button"
@@ -319,8 +319,8 @@ export function GamePage({ puzzle }: GamePageProps) {
 						background: "none",
 						border: "none",
 						cursor: "pointer",
-						color: "var(--text-muted)",
-						fontFamily: "var(--font-sans)",
+						color: "var(--sly-text-muted)",
+						fontFamily: "var(--sly-font-sans)",
 						fontSize: "14px",
 						fontWeight: "600",
 						padding: "4px 0",
@@ -333,7 +333,7 @@ export function GamePage({ puzzle }: GamePageProps) {
 					{!wordsOpen && state.foundWords.length > 0 && (
 						<span
 							style={{
-								color: "var(--text-muted)",
+								color: "var(--sly-text-muted)",
 								fontWeight: "400",
 								marginLeft: "8px",
 							}}
@@ -430,14 +430,14 @@ export function GamePage({ puzzle }: GamePageProps) {
 								background: "none",
 								border: "none",
 								cursor: "pointer",
-								color: "var(--text-muted)",
-								fontFamily: "var(--font-sans)",
+								color: "var(--sly-text-muted)",
+								fontFamily: "var(--sly-font-sans)",
 								fontSize: "13px",
 								fontWeight: "500",
 								padding: "4px 8px",
 								marginTop: "4px",
 								textDecoration: "underline",
-								textDecorationColor: "var(--border)",
+								textDecorationColor: "var(--sly-border)",
 								textUnderlineOffset: "3px",
 							}}
 						>

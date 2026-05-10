@@ -26,24 +26,24 @@ export function StatsPage() {
 	];
 
 	return (
-		<main className="min-h-screen" style={{ background: "var(--bg)" }}>
+		<main className="min-h-screen" style={{ background: "var(--sly-bg)" }}>
 			<header
 				className="border-b px-6 py-4"
-				style={{ borderColor: "var(--border)" }}
+				style={{ borderColor: "var(--sly-border)" }}
 			>
 				<div className="mx-auto max-w-5xl flex items-center gap-4">
 					<a
 						href="/"
 						className="text-sm font-semibold"
-						style={{ color: "var(--text-muted)" }}
+						style={{ color: "var(--sly-text-muted)" }}
 					>
 						← Да гульні
 					</a>
 					<h1
 						className="text-3xl"
 						style={{
-							fontFamily: "var(--font-display)",
-							color: "var(--cornflower)",
+							fontFamily: "var(--sly-font-display)",
+							color: "var(--sly-cornflower)",
 						}}
 					>
 						Статыстыка

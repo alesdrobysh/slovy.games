@@ -19,9 +19,9 @@ export default function ValoshkaPage() {
 		<main
 			className="min-h-screen"
 			style={{
-				background: "var(--color-bg)",
+				background: "var(--sly-bg)",
 				backgroundImage:
-					"radial-gradient(ellipse 90% 55% at 50% 10%, var(--color-bg-card) 0%, var(--color-bg) 65%)",
+					"radial-gradient(ellipse 90% 55% at 50% 10%, var(--sly-bg-card) 0%, var(--sly-bg) 65%)",
 				backgroundAttachment: "fixed",
 				minHeight: "100lvh",
 				overflowX: "hidden",

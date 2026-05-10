@@ -42,9 +42,9 @@ export function InputDisplay({
 						key={`err-${errorKey}`}
 						className="petal-rise rounded-full px-4 py-1.5 text-sm font-semibold"
 						style={{
-							background: "var(--error)",
+							background: "var(--sly-red-500)",
 							color: "#fff",
-							fontFamily: "var(--font-sans)",
+							fontFamily: "var(--sly-font-sans)",
 							letterSpacing: "0.01em",
 							zIndex: 100,
 						}}
@@ -56,9 +56,9 @@ export function InputDisplay({
 						key={`suc-${successKey}`}
 						className="petal-rise rounded-full px-4 py-1.5 text-sm font-semibold"
 						style={{
-							background: "var(--cornflower)",
+							background: "var(--sly-cornflower)",
 							color: "#fff",
-							fontFamily: "var(--font-sans)",
+							fontFamily: "var(--sly-font-sans)",
 							letterSpacing: "0.01em",
 							zIndex: 100,
 						}}
@@ -80,7 +80,7 @@ export function InputDisplay({
 						style={{
 							width: "2px",
 							height: "44px",
-							background: "var(--cornflower)",
+							background: "var(--sly-cornflower)",
 							display: "inline-block",
 							borderRadius: "1px",
 						}}
@@ -94,9 +94,9 @@ export function InputDisplay({
 								<span
 									key={posKey}
 									style={{
-										fontFamily: "var(--font-display)",
+										fontFamily: "var(--sly-font-display)",
 										fontSize: "40px",
-										color: isCenter ? "var(--cornflower)" : "var(--text)",
+										color: isCenter ? "var(--sly-cornflower)" : "var(--sly-text)",
 										fontWeight: "400",
 										lineHeight: 1,
 										letterSpacing: "0.01em",

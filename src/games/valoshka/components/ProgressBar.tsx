@@ -69,12 +69,12 @@ export function ProgressBar({
 					<span
 						className="text-sm font-semibold tabular-nums"
 						style={{
-							color: "var(--text-muted)",
-							fontFamily: "var(--font-sans)",
+							color: "var(--sly-text-muted)",
+							fontFamily: "var(--sly-font-sans)",
 						}}
 					>
-						<span style={{ color: "var(--text)" }}>{score}</span>
-						<span style={{ margin: "0 5px", color: "var(--border)" }}>/</span>
+						<span style={{ color: "var(--sly-text)" }}>{score}</span>
+						<span style={{ margin: "0 5px", color: "var(--sly-border)" }}>/</span>
 						{maxScore}
 					</span>
 				</div>
@@ -95,14 +95,14 @@ export function ProgressBar({
 					{/* Track */}
 					<div
 						className="w-full rounded-full overflow-hidden"
-						style={{ height: "3px", background: "var(--border)" }}
+						style={{ height: "3px", background: "var(--sly-border)" }}
 					>
 						<div
 							className="h-full rounded-full origin-left"
 							style={{
 								transform: `scaleX(${pct / 100})`,
 								background:
-									"linear-gradient(90deg, var(--cornflower-dark), var(--cornflower-light))",
+									"linear-gradient(90deg, var(--sly-cornflower-dark), var(--sly-cornflower-light))",
 								transition: "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
 							}}
 						/>
@@ -127,9 +127,9 @@ export function ProgressBar({
 									width: isCurrent ? "12px" : "7px",
 									height: isCurrent ? "12px" : "7px",
 									borderRadius: "50%",
-									background: isActive ? "var(--cornflower)" : "var(--border)",
+									background: isActive ? "var(--sly-cornflower)" : "var(--sly-border)",
 									border: isCurrent
-										? "2px solid var(--cornflower-dark)"
+										? "2px solid var(--sly-cornflower-dark)"
 										: "none",
 									boxShadow: isCurrent
 										? "0 0 8px rgba(245, 168, 24, 0.6)"

@@ -18,8 +18,8 @@ export function FoundWordsList({
 		<div
 			className="flex flex-col h-full"
 			style={{
-				background: "var(--bg-card)",
-				border: "1px solid var(--border)",
+				background: "var(--sly-bg-card)",
+				border: "1px solid var(--sly-border)",
 				borderRadius: "14px",
 				padding: "20px",
 				minHeight: "200px",
@@ -28,13 +28,13 @@ export function FoundWordsList({
 			{/* Header */}
 			<div
 				className="flex items-center gap-2 mb-4 pb-3"
-				style={{ borderBottom: "1px solid var(--border)" }}
+				style={{ borderBottom: "1px solid var(--sly-border)" }}
 			>
 				<span
 					className="text-sm font-semibold"
 					style={{
-						color: "var(--text)",
-						fontFamily: "var(--font-sans)",
+						color: "var(--sly-text)",
+						fontFamily: "var(--sly-font-sans)",
 					}}
 				>
 					{count === 0
@@ -47,9 +47,9 @@ export function FoundWordsList({
 					<span
 						className="ml-auto rounded-full px-2.5 py-0.5 text-xs font-bold tabular-nums"
 						style={{
-							background: "var(--cornflower)",
-							color: "var(--cell-letter-center)",
-							fontFamily: "var(--font-sans)",
+							background: "var(--sly-cornflower)",
+							color: "var(--sly-cell-letter-center)",
+							fontFamily: "var(--sly-font-sans)",
 						}}
 					>
 						{count}
@@ -63,8 +63,8 @@ export function FoundWordsList({
 					<p
 						className="text-sm italic"
 						style={{
-							color: "var(--text-muted)",
-							fontFamily: "var(--font-sans)",
+							color: "var(--sly-text-muted)",
+							fontFamily: "var(--sly-font-sans)",
 						}}
 					>
 						Пачніце ўводзіць словы...
@@ -79,12 +79,12 @@ export function FoundWordsList({
 									key={word}
 									className={`${isNew ? "word-pop" : ""} group`}
 									style={{
-										fontFamily: "var(--font-sans)",
+										fontFamily: "var(--sly-font-sans)",
 										fontSize: "14px",
 										fontWeight: isPangram ? "700" : "400",
-										color: isPangram ? "var(--cornflower)" : "var(--text)",
+										color: isPangram ? "var(--sly-cornflower)" : "var(--sly-text)",
 										padding: "5px 0",
-										borderBottom: "1px solid var(--border)",
+										borderBottom: "1px solid var(--sly-border)",
 										display: "flex",
 										alignItems: "center",
 										gap: "8px",
@@ -95,9 +95,9 @@ export function FoundWordsList({
 										<span
 											style={{
 												fontSize: "9px",
-												background: "var(--cornflower-bg-subtle)",
-												color: "var(--cornflower)",
-												border: "1px solid var(--cornflower-border-subtle)",
+												background: "var(--sly-cornflower-bg-subtle)",
+												color: "var(--sly-cornflower)",
+												border: "1px solid var(--sly-cornflower-border-subtle)",
 												borderRadius: "4px",
 												padding: "1px 6px",
 												fontWeight: "700",
@@ -114,7 +114,7 @@ export function FoundWordsList({
 										rel="noreferrer"
 										className="ml-auto opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
 										style={{
-											color: "var(--text-muted)",
+											color: "var(--sly-text-muted)",
 											fontSize: "12px",
 											lineHeight: 1,
 											textDecoration: "none",

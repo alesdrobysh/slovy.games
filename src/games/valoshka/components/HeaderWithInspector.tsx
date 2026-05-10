@@ -49,7 +49,7 @@ export function HeaderWithInspector({ displayDate, currentDate }: Props) {
 		<>
 			<header
 				className="border-b px-4 py-2 sm:px-6 sm:py-4"
-				style={{ borderColor: "var(--border)" }}
+				style={{ borderColor: "var(--sly-border)" }}
 			>
 				<div className="mx-auto flex max-w-5xl items-center">
 					{/* Left: title group */}
@@ -58,8 +58,8 @@ export function HeaderWithInspector({ displayDate, currentDate }: Props) {
 						<h1
 							className="text-3xl tracking-tight"
 							style={{
-								fontFamily: "var(--font-display)",
-								color: "var(--cornflower)",
+								fontFamily: "var(--sly-font-display)",
+								color: "var(--sly-cornflower)",
 								letterSpacing: "-0.01em",
 								userSelect: "none",
 							}}
@@ -70,9 +70,9 @@ export function HeaderWithInspector({ displayDate, currentDate }: Props) {
 						<span
 							className="hidden sm:inline text-sm"
 							style={{
-								fontFamily: "var(--font-sans)",
+								fontFamily: "var(--sly-font-sans)",
 								fontStyle: "italic",
-								color: "var(--text-muted)",
+								color: "var(--sly-text-muted)",
 							}}
 						>
 							Слоўная гульня
@@ -82,7 +82,7 @@ export function HeaderWithInspector({ displayDate, currentDate }: Props) {
 					{/* Center: date */}
 					<span
 						className="hidden sm:block text-sm font-medium tabular-nums absolute left-1/2 -translate-x-1/2"
-						style={{ color: "var(--text-muted)" }}
+						style={{ color: "var(--sly-text-muted)" }}
 					>
 						{displayDate}
 					</span>
