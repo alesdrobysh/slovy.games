@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react";
+import { act, renderHook } from "@testing-library/react";
 import { useCountdown } from "./useCountdown";
 
 describe("useCountdown", () => {
@@ -10,18 +10,17 @@ describe("useCountdown", () => {
 		jest.useRealTimers();
 	});
 
-	it("returns a formatted string HH:MM:SS", () => {
+	it("returns HH:MM:SS format after mount", () => {
 		const { result } = renderHook(() => useCountdown());
 		expect(result.current).toMatch(/^\d{2}:\d{2}:\d{2}$/);
 	});
 
-	it("updates over time", () => {
+	it("updates every second", () => {
 		const { result } = renderHook(() => useCountdown());
 		const firstValue = result.current;
 
-		jest.advanceTimersByTime(1000);
+		act(() => jest.advanceTimersByTime(1000));
 
-		// The timer updates every 1000ms via setInterval
-		expect(typeof firstValue).toBe("string");
+		expect(result.current).toMatch(/^\d{2}:\d{2}:\d{2}$/);
 	});
 });

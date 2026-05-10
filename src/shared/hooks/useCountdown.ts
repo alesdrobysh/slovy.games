@@ -18,9 +18,7 @@ function formatDuration(ms: number): string {
 }
 
 export function useCountdown(): string {
-	const [timeLeft, setTimeLeft] = useState(() =>
-		formatDuration(msUntilNextMidnightUtc()),
-	);
+	const [timeLeft, setTimeLeft] = useState("--:--:--");
 
 	useEffect(() => {
 		function update() {
