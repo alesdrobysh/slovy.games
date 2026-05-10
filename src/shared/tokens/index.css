@@ -241,19 +241,6 @@ html.dark .theme-pobach {
 }
 
 /* Valoshka game tokens */
-.theme-valoshka {
-  --sly-cornflower:              var(--sly-blue-500);
-  --sly-cornflower-dark:         var(--sly-blue-600);
-  --sly-cornflower-light:        var(--sly-blue-400);
-  --sly-cornflower-bg-subtle:    rgba(91, 111, 168, 0.1);
-  --sly-cornflower-border-subtle: rgba(91, 111, 168, 0.22);
-  --sly-cell-center:        #252850;
-  --sly-cell-outer:         #7b9cf0;
-  --sly-cell-center-hover:  #2a3670;
-  --sly-cell-outer-hover:   #6a88e0;
-  --sly-cell-letter-center: #fff;
-  --sly-cell-letter-outer:  #fff;
-}
 html:not(.dark) .theme-valoshka {
   --sly-cornflower:              var(--sly-blue-500);
   --sly-cornflower-dark:         var(--sly-blue-600);
@@ -334,6 +321,7 @@ html.dark .theme-valoshka {
   --attempts-50: var(--sly-attempts-50);
   --attempts-100: var(--sly-attempts-100);
   --attempts-many: var(--sly-attempts-many);
+  --card: var(--sly-card-override);
 }
 html.dark .theme-pobach {
   --rank-1: var(--sly-rank-1);
@@ -377,5 +365,5 @@ html.dark .theme-valoshka {
   --cell-center-hover: var(--sly-cell-center-hover);
   --cell-outer-hover: var(--sly-cell-outer-hover);
   --cell-letter-center: var(--sly-cell-letter-center);
-  --cell-letter-outer: var(--sly-cell-outer);
+  --cell-letter-outer: var(--sly-cell-letter-outer);
 }
