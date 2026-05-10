@@ -1,8 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { RankingModal } from "@/games/valoshka/components/RankingModal";
 import { getRank, getRankIndex, RANKS } from "@/games/valoshka/lib/scoring";
+import { Badge } from "@/shared/components/ui/Badge";
+import { useShare } from "@/shared/hooks/useShare";
+
+function buildShareText(date: string, rank: { name: string }, score: number, rankIdx: number): string {
+	const [y, m, d] = date.split("-");
+	const dateStr = `${d}.${m}.${y}`;
+	const visibleRanks = rankIdx < RANKS.length - 1 ? rankIdx + 1 : RANKS.length;
+	const dots = Array.from({ length: visibleRanks }, (_, i) =>
+		i <= rankIdx ? "🟡" : "⬜"
+	).join("");
+	return `Валошка ${dateStr}\nРанг: ${rank.name} (${score} пт)\n${dots}`;
+}
 
 interface ProgressBarProps {
 	score: number;
@@ -22,23 +34,9 @@ export function ProgressBar({
 	const rank = getRank(score, maxScore);
 	const rankIdx = getRankIndex(score, maxScore);
 	const pct = maxScore > 0 ? Math.min((score / maxScore) * 100, 100) : 0;
-	const [copied, setCopied] = useState(false);
 	const [showRanking, setShowRanking] = useState(false);
-
-	function handleShare() {
-		const [y, m, d] = date.split("-");
-		const dateStr = `${d}.${m}.${y}`;
-		const visibleRanks =
-			rankIdx < RANKS.length - 1 ? rankIdx + 1 : RANKS.length;
-		const dots = Array.from({ length: visibleRanks }, (_, i) =>
-			i <= rankIdx ? "🟡" : "⬜"
-		).join("");
-		const text = `Валошка ${dateStr}\nРанг: ${rank.name} (${score} пт)\n${dots}`;
-		navigator.clipboard.writeText(text).then(() => {
-			setCopied(true);
-			setTimeout(() => setCopied(false), 1500);
-		});
-	}
+	const shareText = useMemo(() => buildShareText(date, rank, score, rankIdx), [date, rank.name, score, rankIdx]);
+	const { share, showToast } = useShare(shareText);
 
 	return (
 		<>
@@ -49,34 +47,23 @@ export function ProgressBar({
 						<button
 							type="button"
 							onClick={() => setShowRanking(true)}
-							className="text-xs font-bold tracking-widest uppercase rounded-full px-3 py-1"
-							style={{
-								background: "var(--cornflower-bg-subtle)",
-								color: "var(--cornflower)",
-								border: "1px solid var(--cornflower-border-subtle)",
-								fontFamily: "var(--font-sans)",
-								cursor: "pointer",
-							}}
+							className="cursor-pointer"
 						>
-							{rank.name}
+							<Badge>{rank.name}</Badge>
 						</button>
 						<button
 							type="button"
-							onClick={handleShare}
+							onClick={share}
+							className="text-xs font-semibold py-0.5 px-1.5 rounded transition-colors"
 							style={{
 								background: "none",
 								border: "none",
 								cursor: "pointer",
-								color: copied ? "var(--cornflower)" : "var(--text-muted)",
-								fontFamily: "var(--font-sans)",
-								fontSize: "12px",
-								fontWeight: "600",
-								padding: "2px 6px",
-								borderRadius: "4px",
-								transition: "color 0.2s",
+								color: showToast ? "var(--sly-cornflower)" : "var(--sly-text-muted)",
+								fontFamily: "var(--sly-font-sans)",
 							}}
 						>
-							{copied ? "Скапіравана!" : "Падзяліцца"}
+							{showToast ? "Скапіравана!" : "Падзяліцца"}
 						</button>
 					</div>
 					<span
