@@ -340,6 +340,8 @@ html.dark .theme-pobach {
   --cell-outer-hover: var(--sly-cell-outer-hover);
   --cell-letter-center: var(--sly-cell-letter-center);
   --cell-letter-outer: var(--sly-cell-letter-outer);
+  --error: var(--sly-red-500);
+  --hint-bg: var(--sly-cornflower-bg-subtle);
 }
 html.dark .theme-valoshka {
   --cornflower: var(--sly-cornflower);
@@ -353,4 +355,6 @@ html.dark .theme-valoshka {
   --cell-outer-hover: var(--sly-cell-outer-hover);
   --cell-letter-center: var(--sly-cell-letter-center);
   --cell-letter-outer: var(--sly-cell-letter-outer);
+  --error: var(--sly-red-500);
+  --hint-bg: var(--sly-cornflower-bg-subtle);
 }
