@@ -96,7 +96,9 @@ export function InputDisplay({
 									style={{
 										fontFamily: "var(--sly-font-display)",
 										fontSize: "40px",
-										color: isCenter ? "var(--sly-cornflower)" : "var(--sly-text)",
+										color: isCenter
+											? "var(--sly-cornflower)"
+											: "var(--sly-text)",
 										fontWeight: "400",
 										lineHeight: 1,
 										letterSpacing: "0.01em",

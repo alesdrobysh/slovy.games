@@ -6,7 +6,12 @@ import { getRank, getRankIndex, RANKS } from "@/games/valoshka/lib/scoring";
 import { Badge } from "@/shared/components/ui/Badge";
 import { useShare } from "@/shared/hooks/useShare";
 
-function buildShareText(date: string, rank: { name: string }, score: number, rankIdx: number): string {
+function buildShareText(
+	date: string,
+	rank: { name: string },
+	score: number,
+	rankIdx: number
+): string {
 	const [y, m, d] = date.split("-");
 	const dateStr = `${d}.${m}.${y}`;
 	const visibleRanks = rankIdx < RANKS.length - 1 ? rankIdx + 1 : RANKS.length;
@@ -35,7 +40,10 @@ export function ProgressBar({
 	const rankIdx = getRankIndex(score, maxScore);
 	const pct = maxScore > 0 ? Math.min((score / maxScore) * 100, 100) : 0;
 	const [showRanking, setShowRanking] = useState(false);
-	const shareText = useMemo(() => buildShareText(date, rank, score, rankIdx), [date, rank.name, score, rankIdx]);
+	const shareText = useMemo(
+		() => buildShareText(date, rank, score, rankIdx),
+		[date, rank, score, rankIdx]
+	);
 	const { share, showToast } = useShare(shareText);
 
 	return (
@@ -59,7 +67,9 @@ export function ProgressBar({
 								background: "none",
 								border: "none",
 								cursor: "pointer",
-								color: showToast ? "var(--sly-cornflower)" : "var(--sly-text-muted)",
+								color: showToast
+									? "var(--sly-cornflower)"
+									: "var(--sly-text-muted)",
 								fontFamily: "var(--sly-font-sans)",
 							}}
 						>
@@ -74,7 +84,9 @@ export function ProgressBar({
 						}}
 					>
 						<span style={{ color: "var(--sly-text)" }}>{score}</span>
-						<span style={{ margin: "0 5px", color: "var(--sly-border)" }}>/</span>
+						<span style={{ margin: "0 5px", color: "var(--sly-border)" }}>
+							/
+						</span>
 						{maxScore}
 					</span>
 				</div>
@@ -127,7 +139,9 @@ export function ProgressBar({
 									width: isCurrent ? "12px" : "7px",
 									height: isCurrent ? "12px" : "7px",
 									borderRadius: "50%",
-									background: isActive ? "var(--sly-cornflower)" : "var(--sly-border)",
+									background: isActive
+										? "var(--sly-cornflower)"
+										: "var(--sly-border)",
 									border: isCurrent
 										? "2px solid var(--sly-cornflower-dark)"
 										: "none",

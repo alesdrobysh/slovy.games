@@ -107,8 +107,8 @@ export function YesterdayModal({ currentDate }: YesterdayModalProps) {
 							color: "var(--sly-text-muted)",
 						}}
 					>
-						Вы знайшлі {progress.foundWords.length} з{" "}
-						{puzzle.answers.length} слоў ({progress.score} пт)
+						Вы знайшлі {progress.foundWords.length} з {puzzle.answers.length}{" "}
+						слоў ({progress.score} пт)
 					</div>
 				)}
 
@@ -190,9 +190,7 @@ export function YesterdayModal({ currentDate }: YesterdayModalProps) {
 														</span>
 														<button
 															type="button"
-															onClick={() =>
-																handleConfirm(word, puzzle.date)
-															}
+															onClick={() => handleConfirm(word, puzzle.date)}
 															style={{
 																background: "none",
 																border: "none",
@@ -252,11 +250,7 @@ export function YesterdayModal({ currentDate }: YesterdayModalProps) {
 															: "Адзначыць як непажаданае"
 													}
 												>
-													{fs === "sent"
-														? "✓"
-														: fs === "sending"
-															? "…"
-															: "⚑"}
+													{fs === "sent" ? "✓" : fs === "sending" ? "…" : "⚑"}
 												</button>
 											);
 										})()}

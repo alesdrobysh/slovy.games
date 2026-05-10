@@ -82,7 +82,9 @@ export function FoundWordsList({
 										fontFamily: "var(--sly-font-sans)",
 										fontSize: "14px",
 										fontWeight: isPangram ? "700" : "400",
-										color: isPangram ? "var(--sly-cornflower)" : "var(--sly-text)",
+										color: isPangram
+											? "var(--sly-cornflower)"
+											: "var(--sly-text)",
 										padding: "5px 0",
 										borderBottom: "1px solid var(--sly-border)",
 										display: "flex",

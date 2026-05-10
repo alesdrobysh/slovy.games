@@ -33,7 +33,9 @@ export function HowToPlay({ onClose, isOpen }: HowToPlayProps) {
 							<li>4-літарныя словы: 1 бал</li>
 							<li>Словы даўжэй за 4 літары: па 1 балу за кожную літару</li>
 							<li>
-								<strong className="text-[var(--sly-cornflower)]">Панграмы</strong>{" "}
+								<strong className="text-[var(--sly-cornflower)]">
+									Панграмы
+								</strong>{" "}
 								(выкарыстоўваюць усе 7 літар): +7 бонусных балаў
 							</li>
 						</ul>

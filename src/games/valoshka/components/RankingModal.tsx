@@ -180,7 +180,9 @@ export function RankingModal({
 									{r.name}
 								</span>
 							</div>
-							<span style={{ fontSize: "14px", color: "var(--sly-text-muted)" }}>
+							<span
+								style={{ fontSize: "14px", color: "var(--sly-text-muted)" }}
+							>
 								{pts}
 							</span>
 						</div>

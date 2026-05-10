@@ -41,7 +41,14 @@ export function ActionButtons({
 				Выдаліць
 			</PillButton>
 
-			<PillButton variant="ghost" size="md" onClick={onShuffle} icon={<ShuffleIcon />}>{""}</PillButton>
+			<PillButton
+				variant="ghost"
+				size="md"
+				onClick={onShuffle}
+				icon={<ShuffleIcon />}
+			>
+				{""}
+			</PillButton>
 
 			<PillButton variant="primary" size="md" onClick={onSubmit}>
 				Увесці
