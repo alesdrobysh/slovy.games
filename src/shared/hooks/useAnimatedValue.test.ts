@@ -41,12 +41,13 @@ describe("useAnimatedValue", () => {
 		// Initially 0
 		expect(result.current).toBe(0);
 
-		// After full animation duration
-		act(() => {
-			jest.advanceTimersByTime(1000);
-		});
+		// At ~halfway, should be between 0 and target
+		act(() => { jest.advanceTimersByTime(450); });
+		expect(result.current).toBeGreaterThan(0);
+		expect(result.current).toBeLessThan(42);
 
-		// Should be at or very close to target
+		// After full animation duration
+		act(() => { jest.advanceTimersByTime(600); });
 		expect(result.current).toBe(42);
 	});
 
@@ -69,5 +70,11 @@ describe("useAnimatedValue", () => {
 			jest.advanceTimersByTime(1000);
 		});
 		expect(result.current).toBe(20);
+	});
+
+	it("cleans up animation frame on unmount", () => {
+		const { unmount } = renderHook(() => useAnimatedValue(100));
+		unmount();
+		expect(cancelAnimationFrame).toHaveBeenCalled();
 	});
 });
