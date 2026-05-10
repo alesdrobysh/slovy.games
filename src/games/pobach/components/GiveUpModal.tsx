@@ -1,16 +1,17 @@
 "use client";
 
-import Modal from "./Modal";
+import { Modal } from "@/shared/components/ui/Modal";
 
 type GiveUpModalProps = {
+	isOpen: boolean;
 	onConfirm: () => void;
 	onClose: () => void;
 };
 
-export default function GiveUpModal({ onConfirm, onClose }: GiveUpModalProps) {
+export default function GiveUpModal({ isOpen, onConfirm, onClose }: GiveUpModalProps) {
 	return (
-		<Modal onClose={onClose} title="Ўпэўнены?">
-			<p className="text-sm text-[var(--text-muted)] mb-5">
+		<Modal isOpen={isOpen} onClose={onClose} title="Ўпэўнены?">
+			<p className="text-sm text-[var(--sly-text-muted)] mb-5">
 				Вы сапраўды хочаце здацца? Гэта скіне вашу бягучую серыю перамог.
 			</p>
 

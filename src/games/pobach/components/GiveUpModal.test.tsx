@@ -17,7 +17,7 @@ describe("GiveUpModal Component", () => {
 	});
 
 	it("should render modal with correct content", () => {
-		render(<GiveUpModal onConfirm={mockOnConfirm} onClose={mockOnClose} />);
+		render(<GiveUpModal isOpen={true} onConfirm={mockOnConfirm} onClose={mockOnClose} />);
 
 		expect(screen.getByText("Ўпэўнены?")).toBeInTheDocument();
 		expect(
@@ -28,7 +28,7 @@ describe("GiveUpModal Component", () => {
 	});
 
 	it("should render confirm and cancel buttons", () => {
-		render(<GiveUpModal onConfirm={mockOnConfirm} onClose={mockOnClose} />);
+		render(<GiveUpModal isOpen={true} onConfirm={mockOnConfirm} onClose={mockOnClose} />);
 
 		const confirmButton = screen.getByRole("button", { name: "Здацца" });
 		const cancelButton = screen.getByRole("button", { name: "Не" });
@@ -39,7 +39,7 @@ describe("GiveUpModal Component", () => {
 
 	it("should call onConfirm when confirm button is clicked", async () => {
 		const user = userEvent.setup();
-		render(<GiveUpModal onConfirm={mockOnConfirm} onClose={mockOnClose} />);
+		render(<GiveUpModal isOpen={true} onConfirm={mockOnConfirm} onClose={mockOnClose} />);
 
 		const confirmButton = screen.getByRole("button", { name: "Здацца" });
 		await user.click(confirmButton);
@@ -50,7 +50,7 @@ describe("GiveUpModal Component", () => {
 
 	it("should call onClose when cancel button is clicked", async () => {
 		const user = userEvent.setup();
-		render(<GiveUpModal onConfirm={mockOnConfirm} onClose={mockOnClose} />);
+		render(<GiveUpModal isOpen={true} onConfirm={mockOnConfirm} onClose={mockOnClose} />);
 
 		const cancelButton = screen.getByRole("button", { name: "Не" });
 		await user.click(cancelButton);
@@ -60,7 +60,7 @@ describe("GiveUpModal Component", () => {
 	});
 
 	it("should have proper button styling and accessibility", () => {
-		render(<GiveUpModal onConfirm={mockOnConfirm} onClose={mockOnClose} />);
+		render(<GiveUpModal isOpen={true} onConfirm={mockOnConfirm} onClose={mockOnClose} />);
 
 		const confirmButton = screen.getByRole("button", { name: "Здацца" });
 		const cancelButton = screen.getByRole("button", { name: "Не" });
@@ -78,7 +78,7 @@ describe("GiveUpModal Component", () => {
 
 	it("should have proper focus management with hover states", async () => {
 		const user = userEvent.setup();
-		render(<GiveUpModal onConfirm={mockOnConfirm} onClose={mockOnClose} />);
+		render(<GiveUpModal isOpen={true} onConfirm={mockOnConfirm} onClose={mockOnClose} />);
 
 		const confirmButton = screen.getByRole("button", { name: "Здацца" });
 

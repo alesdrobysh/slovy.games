@@ -8,7 +8,7 @@ import GuessCard from "@/games/pobach/components/GuessCard";
 import GuessInput from "@/games/pobach/components/GuessInput";
 import GuessList from "@/games/pobach/components/GuessList";
 import Header from "@/games/pobach/components/Header";
-import Modal from "@/games/pobach/components/Modal";
+import { Modal } from "@/shared/components/ui/Modal";
 import RulesComponent from "@/games/pobach/components/RulesComponent";
 import { useGame } from "@/games/pobach/hooks/useGame";
 import { getCurrentDayIndex } from "@/games/pobach/lib/storage";
@@ -98,18 +98,15 @@ export default function PobachPage() {
 				)}
 			</div>
 
-			{showHelp && (
-				<Modal title="Як гуляць?" onClose={() => setShowHelp(false)}>
-					<RulesComponent />
-				</Modal>
-			)}
+			<Modal isOpen={showHelp} title="Як гуляць?" onClose={() => setShowHelp(false)}>
+				<RulesComponent />
+			</Modal>
 
-			{showGiveUp && (
-				<GiveUpModal
-					onConfirm={handleGiveUpConfirm}
-					onClose={() => setShowGiveUp(false)}
-				/>
-			)}
+			<GiveUpModal
+				isOpen={showGiveUp}
+				onConfirm={handleGiveUpConfirm}
+				onClose={() => setShowGiveUp(false)}
+			/>
 
 			<div className="w-full max-w-[600px] mx-auto px-4">
 				<Footer />
