@@ -12,7 +12,7 @@ export function Toast({ message, visible, position = "top" }: ToastProps) {
 	return (
 		<div
 			aria-live="polite"
-			className={`absolute ${positionClass} left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-lg bg-[var(--sly-text)] text-[var(--sly-bg)] text-xs font-medium whitespace-nowrap shadow-lg`}
+			className={`absolute ${positionClass} left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-lg bg-ink text-paper text-xs font-medium whitespace-nowrap shadow-lg`}
 		>
 			{message}
 		</div>

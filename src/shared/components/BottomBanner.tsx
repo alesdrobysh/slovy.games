@@ -55,8 +55,8 @@ export function BottomBanner({
 			aria-hidden={!isVisible}
 			className={`${themeClass} fixed bottom-0 left-0 right-0 z-40 transition-all duration-300 ${isVisible ? "translate-y-0 opacity-100 visible" : "translate-y-full opacity-0 invisible"}`}
 		>
-			<div className="w-full bg-[var(--sly-bg-card)] border-t border-[var(--sly-border)] px-5 py-4 flex items-center justify-between gap-4">
-				<p className="text-sm text-[var(--sly-text-muted)] flex-1">{message}</p>
+			<div className="w-full bg-card border-t border-rule px-5 py-4 flex items-center justify-between gap-4">
+				<p className="text-sm text-ink-muted flex-1">{message}</p>
 				<button
 					ref={buttonRef}
 					onClick={onAction}

@@ -44,7 +44,7 @@ export function Modal({
 		<div
 			onClick={onClose}
 			role="presentation"
-			className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--sly-bg)]/70 backdrop-blur-sm p-4"
+			className="fixed inset-0 z-50 flex items-center justify-center bg-paper/70 backdrop-blur-sm p-4"
 		>
 			{/* biome-ignore lint/a11y/useKeyWithClickEvents: stopPropagation only */}
 			<div
@@ -52,14 +52,14 @@ export function Modal({
 				role="dialog"
 				aria-modal="true"
 				aria-labelledby={title ? "modal-title" : undefined}
-				className="bg-[var(--sly-bg-card)] border border-[var(--sly-border)] rounded-2xl shadow-2xl w-full overflow-y-auto"
+				className="bg-card ring-1 ring-rule rounded-2xl shadow-2xl w-full overflow-y-auto"
 				style={{ maxWidth, maxHeight: "90vh" }}
 			>
 				{title && (
-					<div className="flex items-center justify-between px-6 py-4 border-b border-[var(--sly-border)]">
+					<div className="flex items-center justify-between px-6 py-4 border-b border-rule">
 						<h2
 							id="modal-title"
-							className="[font-family:var(--sly-font-display)] text-xl font-semibold text-[var(--sly-text)]"
+							className="font-display text-xl font-semibold text-ink"
 						>
 							{title}
 						</h2>
@@ -67,7 +67,7 @@ export function Modal({
 							onClick={onClose}
 							aria-label="Закрыць"
 							type="button"
-							className="w-8 h-8 flex items-center justify-center rounded-full text-[var(--sly-text-muted)] hover:bg-[var(--sly-border)] transition-colors text-lg leading-none"
+							className="w-8 h-8 flex items-center justify-center rounded-full text-ink-muted hover:bg-rule transition-colors"
 						>
 							<X size={18} aria-hidden="true" />
 						</button>

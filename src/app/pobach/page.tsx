@@ -2,16 +2,14 @@
 
 import { useState } from "react";
 import FinishCard from "@/games/pobach/components/FinishCard";
-import { Footer } from "@/shared/components/Footer";
 import GiveUpModal from "@/games/pobach/components/GiveUpModal";
 import GuessCard from "@/games/pobach/components/GuessCard";
 import GuessInput from "@/games/pobach/components/GuessInput";
 import GuessList from "@/games/pobach/components/GuessList";
 import Header from "@/games/pobach/components/Header";
-import { Modal } from "@/shared/components/ui/Modal";
 import RulesComponent from "@/games/pobach/components/RulesComponent";
 import { useGame } from "@/games/pobach/hooks/useGame";
-import { getCurrentDayIndex } from "@/games/pobach/lib/storage";
+import { Modal } from "@/shared/components/ui/Modal";
 
 export default function PobachPage() {
 	const {
@@ -39,33 +37,50 @@ export default function PobachPage() {
 		handleGiveUp();
 	};
 
+	const isFinished = won || gameOver;
+	const sortedGuesses = [...guesses].sort((a, b) => a.rank - b.rank);
+	const bestRank = sortedGuesses[0]?.rank ?? null;
+
 	return (
-		<main className="min-h-screen flex flex-col">
+		<div className="min-h-screen flex flex-col">
 			<Header onHelpClick={() => setShowHelp(true)} />
 
-			<div className="flex-1 w-full max-w-[600px] mx-auto px-4 pb-20 pt-8 gap-y-6 flex flex-col">
+			<main className="flex-1 max-w-2xl mx-auto w-full px-5 sm:px-8 pb-20">
 				{/* Day badge */}
-				<div className="flex justify-start">
-					<span className="inline-flex items-center px-3 py-1 text-[0.75rem] font-medium text-[var(--sly-accent)] bg-[var(--sly-border)] rounded-full">
-						Дзень #{getCurrentDayIndex() + 1}
+				<div className="flex justify-start mb-6">
+					<span className="inline-flex items-center px-3 py-1 text-[0.75rem] font-medium text-pobach bg-pobach-soft rounded-full">
+						Выпуск №{dayIndex != null ? dayIndex : ""}
 					</span>
 				</div>
 
-				<GuessInput
-					input={input}
-					setInput={setInput}
-					onSubmit={handleSubmit}
-					loading={loading}
-					won={won}
-					gameOver={gameOver}
-					error={error}
-					errorWord={errorWord}
-					onHint={getHint}
-					onGiveUp={() => setShowGiveUp(true)}
-					guessCount={guesses.length}
-				/>
+				{/* Rules — shown only before the first guess */}
+				{guesses.length === 0 && !isFinished && <RulesComponent inline />}
 
-				{(won || gameOver) && dayIndex !== null ? (
+				{/* Input form */}
+				{!isFinished && (
+					<form
+						onSubmit={handleSubmit}
+						className="sticky top-16 bg-paper/95 backdrop-blur-sm py-4 z-20"
+					>
+						<GuessInput
+							input={input}
+							setInput={setInput}
+							onSubmit={handleSubmit}
+							loading={loading}
+							won={won}
+							gameOver={gameOver}
+							error={error}
+							errorWord={errorWord}
+							onHint={getHint}
+							onGiveUp={() => setShowGiveUp(true)}
+							guessCount={guesses.length}
+							bestRank={bestRank}
+						/>
+					</form>
+				)}
+
+				{/* Finish card */}
+				{isFinished && dayIndex !== null ? (
 					<FinishCard
 						mode={won ? "win" : "lose"}
 						targetWord={targetWord}
@@ -76,27 +91,25 @@ export default function PobachPage() {
 				) : (
 					lastGuess && (
 						<output aria-live="polite" className="block mb-4">
-							<p className="text-xs text-[var(--sly-text-muted)] mb-2">
-								Апошняе слова:
-							</p>
-							<GuessCard guess={lastGuess} />
+							<p className="text-xs text-ink-soft mb-2">Апошняе слова:</p>
+							<GuessCard guess={lastGuess} highlight />
 						</output>
 					)
 				)}
 
-				{guesses.length === 0 ? (
-					<div className="mt-6">
-						<div className="rounded-2xl border border-[var(--sly-border)] bg-[var(--sly-bg-card)] p-8">
-							<h2 className="font-serif text-3xl font-bold text-[var(--sly-text)] mb-6">
-								Як гуляць?
-							</h2>
-							<RulesComponent />
-						</div>
-					</div>
-				) : (
-					<GuessList guesses={guesses} />
+				{/* Guess list */}
+				{guesses.length > 0 && (
+					<>
+						<GuessList
+							guesses={sortedGuesses}
+							lastGuess={lastGuess?.word ?? null}
+						/>
+						<p className="mt-8 text-xs text-ink-soft text-center">
+							Чым меншы ранг — тым бліжэй вы да слова. Ранг 1 — перамога.
+						</p>
+					</>
 				)}
-			</div>
+			</main>
 
 			<Modal
 				isOpen={showHelp}
@@ -111,10 +124,6 @@ export default function PobachPage() {
 				onConfirm={handleGiveUpConfirm}
 				onClose={() => setShowGiveUp(false)}
 			/>
-
-			<div className="w-full max-w-[600px] mx-auto px-4">
-				<Footer />
-			</div>
-		</main>
+		</div>
 	);
 }

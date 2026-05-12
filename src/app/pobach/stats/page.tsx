@@ -2,25 +2,24 @@
 
 import { Share2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Footer } from "@/shared/components/Footer";
 import Header from "@/games/pobach/components/Header";
 import type { HistoryRecord } from "@/games/pobach/core/entities/game";
 import { formatRelativeDate } from "@/games/pobach/lib/stats";
 import { getHistory, getStats } from "@/games/pobach/lib/storage";
 import { pluralize } from "@/games/pobach/lib/utils";
 
-type StatCardProps = {
+type StatCardData = {
 	label: string;
 	value: string | number;
 };
 
-function StatCard({ label, value }: StatCardProps) {
+function StatCard({ label, value }: StatCardData) {
 	return (
-		<div className="bg-[var(--sly-bg-card)] rounded-2xl p-3 text-center border border-[var(--sly-border)] min-w-0">
-			<div className="text-3xl font-bold text-[var(--sly-text)] leading-none mb-1.5 font-serif">
+		<div className="bg-card ring-1 ring-rule rounded-2xl p-4 text-center sm:text-left">
+			<div className="font-display text-3xl font-medium text-ink leading-none mb-1.5">
 				{value}
 			</div>
-			<div className="text-[9px] text-[var(--sly-text-muted)] font-medium tracking-wider uppercase leading-tight">
+			<div className="text-[10px] text-ink-soft font-medium uppercase tracking-[0.2em] leading-tight">
 				{label}
 			</div>
 		</div>
@@ -29,7 +28,7 @@ function StatCard({ label, value }: StatCardProps) {
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
 	return (
-		<h2 className="text-lg font-bold text-[var(--sly-text)] mt-8 mb-4 font-serif">
+		<h2 className="font-display text-lg font-medium text-ink mt-8 mb-4">
 			{children}
 		</h2>
 	);
@@ -58,27 +57,20 @@ function getCountForRange(
 	let count = 0;
 	for (const [attempts, value] of Object.entries(distribution)) {
 		const num = Number(attempts);
-		if (num >= min && num <= max) {
-			count += value;
-		}
+		if (num >= min && num <= max) count += value;
 	}
 	return count;
 }
 
 function DistributionChart({
 	distribution,
-	distributionLabel,
-	gamesWon,
 }: {
 	distribution: Record<number, number>;
-	distributionLabel: string;
-	gamesWon: number;
 }) {
 	const rangeCounts = DISTRIBUTION_RANGES.map((range) => ({
 		...range,
 		count: getCountForRange(distribution, range.min, range.max),
 	}));
-
 	const maxCount = Math.max(...rangeCounts.map((r) => r.count), 1);
 
 	return (
@@ -91,10 +83,10 @@ function DistributionChart({
 
 				return (
 					<div key={range.label} className="flex items-center gap-3 text-sm">
-						<div className="w-14 text-right text-[var(--sly-text-muted)] shrink-0 whitespace-nowrap">
+						<div className="w-14 text-right text-ink-muted shrink-0 whitespace-nowrap font-display tabular-nums">
 							{range.label}
 						</div>
-						<div className="flex-1 h-10 bg-[var(--sly-border)] rounded-lg overflow-hidden relative">
+						<div className="flex-1 h-10 bg-rule rounded-lg overflow-hidden relative">
 							{range.count > 0 ? (
 								<div
 									className="h-full min-w-12 rounded-lg flex items-center justify-end pr-3 transition-all duration-500"
@@ -107,7 +99,7 @@ function DistributionChart({
 									aria-valuemin={0}
 									aria-valuemax={maxCount}
 								>
-									<span className="text-white font-bold text-sm font-serif">
+									<span className="text-white font-bold text-sm font-display">
 										{range.count}
 									</span>
 								</div>
@@ -116,7 +108,7 @@ function DistributionChart({
 									className="h-full w-12 rounded-lg flex items-center justify-center"
 									style={{ backgroundColor: range.color }}
 								>
-									<span className="text-white font-bold text-sm font-serif">
+									<span className="text-white font-bold text-sm font-display">
 										0
 									</span>
 								</div>
@@ -129,23 +121,21 @@ function DistributionChart({
 	);
 }
 
-type HistoryItemProps = {
-	game: HistoryRecord;
-};
-
-function HistoryItem({ game }: HistoryItemProps) {
+function HistoryItem({ game }: { game: HistoryRecord }) {
 	return (
-		<div className="flex items-center gap-3 py-3.5 border-b border-[var(--sly-border)] last:border-0">
+		<div className="flex items-center gap-3 py-3.5 border-b border-rule last:border-0">
 			<span
-				className={`w-2.5 h-2.5 rounded-full shrink-0 ${game.won ? "bg-[var(--sly-rank-1)]" : "bg-red-400"}`}
+				className={`w-2.5 h-2.5 rounded-full shrink-0 ${
+					game.won ? "bg-success" : "bg-destructive"
+				}`}
 			/>
-			<div className="font-semibold text-sm text-[var(--sly-text)] flex-1">
-				<span className="font-serif">#{game.dayIndex + 1}</span> Дзень
+			<div className="font-semibold text-sm text-ink flex-1">
+				<span className="font-display">#{game.dayIndex + 1}</span> Дзень
 			</div>
-			<div className="text-xs text-[var(--sly-text-muted)] flex items-center gap-3">
+			<div className="text-xs text-ink-muted flex items-center gap-3">
 				{game.won ? (
 					<span>
-						<span className="font-serif">{game.attempts}</span>{" "}
+						<span className="font-display tabular-nums">{game.attempts}</span>{" "}
 						{pluralize(game.attempts)}
 					</span>
 				) : (
@@ -155,7 +145,7 @@ function HistoryItem({ game }: HistoryItemProps) {
 					const hintCount = game.guesses.filter((g) => g.isHint).length;
 					return hintCount > 0 ? (
 						<span>
-							<span className="font-serif">{hintCount}</span> падк.
+							<span className="font-display">{hintCount}</span> падк.
 						</span>
 					) : null;
 				})()}
@@ -228,10 +218,10 @@ export default function PobachStatsPage() {
 	};
 
 	return (
-		<main className="min-h-screen flex flex-col">
+		<div className="min-h-screen flex flex-col">
 			<Header />
 
-			<div className="flex-1 w-full max-w-[600px] mx-auto px-4 py-6">
+			<div className="flex-1 w-full max-w-2xl mx-auto px-5 sm:px-8 py-6">
 				<div className="grid grid-cols-4 gap-2">
 					<StatCard label="Гульняў" value={stats.gamesPlayed} />
 					<StatCard label="Перамог %" value={winRate} />
@@ -240,16 +230,12 @@ export default function PobachStatsPage() {
 				</div>
 
 				<SectionTitle>Размеркаванне спроб</SectionTitle>
-				<DistributionChart
-					distribution={stats.distribution}
-					distributionLabel="спроб"
-					gamesWon={stats.gamesWon}
-				/>
+				<DistributionChart distribution={stats.distribution} />
 
 				<SectionTitle>Гісторыя гульняў</SectionTitle>
-				<div className="bg-[var(--sly-bg-card)] rounded-2xl border border-[var(--sly-border)] px-4">
+				<div className="bg-card ring-1 ring-rule rounded-2xl px-4">
 					{history.length === 0 ? (
-						<div className="py-6 text-center text-sm text-[var(--sly-text-muted)]">
+						<div className="py-6 text-center text-sm text-ink-muted">
 							Пакуль няма гісторыі гульняў
 						</div>
 					) : (
@@ -272,17 +258,13 @@ export default function PobachStatsPage() {
 					{showToast && (
 						<div
 							aria-live="polite"
-							className="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-lg bg-[var(--sly-text)] text-[var(--sly-bg)] text-xs font-medium whitespace-nowrap shadow-lg"
+							className="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-lg bg-ink text-paper text-xs font-medium whitespace-nowrap shadow-lg"
 						>
 							Скапіравана!
 						</div>
 					)}
 				</div>
 			</div>
-
-			<div className="w-full max-w-[600px] mx-auto px-4">
-				<Footer />
-			</div>
-		</main>
+		</div>
 	);
 }

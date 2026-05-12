@@ -40,28 +40,16 @@ export function InputDisplay({
 				{errorType ? (
 					<span
 						key={`err-${errorKey}`}
-						className="petal-rise rounded-full px-4 py-1.5 text-sm font-semibold"
-						style={{
-							background: "var(--sly-red-500)",
-							color: "#fff",
-							fontFamily: "var(--sly-font-sans)",
-							letterSpacing: "0.01em",
-							zIndex: 100,
-						}}
+						className="petal-rise rounded-full px-4 py-1.5 text-sm font-semibold bg-destructive text-white font-sans z-30"
+						style={{ letterSpacing: "0.01em" }}
 					>
 						{ERROR_MESSAGES[errorType]}
 					</span>
 				) : lastFoundWord ? (
 					<span
 						key={`suc-${successKey}`}
-						className="petal-rise rounded-full px-4 py-1.5 text-sm font-semibold"
-						style={{
-							background: "var(--sly-cornflower)",
-							color: "#fff",
-							fontFamily: "var(--sly-font-sans)",
-							letterSpacing: "0.01em",
-							zIndex: 100,
-						}}
+						className="petal-rise rounded-full px-4 py-1.5 text-sm font-semibold bg-valoshka text-white font-sans z-30"
+						style={{ letterSpacing: "0.01em" }}
 					>
 						{lastFoundIsPangram ? "Панграма! 🤍" : successMsg}
 					</span>
@@ -89,20 +77,13 @@ export function InputDisplay({
 					<div className="flex items-center gap-0.5">
 						{value.split("").map((ch, i) => {
 							const isCenter = ch === center;
-							const posKey = `pos-${i}`;
 							return (
 								<span
-									key={posKey}
-									style={{
-										fontFamily: "var(--sly-font-display)",
-										fontSize: "40px",
-										color: isCenter
-											? "var(--sly-cornflower)"
-											: "var(--sly-text)",
-										fontWeight: "400",
-										lineHeight: 1,
-										letterSpacing: "0.01em",
-									}}
+									key={`letter-${i}-${ch}`}
+									className={`font-display text-[40px] leading-none ${
+										isCenter ? "text-valoshka" : "text-ink"
+									}`}
+									style={{ letterSpacing: "0.01em" }}
 								>
 									{ch.toUpperCase()}
 								</span>

@@ -1,63 +1,35 @@
-import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Пра праект | Словы",
+};
 
 export default function AboutPage() {
 	return (
-		<div
-			className="min-h-screen flex flex-col"
-			style={{ background: "var(--sly-bg)" }}
-		>
-			<div className="mx-auto w-full max-w-[600px] px-4 py-8 flex-1">
-				<Link
-					href="/"
-					className="inline-flex items-center gap-1 text-sm mb-6 hover:opacity-70 transition-opacity"
-					style={{ color: "var(--sly-text-muted)" }}
-				>
-					← Назад
-				</Link>
-
-				<h1
-					className="text-2xl font-bold mb-8"
-					style={{
-						fontFamily: "var(--sly-font-display)",
-						color: "var(--sly-text)",
-					}}
-				>
-					Пра гульні
+		<div className="min-h-screen flex flex-col">
+			<div className="flex-1 max-w-2xl mx-auto w-full px-5 sm:px-8 py-12 sm:py-20">
+				<h1 className="font-display text-4xl sm:text-5xl font-medium tracking-tight text-ink mb-6 animate-fade-in-up">
+					Пра праект
 				</h1>
 
-				<div
-					className="space-y-8 text-sm leading-relaxed"
-					style={{ color: "var(--sly-text-muted)" }}
-				>
-					<section>
-						<h2
-							className="font-serif text-xl font-semibold mb-3"
-							style={{ color: "var(--sly-text)" }}
-						>
-							Што такое Словы?
-						</h2>
-						<p className="mb-3">
-							Словы — гэта збор штодзённых беларускіх слоўных гульняў. Кожная
-							гульня прапануе свой унікальны спосаб праверыць вашы веды і
-							інтуіцыю.
-						</p>
-						<ul className="space-y-2 ml-4 list-disc">
-							<li>
-								<strong>Валошка</strong> — складзіце як мага больш слоў з
-								пераблытаных літар.
-							</li>
-							<li>
-								<strong>Побач</strong> — здагадайцеся слова па сэнсавай
-								блізкасці.
-							</li>
-						</ul>
-					</section>
+				<div className="prose prose-lg text-ink-muted leading-relaxed space-y-5 animate-fade-in-up">
+					<p>
+						<span className="font-display text-ink font-semibold">Словы</span> —
+						гэта платформа штодзённых беларускіх слоўных гульняў. Дзве
+						галаваломкі кожны дзень: <em>Побач</em> і <em>Валошка</em>.
+					</p>
+					<p>
+						Мы натхняемся выдавецкай якасцю NYT Games і інтэлектуальнай глыбінёй
+						Contexto.me — але робім гэта на беларускай мове, з беларускімі
+						словамі і беларускім светапоглядам.
+					</p>
+					<p>
+						Праект бясплатны і не збірае пра вас даных. Усе гульнявыя станы і
+						статыстыка захоўваюцца лакальна на вашым прыстасаванні.
+					</p>
 
 					<section>
-						<h2
-							className="font-serif text-xl font-semibold mb-3"
-							style={{ color: "var(--sly-text)" }}
-						>
+						<h2 className="font-display text-xl font-semibold text-ink mb-3">
 							Як гэта працуе?
 						</h2>
 						<p>
@@ -68,10 +40,7 @@ export default function AboutPage() {
 					</section>
 
 					<section>
-						<h2
-							className="font-serif text-xl font-semibold mb-3"
-							style={{ color: "var(--sly-text)" }}
-						>
+						<h2 className="font-display text-xl font-semibold text-ink mb-3">
 							Стваральнік
 						</h2>
 						<p className="mb-2">Зроблена з ❤️ да роднай мовы</p>
@@ -81,8 +50,7 @@ export default function AboutPage() {
 								href="https://contexto.me"
 								target="_blank"
 								rel="noopener noreferrer"
-								className="hover:underline"
-								style={{ color: "var(--sly-accent)" }}
+								className="text-valoshka hover:underline"
 							>
 								Contexto
 							</a>{" "}
@@ -91,8 +59,7 @@ export default function AboutPage() {
 								href="https://semantle.com"
 								target="_blank"
 								rel="noopener noreferrer"
-								className="hover:underline"
-								style={{ color: "var(--sly-accent)" }}
+								className="text-valoshka hover:underline"
 							>
 								Semantle
 							</a>
@@ -103,21 +70,19 @@ export default function AboutPage() {
 								href="https://github.com/alesdrobysh"
 								target="_blank"
 								rel="noopener noreferrer"
-								className="hover:underline"
-								style={{ color: "var(--sly-accent)" }}
+								className="text-valoshka hover:underline"
 							>
 								alesdrobysh
 							</a>
 						</p>
 						<p className="mb-2">База слоў:</p>
-						<ul className="space-y-1 ml-4">
+						<ul className="space-y-1 ml-4 list-disc">
 							<li>
 								<a
 									href="https://github.com/Belarus/GrammarDB"
 									target="_blank"
 									rel="noopener noreferrer"
-									className="hover:underline"
-									style={{ color: "var(--sly-accent)" }}
+									className="text-valoshka hover:underline"
 								>
 									Belarus/GrammarDB
 								</a>
@@ -127,8 +92,7 @@ export default function AboutPage() {
 									href="https://github.com/verbumby/slouniki"
 									target="_blank"
 									rel="noopener noreferrer"
-									className="hover:underline"
-									style={{ color: "var(--sly-accent)" }}
+									className="text-valoshka hover:underline"
 								>
 									verbumby/slouniki
 								</a>
@@ -137,23 +101,25 @@ export default function AboutPage() {
 					</section>
 
 					<section>
-						<h2
-							className="font-serif text-xl font-semibold mb-3"
-							style={{ color: "var(--sly-text)" }}
-						>
+						<h2 className="font-display text-xl font-semibold text-ink mb-3">
 							Кантакт
 						</h2>
 						<p>
 							Маеце пытанні або прапановы? Напішыце нам па пошце{" "}
 							<a
 								href="mailto:support@pobach.app"
-								className="hover:underline"
-								style={{ color: "var(--sly-accent)" }}
+								className="text-valoshka hover:underline"
 							>
 								support@pobach.app
 							</a>
 						</p>
 					</section>
+				</div>
+
+				<div className="mt-10">
+					<p className="font-display italic text-ink">
+						З любоўю да мовы і сэнсу.
+					</p>
 				</div>
 			</div>
 		</div>

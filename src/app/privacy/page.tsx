@@ -2,38 +2,22 @@ import Link from "next/link";
 
 export default function PrivacyPage() {
 	return (
-		<div
-			className="min-h-screen flex flex-col"
-			style={{ background: "var(--sly-bg)" }}
-		>
-			<div className="mx-auto w-full max-w-[600px] px-4 py-8 flex-1">
+		<div className="min-h-screen flex flex-col">
+			<div className="flex-1 max-w-2xl mx-auto w-full px-5 sm:px-8 py-12 sm:py-20">
 				<Link
 					href="/"
-					className="inline-flex items-center gap-1 text-sm mb-6 hover:opacity-70 transition-opacity"
-					style={{ color: "var(--sly-text-muted)" }}
+					className="text-xs uppercase tracking-[0.2em] text-ink-soft hover:text-ink transition-colors mb-6 inline-block no-underline"
 				>
 					← Назад
 				</Link>
 
-				<h1
-					className="text-2xl font-bold mb-8"
-					style={{
-						fontFamily: "var(--sly-font-display)",
-						color: "var(--sly-text)",
-					}}
-				>
+				<h1 className="font-display text-4xl sm:text-5xl font-medium tracking-tight text-ink mb-8">
 					Прыватнасць
 				</h1>
 
-				<div
-					className="space-y-8 text-sm leading-relaxed"
-					style={{ color: "var(--sly-text-muted)" }}
-				>
+				<div className="space-y-8 text-sm leading-relaxed text-ink-muted">
 					<section>
-						<h2
-							className="font-serif text-xl font-semibold mb-3"
-							style={{ color: "var(--sly-text)" }}
-						>
+						<h2 className="font-display text-xl font-semibold text-ink mb-3">
 							Збор дадзеных
 						</h2>
 						<p className="mb-3">
@@ -52,10 +36,7 @@ export default function PrivacyPage() {
 					</section>
 
 					<section>
-						<h2
-							className="font-serif text-xl font-semibold mb-3"
-							style={{ color: "var(--sly-text)" }}
-						>
+						<h2 className="font-display text-xl font-semibold text-ink mb-3">
 							Мэта выкарыстання
 						</h2>
 						<p className="mb-3">Дадзеныя выкарыстоўваюцца выключна для:</p>
@@ -68,10 +49,7 @@ export default function PrivacyPage() {
 					</section>
 
 					<section>
-						<h2
-							className="font-serif text-xl font-semibold mb-3"
-							style={{ color: "var(--sly-text)" }}
-						>
+						<h2 className="font-display text-xl font-semibold text-ink mb-3">
 							Аналітыка
 						</h2>
 						<p className="mb-3">
@@ -92,10 +70,7 @@ export default function PrivacyPage() {
 					</section>
 
 					<section>
-						<h2
-							className="font-serif text-xl font-semibold mb-3"
-							style={{ color: "var(--sly-text)" }}
-						>
+						<h2 className="font-display text-xl font-semibold text-ink mb-3">
 							Доступ да дадзеных
 						</h2>
 						<p className="mb-3">
@@ -109,10 +84,7 @@ export default function PrivacyPage() {
 					</section>
 
 					<section>
-						<h2
-							className="font-serif text-xl font-semibold mb-3"
-							style={{ color: "var(--sly-text)" }}
-						>
+						<h2 className="font-display text-xl font-semibold text-ink mb-3">
 							Захаванне дадзеных
 						</h2>
 						<p className="mb-3">
@@ -132,10 +104,7 @@ export default function PrivacyPage() {
 					</section>
 
 					<section>
-						<h2
-							className="font-serif text-xl font-semibold mb-3"
-							style={{ color: "var(--sly-text)" }}
-						>
+						<h2 className="font-display text-xl font-semibold text-ink mb-3">
 							Кантакт
 						</h2>
 						<p>
@@ -143,8 +112,7 @@ export default function PrivacyPage() {
 							свае дадзеныя, звяжыцеся з намі па пошце{" "}
 							<a
 								href="mailto:support@pobach.app"
-								className="hover:underline"
-								style={{ color: "var(--sly-accent)" }}
+								className="text-valoshka hover:underline"
 							>
 								support@pobach.app
 							</a>

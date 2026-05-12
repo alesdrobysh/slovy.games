@@ -275,10 +275,47 @@ html.dark .theme-valoshka {
 	--sly-cell-letter-outer: #fff;
 }
 
-/* === Legacy Aliases === */
-/* Maps old --color-X and --X names to --sly-X equivalents.
-   These allow existing code to continue working during migration.
-   DEPRECATED — will be removed once all references use --sly-* names. */
+/* ================================================================
+   Tailwind v4 Semantic Theme
+   Maps --sly-* CSS variables to semantic Tailwind color tokens
+   so we can use bg-ink, text-ink-muted, ring-rule, etc.
+   ================================================================ */
+
+@theme inline {
+	/* --- Text hierarchy --- */
+	--color-ink: var(--sly-text);
+	--color-ink-muted: var(--sly-text-muted);
+	--color-ink-soft: color-mix(in oklab, var(--sly-text-muted) 55%, transparent);
+
+	/* --- Backgrounds --- */
+	--color-paper: var(--sly-bg);
+	--color-card: var(--sly-bg-card);
+	--color-secondary: var(--sly-bg-surface);
+
+	/* --- Borders --- */
+	--color-rule: var(--sly-border);
+
+	/* --- Accents --- */
+	--color-pobach: var(--sly-orange-500);
+	--color-pobach-soft: oklch(from var(--sly-orange-500) l c h / 0.1);
+	--color-valoshka: var(--sly-blue-500);
+	--color-valoshka-soft: oklch(from var(--sly-blue-500) l c h / 0.1);
+
+	/* --- Semantic --- */
+	--color-success: var(--sly-green-500);
+	--color-warning: var(--sly-orange-500);
+	--color-destructive: var(--sly-red-500);
+
+	/* --- Typography --- */
+	--font-family-display: var(--sly-font-display);
+	--font-family-sans: var(--sly-font-sans);
+}
+
+/* ================================================================
+   Legacy Aliases
+   DEPRECATED — will be removed once all references use --sly-* names.
+   ================================================================ */
+
 :root {
 	--color-neutral-accent: var(--sly-accent);
 	--color-neutral-bg: var(--sly-bg);
@@ -312,7 +349,6 @@ html.dark .theme-valoshka {
 	--font-sans: var(--sly-font-sans);
 }
 
-/* Pobach legacy aliases */
 .theme-pobach {
 	--pobach-orange: var(--sly-pobach-orange);
 	--pobach-bg: var(--sly-pobach-bg);
@@ -344,7 +380,6 @@ html.dark .theme-pobach {
 	--attempts-many: var(--sly-attempts-many);
 }
 
-/* Valoshka legacy aliases */
 .theme-valoshka {
 	--valoshka-blue: var(--sly-valoshka-blue);
 	--valoshka-paper: var(--sly-valoshka-paper);

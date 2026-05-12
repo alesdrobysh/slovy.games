@@ -2,10 +2,10 @@
 
 import { Share2 } from "lucide-react";
 import { useMemo } from "react";
+import type { Guess } from "@/games/pobach/core/entities/game";
+import { generateShareText } from "@/games/pobach/lib/share-text";
 import { Toast } from "@/shared/components/ui/Toast";
 import { useShare } from "@/shared/hooks/useShare";
-import { generateShareText } from "@/games/pobach/lib/share-text";
-import type { Guess } from "@/games/pobach/core/entities/game";
 
 type ShareButtonProps = {
 	dayIndex: number;

@@ -62,28 +62,11 @@ function loadPobachStats() {
 
 function StatCard({ label, value }: { label: string; value: number | string }) {
 	return (
-		<div
-			className="flex flex-col gap-1 p-4 rounded-xl"
-			style={{
-				background: "var(--sly-bg-card)",
-				border: "1px solid var(--sly-border)",
-			}}
-		>
-			<span
-				className="text-xs font-semibold uppercase tracking-wider"
-				style={{ color: "var(--sly-text-muted)" }}
-			>
+		<div className="bg-card ring-1 ring-rule rounded-2xl p-5">
+			<p className="text-[10px] uppercase tracking-[0.2em] text-ink-soft mb-1 font-medium">
 				{label}
-			</span>
-			<span
-				className="text-2xl font-bold"
-				style={{
-					fontFamily: "var(--sly-font-display)",
-					color: "var(--sly-text)",
-				}}
-			>
-				{value}
-			</span>
+			</p>
+			<p className="font-display text-3xl font-medium text-ink">{value}</p>
 		</div>
 	);
 }
@@ -102,97 +85,96 @@ export default function CombinedStatsPage() {
 	}, []);
 
 	return (
-		<div style={{ minHeight: "100vh", background: "var(--sly-bg)" }}>
-			<div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-12">
-				<h1
-					className="text-3xl font-bold mb-8"
-					style={{
-						fontFamily: "var(--sly-font-display)",
-						color: "var(--sly-text)",
-					}}
-				>
-					Статыстыка
-				</h1>
-
-				{stats.valoshka && (
-					<section className="mb-10">
-						<h2
-							className="text-xl font-bold mb-4"
-							style={{
-								color: GAMES[0].color,
-								fontFamily: "var(--sly-font-display)",
-							}}
-						>
-							{GAMES[0].nameBel}{" "}
-							<Link
-								href="/valoshka/stats"
-								className="text-xs font-normal"
-								style={{ color: "var(--sly-text-muted)" }}
-							>
-								падрабязней →
-							</Link>
-						</h2>
-						<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-							<StatCard
-								label="Гульняў зыграна"
-								value={stats.valoshka.gamesPlayed}
-							/>
-							<StatCard
-								label="Бягучая серыя"
-								value={stats.valoshka.currentStreak}
-							/>
-							<StatCard
-								label="Найлепшая серыя"
-								value={stats.valoshka.longestStreak}
-							/>
-							<StatCard
-								label="Слоў знойдзена"
-								value={stats.valoshka.totalWordsFound}
-							/>
-						</div>
-					</section>
-				)}
-
-				{stats.pobach && (
-					<section className="mb-10">
-						<h2
-							className="text-xl font-bold mb-4"
-							style={{
-								color: GAMES[1].color,
-								fontFamily: "var(--sly-font-display)",
-							}}
-						>
-							{GAMES[1].nameBel}{" "}
-							<Link
-								href="/pobach/stats"
-								className="text-xs font-normal"
-								style={{ color: "var(--sly-text-muted)" }}
-							>
-								падрабязней →
-							</Link>
-						</h2>
-						<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-							<StatCard
-								label="Гульняў зыграна"
-								value={stats.pobach.gamesPlayed}
-							/>
-							<StatCard label="Перамог" value={`${stats.pobach.winRate}%`} />
-							<StatCard
-								label="Бягучая серыя"
-								value={stats.pobach.currentStreak}
-							/>
-							<StatCard
-								label="Найлепшая серыя"
-								value={stats.pobach.longestStreak}
-							/>
-						</div>
-					</section>
-				)}
-
-				{!stats.valoshka && !stats.pobach && (
-					<p style={{ color: "var(--sly-text-muted)" }}>
-						Няма дадзеных. Згуляйце некалькі гульняў, каб убачыць статыстыку.
+		<div className="min-h-screen flex flex-col">
+			<div className="flex-1 max-w-4xl mx-auto w-full px-5 sm:px-8 py-10 sm:py-14">
+				<div className="mb-8 animate-fade-in-up">
+					<h1 className="font-display text-4xl sm:text-5xl font-medium tracking-tight text-ink">
+						Статыстыка
+					</h1>
+					<p className="text-sm text-ink-muted mt-2">
+						Лакальны архіў вашых вынікаў.
 					</p>
+				</div>
+
+				{!stats.valoshka && !stats.pobach ? (
+					<div className="bg-card ring-1 ring-rule rounded-2xl p-10 text-center">
+						<p className="text-ink-muted mb-4">
+							Пакуль няма даных. Згуляйце некалькі гульняў, каб убачыць
+							статыстыку.
+						</p>
+						<Link
+							href="/"
+							className="inline-flex items-center gap-2 text-sm font-medium text-ink hover:text-pobach transition-colors no-underline"
+						>
+							Да гульняў →
+						</Link>
+					</div>
+				) : (
+					<div className="space-y-10">
+						{stats.valoshka && (
+							<section>
+								<h2 className="font-display text-2xl font-medium text-valoshka mb-5">
+									{GAMES[0].nameBel}{" "}
+									<Link
+										href="/valoshka/stats"
+										className="text-xs font-normal text-ink-muted hover:text-ink"
+									>
+										падрабязней →
+									</Link>
+								</h2>
+								<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+									<StatCard
+										label="Гульняў зыграна"
+										value={stats.valoshka.gamesPlayed}
+									/>
+									<StatCard
+										label="Бягучая серыя"
+										value={stats.valoshka.currentStreak}
+									/>
+									<StatCard
+										label="Найлепшая серыя"
+										value={stats.valoshka.longestStreak}
+									/>
+									<StatCard
+										label="Слоў знойдзена"
+										value={stats.valoshka.totalWordsFound}
+									/>
+								</div>
+							</section>
+						)}
+
+						{stats.pobach && (
+							<section>
+								<h2 className="font-display text-2xl font-medium text-pobach mb-5">
+									{GAMES[1].nameBel}{" "}
+									<Link
+										href="/pobach/stats"
+										className="text-xs font-normal text-ink-muted hover:text-ink"
+									>
+										падрабязней →
+									</Link>
+								</h2>
+								<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+									<StatCard
+										label="Гульняў зыграна"
+										value={stats.pobach.gamesPlayed}
+									/>
+									<StatCard
+										label="Перамог"
+										value={`${stats.pobach.winRate}%`}
+									/>
+									<StatCard
+										label="Бягучая серыя"
+										value={stats.pobach.currentStreak}
+									/>
+									<StatCard
+										label="Найлепшая серыя"
+										value={stats.pobach.longestStreak}
+									/>
+								</div>
+							</section>
+						)}
+					</div>
 				)}
 			</div>
 		</div>

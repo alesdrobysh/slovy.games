@@ -15,123 +15,49 @@ export function FoundWordsList({
 	const count = words.length;
 
 	return (
-		<div
-			className="flex flex-col h-full"
-			style={{
-				background: "var(--sly-bg-card)",
-				border: "1px solid var(--sly-border)",
-				borderRadius: "14px",
-				padding: "20px",
-				minHeight: "200px",
-			}}
-		>
-			{/* Header */}
-			<div
-				className="flex items-center gap-2 mb-4 pb-3"
-				style={{ borderBottom: "1px solid var(--sly-border)" }}
-			>
-				<span
-					className="text-sm font-semibold"
-					style={{
-						color: "var(--sly-text)",
-						fontFamily: "var(--sly-font-sans)",
-					}}
-				>
+		<aside className="bg-card ring-1 ring-rule rounded-2xl p-5 max-h-[60vh] overflow-y-auto">
+			<div className="flex items-baseline justify-between mb-4">
+				<h2 className="font-display text-lg font-medium text-ink">
 					{count === 0
-						? "Словы не знойдзены"
+						? "Пакуль нічога"
 						: count === 1
-							? "Знойдзена 1 слова"
-							: `Знойдзена ${count} слоў`}
-				</span>
+							? "1 слова"
+							: `${count} слоў`}
+				</h2>
 				{count > 0 && (
-					<span
-						className="ml-auto rounded-full px-2.5 py-0.5 text-xs font-bold tabular-nums"
-						style={{
-							background: "var(--sly-cornflower)",
-							color: "var(--sly-cell-letter-center)",
-							fontFamily: "var(--sly-font-sans)",
-						}}
-					>
-						{count}
+					<span className="text-xs text-ink-muted">
+						{count} з {pangrams.length ? "?" : ""}
 					</span>
 				)}
 			</div>
 
-			{/* Word list */}
-			<div className="flex-1 overflow-y-auto">
-				{count === 0 ? (
-					<p
-						className="text-sm italic"
-						style={{
-							color: "var(--sly-text-muted)",
-							fontFamily: "var(--sly-font-sans)",
-						}}
-					>
-						Пачніце ўводзіць словы...
-					</p>
-				) : (
-					<ul>
-						{sorted.map((word) => {
-							const isPangram = pangrams.includes(word);
-							const isNew = word === lastFoundWord;
-							return (
-								<li
-									key={word}
-									className={`${isNew ? "word-pop" : ""} group`}
-									style={{
-										fontFamily: "var(--sly-font-sans)",
-										fontSize: "14px",
-										fontWeight: isPangram ? "700" : "400",
-										color: isPangram
-											? "var(--sly-cornflower)"
-											: "var(--sly-text)",
-										padding: "5px 0",
-										borderBottom: "1px solid var(--sly-border)",
-										display: "flex",
-										alignItems: "center",
-										gap: "8px",
-									}}
-								>
-									{word}
-									{isPangram && (
-										<span
-											style={{
-												fontSize: "9px",
-												background: "var(--sly-cornflower-bg-subtle)",
-												color: "var(--sly-cornflower)",
-												border: "1px solid var(--sly-cornflower-border-subtle)",
-												borderRadius: "4px",
-												padding: "1px 6px",
-												fontWeight: "700",
-												letterSpacing: "0.08em",
-												textTransform: "uppercase",
-											}}
-										>
-											панграма
-										</span>
-									)}
-									<a
-										href={`https://verbum.by/tsblm2022/${encodeURIComponent(word)}`}
-										target="_blank"
-										rel="noreferrer"
-										className="ml-auto opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
-										style={{
-											color: "var(--sly-text-muted)",
-											fontSize: "12px",
-											lineHeight: 1,
-											textDecoration: "none",
-											flexShrink: 0,
-										}}
-										title={`Знайсці "${word}" у слоўніку`}
-									>
-										↗
-									</a>
-								</li>
-							);
-						})}
-					</ul>
-				)}
-			</div>
-		</div>
+			{count === 0 ? (
+				<p className="text-sm text-ink-soft">Пачніце ўводзіць словы...</p>
+			) : (
+				<ul className="grid grid-cols-2 gap-y-1.5 gap-x-4 text-sm font-display">
+					{sorted.map((word) => {
+						const isPangram = pangrams.includes(word);
+						const isNew = word === lastFoundWord;
+						return (
+							<li
+								key={word}
+								className={`${
+									isNew ? "word-pop" : ""
+								} flex items-center gap-1.5 ${
+									isPangram ? "text-valoshka font-semibold" : "text-ink"
+								}`}
+							>
+								{word}
+								{isPangram && (
+									<span className="text-[9px] bg-valoshka-soft text-valoshka rounded px-1 py-px font-bold uppercase tracking-wider">
+										панг
+									</span>
+								)}
+							</li>
+						);
+					})}
+				</ul>
+			)}
+		</aside>
 	);
 }

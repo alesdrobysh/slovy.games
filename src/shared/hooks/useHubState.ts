@@ -179,7 +179,7 @@ function getPobachStatus(): {
 		if (data.history) {
 			const todayKey = String(todayIdx);
 			const todayRecord = data.history[todayKey];
-			if (todayRecord && todayRecord.won) {
+			if (todayRecord?.won) {
 				hasPlayedToday = true;
 				won = true;
 				attempts = todayRecord.attempts;

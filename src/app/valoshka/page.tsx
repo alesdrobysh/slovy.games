@@ -16,22 +16,14 @@ export default function ValoshkaPage() {
 	});
 
 	return (
-		<main
-			className="min-h-screen"
-			style={{
-				background: "var(--sly-bg)",
-				backgroundImage:
-					"radial-gradient(ellipse 90% 55% at 50% 10%, var(--sly-bg-card) 0%, var(--sly-bg) 65%)",
-				backgroundAttachment: "fixed",
-				minHeight: "100lvh",
-				overflowX: "hidden",
-			}}
-		>
+		<div className="min-h-screen flex flex-col">
 			<HeaderWithInspector
 				displayDate={displayDate}
 				currentDate={puzzle.date}
 			/>
-			<GamePage puzzle={puzzle} />
-		</main>
+			<main className="flex-1">
+				<GamePage puzzle={puzzle} />
+			</main>
+		</div>
 	);
 }

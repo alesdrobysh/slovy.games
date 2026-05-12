@@ -10,11 +10,9 @@ export interface PillButtonProps {
 }
 
 const variantClasses = {
-	primary: "bg-[var(--sly-accent)] text-white hover:opacity-90",
-	accent:
-		"text-[var(--sly-accent)] border border-[var(--sly-accent)] hover:bg-[var(--sly-accent)]/5",
-	ghost:
-		"text-[var(--sly-text-muted)] border border-[var(--sly-border)] hover:bg-[var(--sly-border)]",
+	primary: "bg-valoshka text-white hover:brightness-105",
+	accent: "text-valoshka ring-1 ring-valoshka/30 hover:bg-valoshka-soft",
+	ghost: "text-ink-muted ring-1 ring-rule hover:bg-rule",
 } as const;
 
 const sizeClasses = {
@@ -35,7 +33,7 @@ export function PillButton({
 			onClick={onClick}
 			disabled={disabled}
 			type="button"
-			className={`inline-flex items-center gap-1.5 rounded-full font-medium transition-colors disabled:opacity-50 ${variantClasses[variant]} ${sizeClasses[size]}`}
+			className={`inline-flex items-center gap-1.5 rounded-full font-medium transition-all active:scale-[0.98] disabled:opacity-50 ${variantClasses[variant]} ${sizeClasses[size]}`}
 		>
 			{icon}
 			{children}

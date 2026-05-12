@@ -9,12 +9,6 @@ interface HeaderIconButtonsProps {
 	statsHref: string;
 }
 
-/**
- * Standard header icon buttons shared across games:
- * - How to play (optional)
- * - Stats
- * - Theme toggle (dark/light)
- */
 export function HeaderIconButtons({
 	onHelpClick,
 	statsHref,
@@ -28,7 +22,7 @@ export function HeaderIconButtons({
 					type="button"
 					onClick={onHelpClick}
 					aria-label="Як гуляць?"
-					className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[var(--sly-border)] transition-colors text-[var(--sly-text)]"
+					className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-rule transition-colors text-ink-muted"
 				>
 					<HelpCircle size={18} />
 				</button>
@@ -36,15 +30,19 @@ export function HeaderIconButtons({
 			<Link
 				href={statsHref}
 				aria-label="Статыстыка"
-				className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[var(--sly-border)] transition-colors text-[var(--sly-text)]"
+				className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-rule transition-colors text-ink-muted"
 			>
 				<BarChart2 size={18} />
 			</Link>
 			<button
 				onClick={toggleTheme}
-				aria-label={`Пераключыць на ${theme === "light" ? "цёмную" : "светлую"} тэму`}
+				aria-label={
+					theme === "light"
+						? "Пераключыць на цёмную тэму"
+						: "Пераключыць на светлую тэму"
+				}
 				type="button"
-				className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[var(--sly-border)] transition-colors text-[var(--sly-text)]"
+				className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-rule transition-colors text-ink-muted"
 			>
 				{theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
 			</button>

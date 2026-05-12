@@ -1,7 +1,7 @@
 "use client";
 
+import Link from "next/link";
 import { GameCard } from "@/shared/components/GameCard";
-import { Footer } from "@/shared/components/Footer";
 import { useHubState } from "@/shared/hooks/useHubState";
 import { GAMES } from "@/shared/types";
 
@@ -11,83 +11,61 @@ function dayOrdinal(n: number): string {
 	return "дзён";
 }
 
+function getDayIndex(): number {
+	const epoch = new Date(Date.UTC(2024, 0, 1));
+	const utcMs = Date.UTC(
+		new Date().getFullYear(),
+		new Date().getMonth(),
+		new Date().getDate()
+	);
+	return Math.floor((utcMs - epoch.getTime()) / 86400000);
+}
+
 export default function HubPage() {
 	const hub = useHubState(GAMES);
 	const games = GAMES.filter((g) => g.enabled);
+	const dayIdx = getDayIndex();
 
 	return (
-		<div className="min-h-screen" style={{ background: "var(--sly-bg)" }}>
-			<div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-16">
-				{/* ── Hero: date + streak ── */}
-				<div className="mb-8 sm:mb-12 text-center">
-					{hub.todayLabel && (
-						<p
-							className="text-xs sm:text-sm font-semibold tracking-wider uppercase mb-4"
-							style={{
-								color: "var(--sly-text-muted)",
-								fontFamily: "var(--sly-font-sans)",
-							}}
-						>
-							{hub.todayLabel}
+		<div className="min-h-screen flex flex-col">
+			<div className="flex-1 max-w-5xl mx-auto w-full px-5 sm:px-8 py-12 sm:py-20">
+				{/* Hero */}
+				<div className="mb-14 sm:mb-20 max-w-3xl animate-fade-in-up">
+					<div className="flex items-center gap-3 mb-5">
+						<p className="text-xs uppercase tracking-[0.22em] text-ink-soft font-medium">
+							{hub.todayLabel || `Выпуск №${dayIdx}`}
 						</p>
-					)}
-
-					<h1
-						className="text-4xl sm:text-5xl font-bold mb-4 tracking-tight"
-						style={{
-							fontFamily: "var(--sly-font-display)",
-							color: "var(--sly-accent)",
-						}}
-					>
-						Словы
-					</h1>
-
-					<p
-						className="text-sm sm:text-base max-w-md mx-auto mb-4"
-						style={{
-							color: "var(--sly-text-muted)",
-							fontFamily: "var(--sly-font-sans)",
-						}}
-					>
+						{hub.totalPlayed > 0 && (
+							<span className="text-[10px] uppercase tracking-[0.18em] text-ink-muted bg-secondary rounded-full px-2.5 py-0.5">
+								{hub.totalPlayed}{" "}
+								{hub.totalPlayed === 1 ? "гульня" : `${hub.totalPlayed} гульні`}{" "}
+								згуляна
+							</span>
+						)}
+					</div>
+					<h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium leading-[1.05] tracking-tight text-balance text-ink mb-5">
 						Штодзённыя беларускія слоўныя гульні
+					</h1>
+					<p className="text-lg sm:text-xl text-ink-muted text-pretty max-w-[56ch] leading-relaxed">
+						Дзве новыя галаваломкі кожны дзень. Адкрывайце багацце беларускай
+						мовы — спакойна, засяроджана, без спеху.
 					</p>
 
-					{/* Streak + total badge */}
-					{hub.totalPlayed > 0 && (
-						<div
-							className="inline-flex items-center gap-3 text-xs sm:text-sm rounded-full px-4 py-1.5"
-							style={{
-								background: "var(--sly-bg-surface)",
-								color: "var(--sly-text-muted)",
-								fontFamily: "var(--sly-font-sans)",
-							}}
-						>
-							{hub.currentStreak > 0 ? (
-								<>
-									<span
-										style={{
-											color: "var(--sly-accent)",
-											fontWeight: 700,
-										}}
-									>
-										🔥 {hub.currentStreak} {dayOrdinal(hub.currentStreak)}
-									</span>
-									<span>·</span>
-								</>
-							) : null}
-							<span>
-								{hub.totalPlayed}{" "}
-								{hub.totalPlayed === 1
-									? "гульня згуляна"
-									: `${hub.totalPlayed} гульні згуляна`}
+					{hub.currentStreak > 0 && (
+						<div className="mt-6 inline-flex items-center gap-2 text-sm text-ink-muted">
+							<span className="text-pobach font-semibold">
+								{hub.currentStreak} {dayOrdinal(hub.currentStreak)} запар
 							</span>
 						</div>
 					)}
 				</div>
 
-				{/* ── Game cards ── */}
-				<div className="grid gap-4 sm:gap-6 sm:grid-cols-2 max-w-2xl mx-auto">
-					{games.map((game) => {
+				{/* Game cards */}
+				<section
+					aria-label="Сённяшнія гульні"
+					className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10"
+				>
+					{games.map((game, i) => {
 						const status = hub.statuses.get(game.id);
 						return (
 							<GameCard
@@ -96,20 +74,34 @@ export default function HubPage() {
 								hasPlayedToday={status?.hasPlayedToday ?? false}
 								progressText={status?.progressText}
 								ctaLabel={status?.ctaLabel}
+								delay={i * 100}
 							/>
 						);
 					})}
 					{games.length === 0 && (
-						<p
-							className="text-center text-sm"
-							style={{ color: "var(--sly-text-muted)" }}
-						>
-							Хутка тут з’явяцца новыя гульні.
+						<p className="text-center text-sm text-ink-muted col-span-2">
+							Хутка тут з&rsquo;явяцца новыя гульні.
 						</p>
 					)}
-				</div>
+				</section>
+
+				{/* Stats CTA */}
+				<section className="mt-20 pt-10 border-t border-rule flex flex-col sm:flex-row gap-6 items-start sm:items-center justify-between animate-fade-in-up">
+					<p className="text-sm text-ink-muted max-w-[52ch] leading-relaxed text-pretty">
+						Усе гульнявыя станы і статыстыка захоўваюцца лакальна на вашым
+						прыстасаванні.
+					</p>
+					<Link
+						href="/stats"
+						className="group inline-flex items-center gap-2 text-sm font-medium uppercase tracking-[0.18em] text-ink hover:text-pobach transition-colors no-underline"
+					>
+						Статыстыка
+						<span className="transition-transform group-hover:translate-x-0.5">
+							→
+						</span>
+					</Link>
+				</section>
 			</div>
-			<Footer />
 		</div>
 	);
 }

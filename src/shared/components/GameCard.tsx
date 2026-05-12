@@ -6,10 +6,9 @@ import type { GameInfo } from "@/shared/types";
 interface GameCardProps {
 	game: GameInfo;
 	hasPlayedToday: boolean;
-	/** Optional progress line shown below description, e.g. "12 слоў знойдзена" */
 	progressText?: string;
-	/** Custom CTA label, defaults to "Гуляць" */
 	ctaLabel?: string;
+	delay?: number;
 }
 
 export function GameCard({
@@ -17,96 +16,64 @@ export function GameCard({
 	hasPlayedToday,
 	progressText,
 	ctaLabel = "Гуляць",
+	delay = 0,
 }: GameCardProps) {
 	const isCompleted = ctaLabel === "Вынік";
+	const isPobach = game.id === "pobach";
+	const accentBg = isPobach ? "bg-pobach" : "bg-valoshka";
+	const accentText = isPobach ? "text-pobach" : "text-valoshka";
+	const accentSoft = isPobach ? "bg-pobach-soft" : "bg-valoshka-soft";
 
 	return (
 		<Link
 			href={game.path}
-			className="group relative block no-underline rounded-2xl border transition-all duration-200 hover:scale-[1.02] hover:shadow-lg"
-			style={{
-				background: "var(--sly-bg-card)",
-				borderColor: "var(--sly-border)",
-			}}
+			className="group relative flex flex-col bg-card ring-1 ring-rule rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:ring-ink/20 animate-fade-in-up no-underline"
+			style={{ animationDelay: `${delay}ms` }}
 		>
-			<div className="p-6 sm:p-8">
-				<div className="flex items-start justify-between mb-4">
-					<div
-						className="flex items-center justify-center rounded-xl"
-						style={{
-							width: "48px",
-							height: "48px",
-							background: `${game.color}18`,
-							fontSize: "24px",
-						}}
-					>
-						{game.icon}
-					</div>
-					{hasPlayedToday && (
-						<span
-							className="text-xs font-bold uppercase tracking-wider rounded-full px-2.5 py-1"
-							style={{
-								background: "var(--sly-accent-subtle)",
-								color: "var(--sly-accent)",
-								border: "1px solid var(--sly-accent-border)",
-							}}
+			<div className={`h-1.5 ${accentBg}`} aria-hidden />
+
+			<div className="p-7 sm:p-9 flex flex-col flex-1">
+				<div className="flex items-start justify-between gap-4 mb-6">
+					<div>
+						<h2 className="font-display text-3xl sm:text-4xl font-medium tracking-tight text-ink">
+							{game.nameBel}
+						</h2>
+						<p
+							className={`text-xs uppercase tracking-[0.2em] mt-2 ${accentText} font-semibold`}
 						>
-							✓ Сёння
+							{game.descriptionBel}
+						</p>
+					</div>
+					{isCompleted && (
+						<span
+							className={`px-2.5 py-1 rounded-full text-[10px] uppercase tracking-widest font-semibold ${accentSoft} ${accentText}`}
+						>
+							Скончана
 						</span>
 					)}
 				</div>
 
-				<h2
-					className="text-2xl font-bold mb-2"
-					style={{
-						fontFamily: "var(--sly-font-display)",
-						color: game.color,
-					}}
-				>
-					{game.nameBel}
-				</h2>
-				<p
-					className="text-sm leading-relaxed"
-					style={{
-						color: "var(--sly-text-muted)",
-						fontFamily: "var(--sly-font-sans)",
-					}}
-				>
-					{game.descriptionBel}
+				<p className="text-base text-ink-muted leading-relaxed mb-10 max-w-[42ch]">
+					{game.description}
 				</p>
 
-				{progressText && (
-					<div
-						className="mt-3 text-sm font-medium"
-						style={{ color: "var(--sly-text-muted)" }}
-					>
-						{progressText}
+				<div className="mt-auto pt-6 border-t border-rule flex items-end justify-between gap-4">
+					<div className="flex flex-col min-w-0">
+						<span className="text-[10px] uppercase tracking-[0.2em] text-ink-soft mb-1.5 font-medium">
+							{hasPlayedToday ? "Сёння" : "Статус"}
+						</span>
+						<span className="font-display text-base sm:text-lg font-medium text-ink truncate">
+							{progressText || "Чакае вас"}
+						</span>
 					</div>
-				)}
-
-				<div className="mt-6">
 					<span
-						className="inline-flex items-center gap-1 text-sm font-semibold rounded-full px-4 py-2 transition-colors"
-						style={{
-							background: isCompleted ? "var(--sly-bg-surface)" : game.color,
-							color: isCompleted ? "var(--sly-text)" : "#fff",
-						}}
+						className={`shrink-0 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all ${
+							isCompleted
+								? "bg-secondary text-ink"
+								: `${isPobach ? "bg-pobach" : "bg-valoshka"} text-white hover:brightness-105`
+						}`}
 					>
 						{ctaLabel}
-						<svg
-							width="14"
-							height="14"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="2"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							aria-hidden="true"
-						>
-							<line x1="5" y1="12" x2="19" y2="12" />
-							<polyline points="12 5 19 12 12 19" />
-						</svg>
 					</span>
 				</div>
 			</div>

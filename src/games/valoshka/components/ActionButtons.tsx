@@ -38,7 +38,7 @@ export function ActionButtons({
 	return (
 		<div className="flex items-center justify-center gap-3">
 			<PillButton variant="ghost" size="md" onClick={onDelete}>
-				Выдаліць
+				Сцерці
 			</PillButton>
 
 			<PillButton

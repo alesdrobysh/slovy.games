@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { DEFAULT_STATS, loadStats } from "@/games/valoshka/lib/storage";
 import type { GameStats } from "@/games/valoshka/types";
-import { useAnimatedValue } from "@/shared/hooks/useAnimatedValue";
 import { StatCard } from "@/shared/components/ui/StatCard";
+import { useAnimatedValue } from "@/shared/hooks/useAnimatedValue";
 
 export function StatsPage() {
 	const [stats, setStats] = useState<GameStats>(DEFAULT_STATS);

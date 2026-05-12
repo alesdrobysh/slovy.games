@@ -16,13 +16,13 @@ describe("StatCard", () => {
 	it("uses accent color when accent=true", () => {
 		render(<StatCard label="Тэст" value={1} accent />);
 		const value = screen.getByText("1");
-		expect(value).toHaveClass("text-[var(--sly-accent)]");
+		expect(value).toHaveClass("text-pobach");
 	});
 
-	it("has uppercase tracking-wider on label", () => {
+	it("has uppercase tracking on label", () => {
 		render(<StatCard label="Тэст" value={1} />);
 		const label = screen.getByText("Тэст");
 		expect(label.className).toContain("uppercase");
-		expect(label.className).toContain("tracking-wider");
+		expect(label.className).toContain("tracking-");
 	});
 });

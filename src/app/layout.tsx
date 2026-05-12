@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { EB_Garamond, Manrope } from "next/font/google";
 import { BannerProvider } from "@/shared/components/BannerContext";
 import CookieBanner from "@/shared/components/CookieBanner";
+import { Footer } from "@/shared/components/Footer";
 import { HubNav } from "@/shared/components/HubNav";
 import { ThemeProvider } from "@/shared/hooks/useTheme";
 import { PostHogProvider } from "@/shared/lib/analytics";
@@ -47,7 +48,7 @@ export default function RootLayout({
 			suppressHydrationWarning
 			className={`${manrope.variable} ${ebGaramond.variable}`}
 		>
-			<body className="min-h-screen flex flex-col">
+			<body className="min-h-screen flex flex-col bg-paper text-ink">
 				<script
 					dangerouslySetInnerHTML={{
 						__html: `(function(){try{var t=localStorage.getItem('theme');var dark=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(dark)document.documentElement.classList.add('dark');}catch(e){}})();`,
@@ -58,6 +59,7 @@ export default function RootLayout({
 						<BannerProvider>
 							<HubNav />
 							<main className="flex-1">{children}</main>
+							<Footer />
 							<CookieBanner />
 							<Analytics />
 						</BannerProvider>

@@ -50,6 +50,16 @@
 					}
 				}
 			}
+		},
+		{
+			"includes": ["src/games/valoshka/components/InputDisplay.tsx"],
+			"linter": {
+				"rules": {
+					"suspicious": {
+						"noArrayIndexKey": "off"
+					}
+				}
+			}
 		}
 	],
 	"javascript": {

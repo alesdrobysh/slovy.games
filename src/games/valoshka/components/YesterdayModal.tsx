@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Modal } from "@/shared/components/ui/Modal";
-import { useModal } from "@/shared/hooks/useModal";
 import {
 	UNWANTED_DATE_ENTRY,
 	UNWANTED_FORM_ACTION,
@@ -14,6 +12,8 @@ import {
 	loadProgress,
 } from "@/games/valoshka/lib/storage";
 import type { Puzzle, SavedProgress } from "@/games/valoshka/types";
+import { Modal } from "@/shared/components/ui/Modal";
+import { useModal } from "@/shared/hooks/useModal";
 
 type FlagState = "idle" | "confirming" | "sending" | "sent";
 

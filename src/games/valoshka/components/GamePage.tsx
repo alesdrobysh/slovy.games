@@ -303,41 +303,17 @@ export function GamePage({ puzzle }: GamePageProps) {
 	}, []);
 
 	return (
-		<div
-			className="mx-auto max-w-5xl px-4 select-none"
-			style={{ fontFamily: "var(--sly-font-sans)" }}
-		>
+		<div className="mx-auto max-w-5xl px-5 sm:px-8 select-none font-sans">
 			{/* Mobile: collapsible words toggle */}
-			<div
-				className="lg:hidden border-b py-2"
-				style={{ borderColor: "var(--sly-border)" }}
-			>
+			<div className="lg:hidden border-b border-rule py-2">
 				<button
 					type="button"
 					onClick={() => setWordsOpen((o) => !o)}
-					style={{
-						background: "none",
-						border: "none",
-						cursor: "pointer",
-						color: "var(--sly-text-muted)",
-						fontFamily: "var(--sly-font-sans)",
-						fontSize: "14px",
-						fontWeight: "600",
-						padding: "4px 0",
-						display: "flex",
-						alignItems: "center",
-						gap: "6px",
-					}}
+					className="flex items-center gap-1.5 text-sm font-semibold text-ink-muted bg-transparent border-none cursor-pointer p-1"
 				>
 					Словы ({state.foundWords.length})
 					{!wordsOpen && state.foundWords.length > 0 && (
-						<span
-							style={{
-								color: "var(--sly-text-muted)",
-								fontWeight: "400",
-								marginLeft: "8px",
-							}}
-						>
+						<span className="text-ink-muted font-normal ml-2">
 							{state.foundWords
 								.slice(-2)
 								.map((w) => w.charAt(0).toUpperCase() + w.slice(1))
@@ -345,10 +321,8 @@ export function GamePage({ puzzle }: GamePageProps) {
 						</span>
 					)}
 					<span
+						className="text-[10px] inline-block transition-transform"
 						style={{
-							fontSize: "10px",
-							transition: "transform 0.2s",
-							display: "inline-block",
 							transform: wordsOpen ? "rotate(180deg)" : "rotate(0deg)",
 						}}
 					>
@@ -360,8 +334,8 @@ export function GamePage({ puzzle }: GamePageProps) {
 			{/* Mobile: collapsible words panel */}
 			{wordsOpen && (
 				<div
-					className="lg:hidden"
-					style={{ maxHeight: "40vh", overflowY: "auto", paddingBlock: "12px" }}
+					className="lg:hidden py-3"
+					style={{ maxHeight: "40vh", overflowY: "auto" }}
 				>
 					<FoundWordsList
 						words={state.foundWords}
@@ -426,20 +400,7 @@ export function GamePage({ puzzle }: GamePageProps) {
 						<button
 							type="button"
 							onClick={handleStartHint}
-							style={{
-								background: "none",
-								border: "none",
-								cursor: "pointer",
-								color: "var(--sly-text-muted)",
-								fontFamily: "var(--sly-font-sans)",
-								fontSize: "13px",
-								fontWeight: "500",
-								padding: "4px 8px",
-								marginTop: "4px",
-								textDecoration: "underline",
-								textDecorationColor: "var(--sly-border)",
-								textUnderlineOffset: "3px",
-							}}
+							className="text-sm font-medium text-ink-muted hover:text-ink underline decoration-rule underline-offset-[3px] bg-transparent border-none cursor-pointer mt-1"
 						>
 							Падказка
 						</button>

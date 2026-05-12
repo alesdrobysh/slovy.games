@@ -1,15 +1,24 @@
 /**
  * FinishCard Component Integration Tests
- * Tests FinishCard component behavior in different modes
  */
 
 import { render, screen } from "@testing-library/react";
 import FinishCard from "@/games/pobach/components/FinishCard";
 
-// Mock the dependencies
 jest.mock("@/shared/hooks/useCountdown", () => ({
 	useCountdown: () => "23:45:12",
 }));
+
+jest.mock("@/games/pobach/lib/storage", () => ({
+	getCurrentDayIndex: () => 42,
+	getStats: () => ({ currentStreak: 0, maxStreak: 0, gamesPlayed: 0, gamesWon: 0 }),
+}));
+
+jest.mock("@/games/pobach/components/TopWordsList", () => {
+	return function MockTopWordsList() {
+		return <div data-testid="top-words-list" />;
+	};
+});
 
 jest.mock("@/games/pobach/components/ShareButton", () => {
 	return function MockShareButton({
@@ -47,32 +56,18 @@ describe("FinishCard Component", () => {
 			};
 			render(<FinishCard {...loseProps} />);
 
-			// Check title
-			expect(screen.getByText("Таямніца раскрыта!")).toBeInTheDocument();
-
-			// Check stats
 			expect(
-				screen.getByText(
-					"Таямніца раскрыта! 🔓 Дзякуй за гульню. Заўтра будзе новае слова — заходзьце праверыць веды!"
-				)
+				screen.getByText("Заўтра — новае слова")
 			).toBeInTheDocument();
-
-			// Check target word is shown
 			expect(screen.getByText("Правільнае слова:")).toBeInTheDocument();
 			expect(screen.getByText("правільнае")).toBeInTheDocument();
-
-			// Check no emoji
 			expect(screen.queryByText("🎉")).not.toBeInTheDocument();
 
-			// Check simple styling (not gradient)
 			const card = screen.getByTestId("finish-card");
-			expect(card).toHaveClass("finishCardLose");
-			expect(card).not.toHaveClass("finishCardWin");
+			expect(card).toHaveClass("bg-card");
+			expect(card).toHaveClass("ring-rule");
 
-			// Check share button is still present
 			expect(screen.getByTestId("share-button")).toBeInTheDocument();
-
-			// Check countdown timer is still present
 			expect(screen.getByText("23:45:12")).toBeInTheDocument();
 		});
 
@@ -89,28 +84,17 @@ describe("FinishCard Component", () => {
 			const winProps = { ...defaultProps, mode: "win" as const };
 			render(<FinishCard {...winProps} />);
 
-			// Check title
-			expect(screen.getByText("Віншуем!")).toBeInTheDocument();
-
-			// Check stats
 			expect(
-				screen.getByText(
-					"Вы адгадалі слова за 3 спробы! Заўтра будзе новае слова — заходзьце праверыць веды!"
-				)
+				screen.getByText("Адгадана 🎉")
+			).toBeInTheDocument();
+			expect(
+				screen.getByText(/Вы знайшлі слова за 3 спроб/)
 			).toBeInTheDocument();
 
-			// Check emoji is present
-			const emoji = screen.getByText("🎉");
-			expect(emoji).toBeInTheDocument();
-
-			// Check gradient styling
 			const card = screen.getByTestId("finish-card");
-			expect(card).toHaveClass("finishCardWin");
+			expect(card).toHaveClass("bg-pobach-soft");
 
-			// Check share button is present
 			expect(screen.getByTestId("share-button")).toBeInTheDocument();
-
-			// Check countdown timer is present
 			expect(screen.getByText("23:45:12")).toBeInTheDocument();
 		});
 

@@ -5,67 +5,59 @@ export default function RulesComponent({
 }) {
 	if (inline) {
 		return (
-			<div className="border-2 border-dashed border-[var(--sly-border)] rounded-2xl p-8 text-center">
-				<div className="w-16 h-16 rounded-full bg-[var(--sly-rank-10)] text-white text-3xl font-bold flex items-center justify-center mx-auto">
-					?
-				</div>
-				<h2 className="font-serif text-2xl font-bold text-[var(--sly-text)] mt-4">
-					Адгадайце слова дня
+			<div className="bg-card ring-1 ring-rule rounded-2xl p-7 animate-fade-in-up">
+				<h2 className="font-display text-xl font-medium text-ink mb-4">
+					Як гуляць
 				</h2>
-				<p className="text-sm text-[var(--sly-text-muted)] max-w-xs mx-auto mt-2">
-					Знайдзіце загаданае слова па яго сэнсе. Чым меншы нумар, тым бліжэй вы
-					да адгадкі.
-				</p>
-				<div className="flex justify-center gap-3 flex-wrap pt-3">
-					<div className="flex flex-col items-center gap-1">
-						<span
-							className="w-8 h-2 rounded-full"
+				<ul className="space-y-2 text-sm text-ink-muted leading-relaxed">
+					<li>• Уводзьце любыя беларускія словы.</li>
+					<li>
+						• Кожнае слова атрымае{" "}
+						<span className="text-ink font-medium">ранг</span> — наколькі яно
+						блізкае па сэнсе да схаванага.
+					</li>
+					<li>
+						• Чым меншы лік — тым бліжэй. Ранг{" "}
+						<span className="text-pobach font-semibold">1</span> — перамога.
+					</li>
+					<li>• Колькасць спроб неабмежаваная. Можна ўзяць падказку.</li>
+				</ul>
+
+				<div className="mt-5 grid grid-cols-5 gap-2 text-center text-[10px] text-ink-soft">
+					<div className="flex flex-col items-center gap-1.5">
+						<div
+							className="w-6 h-2 rounded-full"
 							style={{ backgroundColor: "var(--sly-rank-1)" }}
-							aria-hidden="true"
 						/>
-						<span className="text-xs text-[var(--sly-text-muted)]">
-							Перамога №1
-						</span>
+						Мэта
 					</div>
-					<div className="flex flex-col items-center gap-1">
-						<span
-							className="w-8 h-2 rounded-full"
+					<div className="flex flex-col items-center gap-1.5">
+						<div
+							className="w-6 h-2 rounded-full"
 							style={{ backgroundColor: "var(--sly-rank-10)" }}
-							aria-hidden="true"
 						/>
-						<span className="text-xs text-[var(--sly-text-muted)]">
-							Вельмі блізка 2–10
-						</span>
+						Гарача
 					</div>
-					<div className="flex flex-col items-center gap-1">
-						<span
-							className="w-8 h-2 rounded-full"
+					<div className="flex flex-col items-center gap-1.5">
+						<div
+							className="w-6 h-2 rounded-full"
 							style={{ backgroundColor: "var(--sly-rank-100)" }}
-							aria-hidden="true"
 						/>
-						<span className="text-xs text-[var(--sly-text-muted)]">
-							Блізка 11–100
-						</span>
+						Цёпла
 					</div>
-					<div className="flex flex-col items-center gap-1">
-						<span
-							className="w-8 h-2 rounded-full"
+					<div className="flex flex-col items-center gap-1.5">
+						<div
+							className="w-6 h-2 rounded-full"
 							style={{ backgroundColor: "var(--sly-rank-1000)" }}
-							aria-hidden="true"
 						/>
-						<span className="text-xs text-[var(--sly-text-muted)]">
-							Трохі далей 101–1000
-						</span>
+						Холадна
 					</div>
-					<div className="flex flex-col items-center gap-1">
-						<span
-							className="w-8 h-2 rounded-full"
+					<div className="flex flex-col items-center gap-1.5">
+						<div
+							className="w-6 h-2 rounded-full"
 							style={{ backgroundColor: "var(--sly-rank-default)" }}
-							aria-hidden="true"
 						/>
-						<span className="text-xs text-[var(--sly-text-muted)]">
-							Вельмі далёка 1001+
-						</span>
+						Далёка
 					</div>
 				</div>
 			</div>
@@ -73,14 +65,13 @@ export default function RulesComponent({
 	}
 
 	return (
-		<div className="space-y-3 text-sm text-[var(--sly-text)]">
+		<div className="space-y-3 text-sm text-ink leading-relaxed">
 			<p>
 				Знайдзіце загаданае слова па яго <strong>сэнсе</strong>, а не па
 				напісанні.
 			</p>
 			<p>
-				Напрыклад, загадана слова:{" "}
-				<strong className="text-[var(--sly-accent)]">ЛЕС</strong>
+				Напрыклад, загадана слова: <strong className="text-pobach">ЛЕС</strong>
 			</p>
 
 			<ul className="space-y-2 mt-3">
@@ -88,7 +79,6 @@ export default function RulesComponent({
 					<span
 						className="shrink-0 w-3 h-3 rounded-sm mt-0.5"
 						style={{ backgroundColor: "var(--sly-rank-1)" }}
-						aria-hidden="true"
 					/>
 					<span>
 						Лес — <strong>перамога</strong> (№1)
@@ -98,7 +88,6 @@ export default function RulesComponent({
 					<span
 						className="shrink-0 w-3 h-3 rounded-sm mt-0.5"
 						style={{ backgroundColor: "var(--sly-rank-10)" }}
-						aria-hidden="true"
 					/>
 					<span>
 						Дрэва — <strong>вельмі блізка</strong> (№4)
@@ -108,7 +97,6 @@ export default function RulesComponent({
 					<span
 						className="shrink-0 w-3 h-3 rounded-sm mt-0.5"
 						style={{ backgroundColor: "var(--sly-rank-100)" }}
-						aria-hidden="true"
 					/>
 					<span>
 						Птушка — <strong>блізка</strong> (№45)
@@ -118,7 +106,6 @@ export default function RulesComponent({
 					<span
 						className="shrink-0 w-3 h-3 rounded-sm mt-0.5"
 						style={{ backgroundColor: "var(--sly-rank-1000)" }}
-						aria-hidden="true"
 					/>
 					<span>
 						Грыб — <strong>трохі далей</strong> (№215)
@@ -128,7 +115,6 @@ export default function RulesComponent({
 					<span
 						className="shrink-0 w-3 h-3 rounded-sm mt-0.5"
 						style={{ backgroundColor: "var(--sly-rank-default)" }}
-						aria-hidden="true"
 					/>
 					<span>
 						Аўтамабіль — <strong>вельмі далёка</strong> (№15000)
@@ -143,7 +129,7 @@ export default function RulesComponent({
 			<p>
 				Калі захраснеце — бярыце <strong>падказку</strong>.
 			</p>
-			<p className="text-[var(--sly-text-muted)]">
+			<p className="text-ink-muted">
 				Націсніце на любое слова ў спісе, каб убачыць яго ў слоўніку.
 			</p>
 		</div>

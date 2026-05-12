@@ -4,14 +4,15 @@ import GuessCard from "./GuessCard";
 
 type GuessListProps = {
 	guesses: Guess[];
+	lastGuess?: string | null;
 };
 
-export default function GuessList({ guesses }: GuessListProps) {
+export default function GuessList({ guesses, lastGuess }: GuessListProps) {
 	return (
 		<div>
 			<div className="flex items-center justify-between mb-3">
 				{guesses.length > 0 && (
-					<span className="flex items-center gap-1.5 text-xs text-[var(--sly-text-muted)]">
+					<span className="flex items-center gap-1.5 text-xs text-ink-muted">
 						<BookOpen size={12} />
 						<span className="hidden sm:inline">Слоўнік па кліку на слова</span>
 						<span className="sm:hidden">Націсніце на слова</span>
@@ -20,7 +21,7 @@ export default function GuessList({ guesses }: GuessListProps) {
 				<output
 					aria-live="polite"
 					aria-label={`Колькасць спроб: ${guesses.length}`}
-					className="text-sm font-medium text-[var(--sly-accent)] ml-auto"
+					className="text-sm font-medium text-pobach ml-auto"
 				>
 					Спроб: {guesses.length}
 				</output>
@@ -28,7 +29,7 @@ export default function GuessList({ guesses }: GuessListProps) {
 			<ul aria-label="Спіс здагадак" className="flex flex-col gap-2">
 				{guesses.map((guess) => (
 					<li key={guess.word}>
-						<GuessCard guess={guess} isWin={guess.rank === 1} />
+						<GuessCard guess={guess} highlight={guess.word === lastGuess} />
 					</li>
 				))}
 			</ul>

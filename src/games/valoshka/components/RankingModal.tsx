@@ -1,7 +1,7 @@
 "use client";
 
-import { Modal } from "@/shared/components/ui/Modal";
 import { RANKS } from "@/games/valoshka/lib/scoring";
+import { Modal } from "@/shared/components/ui/Modal";
 
 interface RankingModalProps {
 	score: number;

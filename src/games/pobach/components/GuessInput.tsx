@@ -1,4 +1,3 @@
-import { Flag, Lightbulb } from "lucide-react";
 import { useEffect, useRef } from "react";
 
 type GuessInputProps = {
@@ -13,6 +12,7 @@ type GuessInputProps = {
 	error: string | null;
 	errorWord: string | null;
 	guessCount: number;
+	bestRank?: number | null;
 };
 
 export default function GuessInput({
@@ -27,11 +27,11 @@ export default function GuessInput({
 	error,
 	errorWord,
 	guessCount,
+	bestRank,
 }: GuessInputProps) {
 	const divRef = useRef<HTMLDivElement>(null);
 	const isDisabled = won || gameOver;
 
-	// Sync: when parent resets input to "" (after submit), clear the div
 	useEffect(() => {
 		if (input === "" && divRef.current && divRef.current.textContent !== "") {
 			divRef.current.textContent = "";
@@ -58,19 +58,11 @@ export default function GuessInput({
 
 	return (
 		<div className="mb-4">
-			{/* Row 1: input + submit */}
+			{/* Input row */}
 			<div className="flex gap-2">
-				<button
-					className="flex-1 h-12 border border-[var(--sly-border)] rounded-xl px-4 flex items-center bg-[var(--sly-bg-card)] focus-within:border-[var(--sly-accent)] focus-within:ring-2 focus-within:ring-[var(--sly-accent)]/20 transition-all cursor-text text-left"
-					onClick={() => !isDisabled && divRef.current?.focus()}
-					onKeyDown={(e) =>
-						e.key === "Enter" && !isDisabled && divRef.current?.focus()
-					}
-					type="button"
-					tabIndex={0}
-					aria-label="Увядзіце слова для здагадкі"
-				>
-					{/* biome-ignore lint/a11y/useSemanticElements: contenteditable div used intentionally to suppress Chrome Android autofill bar */}
+				{/* biome-ignore lint/a11y/noLabelWithoutControl: contenteditable div serves as input */}
+				<label className="flex-1 bg-card border border-rule rounded-xl px-4 py-3 flex items-center focus-within:border-pobach focus-within:ring-2 focus-within:ring-pobach/20 transition-all cursor-text text-left">
+					{/* biome-ignore lint/a11y/useSemanticElements: contenteditable suppresses Chrome Android autofill */}
 					<div
 						ref={divRef}
 						contentEditable={!isDisabled}
@@ -80,7 +72,6 @@ export default function GuessInput({
 						role="textbox"
 						aria-label="Увядзіце слова для здагадкі"
 						aria-placeholder="Увядзіце слова..."
-						aria-describedby={error ? "error-message" : undefined}
 						tabIndex={0}
 						spellCheck={false}
 						autoCorrect="off"
@@ -88,16 +79,17 @@ export default function GuessInput({
 						inputMode="text"
 						enterKeyHint="send"
 						suppressContentEditableWarning
-						className="text-lg text-[var(--sly-text)] outline-none min-h-[1.5rem] w-full empty:before:content-['Увядзіце_слова...'] empty:before:text-[var(--sly-text-muted)] text-left"
+						className="text-lg text-ink outline-none min-h-[1.5rem] w-full empty:before:content-['Увядзіце_слова...'] empty:before:text-ink-muted text-left"
 					/>
-				</button>
+				</label>
+
 				{!isDisabled && (
 					<button
 						onClick={onSubmit}
 						disabled={loading}
 						aria-label="Адправіць здагадку"
 						type="button"
-						className="hidden sm:flex w-12 h-12 items-center justify-center rounded-xl bg-[var(--sly-accent)] text-white hover:opacity-90 transition-opacity disabled:opacity-50 shrink-0"
+						className="hidden sm:flex w-12 h-12 items-center justify-center rounded-xl bg-pobach text-white hover:brightness-105 active:scale-[0.98] transition-all disabled:opacity-50 shrink-0"
 					>
 						<svg
 							width="16"
@@ -118,49 +110,52 @@ export default function GuessInput({
 				)}
 			</div>
 
+			{/* Error message */}
 			{error && (
 				<div
 					id="error-message"
 					role="alert"
-					className="mt-2 text-sm text-red-500"
+					className="mt-2 text-sm text-destructive"
 				>
 					{errorWord && (
 						<>
-							<strong>«{errorWord}»</strong> —{" "}
+							<strong>&laquo;{errorWord}&raquo;</strong> —{" "}
 						</>
 					)}
 					{error}
 				</div>
 			)}
 
-			{/* Row 2: pill action buttons */}
-			<div className="flex items-center justify-center gap-3 mt-3">
+			{/* Action buttons row */}
+			<div className="flex items-center justify-center gap-3 mt-3 text-sm">
 				{!won && !gameOver && (
-					<button
-						onClick={onHint}
-						disabled={loading}
-						aria-label="Атрымаць падказку"
-						aria-disabled={loading}
-						type="button"
-						className="flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-[var(--sly-accent)] border border-[var(--sly-accent)] rounded-full hover:bg-[var(--sly-accent)]/5 transition-colors disabled:opacity-50"
-					>
-						<Lightbulb size={12} />
-						Падказка
-					</button>
+					<>
+						<button
+							type="button"
+							onClick={onHint}
+							disabled={loading}
+							className="text-ink-muted hover:text-ink transition-colors disabled:opacity-30"
+						>
+							Падказка
+						</button>
+						<span className="text-ink-soft">·</span>
+					</>
 				)}
 				{!won && guessCount >= 10 && !gameOver && (
 					<button
+						type="button"
 						onClick={onGiveUp}
 						disabled={loading}
-						aria-label="Здацца і завяршыць гульню"
-						aria-disabled={loading}
-						type="button"
-						data-testid="give-up-button"
-						className="flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-[var(--sly-text-muted)] border border-[var(--sly-border)] rounded-full hover:bg-[var(--sly-border)] transition-colors disabled:opacity-50"
+						className="text-ink-muted hover:text-destructive transition-colors disabled:opacity-30"
 					>
-						<Flag size={12} />
 						Здацца
 					</button>
+				)}
+				{bestRank !== null && (
+					<span className="ml-auto text-xs text-ink-soft">
+						Найлепшы ранг:{" "}
+						<span className="text-ink font-medium">{bestRank}</span>
+					</span>
 				)}
 			</div>
 		</div>

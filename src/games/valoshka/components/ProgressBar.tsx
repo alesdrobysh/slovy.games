@@ -49,7 +49,6 @@ export function ProgressBar({
 	return (
 		<>
 			<div className="w-full max-w-sm">
-				{/* Rank badge + score + share */}
 				<div className="flex items-center justify-between mb-3">
 					<div className="flex items-center gap-2">
 						<button
@@ -62,49 +61,27 @@ export function ProgressBar({
 						<button
 							type="button"
 							onClick={share}
-							className="text-xs font-semibold py-0.5 px-1.5 rounded transition-colors"
-							style={{
-								background: "none",
-								border: "none",
-								cursor: "pointer",
-								color: showToast
-									? "var(--sly-cornflower)"
-									: "var(--sly-text-muted)",
-								fontFamily: "var(--sly-font-sans)",
-							}}
+							className={`text-xs font-semibold py-0.5 px-1.5 rounded transition-colors ${
+								showToast ? "text-valoshka" : "text-ink-muted hover:text-ink"
+							}`}
 						>
 							{showToast ? "Скапіравана!" : "Падзяліцца"}
 						</button>
 					</div>
-					<span
-						className="text-sm font-semibold tabular-nums"
-						style={{
-							color: "var(--sly-text-muted)",
-							fontFamily: "var(--sly-font-sans)",
-						}}
-					>
-						<span style={{ color: "var(--sly-text)" }}>{score}</span>
-						<span style={{ margin: "0 5px", color: "var(--sly-border)" }}>
-							/
-						</span>
+					<span className="text-sm font-semibold tabular-nums text-ink-muted font-sans">
+						<span className="text-ink">{score}</span>
+						<span className="mx-1 text-rule">/</span>
 						{maxScore}
 					</span>
 				</div>
 
-				{/* Progress track with dots */}
-				{/* biome-ignore lint/a11y/noStaticElementInteractions: decorative progress bar */}
-				{/* biome-ignore lint/a11y/useKeyWithClickEvents: decorative progress bar */}
+				{/* biome-ignore lint/a11y/noStaticElementInteractions: decorative */}
+				{/* biome-ignore lint/a11y/useKeyWithClickEvents: decorative */}
 				<div
-					className="relative"
+					className="relative flex items-center cursor-pointer"
+					style={{ height: "20px" }}
 					onClick={() => setShowRanking(true)}
-					style={{
-						height: "20px",
-						display: "flex",
-						alignItems: "center",
-						cursor: "pointer",
-					}}
 				>
-					{/* Track */}
 					<div
 						className="w-full rounded-full overflow-hidden"
 						style={{ height: "3px", background: "var(--sly-border)" }}
@@ -120,13 +97,11 @@ export function ProgressBar({
 						/>
 					</div>
 
-					{/* Rank dots */}
 					{RANKS.map((r, i) => {
 						const dotPct = r.threshold;
 						const isActive = i <= rankIdx;
 						const isCurrent = i === rankIdx;
 						const isTopRank = i === RANKS.length - 1;
-						// Hide top rank dot until reached
 						if (isTopRank && !isActive) return <div key={r.name} />;
 						return (
 							<div
@@ -144,9 +119,6 @@ export function ProgressBar({
 										: "var(--sly-border)",
 									border: isCurrent
 										? "2px solid var(--sly-cornflower-dark)"
-										: "none",
-									boxShadow: isCurrent
-										? "0 0 8px rgba(245, 168, 24, 0.6)"
 										: "none",
 									transition: "all 0.3s ease",
 									zIndex: 1,

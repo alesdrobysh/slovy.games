@@ -2,35 +2,16 @@
 
 interface StatCardProps {
 	label: string;
-	value: number;
+	value: number | string;
 }
 
 export function StatCard({ label, value }: StatCardProps) {
 	return (
-		<div
-			className="flex flex-col gap-1"
-			style={{
-				background: "var(--sly-bg-card)",
-				border: "1px solid var(--sly-border)",
-				borderRadius: "12px",
-				padding: "20px 24px",
-			}}
-		>
-			<span
-				className="text-xs font-semibold uppercase tracking-wider"
-				style={{ color: "var(--sly-text-muted)" }}
-			>
+		<div className="bg-card ring-1 ring-rule rounded-2xl p-5 text-center sm:text-left">
+			<p className="text-[10px] uppercase tracking-[0.2em] text-ink-soft mb-1 font-medium">
 				{label}
-			</span>
-			<span
-				className="text-3xl font-bold"
-				style={{
-					fontFamily: "var(--sly-font-display)",
-					color: "var(--sly-text)",
-				}}
-			>
-				{value}
-			</span>
+			</p>
+			<p className="font-display text-3xl font-medium text-ink">{value}</p>
 		</div>
 	);
 }
