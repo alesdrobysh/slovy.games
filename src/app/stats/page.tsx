@@ -2,25 +2,33 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { GAMES } from "@/shared/types";
 
-interface CombinedStats {
-	valoshka: {
-		gamesPlayed: number;
-		currentStreak: number;
-		longestStreak: number;
-		totalWordsFound: number;
-	} | null;
-	pobach: {
-		gamesPlayed: number;
-		gamesWon: number;
-		winRate: number;
-		currentStreak: number;
-		longestStreak: number;
-	} | null;
+const ATTEMPT_BUCKETS = [
+	{ label: "1–5",    min: 1,   max: 5 },
+	{ label: "6–15",   min: 6,   max: 15 },
+	{ label: "16–50",  min: 16,  max: 50 },
+	{ label: "51–150", min: 51,  max: 150 },
+	{ label: "150+",   min: 151, max: Infinity },
+];
+
+interface ValoshkaStats {
+	gamesPlayed: number;
+	currentStreak: number;
+	longestStreak: number;
+	totalWordsFound: number;
 }
 
-function loadValoshkaStats() {
+interface PobachStats {
+	gamesPlayed: number;
+	gamesWon: number;
+	winRate: number;
+	currentStreak: number;
+	longestStreak: number;
+	distribution: Record<number, number>;
+	bestAttempts: number;
+}
+
+function loadValoshkaStats(): ValoshkaStats | null {
 	if (typeof window === "undefined") return null;
 	try {
 		const raw = localStorage.getItem("vulej_stats");
@@ -37,23 +45,22 @@ function loadValoshkaStats() {
 	}
 }
 
-function loadPobachStats() {
+function loadPobachStats(): PobachStats | null {
 	if (typeof window === "undefined") return null;
 	try {
 		const raw = localStorage.getItem("pobach_storage");
 		if (!raw) return null;
 		const s = JSON.parse(raw);
-		const history = s.history ?? [];
-		const won = history.filter((h: { won: boolean }) => h.won);
+		const stats = s.stats;
+		if (!stats) return null;
 		return {
-			gamesPlayed: history.length,
-			gamesWon: won.length,
-			winRate:
-				history.length > 0
-					? Math.round((won.length / history.length) * 100)
-					: 0,
-			currentStreak: s.stats?.currentStreak ?? 0,
-			longestStreak: s.stats?.maxStreak ?? 0,
+			gamesPlayed: stats.gamesPlayed ?? 0,
+			gamesWon: stats.gamesWon ?? 0,
+			winRate: Math.round(stats.winRate ?? 0),
+			currentStreak: stats.currentStreak ?? 0,
+			longestStreak: stats.maxStreak ?? 0,
+			distribution: stats.distribution ?? {},
+			bestAttempts: stats.bestAttempts ?? 0,
 		};
 	} catch {
 		return null;
@@ -71,22 +78,148 @@ function StatCard({ label, value }: { label: string; value: number | string }) {
 	);
 }
 
-export default function CombinedStatsPage() {
-	const [stats, setStats] = useState<CombinedStats>({
-		valoshka: null,
-		pobach: null,
+function TabButton({
+	active,
+	onClick,
+	accent,
+	children,
+}: {
+	active: boolean;
+	onClick: () => void;
+	accent: "pobach" | "valoshka";
+	children: React.ReactNode;
+}) {
+	const activeColor = accent === "pobach" ? "text-pobach" : "text-valoshka";
+	return (
+		<button
+			type="button"
+			onClick={onClick}
+			className={
+				"px-5 py-1.5 rounded-full text-sm font-medium transition-all " +
+				(active
+					? `bg-paper text-ink shadow-sm ring-1 ring-rule ${activeColor}`
+					: "text-ink-muted hover:text-ink")
+			}
+		>
+			{children}
+		</button>
+	);
+}
+
+function DistributionChart({ distribution }: { distribution: Record<number, number> }) {
+	const buckets = ATTEMPT_BUCKETS.map((b) => {
+		let n = 0;
+		for (const [attempts, count] of Object.entries(distribution)) {
+			const a = Number(attempts);
+			if (a >= b.min && a <= b.max) n += count;
+		}
+		return { ...b, n };
 	});
+	const maxCount = Math.max(1, ...buckets.map((b) => b.n));
+
+	return (
+		<div className="bg-card ring-1 ring-rule rounded-2xl p-6">
+			<h3 className="font-display text-lg font-medium text-ink mb-4">
+				Размеркаванне спроб
+			</h3>
+			<div className="space-y-2">
+				{buckets.map((bucket) => (
+					<div key={bucket.label} className="flex items-center gap-3 text-sm">
+						<span className="w-16 text-ink-muted text-xs uppercase tracking-wider shrink-0">
+							{bucket.label}
+						</span>
+						<div className="flex-1 h-6 bg-ink/5 rounded overflow-hidden">
+							<div
+								className="h-full rounded bg-pobach flex items-center justify-end px-2 text-white text-xs font-semibold transition-all duration-500"
+								style={{
+									width: `${(bucket.n / maxCount) * 100}%`,
+									minWidth: bucket.n > 0 ? "1.5rem" : 0,
+								}}
+							>
+								{bucket.n > 0 && bucket.n}
+							</div>
+						</div>
+					</div>
+				))}
+			</div>
+		</div>
+	);
+}
+
+function PobachStatsView({ stats }: { stats: PobachStats }) {
+	const avgGuesses =
+		stats.gamesWon > 0 && stats.bestAttempts > 0
+			? stats.bestAttempts
+			: null;
+
+	return (
+		<div className="space-y-6">
+			<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+				<StatCard label="Згулялі" value={stats.gamesPlayed} />
+				<StatCard label="Перамог" value={`${stats.winRate}%`} />
+				<StatCard label="Бягучая серыя" value={stats.currentStreak} />
+				<StatCard label="Найлепшая серыя" value={stats.longestStreak} />
+			</div>
+			{stats.gamesWon > 0 && avgGuesses && (
+				<div className="grid gap-3 sm:grid-cols-2">
+					<StatCard label="Лепшы вынік (спроб)" value={avgGuesses} />
+					<StatCard label="Перамог усяго" value={stats.gamesWon} />
+				</div>
+			)}
+			{stats.gamesWon > 0 && Object.keys(stats.distribution).length > 0 && (
+				<DistributionChart distribution={stats.distribution} />
+			)}
+			<div className="text-right">
+				<Link
+					href="/pobach/stats"
+					className="text-xs font-medium text-ink-muted hover:text-ink transition-colors no-underline"
+				>
+					Падрабязная статыстыка →
+				</Link>
+			</div>
+		</div>
+	);
+}
+
+function ValoshkaStatsView({ stats }: { stats: ValoshkaStats }) {
+	return (
+		<div className="space-y-6">
+			<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+				<StatCard label="Гульняў зыграна" value={stats.gamesPlayed} />
+				<StatCard label="Бягучая серыя" value={stats.currentStreak} />
+				<StatCard label="Найлепшая серыя" value={stats.longestStreak} />
+				<StatCard label="Слоў знойдзена" value={stats.totalWordsFound} />
+			</div>
+			<div className="text-right">
+				<Link
+					href="/valoshka/stats"
+					className="text-xs font-medium text-ink-muted hover:text-ink transition-colors no-underline"
+				>
+					Падрабязная статыстыка →
+				</Link>
+			</div>
+		</div>
+	);
+}
+
+export default function CombinedStatsPage() {
+	const [valoshka, setValoshka] = useState<ValoshkaStats | null>(null);
+	const [pobach, setPobach] = useState<PobachStats | null>(null);
+	const [activeTab, setActiveTab] = useState<"valoshka" | "pobach">("valoshka");
 
 	useEffect(() => {
-		setStats({
-			valoshka: loadValoshkaStats(),
-			pobach: loadPobachStats(),
-		});
+		const v = loadValoshkaStats();
+		const p = loadPobachStats();
+		setValoshka(v);
+		setPobach(p);
+		if (!v && p) setActiveTab("pobach");
 	}, []);
+
+	const isEmpty = !valoshka && !pobach;
 
 	return (
 		<div className="min-h-screen flex flex-col">
-			<div className="flex-1 max-w-4xl mx-auto w-full px-5 sm:px-8 py-10 sm:py-14">
+			<div className="flex-1 max-w-screen-xl mx-auto w-full px-5 sm:px-8 py-10 sm:py-14">
 				<div className="mb-8 animate-fade-in-up">
 					<h1 className="font-display text-4xl sm:text-5xl font-medium tracking-tight text-ink">
 						Статыстыка
@@ -96,11 +229,10 @@ export default function CombinedStatsPage() {
 					</p>
 				</div>
 
-				{!stats.valoshka && !stats.pobach ? (
+				{isEmpty ? (
 					<div className="bg-card ring-1 ring-rule rounded-2xl p-10 text-center">
 						<p className="text-ink-muted mb-4">
-							Пакуль няма даных. Згуляйце некалькі гульняў, каб убачыць
-							статыстыку.
+							Пакуль няма даных. Згуляйце сваю першую гульню.
 						</p>
 						<Link
 							href="/"
@@ -110,71 +242,35 @@ export default function CombinedStatsPage() {
 						</Link>
 					</div>
 				) : (
-					<div className="space-y-10">
-						{stats.valoshka && (
-							<section>
-								<h2 className="font-display text-2xl font-medium text-valoshka mb-5">
-									{GAMES[0].nameBel}{" "}
-									<Link
-										href="/valoshka/stats"
-										className="text-xs font-normal text-ink-muted hover:text-ink"
-									>
-										падрабязней →
-									</Link>
-								</h2>
-								<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-									<StatCard
-										label="Гульняў зыграна"
-										value={stats.valoshka.gamesPlayed}
-									/>
-									<StatCard
-										label="Бягучая серыя"
-										value={stats.valoshka.currentStreak}
-									/>
-									<StatCard
-										label="Найлепшая серыя"
-										value={stats.valoshka.longestStreak}
-									/>
-									<StatCard
-										label="Слоў знойдзена"
-										value={stats.valoshka.totalWordsFound}
-									/>
-								</div>
-							</section>
-						)}
+					<>
+						<div className="flex gap-1 mb-8 bg-secondary rounded-full p-1 w-fit">
+							{valoshka && (
+								<TabButton
+									active={activeTab === "valoshka"}
+									onClick={() => setActiveTab("valoshka")}
+									accent="valoshka"
+								>
+									Валошка
+								</TabButton>
+							)}
+							{pobach && (
+								<TabButton
+									active={activeTab === "pobach"}
+									onClick={() => setActiveTab("pobach")}
+									accent="pobach"
+								>
+									Побач
+								</TabButton>
+							)}
+						</div>
 
-						{stats.pobach && (
-							<section>
-								<h2 className="font-display text-2xl font-medium text-pobach mb-5">
-									{GAMES[1].nameBel}{" "}
-									<Link
-										href="/pobach/stats"
-										className="text-xs font-normal text-ink-muted hover:text-ink"
-									>
-										падрабязней →
-									</Link>
-								</h2>
-								<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-									<StatCard
-										label="Гульняў зыграна"
-										value={stats.pobach.gamesPlayed}
-									/>
-									<StatCard
-										label="Перамог"
-										value={`${stats.pobach.winRate}%`}
-									/>
-									<StatCard
-										label="Бягучая серыя"
-										value={stats.pobach.currentStreak}
-									/>
-									<StatCard
-										label="Найлепшая серыя"
-										value={stats.pobach.longestStreak}
-									/>
-								</div>
-							</section>
+						{activeTab === "valoshka" && valoshka && (
+							<ValoshkaStatsView stats={valoshka} />
 						)}
-					</div>
+						{activeTab === "pobach" && pobach && (
+							<PobachStatsView stats={pobach} />
+						)}
+					</>
 				)}
 			</div>
 		</div>

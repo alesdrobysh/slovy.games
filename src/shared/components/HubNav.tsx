@@ -49,7 +49,7 @@ export function HubNav() {
 
 	return (
 		<header className="sticky top-0 z-30 border-b border-rule bg-paper/80 backdrop-blur-sm">
-			<div className="mx-auto flex max-w-5xl items-center justify-between px-5 sm:px-8 h-16 gap-4">
+			<div className="mx-auto flex max-w-screen-xl items-center justify-between px-5 sm:px-8 h-16 gap-4">
 				<div className="flex items-center gap-8">
 					<Link
 						href="/"

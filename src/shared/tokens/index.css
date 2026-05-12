@@ -107,8 +107,8 @@
 	--sly-easing: cubic-bezier(0.4, 0, 0.2, 1);
 
 	/* --- Fonts --- */
-	--sly-font-display: "EB Garamond", serif;
-	--sly-font-sans: "Manrope", sans-serif;
+	--sly-font-display: var(--font-display), serif;
+	--sly-font-sans: var(--font-sans), sans-serif;
 }
 
 /* === Layer 2: Semantic Tokens (Hub / Neutral — light) === */

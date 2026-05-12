@@ -3,7 +3,7 @@ import Link from "next/link";
 export function Footer() {
 	return (
 		<footer className="mt-24 border-t border-rule">
-			<div className="max-w-5xl mx-auto px-5 sm:px-8 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
+			<div className="max-w-screen-xl mx-auto px-5 sm:px-8 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
 				<p className="font-display italic text-ink-muted">
 					З любоўю да мовы і сэнсу.
 				</p>

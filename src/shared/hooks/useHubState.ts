@@ -36,25 +36,18 @@ function todayString(): string {
 	return new Date().toISOString().slice(0, 10);
 }
 
-/** Format today as Belarusian, e.g. "Пятніца, 8 траўня 2026" */
+const MONTHS_GEN = [
+	"студзеня", "лютага", "сакавіка", "красавіка", "траўня", "чэрвеня",
+	"ліпеня", "жніўня", "верасня", "кастрычніка", "лістапада", "снежня",
+];
+const WEEKDAYS_BE = [
+	"Нядзеля", "Панядзелак", "Аўторак", "Серада", "Чацвер", "Пятніца", "Субота",
+];
+
+/** Format today as Belarusian, e.g. "Пятніца, 8 траўня" */
 function formatTodayBe(): string {
 	const d = new Date();
-	try {
-		return d.toLocaleDateString("be", {
-			weekday: "long",
-			year: "numeric",
-			month: "long",
-			day: "numeric",
-		});
-	} catch {
-		// Fallback if 'be' locale missing
-		return d.toLocaleDateString("ru-RU", {
-			weekday: "long",
-			year: "numeric",
-			month: "long",
-			day: "numeric",
-		});
-	}
+	return `${WEEKDAYS_BE[d.getDay()]}, ${d.getDate()} ${MONTHS_GEN[d.getMonth()]}`;
 }
 
 // ─── Valoshka state ────────────────────────────────────────────────

@@ -28,7 +28,7 @@ export default function HubPage() {
 
 	return (
 		<div className="min-h-screen flex flex-col">
-			<div className="flex-1 max-w-5xl mx-auto w-full px-5 sm:px-8 py-12 sm:py-20">
+			<div className="flex-1 max-w-screen-xl mx-auto w-full px-5 sm:px-8 py-12 sm:py-20">
 				{/* Hero */}
 				<div className="mb-14 sm:mb-20 max-w-3xl animate-fade-in-up">
 					<div className="flex items-center gap-3 mb-5">
@@ -44,7 +44,7 @@ export default function HubPage() {
 						)}
 					</div>
 					<h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium leading-[1.05] tracking-tight text-balance text-ink mb-5">
-						Штодзённыя беларускія слоўныя гульні
+						Ваш штодзённы інтэлектуальны рытуал.
 					</h1>
 					<p className="text-lg sm:text-xl text-ink-muted text-pretty max-w-[56ch] leading-relaxed">
 						Дзве новыя галаваломкі кожны дзень. Адкрывайце багацце беларускай
@@ -88,8 +88,8 @@ export default function HubPage() {
 				{/* Stats CTA */}
 				<section className="mt-20 pt-10 border-t border-rule flex flex-col sm:flex-row gap-6 items-start sm:items-center justify-between animate-fade-in-up">
 					<p className="text-sm text-ink-muted max-w-[52ch] leading-relaxed text-pretty">
-						Усе гульнявыя станы і статыстыка захоўваюцца лакальна на вашым
-						прыстасаванні.
+						Хочаце ўбачыць свае серыі і размеркаванне вынікаў? Усе запісы
+						захоўваюцца лакальна на вашым прыстасаванні.
 					</p>
 					<Link
 						href="/stats"

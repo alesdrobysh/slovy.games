@@ -1,6 +1,6 @@
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
-import { EB_Garamond, Manrope } from "next/font/google";
+import { Literata, Wix_Madefor_Text } from "next/font/google";
 import { BannerProvider } from "@/shared/components/BannerContext";
 import CookieBanner from "@/shared/components/CookieBanner";
 import { Footer } from "@/shared/components/Footer";
@@ -9,15 +9,15 @@ import { ThemeProvider } from "@/shared/hooks/useTheme";
 import { PostHogProvider } from "@/shared/lib/analytics";
 import "./globals.css";
 
-const manrope = Manrope({
+const wixMadeforText = Wix_Madefor_Text({
 	subsets: ["latin", "cyrillic"],
+	style: ["normal", "italic"],
 	variable: "--font-sans",
 	display: "swap",
 });
 
-const ebGaramond = EB_Garamond({
+const literata = Literata({
 	subsets: ["latin", "cyrillic"],
-	weight: ["400", "700"],
 	style: ["normal", "italic"],
 	variable: "--font-display",
 	display: "swap",
@@ -46,7 +46,7 @@ export default function RootLayout({
 		<html
 			lang="be"
 			suppressHydrationWarning
-			className={`${manrope.variable} ${ebGaramond.variable}`}
+			className={`${wixMadeforText.variable} ${literata.variable}`}
 		>
 			<body className="min-h-screen flex flex-col bg-paper text-ink">
 				<script

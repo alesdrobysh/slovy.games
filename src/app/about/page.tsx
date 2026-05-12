@@ -4,32 +4,36 @@ export const metadata: Metadata = {
 	title: "Пра праект | Словы",
 };
 
+import Link from "next/link";
+
 export default function AboutPage() {
 	return (
 		<div className="min-h-screen flex flex-col">
 			<div className="flex-1 max-w-2xl mx-auto w-full px-5 sm:px-8 py-12 sm:py-20">
-				<h1 className="font-display text-4xl sm:text-5xl font-medium tracking-tight text-ink mb-6 animate-fade-in-up">
+				<h1 className="font-display text-4xl sm:text-5xl font-medium tracking-tight text-ink mb-8 animate-fade-in-up">
 					Пра праект
 				</h1>
 
-				<div className="prose prose-lg text-ink-muted leading-relaxed space-y-5 animate-fade-in-up">
-					<p>
-						<span className="font-display text-ink font-semibold">Словы</span> —
-						гэта платформа штодзённых беларускіх слоўных гульняў. Дзве
-						галаваломкі кожны дзень: <em>Побач</em> і <em>Валошка</em>.
+				<div className="text-ink-muted leading-relaxed space-y-5 animate-fade-in-up">
+					<p className="text-lg">
+						<span className="font-display text-ink">Словы</span> — гэта
+						платформа штодзённых беларускіх слоўных гульняў. Дзве галаваломкі
+						кожны дзень: <em>Побач</em> і <em>Валошка</em>.
 					</p>
-					<p>
-						Мы натхняемся выдавецкай якасцю NYT Games і інтэлектуальнай глыбінёй
-						Contexto.me — але робім гэта на беларускай мове, з беларускімі
-						словамі і беларускім светапоглядам.
+					<p className="text-lg">
+						Мы натхняемся выдавецкай якасцю NYT Games і інтэлектуальнай
+						глыбінёй Contexto.me — але робім гэта на беларускай мове, з
+						беларускімі словамі і беларускім светапоглядам.
 					</p>
-					<p>
+					<p className="text-lg">
 						Праект бясплатны і не збірае пра вас даных. Усе гульнявыя станы і
 						статыстыка захоўваюцца лакальна на вашым прыстасаванні.
 					</p>
 
-					<section>
-						<h2 className="font-display text-xl font-semibold text-ink mb-3">
+					<div className="border-t border-rule my-8" />
+
+					<section className="space-y-2">
+						<h2 className="font-display text-xl font-semibold text-ink">
 							Як гэта працуе?
 						</h2>
 						<p>
@@ -39,12 +43,11 @@ export default function AboutPage() {
 						</p>
 					</section>
 
-					<section>
-						<h2 className="font-display text-xl font-semibold text-ink mb-3">
+					<section className="space-y-2">
+						<h2 className="font-display text-xl font-semibold text-ink">
 							Стваральнік
 						</h2>
-						<p className="mb-2">Зроблена з ❤️ да роднай мовы</p>
-						<p className="mb-2">
+						<p>
 							Натхненнем сталі{" "}
 							<a
 								href="https://contexto.me"
@@ -63,9 +66,7 @@ export default function AboutPage() {
 							>
 								Semantle
 							</a>
-						</p>
-						<p className="mb-3">
-							Аўтар:{" "}
+							. Аўтар:{" "}
 							<a
 								href="https://github.com/alesdrobysh"
 								target="_blank"
@@ -74,38 +75,37 @@ export default function AboutPage() {
 							>
 								alesdrobysh
 							</a>
+							.
 						</p>
-						<p className="mb-2">База слоў:</p>
-						<ul className="space-y-1 ml-4 list-disc">
-							<li>
-								<a
-									href="https://github.com/Belarus/GrammarDB"
-									target="_blank"
-									rel="noopener noreferrer"
-									className="text-valoshka hover:underline"
-								>
-									Belarus/GrammarDB
-								</a>
-							</li>
-							<li>
-								<a
-									href="https://github.com/verbumby/slouniki"
-									target="_blank"
-									rel="noopener noreferrer"
-									className="text-valoshka hover:underline"
-								>
-									verbumby/slouniki
-								</a>
-							</li>
-						</ul>
+						<p>
+							База слоў:{" "}
+							<a
+								href="https://github.com/Belarus/GrammarDB"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="text-valoshka hover:underline"
+							>
+								Belarus/GrammarDB
+							</a>{" "}
+							і{" "}
+							<a
+								href="https://github.com/verbumby/slouniki"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="text-valoshka hover:underline"
+							>
+								verbumby/slouniki
+							</a>
+							.
+						</p>
 					</section>
 
-					<section>
-						<h2 className="font-display text-xl font-semibold text-ink mb-3">
+					<section className="space-y-2">
+						<h2 className="font-display text-xl font-semibold text-ink">
 							Кантакт
 						</h2>
 						<p>
-							Маеце пытанні або прапановы? Напішыце нам па пошце{" "}
+							Маеце пытанні або прапановы?{" "}
 							<a
 								href="mailto:support@pobach.app"
 								className="text-valoshka hover:underline"
@@ -116,10 +116,14 @@ export default function AboutPage() {
 					</section>
 				</div>
 
-				<div className="mt-10">
-					<p className="font-display italic text-ink">
-						З любоўю да мовы і сэнсу.
-					</p>
+				<div className="mt-12 pt-8 border-t border-rule flex items-center justify-between">
+					<p className="font-display italic text-ink">З любоўю да мовы і сэнсу.</p>
+					<Link
+						href="/"
+						className="text-sm font-medium text-ink-muted hover:text-ink transition-colors no-underline"
+					>
+						← Да гульняў
+					</Link>
 				</div>
 			</div>
 		</div>
