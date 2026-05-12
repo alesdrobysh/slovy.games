@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { EB_Garamond, Manrope } from "next/font/google";
 import { BannerProvider } from "@/shared/components/BannerContext";
 import CookieBanner from "@/shared/components/CookieBanner";
-import { ConditionalHubNav } from "@/shared/components/ConditionalHubNav";
+import { HubNav } from "@/shared/components/HubNav";
 import { ThemeProvider } from "@/shared/hooks/useTheme";
 import { PostHogProvider } from "@/shared/lib/analytics";
 import "./globals.css";
@@ -56,7 +56,7 @@ export default function RootLayout({
 				<ThemeProvider>
 					<PostHogProvider>
 						<BannerProvider>
-							<ConditionalHubNav />
+							<HubNav />
 							<main className="flex-1">{children}</main>
 							<CookieBanner />
 							<Analytics />

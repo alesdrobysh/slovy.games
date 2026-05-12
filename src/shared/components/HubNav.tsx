@@ -6,12 +6,8 @@ import { HeaderIconButtons } from "@/shared/components/HeaderIconButtons";
 
 export function HubNav() {
 	const pathname = usePathname();
-	const isHub = pathname === "/";
 
-	const links = [
-		{ href: "/valoshka", label: "Валошка" },
-		{ href: "/pobach", label: "Побач" },
-	];
+	if (pathname !== "/") return null;
 
 	return (
 		<nav
@@ -28,30 +24,32 @@ export function HubNav() {
 						className="text-xl font-bold no-underline tracking-tight"
 						style={{
 							fontFamily: "var(--sly-font-display)",
-							color: isHub ? "var(--sly-accent)" : "var(--sly-text-muted)",
+							color: "var(--sly-accent)",
 						}}
 					>
 						Словы
 					</Link>
 
-					{links.map((link) => {
-						const isActive = pathname.startsWith(link.href);
-						return (
-							<Link
-								key={link.href}
-								href={link.href}
-								className="text-sm font-semibold no-underline transition-colors"
-								style={{
-									fontFamily: "var(--sly-font-sans)",
-									color: isActive
-										? "var(--sly-accent)"
-										: "var(--sly-text-muted)",
-								}}
-							>
-								{link.label}
-							</Link>
-						);
-					})}
+					<Link
+						href="/valoshka"
+						className="text-sm font-semibold no-underline transition-colors"
+						style={{
+							fontFamily: "var(--sly-font-sans)",
+							color: "var(--sly-text-muted)",
+						}}
+					>
+						Валошка
+					</Link>
+					<Link
+						href="/pobach"
+						className="text-sm font-semibold no-underline transition-colors"
+						style={{
+							fontFamily: "var(--sly-font-sans)",
+							color: "var(--sly-text-muted)",
+						}}
+					>
+						Побач
+					</Link>
 				</div>
 
 				<HeaderIconButtons statsHref="/stats" />

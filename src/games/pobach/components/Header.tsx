@@ -5,21 +5,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { HeaderIconButtons } from "@/shared/components/HeaderIconButtons";
 
-const PAGE_TITLES: Record<string, string> = {
-	"/": "ПОБАЧ",
-	"/pobach": "ПОБАЧ",
-	"/stats": "Статыстыка",
-	"/pobach/stats": "Статыстыка",
-	"/about": "Пра гульню",
-	"/pobach/about": "Пра гульню",
-	"/privacy": "Прыватнасць",
-	"/pobach/privacy": "Прыватнасць",
-};
-
 export default function Header({ onHelpClick }: { onHelpClick?: () => void }) {
 	const pathname = usePathname();
-	const isHome = pathname === "/" || pathname === "/pobach";
-	const title = PAGE_TITLES[pathname] ?? "ПОБАЧ";
+	const isHome = pathname === "/pobach";
+	const title = pathname === "/pobach/stats" ? "Статыстыка" : "ПОБАЧ";
 
 	return (
 		<header className="border-b border-[var(--sly-border)] bg-[var(--sly-bg)]">
