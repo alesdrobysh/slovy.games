@@ -46,7 +46,7 @@ export default function PobachPage() {
 		<>
 			<Header onHelpClick={handleHelpClick} />
 
-			<main className="page-narrow page-container pb-20">
+			<main className="page-narrow page-container pt-8 pb-20">
 				{/* Day badge */}
 				<div className="flex justify-start mb-8">
 					<span className="inline-flex items-center px-3 py-1 text-[0.75rem] font-medium text-pobach bg-pobach-soft rounded-full">

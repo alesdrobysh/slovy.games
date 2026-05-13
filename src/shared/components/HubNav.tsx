@@ -71,34 +71,31 @@ export function HubNav() {
 	}, [pathname]);
 
 	const iconClass =
-		"w-9 h-9 flex items-center justify-center rounded-full hover:bg-rule transition-colors text-ink-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper";
+		"w-10 h-10 flex items-center justify-center rounded-full hover:bg-rule/50 transition-all duration-300 text-ink-muted hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/30 focus-visible:ring-offset-2 focus-visible:ring-offset-paper active:scale-90";
 
 	return (
-		<header ref={menuRef} className="sticky top-0 z-30 border-b border-rule bg-paper/80 backdrop-blur-sm">
-			<div className="mx-auto flex max-w-screen-xl items-center h-14 sm:h-16 px-3 sm:px-8 gap-2">
+		<header ref={menuRef} className="sticky top-0 z-30 border-b border-rule/60 bg-paper/70 backdrop-blur-md">
+			<div className="mx-auto flex max-w-screen-xl items-center h-16 sm:h-20 px-4 sm:px-8 gap-4">
 				{game ? (
 					/* ── Game mode ── */
 					<>
-						{/* Back arrow */}
 						<div className="flex items-center shrink-0">
 							<Link
 								href="/"
 								aria-label="Усе гульні"
 								className={iconClass}
 							>
-								<ChevronLeft size={20} />
+								<ChevronLeft size={22} strokeWidth={2.5} />
 							</Link>
 						</div>
 
-						{/* Game title — centered */}
 						<span
-							className={`flex-1 text-center font-display text-lg sm:text-xl font-semibold tracking-tight leading-none ${game.accentClass}`}
+							className={`flex-1 text-center font-display text-xl sm:text-2xl font-semibold tracking-tight leading-none ${game.accentClass}`}
 						>
 							{game.title}
 						</span>
 
-						{/* Game actions */}
-						<div className="flex items-center gap-0.5 shrink-0">
+						<div className="flex items-center gap-1 shrink-0">
 							{extraActions}
 							{onHelpClick && (
 								<button
@@ -107,7 +104,7 @@ export function HubNav() {
 									aria-label="Як гуляць?"
 									className={iconClass}
 								>
-									<HelpCircle size={18} />
+									<HelpCircle size={20} />
 								</button>
 							)}
 							<Link
@@ -115,43 +112,35 @@ export function HubNav() {
 								aria-label="Статыстыка"
 								className={iconClass}
 							>
-								<BarChart2 size={18} />
+								<BarChart2 size={20} />
 							</Link>
 							<button
 								onClick={toggleTheme}
 								type="button"
-								aria-label={
-									theme === "light"
-										? "Пераключыць на цёмную тэму"
-										: "Пераключыць на светлую тэму"
-								}
 								className={iconClass}
 							>
-								{theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
+								{theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
 							</button>
-							{/* Hamburger */}
 							<button
 								type="button"
 								onClick={() => setMenuOpen((v) => !v)}
-								aria-label="Меню"
-								aria-expanded={menuOpen}
 								className={iconClass}
 							>
-								{menuOpen ? <X size={18} /> : <Menu size={18} />}
+								{menuOpen ? <X size={20} /> : <Menu size={20} />}
 							</button>
 						</div>
 					</>
 				) : (
-					/* ── Hub mode ── */
+					/* ── Hub mode: Editorial Masthead ── */
 					<>
-						<div className="flex items-center gap-6 flex-1">
+						<div className="flex-1 flex items-center gap-8">
 							<Link
 								href="/"
-								className="font-display text-2xl font-semibold tracking-tight leading-none text-ink no-underline"
+								className="font-display text-3xl sm:text-4xl font-bold tracking-tighter text-ink no-underline hover:opacity-80 transition-opacity"
 							>
 								Словы
 							</Link>
-							<nav className="hidden sm:flex items-center gap-6 text-sm">
+							<nav className="hidden md:flex items-center gap-8">
 								{NAV_LINKS.map((link) => {
 									const active =
 										link.href === "/"
@@ -161,9 +150,9 @@ export function HubNav() {
 										<Link
 											key={link.href}
 											href={link.href}
-											className={`transition-colors no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded-sm ${
+											className={`text-xs uppercase tracking-[0.2em] font-semibold transition-all no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/30 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded-sm ${
 												active
-													? "text-ink font-medium"
+													? "text-ink border-b-2 border-ink pt-0.5"
 													: "text-ink-muted hover:text-ink"
 											}`}
 										>
@@ -174,27 +163,20 @@ export function HubNav() {
 							</nav>
 						</div>
 
-						<div className="flex items-center gap-0.5">
+						<div className="flex items-center gap-1">
 							<button
 								onClick={toggleTheme}
 								type="button"
-								aria-label={
-									theme === "light"
-										? "Пераключыць на цёмную тэму"
-										: "Пераключыць на светлую тэму"
-								}
 								className={iconClass}
 							>
-								{theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
+								{theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
 							</button>
 							<button
 								type="button"
 								onClick={() => setMenuOpen((v) => !v)}
-								aria-label="Меню"
-								aria-expanded={menuOpen}
 								className={iconClass}
 							>
-								{menuOpen ? <X size={18} /> : <Menu size={18} />}
+								{menuOpen ? <X size={20} /> : <Menu size={20} />}
 							</button>
 						</div>
 					</>

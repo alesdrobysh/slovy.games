@@ -15,6 +15,9 @@ export function HeaderIconButtons({
 }: HeaderIconButtonsProps) {
 	const { theme, toggleTheme } = useTheme();
 
+	const btnClass =
+		"w-10 h-10 flex items-center justify-center rounded-full hover:bg-rule/50 transition-all duration-300 text-ink-muted hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/20 focus-visible:ring-offset-2 focus-visible:ring-offset-paper active:scale-90";
+
 	return (
 		<div className="flex items-center gap-1">
 			{onHelpClick && (
@@ -22,17 +25,17 @@ export function HeaderIconButtons({
 					type="button"
 					onClick={onHelpClick}
 					aria-label="Як гуляць?"
-					className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-rule transition-colors text-ink-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+					className={btnClass}
 				>
-					<HelpCircle size={18} />
+					<HelpCircle size={20} />
 				</button>
 			)}
 			<Link
 				href={statsHref}
 				aria-label="Статыстыка"
-				className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-rule transition-colors text-ink-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+				className={btnClass}
 			>
-				<BarChart2 size={18} />
+				<BarChart2 size={20} />
 			</Link>
 			<button
 				onClick={toggleTheme}
@@ -42,9 +45,9 @@ export function HeaderIconButtons({
 						: "Пераключыць на светлую тэму"
 				}
 				type="button"
-				className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-rule transition-colors text-ink-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+				className={btnClass}
 			>
-				{theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
+				{theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
 			</button>
 		</div>
 	);
