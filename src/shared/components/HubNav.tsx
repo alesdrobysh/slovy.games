@@ -92,7 +92,7 @@ export function HubNav() {
 
 						{/* Game title — centered */}
 						<span
-							className={`flex-1 text-center font-display text-lg sm:text-xl font-semibold tracking-tight ${game.accentClass}`}
+							className={`flex-1 text-center font-display text-lg sm:text-xl font-semibold tracking-tight leading-none ${game.accentClass}`}
 						>
 							{game.title}
 						</span>
@@ -147,7 +147,7 @@ export function HubNav() {
 						<div className="flex items-center gap-6 flex-1">
 							<Link
 								href="/"
-								className="font-display text-2xl font-semibold tracking-tight text-ink no-underline"
+								className="font-display text-2xl font-semibold tracking-tight leading-none text-ink no-underline"
 							>
 								Словы
 							</Link>
