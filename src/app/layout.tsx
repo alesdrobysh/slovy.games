@@ -4,6 +4,7 @@ import { Literata, Wix_Madefor_Text } from "next/font/google";
 import { BannerProvider } from "@/shared/components/BannerContext";
 import CookieBanner from "@/shared/components/CookieBanner";
 import { Footer } from "@/shared/components/Footer";
+import { GameNavProvider } from "@/shared/components/GameNavContext";
 import { HubNav } from "@/shared/components/HubNav";
 import { ThemeProvider } from "@/shared/hooks/useTheme";
 import { PostHogProvider } from "@/shared/lib/analytics";
@@ -56,8 +57,10 @@ export default function RootLayout({
 				<ThemeProvider>
 					<PostHogProvider>
 						<BannerProvider>
-							<HubNav />
-							<main className="flex-1">{children}</main>
+							<GameNavProvider>
+								<HubNav />
+								<main className="flex-1">{children}</main>
+							</GameNavProvider>
 							<Footer />
 							<CookieBanner />
 							<Analytics />

@@ -7,20 +7,11 @@ type GuessCardProps = {
 	highlight?: boolean;
 };
 
-function getRankStyle(rank: number) {
-	if (rank === 1) return { label: "Мэта!", bar: 100 };
-	if (rank <= 50) return { label: "Гарача", bar: 92 };
-	if (rank <= 200) return { label: "Цёпла", bar: 70 };
-	if (rank <= 1000) return { label: "Холадна", bar: 40 };
-	return { label: "Далёка", bar: 12 };
-}
-
 export default function GuessCard({
 	guess,
 	highlight = false,
 }: GuessCardProps) {
 	const rankColor = getRankColor(guess.rank);
-	const style = getRankStyle(guess.rank);
 	const barPct = getBarPercentage(guess.rank);
 
 	return (
@@ -47,7 +38,7 @@ export default function GuessCard({
 				</span>
 			)}
 
-			<div className="hidden sm:block w-32 h-1.5 rounded-full bg-ink/5 overflow-hidden shrink-0">
+			<div className="w-32 h-1.5 rounded-full bg-ink/5 overflow-hidden shrink-0">
 				<div
 					className="h-full rounded-full transition-all"
 					style={{
@@ -55,10 +46,6 @@ export default function GuessCard({
 						backgroundColor: rankColor,
 					}}
 				/>
-			</div>
-
-			<div className="text-[10px] uppercase tracking-widest text-ink-soft w-16 text-right shrink-0">
-				{style.label}
 			</div>
 		</article>
 	);

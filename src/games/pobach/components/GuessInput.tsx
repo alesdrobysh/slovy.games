@@ -136,17 +136,30 @@ export default function GuessInput({
 			{/* Action buttons row */}
 			<div className="flex items-center justify-center gap-3 mt-3 text-sm">
 				{!won && !gameOver && (
-					<>
-						<button
-							type="button"
-							onClick={onHint}
-							disabled={loading}
-							className="text-ink-muted hover:text-ink transition-colors disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded-sm"
+					<button
+						type="button"
+						onClick={onHint}
+						disabled={loading}
+						aria-label="Атрымаць падказку"
+						className="flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-pobach border border-pobach rounded-full hover:bg-pobach/5 transition-colors disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pobach/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+					>
+						<svg
+							width="12"
+							height="12"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							aria-hidden="true"
 						>
-							Падказка
-						</button>
-						<span className="text-ink-soft">·</span>
-					</>
+							<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+							<path d="M9 18h6" />
+							<path d="M10 22h4" />
+						</svg>
+						Падказка
+					</button>
 				)}
 				{!won && guessCount >= 10 && !gameOver && (
 					<button

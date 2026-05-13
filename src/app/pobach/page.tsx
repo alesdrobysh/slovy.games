@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import FinishCard from "@/games/pobach/components/FinishCard";
 import GiveUpModal from "@/games/pobach/components/GiveUpModal";
 import GuessCard from "@/games/pobach/components/GuessCard";
@@ -31,6 +31,7 @@ export default function PobachPage() {
 
 	const [showHelp, setShowHelp] = useState(false);
 	const [showGiveUp, setShowGiveUp] = useState(false);
+	const handleHelpClick = useCallback(() => setShowHelp(true), []);
 
 	const handleGiveUpConfirm = () => {
 		setShowGiveUp(false);
@@ -43,24 +44,21 @@ export default function PobachPage() {
 
 	return (
 		<>
-			<Header onHelpClick={() => setShowHelp(true)} />
+			<Header onHelpClick={handleHelpClick} />
 
 			<main className="page-narrow page-container pb-20">
 				{/* Day badge */}
 				<div className="flex justify-start mb-8">
 					<span className="inline-flex items-center px-3 py-1 text-[0.75rem] font-medium text-pobach bg-pobach-soft rounded-full">
-						Выпуск №{dayIndex != null ? dayIndex : ""}
+						Дзень #{dayIndex != null ? dayIndex : ""}
 					</span>
 				</div>
-
-				{/* Rules — shown only before the first guess */}
-				{guesses.length === 0 && !isFinished && <RulesComponent inline />}
 
 				{/* Input form */}
 				{!isFinished && (
 					<form
 						onSubmit={handleSubmit}
-						className="sticky top-16 bg-paper/95 backdrop-blur-sm py-4 z-20"
+						className="py-4"
 					>
 						<GuessInput
 							input={input}
@@ -78,6 +76,9 @@ export default function PobachPage() {
 						/>
 					</form>
 				)}
+
+				{/* Rules — shown only before the first guess */}
+				{guesses.length === 0 && !isFinished && <RulesComponent inline />}
 
 				{/* Finish card */}
 				{isFinished && dayIndex !== null ? (
