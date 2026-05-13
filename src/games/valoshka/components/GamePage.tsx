@@ -369,11 +369,11 @@ export function GamePage({ puzzle }: GamePageProps) {
 						successKey={successKey}
 					/>
 
-					{state.hint.isActive && (
-						<div className="w-full max-w-sm mb-2">
+					<div className="w-full max-w-sm" style={{ height: "38px" }}>
+						{state.hint.isActive && (
 							<HintDisplay hint={state.hint} onCancel={handleCancelHint} />
-						</div>
-					)}
+						)}
+					</div>
 
 					<div
 						style={{
@@ -394,17 +394,8 @@ export function GamePage({ puzzle }: GamePageProps) {
 						onDelete={handleDelete}
 						onShuffle={handleShuffle}
 						onSubmit={handleSubmit}
+						onHint={handleStartHint}
 					/>
-
-					{!state.hint.isActive && (
-						<button
-							type="button"
-							onClick={handleStartHint}
-							className="text-sm font-medium text-ink-muted hover:text-ink underline decoration-rule underline-offset-[3px] bg-transparent border-none cursor-pointer mt-1"
-						>
-							Падказка
-						</button>
-					)}
 				</div>
 
 				{/* Right: found words — desktop only */}
