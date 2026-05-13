@@ -17,5 +17,5 @@ export const ERROR_MESSAGES: Record<ValidationError, string> = {
 	too_short: "Мінімум 4 літары",
 	missing_center: "У слове павінна быць цэнтральная літара",
 	not_in_list: "Гэтага слова няма ў сённяшнім спісе",
-	already_found: "Вы ўжо знайшлі гэта слово",
+	already_found: "Вы ўжо знайшлі гэта слова",
 };

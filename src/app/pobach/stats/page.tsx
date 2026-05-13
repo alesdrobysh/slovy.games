@@ -6,7 +6,10 @@ import Header from "@/games/pobach/components/Header";
 import type { HistoryRecord } from "@/games/pobach/core/entities/game";
 import { formatRelativeDate } from "@/games/pobach/lib/stats";
 import { getHistory, getStats } from "@/games/pobach/lib/storage";
-import { pluralize } from "@/games/pobach/lib/utils";
+import {
+	pluralize,
+	pluralizeAttemptsNominative,
+} from "@/games/pobach/lib/utils";
 
 type StatCardData = {
 	label: string;
@@ -210,7 +213,9 @@ export default function PobachStatsPage() {
 			`Перамог: ${stats.gamesWon}/${stats.gamesPlayed} (${winRate}%)`,
 			`Макс. серыя: ${stats.maxStreak}`,
 			stats.bestAttempts > 0
-				? `Лепшы вынік: ${stats.bestAttempts} ${pluralize(stats.bestAttempts)}`
+				? `Лепшы вынік: ${stats.bestAttempts} ${pluralizeAttemptsNominative(
+						stats.bestAttempts
+					)}`
 				: null,
 			"pobach.app",
 		]

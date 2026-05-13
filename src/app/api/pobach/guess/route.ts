@@ -12,12 +12,12 @@ export async function GET(request: Request) {
 		const dayIndexStr = searchParams.get("dayIndex");
 
 		if (!word) {
-			return NextResponse.json({ error: "Патрабуецца слова" }, { status: 400 });
+			return NextResponse.json({ error: "Увядзіце слова" }, { status: 400 });
 		}
 
 		if (!dayIndexStr) {
 			return NextResponse.json(
-				{ error: "Патрабуецца dayIndex" },
+				{ error: "Не пазначаны dayIndex" },
 				{ status: 400 }
 			);
 		}

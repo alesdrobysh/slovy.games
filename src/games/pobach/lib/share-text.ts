@@ -1,14 +1,10 @@
 import type { Guess } from "@/games/pobach/core/entities/game";
 import { EPOCH_DATE } from "@/games/pobach/lib/config";
-import { pluralizeHintsInstrumental } from "@/games/pobach/lib/utils";
-
-function getGuessWord(count: number): string {
-	const tens = count % 100;
-	const ones = count % 10;
-	if (ones === 1 && tens !== 11) return "спробу";
-	if (ones >= 2 && ones <= 4 && (tens < 10 || tens >= 20)) return "спробы";
-	return "спроб";
-}
+import {
+	pluralize,
+	pluralizeAttemptsGenitive,
+	pluralizeHintsInstrumental,
+} from "@/games/pobach/lib/utils";
 
 export interface ShareTextInput {
 	dayIndex: number;
@@ -54,15 +50,16 @@ export function generateShareText({
 		.join("\n");
 
 	const guessCount = guesses.length;
-	const guessWord = getGuessWord(guessCount);
 	const hintsCount = guesses.filter((g) => g.isHint).length;
 	const hintsText =
 		hintsCount > 0
 			? ` (з ${hintsCount} ${pluralizeHintsInstrumental(hintsCount)})`
 			: "";
 	const status = won
-		? `Я адгадаў за ${guessCount} ${guessWord}${hintsText}`
-		: `Я здаўся пасля ${guessCount} ${guessWord}${hintsText}`;
+		? `Адгадана за ${guessCount} ${pluralize(guessCount)}${hintsText}`
+		: `Не адгадана пасля ${guessCount} ${pluralizeAttemptsGenitive(
+				guessCount
+			)}${hintsText}`;
 
 	return `Побач ${formattedDate}\n${status}\n${emojiLines}\npobach.app`;
 }

@@ -11,7 +11,7 @@ export async function GET(request: Request) {
 
 		if (!dayIndexStr) {
 			return NextResponse.json(
-				{ error: "Патрабуецца dayIndex" },
+				{ error: "Не пазначаны dayIndex" },
 				{ status: 400 }
 			);
 		}

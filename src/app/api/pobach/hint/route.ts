@@ -44,7 +44,7 @@ export async function POST(request: Request) {
 
 		if (!dayIndex || typeof dayIndex !== "number") {
 			return NextResponse.json(
-				{ error: "Патрабуецца dayIndex" },
+				{ error: "Не пазначаны dayIndex" },
 				{ status: 400 }
 			);
 		}

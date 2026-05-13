@@ -81,10 +81,14 @@ export function calculateDistribution(
 }
 
 function pluralizeDays(count: number): string {
-	if (count % 10 === 1 && count % 100 !== 11) return "дзень";
-	if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100))
-		return "дні";
-	return "дзён";
+	const pr = new Intl.PluralRules("be-BY");
+	const rule = pr.select(count);
+	const forms = {
+		one: "дзень",
+		few: "дні",
+		many: "дзён",
+	};
+	return forms[rule] || forms.many;
 }
 
 export function formatRelativeDate(dayIndex: number): string {
