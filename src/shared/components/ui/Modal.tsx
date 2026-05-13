@@ -2,7 +2,7 @@
 
 import { X } from "lucide-react";
 import type { ReactNode } from "react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export interface ModalProps {
 	isOpen: boolean;
@@ -19,8 +19,15 @@ export function Modal({
 	children,
 	maxWidth = "480px",
 }: ModalProps) {
+	const dialogRef = useRef<HTMLDivElement>(null);
+	const prevFocusRef = useRef<HTMLElement | null>(null);
+
 	useEffect(() => {
 		if (!isOpen) return;
+		prevFocusRef.current = document.activeElement as HTMLElement;
+		// Focus the dialog itself for screen readers
+		queueMicrotask(() => dialogRef.current?.focus());
+
 		const handleEscape = (e: KeyboardEvent) => {
 			if (e.key === "Escape") onClose();
 		};
@@ -34,6 +41,7 @@ export function Modal({
 		document.body.style.overflow = "hidden";
 		return () => {
 			document.body.style.overflow = prev;
+			prevFocusRef.current?.focus();
 		};
 	}, [isOpen]);
 
@@ -48,11 +56,13 @@ export function Modal({
 		>
 			{/* biome-ignore lint/a11y/useKeyWithClickEvents: stopPropagation only */}
 			<div
+				ref={dialogRef}
+				tabIndex={-1}
 				onClick={(e) => e.stopPropagation()}
 				role="dialog"
 				aria-modal="true"
 				aria-labelledby={title ? "modal-title" : undefined}
-				className="bg-card ring-1 ring-rule rounded-2xl shadow-2xl w-full overflow-y-auto"
+				className="bg-card ring-1 ring-rule rounded-2xl shadow-2xl w-full overflow-y-auto focus-visible:outline-none"
 				style={{ maxWidth, maxHeight: "90vh" }}
 			>
 				{title && (
@@ -67,7 +77,7 @@ export function Modal({
 							onClick={onClose}
 							aria-label="Закрыць"
 							type="button"
-							className="w-8 h-8 flex items-center justify-center rounded-full text-ink-muted hover:bg-rule transition-colors"
+							className="w-8 h-8 flex items-center justify-center rounded-full text-ink-muted hover:bg-rule transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-card"
 						>
 							<X size={18} aria-hidden="true" />
 						</button>

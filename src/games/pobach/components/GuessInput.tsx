@@ -53,13 +53,21 @@ export default function GuessInput({
 	const handlePaste = (e: React.ClipboardEvent<HTMLDivElement>) => {
 		e.preventDefault();
 		const text = e.clipboardData.getData("text/plain");
-		document.execCommand("insertText", false, text);
+		const selection = window.getSelection();
+		if (!selection?.rangeCount) return;
+		selection.deleteFromDocument();
+		selection.getRangeAt(0).insertNode(document.createTextNode(text));
+		selection.collapseToEnd();
+		handleInput();
 	};
 
 	return (
 		<div className="mb-4">
 			{/* Input row */}
 			<div className="flex gap-2">
+				<span className="sr-only" id="guess-label">
+					Увядзіце слова для здагадкі
+				</span>
 				{/* biome-ignore lint/a11y/noLabelWithoutControl: contenteditable div serves as input */}
 				<label className="flex-1 bg-card border border-rule rounded-xl px-4 py-3 flex items-center focus-within:border-pobach focus-within:ring-2 focus-within:ring-pobach/20 transition-all cursor-text text-left">
 					{/* biome-ignore lint/a11y/useSemanticElements: contenteditable suppresses Chrome Android autofill */}
@@ -70,8 +78,7 @@ export default function GuessInput({
 						onKeyDown={handleKeyDown}
 						onPaste={handlePaste}
 						role="textbox"
-						aria-label="Увядзіце слова для здагадкі"
-						aria-placeholder="Увядзіце слова..."
+						aria-labelledby="guess-label"
 						tabIndex={0}
 						spellCheck={false}
 						autoCorrect="off"
@@ -89,7 +96,7 @@ export default function GuessInput({
 						disabled={loading}
 						aria-label="Адправіць здагадку"
 						type="button"
-						className="hidden sm:flex w-12 h-12 items-center justify-center rounded-xl bg-pobach text-white hover:brightness-105 active:scale-[0.98] transition-all disabled:opacity-50 shrink-0"
+						className="hidden sm:flex w-12 h-12 items-center justify-center rounded-xl bg-pobach text-white hover:brightness-105 active:scale-[0.98] transition-all disabled:opacity-50 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pobach/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
 					>
 						<svg
 							width="16"
@@ -134,7 +141,7 @@ export default function GuessInput({
 							type="button"
 							onClick={onHint}
 							disabled={loading}
-							className="text-ink-muted hover:text-ink transition-colors disabled:opacity-30"
+							className="text-ink-muted hover:text-ink transition-colors disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded-sm"
 						>
 							Падказка
 						</button>
@@ -146,7 +153,7 @@ export default function GuessInput({
 						type="button"
 						onClick={onGiveUp}
 						disabled={loading}
-						className="text-ink-muted hover:text-destructive transition-colors disabled:opacity-30"
+						className="text-ink-muted hover:text-destructive transition-colors disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded-sm"
 					>
 						Здацца
 					</button>

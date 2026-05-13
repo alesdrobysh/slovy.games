@@ -7,10 +7,13 @@ describe("Toast", () => {
 		expect(screen.getByText("Скапіравана!")).toBeInTheDocument();
 	});
 
-	it("renders nothing when not visible", () => {
+	it("renders hidden when not visible", () => {
 		const { container } = render(
 			<Toast message="Скапіравана!" visible={false} />
 		);
-		expect(container.firstChild).toBeNull();
+		expect(container.firstChild).toHaveClass(
+			"opacity-0",
+			"pointer-events-none"
+		);
 	});
 });

@@ -14,13 +14,13 @@ export function Footer() {
 					<nav className="flex items-center gap-4">
 						<Link
 							href="/about"
-							className="text-xs text-ink-muted hover:text-ink transition-colors"
+							className="text-xs text-ink-muted hover:text-ink transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded-sm"
 						>
 							Пра праект
 						</Link>
 						<Link
 							href="/privacy"
-							className="text-xs text-ink-muted hover:text-ink transition-colors"
+							className="text-xs text-ink-muted hover:text-ink transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded-sm"
 						>
 							Прыватнасць
 						</Link>

@@ -37,6 +37,8 @@ export const metadata: Metadata = {
 	},
 };
 
+const THEME_SCRIPT = `(function(){try{var t=localStorage.getItem('theme');var dark=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(dark)document.documentElement.classList.add('dark');}catch(e){}})();`;
+
 export default function RootLayout({
 	children,
 }: {
@@ -49,11 +51,8 @@ export default function RootLayout({
 			className={`${wixMadeforText.variable} ${literata.variable}`}
 		>
 			<body className="min-h-screen flex flex-col bg-paper text-ink">
-				<script
-					dangerouslySetInnerHTML={{
-						__html: `(function(){try{var t=localStorage.getItem('theme');var dark=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(dark)document.documentElement.classList.add('dark');}catch(e){}})();`,
-					}}
-				/>
+				<meta name="theme-color" content="#f5f0e8" />
+				<script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
 				<ThemeProvider>
 					<PostHogProvider>
 						<BannerProvider>

@@ -27,7 +27,7 @@ export function GameCard({
 	return (
 		<Link
 			href={game.path}
-			className="group relative flex flex-col bg-card ring-1 ring-rule rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:ring-ink/20 animate-fade-in-up no-underline"
+			className="group relative flex flex-col bg-card ring-1 ring-rule rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:ring-ink/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper animate-fade-in-up no-underline"
 			style={{ animationDelay: `${delay}ms` }}
 		>
 			<div className={`h-1.5 ${accentBg}`} aria-hidden />

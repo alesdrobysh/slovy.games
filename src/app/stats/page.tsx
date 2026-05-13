@@ -4,11 +4,11 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const ATTEMPT_BUCKETS = [
-	{ label: "1–5",    min: 1,   max: 5 },
-	{ label: "6–15",   min: 6,   max: 15 },
-	{ label: "16–50",  min: 16,  max: 50 },
-	{ label: "51–150", min: 51,  max: 150 },
-	{ label: "150+",   min: 151, max: Infinity },
+	{ label: "1–5", min: 1, max: 5 },
+	{ label: "6–15", min: 6, max: 15 },
+	{ label: "16–50", min: 16, max: 50 },
+	{ label: "51–150", min: 51, max: 150 },
+	{ label: "150+", min: 151, max: Infinity },
 ];
 
 interface ValoshkaStats {
@@ -83,7 +83,9 @@ function StatCard({
 			<p className="text-[10px] uppercase tracking-[0.2em] text-ink-soft mb-1 font-medium">
 				{label}
 			</p>
-			<p className={`font-display font-medium text-ink ${featured ? "text-4xl" : "text-3xl"}`}>
+			<p
+				className={`font-display font-medium text-ink ${featured ? "text-4xl" : "text-3xl"}`}
+			>
 				{value}
 			</p>
 		</div>
@@ -107,7 +109,7 @@ function TabButton({
 			type="button"
 			onClick={onClick}
 			className={
-				"px-5 py-1.5 rounded-full text-sm font-medium transition-all " +
+				"px-5 py-1.5 rounded-full text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper " +
 				(active
 					? `bg-paper text-ink shadow-sm ring-1 ring-rule ${activeColor}`
 					: "text-ink-muted hover:text-ink")
@@ -118,7 +120,11 @@ function TabButton({
 	);
 }
 
-function DistributionChart({ distribution }: { distribution: Record<number, number> }) {
+function DistributionChart({
+	distribution,
+}: {
+	distribution: Record<number, number>;
+}) {
 	const buckets = ATTEMPT_BUCKETS.map((b) => {
 		let n = 0;
 		for (const [attempts, count] of Object.entries(distribution)) {
@@ -160,9 +166,7 @@ function DistributionChart({ distribution }: { distribution: Record<number, numb
 
 function PobachStatsView({ stats }: { stats: PobachStats }) {
 	const avgGuesses =
-		stats.gamesWon > 0 && stats.bestAttempts > 0
-			? stats.bestAttempts
-			: null;
+		stats.gamesWon > 0 && stats.bestAttempts > 0 ? stats.bestAttempts : null;
 
 	return (
 		<div className="space-y-8">
@@ -231,58 +235,58 @@ export default function CombinedStatsPage() {
 
 	return (
 		<div className="page-container page-section">
-				<div className="mb-10 animate-fade-in-up">
-					<h1 className="font-display text-4xl sm:text-5xl font-medium tracking-tight text-ink">
-						Статыстыка
-					</h1>
-					<p className="text-sm text-ink-muted mt-2">
-						Лакальны архіў вашых вынікаў.
-					</p>
-				</div>
-
-				{isEmpty ? (
-					<div className="bg-card ring-1 ring-rule rounded-2xl p-10 text-center">
-						<p className="text-ink-muted mb-4">
-							Пакуль няма даных. Згуляйце сваю першую гульню.
-						</p>
-						<Link
-							href="/"
-							className="inline-flex items-center gap-2 text-sm font-medium text-ink hover:text-pobach transition-colors no-underline"
-						>
-							Да гульняў →
-						</Link>
-					</div>
-				) : (
-					<>
-						<div className="flex gap-1 mb-10 bg-secondary rounded-full p-1 w-fit">
-							{valoshka && (
-								<TabButton
-									active={activeTab === "valoshka"}
-									onClick={() => setActiveTab("valoshka")}
-									accent="valoshka"
-								>
-									Валошка
-								</TabButton>
-							)}
-							{pobach && (
-								<TabButton
-									active={activeTab === "pobach"}
-									onClick={() => setActiveTab("pobach")}
-									accent="pobach"
-								>
-									Побач
-								</TabButton>
-							)}
-						</div>
-
-						{activeTab === "valoshka" && valoshka && (
-							<ValoshkaStatsView stats={valoshka} />
-						)}
-						{activeTab === "pobach" && pobach && (
-							<PobachStatsView stats={pobach} />
-						)}
-					</>
-				)}
+			<div className="mb-10 animate-fade-in-up">
+				<h1 className="font-display text-4xl sm:text-5xl font-medium tracking-tight text-ink">
+					Статыстыка
+				</h1>
+				<p className="text-sm text-ink-muted mt-2">
+					Лакальны архіў вашых вынікаў.
+				</p>
 			</div>
+
+			{isEmpty ? (
+				<div className="bg-card ring-1 ring-rule rounded-2xl p-10 text-center">
+					<p className="text-ink-muted mb-4">
+						Пакуль няма даных. Згуляйце сваю першую гульню.
+					</p>
+					<Link
+						href="/"
+						className="inline-flex items-center gap-2 text-sm font-medium text-ink hover:text-pobach transition-colors no-underline"
+					>
+						Да гульняў →
+					</Link>
+				</div>
+			) : (
+				<>
+					<div className="flex gap-1 mb-10 bg-secondary rounded-full p-1 w-fit">
+						{valoshka && (
+							<TabButton
+								active={activeTab === "valoshka"}
+								onClick={() => setActiveTab("valoshka")}
+								accent="valoshka"
+							>
+								Валошка
+							</TabButton>
+						)}
+						{pobach && (
+							<TabButton
+								active={activeTab === "pobach"}
+								onClick={() => setActiveTab("pobach")}
+								accent="pobach"
+							>
+								Побач
+							</TabButton>
+						)}
+					</div>
+
+					{activeTab === "valoshka" && valoshka && (
+						<ValoshkaStatsView stats={valoshka} />
+					)}
+					{activeTab === "pobach" && pobach && (
+						<PobachStatsView stats={pobach} />
+					)}
+				</>
+			)}
+		</div>
 	);
 }

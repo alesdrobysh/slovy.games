@@ -28,7 +28,7 @@ describe("GiveUpModal Component", () => {
 		expect(screen.getByText("Ўпэўнены?")).toBeInTheDocument();
 		expect(
 			screen.getByText(
-				"Вы сапраўды хочаце здацца? Гэта скіне вашу бягучую серыю перамог."
+				"Калі вы здасцеся, серыя перамог пачнецца спачатку. Працягваем?"
 			)
 		).toBeInTheDocument();
 	});
@@ -43,7 +43,9 @@ describe("GiveUpModal Component", () => {
 		);
 
 		const confirmButton = screen.getByRole("button", { name: "Здацца" });
-		const cancelButton = screen.getByRole("button", { name: "Не" });
+		const cancelButton = screen.getByRole("button", {
+			name: "Працягнуць гульню",
+		});
 
 		expect(confirmButton).toBeInTheDocument();
 		expect(cancelButton).toBeInTheDocument();
@@ -76,7 +78,9 @@ describe("GiveUpModal Component", () => {
 			/>
 		);
 
-		const cancelButton = screen.getByRole("button", { name: "Не" });
+		const cancelButton = screen.getByRole("button", {
+			name: "Працягнуць гульню",
+		});
 		await user.click(cancelButton);
 
 		expect(mockOnClose).toHaveBeenCalledTimes(1);
@@ -93,7 +97,9 @@ describe("GiveUpModal Component", () => {
 		);
 
 		const confirmButton = screen.getByRole("button", { name: "Здацца" });
-		const cancelButton = screen.getByRole("button", { name: "Не" });
+		const cancelButton = screen.getByRole("button", {
+			name: "Працягнуць гульню",
+		});
 
 		// Check button types
 		expect(confirmButton).toHaveAttribute("type", "button");

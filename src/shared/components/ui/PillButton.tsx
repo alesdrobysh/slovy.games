@@ -33,7 +33,7 @@ export function PillButton({
 			onClick={onClick}
 			disabled={disabled}
 			type="button"
-			className={`inline-flex items-center gap-1.5 rounded-full font-medium transition-all active:scale-[0.98] disabled:opacity-50 ${variantClasses[variant]} ${sizeClasses[size]}`}
+			className={`inline-flex items-center gap-1.5 rounded-full font-medium transition-all active:scale-[0.98] disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper ${variantClasses[variant]} ${sizeClasses[size]}`}
 		>
 			{icon}
 			{children}

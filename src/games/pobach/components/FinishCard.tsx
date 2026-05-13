@@ -93,7 +93,7 @@ export default function FinishCard({
 				) : (
 					<div className="flex items-center gap-2">
 						<span>Наступнае слова праз</span>
-						<span className="font-mono tabular-nums text-ink">{countdown}</span>
+						<span className="font-sans tabular-nums text-ink">{countdown}</span>
 					</div>
 				)}
 			</div>

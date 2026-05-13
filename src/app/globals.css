@@ -287,6 +287,12 @@ g[tabindex="0"]:focus-visible {
 	transition:
 		filter 0.15s,
 		transform 0.1s;
+	outline: none;
+}
+.btn-primary:focus-visible {
+	box-shadow:
+		0 0 0 2px var(--sly-bg),
+		0 0 0 4px var(--sly-accent);
 }
 .btn-primary:hover {
 	filter: brightness(1.05);

@@ -21,7 +21,11 @@ export default function RulesComponent({
 						{ color: "var(--sly-rank-10)", label: "Гарача", rank: "≤10" },
 						{ color: "var(--sly-rank-100)", label: "Цёпла", rank: "≤100" },
 						{ color: "var(--sly-rank-1000)", label: "Холадна", rank: "≤1000" },
-						{ color: "var(--sly-rank-default)", label: "Далёка", rank: ">1000" },
+						{
+							color: "var(--sly-rank-default)",
+							label: "Далёка",
+							rank: ">1000",
+						},
 					].map((item) => (
 						<div key={item.label} className="flex flex-col items-center gap-1">
 							<div
@@ -100,8 +104,7 @@ export default function RulesComponent({
 				<strong>падказку</strong>.
 			</p>
 			<p className="text-ink-muted text-xs">
-				Падказка: націсніце на любое слова ў спісе, каб адкрыць яго ў
-				слоўніку.
+				Падказка: націсніце на любое слова ў спісе, каб адкрыць яго ў слоўніку.
 			</p>
 		</div>
 	);

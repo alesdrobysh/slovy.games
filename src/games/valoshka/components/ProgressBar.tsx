@@ -54,14 +54,14 @@ export function ProgressBar({
 						<button
 							type="button"
 							onClick={() => setShowRanking(true)}
-							className="cursor-pointer"
+							className="cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded-sm"
 						>
 							<Badge>{rank.name}</Badge>
 						</button>
 						<button
 							type="button"
 							onClick={share}
-							className={`text-xs font-semibold py-0.5 px-1.5 rounded transition-colors ${
+							className={`text-xs font-semibold py-0.5 px-1.5 rounded transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper ${
 								showToast ? "text-valoshka" : "text-ink-muted hover:text-ink"
 							}`}
 						>
@@ -75,10 +75,10 @@ export function ProgressBar({
 					</span>
 				</div>
 
-				{/* biome-ignore lint/a11y/noStaticElementInteractions: decorative */}
-				{/* biome-ignore lint/a11y/useKeyWithClickEvents: decorative */}
-				<div
-					className="relative flex items-center cursor-pointer"
+				<button
+					type="button"
+					aria-label="Паказаць рангі"
+					className="relative flex items-center w-full bg-transparent border-none p-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded-full"
 					style={{ height: "20px" }}
 					onClick={() => setShowRanking(true)}
 				>
@@ -126,7 +126,7 @@ export function ProgressBar({
 							/>
 						);
 					})}
-				</div>
+				</button>
 			</div>
 
 			{showRanking && (

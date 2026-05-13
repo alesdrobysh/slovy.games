@@ -33,9 +33,7 @@ export function HowToPlay({ onClose, isOpen }: HowToPlayProps) {
 						border: "1px solid var(--sly-cornflower-border-subtle)",
 					}}
 				>
-					<p className="text-xs text-[var(--sly-text-muted)] mb-2">
-						Прыклад:
-					</p>
+					<p className="text-xs text-[var(--sly-text-muted)] mb-2">Прыклад:</p>
 					<p className="font-display text-base">
 						<span style={{ color: "var(--sly-cornflower)" }}>А</span>
 						<span className="text-[var(--sly-text)]">РБ</span>
@@ -50,7 +48,7 @@ export function HowToPlay({ onClose, isOpen }: HowToPlayProps) {
 
 				{/* Scoring — simplified */}
 				<details className="mb-3">
-					<summary className="cursor-pointer text-[var(--sly-cornflower)] font-medium hover:opacity-80 transition-opacity">
+					<summary className="cursor-pointer text-[var(--sly-cornflower)] font-medium hover:opacity-80 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-card rounded-sm">
 						Як налічваюцца балы?
 					</summary>
 					<ul className="mt-2 pl-4 space-y-1.5 text-[var(--sly-text-muted)]">
@@ -58,9 +56,7 @@ export function HowToPlay({ onClose, isOpen }: HowToPlayProps) {
 						<li>• 5 літар = 5 балаў, 6 літар = 6 балаў і г.д.</li>
 						<li>
 							•{" "}
-							<strong className="text-[var(--sly-cornflower)]">
-								Панграма
-							</strong>{" "}
+							<strong className="text-[var(--sly-cornflower)]">Панграма</strong>{" "}
 							— слова з усіх 7 літар: +7 бонусных балаў
 						</li>
 					</ul>
@@ -68,7 +64,7 @@ export function HowToPlay({ onClose, isOpen }: HowToPlayProps) {
 
 				{/* Ranks */}
 				<details>
-					<summary className="cursor-pointer text-[var(--sly-cornflower)] font-medium hover:opacity-80 transition-opacity">
+					<summary className="cursor-pointer text-[var(--sly-cornflower)] font-medium hover:opacity-80 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-card rounded-sm">
 						Што такое рангі?
 					</summary>
 					<p className="mt-2 text-[var(--sly-text-muted)]">

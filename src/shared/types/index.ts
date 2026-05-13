@@ -27,7 +27,8 @@ export const GAMES: GameInfo[] = [
 		id: "valoshka",
 		name: "Valoshka",
 		nameBel: "Валошка",
-		description: "Складайце словы з сямі літар. Цэнтральная літара — абавязковая ў кожным слове.",
+		description:
+			"Складайце словы з сямі літар. Цэнтральная літара — абавязковая ў кожным слове.",
 		descriptionBel: "Складайце словы з 7 прапанаваных літар",
 		path: "/valoshka",
 		color: "#5b6fa8",
@@ -39,7 +40,8 @@ export const GAMES: GameInfo[] = [
 		id: "pobach",
 		name: "Pobach",
 		nameBel: "Побач",
-		description: "Адгадайце схаванае слова, параўноўваючы значэнне вашых варыянтаў з мэтай.",
+		description:
+			"Адгадайце схаванае слова, параўноўваючы значэнне вашых варыянтаў з мэтай.",
 		descriptionBel: "Здагадайцеся слова па сэнсавай блізкасці",
 		path: "/pobach",
 		color: "#E58E3F",

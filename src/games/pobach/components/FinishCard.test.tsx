@@ -11,7 +11,12 @@ jest.mock("@/shared/hooks/useCountdown", () => ({
 
 jest.mock("@/games/pobach/lib/storage", () => ({
 	getCurrentDayIndex: () => 42,
-	getStats: () => ({ currentStreak: 0, maxStreak: 0, gamesPlayed: 0, gamesWon: 0 }),
+	getStats: () => ({
+		currentStreak: 0,
+		maxStreak: 0,
+		gamesPlayed: 0,
+		gamesWon: 0,
+	}),
 }));
 
 jest.mock("@/games/pobach/components/TopWordsList", () => {
@@ -56,9 +61,7 @@ describe("FinishCard Component", () => {
 			};
 			render(<FinishCard {...loseProps} />);
 
-			expect(
-				screen.getByText("Заўтра — новае слова")
-			).toBeInTheDocument();
+			expect(screen.getByText("Заўтра — новае слова")).toBeInTheDocument();
 			expect(screen.getByText("Правільнае слова:")).toBeInTheDocument();
 			expect(screen.getByText("правільнае")).toBeInTheDocument();
 			expect(screen.queryByText("🎉")).not.toBeInTheDocument();
@@ -84,9 +87,7 @@ describe("FinishCard Component", () => {
 			const winProps = { ...defaultProps, mode: "win" as const };
 			render(<FinishCard {...winProps} />);
 
-			expect(
-				screen.getByText("Адгадана 🎉")
-			).toBeInTheDocument();
+			expect(screen.getByText("Адгадана 🎉")).toBeInTheDocument();
 			expect(
 				screen.getByText(/Вы знайшлі слова за 3 спроб/)
 			).toBeInTheDocument();

@@ -20,15 +20,8 @@ export function FoundWordsList({
 				<h2 className="font-display text-lg font-medium text-ink">
 					{count === 0
 						? "Пакуль нічога"
-						: count === 1
-							? "1 слова"
-							: `${count} слоў`}
+						: `${count} ${count === 1 ? "слова" : "слоў"}`}
 				</h2>
-				{count > 0 && (
-					<span className="text-xs text-ink-muted">
-						{count} {count === 1 ? "слова" : "слоў"}
-					</span>
-				)}
 			</div>
 
 			{count === 0 ? (

@@ -30,8 +30,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
 	useEffect(() => {
 		setThemeState(computeInitialTheme());
-		setMounted(false);
-		requestAnimationFrame(() => setMounted(true));
+		setMounted(true);
 	}, []);
 
 	useEffect(() => {

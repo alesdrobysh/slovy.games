@@ -67,7 +67,7 @@ export function HubNav() {
 								<Link
 									key={link.href}
 									href={link.href}
-									className={`transition-colors no-underline ${
+									className={`transition-colors no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded-sm ${
 										active
 											? "text-ink font-medium"
 											: "text-ink-muted hover:text-ink"
@@ -87,7 +87,7 @@ export function HubNav() {
 					<Link
 						href="/stats"
 						aria-label="Статыстыка"
-						className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-rule transition-colors text-ink-muted"
+						className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-rule transition-colors text-ink-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
 					>
 						<BarChart2 size={18} />
 					</Link>
@@ -99,7 +99,7 @@ export function HubNav() {
 								: "Пераключыць на светлую тэму"
 						}
 						type="button"
-						className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-rule transition-colors text-ink-muted"
+						className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-rule transition-colors text-ink-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
 					>
 						{theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
 					</button>
