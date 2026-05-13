@@ -76,8 +76,8 @@ export default function HubPage() {
         {/* Stats CTA */}
         <section className="mt-20 pt-10 border-t border-rule flex flex-col sm:flex-row gap-6 items-start sm:items-center justify-between animate-fade-in-up">
           <p className="text-sm text-ink-muted max-w-[52ch] leading-relaxed text-pretty">
-            Хочаце ўбачыць свае серыі і размеркаванне вынікаў? Усе запісы
-            захоўваюцца лакальна на вашым прыстасаванні.
+            Сачыце за сваёй серыяй перамог і глядзіце, колькі слоў вы
+            знайшлі. Усё захоўваецца тут, на вашай прыладзе.
           </p>
           <Link
             href="/stats"

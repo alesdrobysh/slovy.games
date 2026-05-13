@@ -52,7 +52,7 @@ export default function FinishCard({
 			<p className="text-ink-muted mb-4">
 				{isWin
 					? `Вы знайшлі слова за ${attempts} ${pluralize(attempts)}${hintsCount > 0 ? ` з ${hintsCount} ${pluralizeHintsInstrumental(hintsCount)}` : ""}.`
-					: `Дзякуй за гульню.${hintsCount > 0 ? ` Выкарыстана ${hintsCount} ${pluralizeHintsAccusative(hintsCount)}.` : ""}`}
+					: `Нічога страшнага — заўтра новае слова.${hintsCount > 0 ? ` Выкарыстана ${hintsCount} ${pluralizeHintsAccusative(hintsCount)}.` : ""}`}
 			</p>
 
 			{!isWin && targetWord && (

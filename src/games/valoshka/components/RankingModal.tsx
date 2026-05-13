@@ -134,7 +134,7 @@ export function RankingModal({
 													marginTop: "1px",
 												}}
 											>
-												{pointsToNext} б. да наступнага
+												яшчэ {pointsToNext} да наступнага
 											</div>
 										)}
 									</div>

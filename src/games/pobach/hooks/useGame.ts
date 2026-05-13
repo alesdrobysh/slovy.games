@@ -147,7 +147,7 @@ export function useGame(): UseGameReturn {
 			if (guesses.some((g) => g.word === wordToGuess)) {
 				vibrate("short");
 				setErrorWord(wordToGuess);
-				setError("вы ўжо ўводзілі гэтае слова");
+				setError("гэтае слова ўжо спробавана");
 				setTimeout(() => {
 					setError(null);
 					setErrorWord(null);
@@ -178,7 +178,7 @@ export function useGame(): UseGameReturn {
 					vibrate("short");
 					trackUnknownWord(wordToGuess);
 					setErrorWord(wordToGuess);
-					setError("я не ведаю гэтага слова");
+					setError("няма ў слоўніку");
 					setTimeout(() => {
 						setError(null);
 						setErrorWord(null);

@@ -14,8 +14,8 @@ export function validateWord(
 }
 
 export const ERROR_MESSAGES: Record<ValidationError, string> = {
-	too_short: "Занадта кароткае слова",
-	missing_center: "Патрэбна цэнтральная літара",
-	not_in_list: "Не ў слоўніку",
-	already_found: "Ужо знойдзена",
+	too_short: "Мінімум 4 літары",
+	missing_center: "У слове павінна быць цэнтральная літара",
+	not_in_list: "Гэтага слова няма ў сённяшнім спісе",
+	already_found: "Вы ўжо знайшлі гэта слово",
 };

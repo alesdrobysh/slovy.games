@@ -247,7 +247,7 @@ export function YesterdayModal({ currentDate }: YesterdayModalProps) {
 													title={
 														fs === "sent"
 															? "Адпраўлена"
-															: "Адзначыць як непажаданае"
+															: "Паведаміць пра памылку ў слове"
 													}
 												>
 													{fs === "sent" ? "✓" : fs === "sending" ? "…" : "⚑"}

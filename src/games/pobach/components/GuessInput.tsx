@@ -79,7 +79,7 @@ export default function GuessInput({
 						inputMode="text"
 						enterKeyHint="send"
 						suppressContentEditableWarning
-						className="text-lg text-ink outline-none min-h-[1.5rem] w-full empty:before:content-['Увядзіце_слова...'] empty:before:text-ink-muted text-left"
+						className="text-lg text-ink outline-none min-h-[1.5rem] w-full empty:before:content-['Увядзіце\00a0слова...'] empty:before:text-ink-muted text-left"
 					/>
 				</label>
 

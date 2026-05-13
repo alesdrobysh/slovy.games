@@ -65,7 +65,7 @@ export function HintDisplay({ hint, onCancel }: HintDisplayProps) {
 						textTransform: "uppercase",
 					}}
 				>
-					{length}л
+					{length} {length === 1 ? "літара" : length < 5 ? "літары" : "літар"}
 				</span>
 			</div>
 

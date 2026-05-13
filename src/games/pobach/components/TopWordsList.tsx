@@ -75,7 +75,18 @@ export default function TopWordsList({
 						</div>
 					)}
 
-					{error && <div className="text-sm text-red-500">{error}</div>}
+					{error && (
+						<div className="text-sm text-destructive">
+							Не атрымалася загрузіць спіс.{" "}
+							<button
+								type="button"
+								onClick={loadTopWords}
+								className="underline hover:no-underline text-ink"
+							>
+								Паспрабаваць зноў
+							</button>
+						</div>
+					)}
 
 					{topWords && (
 						<table className="w-full text-sm">

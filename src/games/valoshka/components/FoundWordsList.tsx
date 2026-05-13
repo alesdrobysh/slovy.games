@@ -26,7 +26,7 @@ export function FoundWordsList({
 				</h2>
 				{count > 0 && (
 					<span className="text-xs text-ink-muted">
-						{count} з {pangrams.length ? "?" : ""}
+						{count} {count === 1 ? "слова" : "слоў"}
 					</span>
 				)}
 			</div>

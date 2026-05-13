@@ -16,15 +16,15 @@ export default function GiveUpModal({
 	return (
 		<Modal isOpen={isOpen} onClose={onClose} title="Ўпэўнены?">
 			<p className="text-sm text-[var(--sly-text-muted)] mb-5">
-				Вы сапраўды хочаце здацца? Гэта скіне вашу бягучую серыю перамог.
+				Калі вы здасцеся, серыя перамог пачнецца спачатку. Працягваем?
 			</p>
 
 			<div className="flex items-center justify-center gap-3">
+				<button onClick={onClose} type="button" className="btn-ghost">
+					Працягнуць гульню
+				</button>
 				<button onClick={onConfirm} type="button" className="btn-primary">
 					Здацца
-				</button>
-				<button onClick={onClose} type="button" className="btn-ghost">
-					Не
 				</button>
 			</div>
 		</Modal>

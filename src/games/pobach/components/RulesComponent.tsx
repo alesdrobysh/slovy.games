@@ -9,128 +9,99 @@ export default function RulesComponent({
 				<h2 className="font-display text-xl font-medium text-ink mb-4">
 					Як гуляць
 				</h2>
-				<ul className="space-y-2 text-sm text-ink-muted leading-relaxed">
-					<li>• Уводзьце любыя беларускія словы.</li>
-					<li>
-						• Кожнае слова атрымае{" "}
-						<span className="text-ink font-medium">ранг</span> — наколькі яно
-						блізкае па сэнсе да схаванага.
-					</li>
-					<li>
-						• Чым меншы лік — тым бліжэй. Ранг{" "}
-						<span className="text-pobach font-semibold">1</span> — перамога.
-					</li>
-					<li>• Колькасць спроб неабмежаваная. Можна ўзяць падказку.</li>
-				</ul>
+				<p className="text-sm text-ink-muted leading-relaxed mb-4">
+					Згадайце схаванае слова па яго сэнсе. Уводзьце беларускія словы —
+					кожнае атрымае ранг. Чым меншы ранг, тым бліжэй вы да адгадкі.
+					<strong className="text-ink"> Ранг 1 — перамога.</strong>
+				</p>
 
-				<div className="mt-5 grid grid-cols-5 gap-2 text-center text-[10px] text-ink-soft">
-					<div className="flex flex-col items-center gap-1.5">
-						<div
-							className="w-6 h-2 rounded-full"
-							style={{ backgroundColor: "var(--sly-rank-1)" }}
-						/>
-						Мэта
-					</div>
-					<div className="flex flex-col items-center gap-1.5">
-						<div
-							className="w-6 h-2 rounded-full"
-							style={{ backgroundColor: "var(--sly-rank-10)" }}
-						/>
-						Гарача
-					</div>
-					<div className="flex flex-col items-center gap-1.5">
-						<div
-							className="w-6 h-2 rounded-full"
-							style={{ backgroundColor: "var(--sly-rank-100)" }}
-						/>
-						Цёпла
-					</div>
-					<div className="flex flex-col items-center gap-1.5">
-						<div
-							className="w-6 h-2 rounded-full"
-							style={{ backgroundColor: "var(--sly-rank-1000)" }}
-						/>
-						Холадна
-					</div>
-					<div className="flex flex-col items-center gap-1.5">
-						<div
-							className="w-6 h-2 rounded-full"
-							style={{ backgroundColor: "var(--sly-rank-default)" }}
-						/>
-						Далёка
-					</div>
+				<div className="grid grid-cols-5 gap-2 text-center text-[10px]">
+					{[
+						{ color: "var(--sly-rank-1)", label: "Мэта", rank: "1" },
+						{ color: "var(--sly-rank-10)", label: "Гарача", rank: "≤10" },
+						{ color: "var(--sly-rank-100)", label: "Цёпла", rank: "≤100" },
+						{ color: "var(--sly-rank-1000)", label: "Холадна", rank: "≤1000" },
+						{ color: "var(--sly-rank-default)", label: "Далёка", rank: ">1000" },
+					].map((item) => (
+						<div key={item.label} className="flex flex-col items-center gap-1">
+							<div
+								className="w-6 h-2 rounded-full"
+								style={{ backgroundColor: item.color }}
+							/>
+							<span className="text-ink-soft font-medium">{item.label}</span>
+							<span className="text-ink-muted">{item.rank}</span>
+						</div>
+					))}
 				</div>
 			</div>
 		);
 	}
 
 	return (
-		<div className="space-y-3 text-sm text-ink leading-relaxed">
+		<div className="space-y-4 text-sm text-ink leading-relaxed">
 			<p>
-				Знайдзіце загаданае слова па яго <strong>сэнсе</strong>, а не па
+				Знайдзіце схаванае слова па яго <strong>сэнсе</strong>, а не па
 				напісанні.
 			</p>
-			<p>
-				Напрыклад, загадана слова: <strong className="text-pobach">ЛЕС</strong>
-			</p>
 
-			<ul className="space-y-2 mt-3">
-				<li className="flex items-start gap-3">
-					<span
-						className="shrink-0 w-3 h-3 rounded-sm mt-0.5"
-						style={{ backgroundColor: "var(--sly-rank-1)" }}
-					/>
-					<span>
-						Лес — <strong>перамога</strong> (№1)
-					</span>
-				</li>
-				<li className="flex items-start gap-3">
-					<span
-						className="shrink-0 w-3 h-3 rounded-sm mt-0.5"
-						style={{ backgroundColor: "var(--sly-rank-10)" }}
-					/>
-					<span>
-						Дрэва — <strong>вельмі блізка</strong> (№4)
-					</span>
-				</li>
-				<li className="flex items-start gap-3">
-					<span
-						className="shrink-0 w-3 h-3 rounded-sm mt-0.5"
-						style={{ backgroundColor: "var(--sly-rank-100)" }}
-					/>
-					<span>
-						Птушка — <strong>блізка</strong> (№45)
-					</span>
-				</li>
-				<li className="flex items-start gap-3">
-					<span
-						className="shrink-0 w-3 h-3 rounded-sm mt-0.5"
-						style={{ backgroundColor: "var(--sly-rank-1000)" }}
-					/>
-					<span>
-						Грыб — <strong>трохі далей</strong> (№215)
-					</span>
-				</li>
-				<li className="flex items-start gap-3">
-					<span
-						className="shrink-0 w-3 h-3 rounded-sm mt-0.5"
-						style={{ backgroundColor: "var(--sly-rank-default)" }}
-					/>
-					<span>
-						Аўтамабіль — <strong>вельмі далёка</strong> (№15000)
-					</span>
-				</li>
-			</ul>
+			<div
+				className="p-3 rounded-xl"
+				style={{
+					background: "var(--sly-accent-subtle)",
+					border: "1px solid var(--sly-accent-border)",
+				}}
+			>
+				<p className="text-xs text-ink-muted mb-2">Напрыклад, калі слова:</p>
+				<p className="font-display text-lg text-pobach mb-2">ЛЕС</p>
+				<ul className="space-y-1.5">
+					<li className="flex items-center gap-2">
+						<span
+							className="shrink-0 w-2.5 h-2.5 rounded-sm"
+							style={{ backgroundColor: "var(--sly-rank-1)" }}
+						/>
+						<span>
+							Лес — <strong>перамога</strong> (ранг 1)
+						</span>
+					</li>
+					<li className="flex items-center gap-2">
+						<span
+							className="shrink-0 w-2.5 h-2.5 rounded-sm"
+							style={{ backgroundColor: "var(--sly-rank-10)" }}
+						/>
+						<span>Дрэва — вельмі блізка (ранг 4)</span>
+					</li>
+					<li className="flex items-center gap-2">
+						<span
+							className="shrink-0 w-2.5 h-2.5 rounded-sm"
+							style={{ backgroundColor: "var(--sly-rank-100)" }}
+						/>
+						<span>Птушка — блізка (ранг 45)</span>
+					</li>
+					<li className="flex items-center gap-2">
+						<span
+							className="shrink-0 w-2.5 h-2.5 rounded-sm"
+							style={{ backgroundColor: "var(--sly-rank-1000)" }}
+						/>
+						<span>Грыб — далёка (ранг 215)</span>
+					</li>
+					<li className="flex items-center gap-2">
+						<span
+							className="shrink-0 w-2.5 h-2.5 rounded-sm"
+							style={{ backgroundColor: "var(--sly-rank-default)" }}
+						/>
+						<span>Аўтамабіль — вельмі далёка (ранг 15000)</span>
+					</li>
+				</ul>
+			</div>
 
-			<p className="pt-1">Чым меншы нумар, тым бліжэй вы да адгадкі.</p>
+			<p>Чым меншы нумар, тым бліжэй вы да адгадкі.</p>
 			<p>
-				Слова пад нумарам <strong>1</strong> — гэта перамога!
+				Спробаў неабмежавана. Калі захраснеце — скарыстайце{" "}
+				<strong>падказку</strong>.
 			</p>
-			<p>
-				Калі захраснеце — бярыце <strong>падказку</strong>.
-			</p>
-			<p className="text-ink-muted">
-				Націсніце на любое слова ў спісе, каб убачыць яго ў слоўніку.
+			<p className="text-ink-muted text-xs">
+				Падказка: націсніце на любое слова ў спісе, каб адкрыць яго ў
+				слоўніку.
 			</p>
 		</div>
 	);
