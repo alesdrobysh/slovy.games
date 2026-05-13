@@ -8,8 +8,7 @@ import Link from "next/link";
 
 export default function AboutPage() {
 	return (
-		<div className="min-h-screen flex flex-col">
-			<div className="flex-1 max-w-2xl mx-auto w-full px-5 sm:px-8 py-12 sm:py-20">
+		<div className="page-narrow page-container page-section">
 				<h1 className="font-display text-4xl sm:text-5xl font-medium tracking-tight text-ink mb-8 animate-fade-in-up">
 					Пра праект
 				</h1>
@@ -125,7 +124,6 @@ export default function AboutPage() {
 						← Да гульняў
 					</Link>
 				</div>
-			</div>
 		</div>
 	);
 }

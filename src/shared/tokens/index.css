@@ -106,6 +106,12 @@
 	--sly-duration-slow: 400ms;
 	--sly-easing: cubic-bezier(0.4, 0, 0.2, 1);
 
+	/* --- Semantic Spacing --- */
+	--sly-page-py: clamp(2.5rem, 5vw, 5rem);
+	--sly-section-gap: clamp(3rem, 5vw, 5rem);
+	--sly-content-gap: 1.5rem;
+	--sly-tight-gap: 0.75rem;
+
 	/* --- Fonts --- */
 	--sly-font-display: var(--font-display), serif;
 	--sly-font-sans: var(--font-sans), sans-serif;

@@ -27,10 +27,9 @@ export default function HubPage() {
   const dayIdx = getDayIndex();
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="flex-1 max-w-screen-xl mx-auto w-full px-5 sm:px-8 py-12 sm:py-20">
-        {/* Hero */}
-        <div className="mb-14 sm:mb-20 max-w-3xl animate-fade-in-up">
+    <div className="page-container page-section">
+      {/* Hero */}
+      <div className="mb-16 sm:mb-20 max-w-3xl animate-fade-in-up">
           <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-medium leading-[1.05] tracking-tight text-balance text-ink mb-5">
             Ваш штодзённы інтэлектуальны рытуал.
           </h1>
@@ -74,7 +73,7 @@ export default function HubPage() {
         </section>
 
         {/* Stats CTA */}
-        <section className="mt-20 pt-10 border-t border-rule flex flex-col sm:flex-row gap-6 items-start sm:items-center justify-between animate-fade-in-up">
+        <section className="mt-16 pt-10 border-t border-rule flex flex-col sm:flex-row gap-6 items-start sm:items-center justify-between animate-fade-in-up">
           <p className="text-sm text-ink-muted max-w-[52ch] leading-relaxed text-pretty">
             Сачыце за сваёй серыяй перамог і глядзіце, колькі слоў вы
             знайшлі. Усё захоўваецца тут, на вашай прыладзе.
@@ -89,7 +88,6 @@ export default function HubPage() {
             </span>
           </Link>
         </section>
-      </div>
     </div>
   );
 }

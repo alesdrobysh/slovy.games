@@ -42,12 +42,12 @@ export default function PobachPage() {
 	const bestRank = sortedGuesses[0]?.rank ?? null;
 
 	return (
-		<div className="min-h-screen flex flex-col">
+		<>
 			<Header onHelpClick={() => setShowHelp(true)} />
 
-			<main className="flex-1 max-w-2xl mx-auto w-full px-5 sm:px-8 pb-20">
+			<main className="page-narrow page-container pb-20">
 				{/* Day badge */}
-				<div className="flex justify-start mb-6">
+				<div className="flex justify-start mb-8">
 					<span className="inline-flex items-center px-3 py-1 text-[0.75rem] font-medium text-pobach bg-pobach-soft rounded-full">
 						Выпуск №{dayIndex != null ? dayIndex : ""}
 					</span>
@@ -90,7 +90,7 @@ export default function PobachPage() {
 					/>
 				) : (
 					lastGuess && (
-						<output aria-live="polite" className="block mb-4">
+						<output aria-live="polite" className="block mb-6">
 							<p className="text-xs text-ink-soft mb-2">Апошняе слова:</p>
 							<GuessCard guess={lastGuess} highlight />
 						</output>
@@ -99,7 +99,7 @@ export default function PobachPage() {
 
 				{/* Guess list */}
 				{guesses.length > 0 && (
-					<>
+					<div className="pt-2">
 						<GuessList
 							guesses={sortedGuesses}
 							lastGuess={lastGuess?.word ?? null}
@@ -107,7 +107,7 @@ export default function PobachPage() {
 						<p className="mt-8 text-xs text-ink-soft text-center">
 							Чым меншы ранг — тым бліжэй вы да слова. Ранг 1 — перамога.
 						</p>
-					</>
+					</div>
 				)}
 			</main>
 
@@ -124,6 +124,6 @@ export default function PobachPage() {
 				onConfirm={handleGiveUpConfirm}
 				onClose={() => setShowGiveUp(false)}
 			/>
-		</div>
+		</>
 	);
 }

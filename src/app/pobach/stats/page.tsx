@@ -13,10 +13,18 @@ type StatCardData = {
 	value: string | number;
 };
 
-function StatCard({ label, value }: StatCardData) {
+function StatCard({
+	label,
+	value,
+	featured = false,
+}: StatCardData & { featured?: boolean }) {
 	return (
-		<div className="bg-card ring-1 ring-rule rounded-2xl p-4 text-center sm:text-left">
-			<div className="font-display text-3xl font-medium text-ink leading-none mb-1.5">
+		<div
+			className={`bg-card ring-1 ring-rule rounded-2xl p-5 text-center sm:text-left ${featured ? "sm:col-span-2 lg:col-span-1" : ""}`}
+		>
+			<div
+				className={`font-display font-medium text-ink leading-none mb-1.5 ${featured ? "text-4xl" : "text-3xl"}`}
+			>
 				{value}
 			</div>
 			<div className="text-[10px] text-ink-soft font-medium uppercase tracking-[0.2em] leading-tight">
@@ -218,13 +226,13 @@ export default function PobachStatsPage() {
 	};
 
 	return (
-		<div className="min-h-screen flex flex-col">
+		<>
 			<Header />
 
-			<div className="flex-1 w-full max-w-2xl mx-auto px-5 sm:px-8 py-6">
-				<div className="grid grid-cols-4 gap-2">
+			<div className="page-narrow page-container py-6">
+				<div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
 					<StatCard label="Гульняў" value={stats.gamesPlayed} />
-					<StatCard label="Перамог %" value={winRate} />
+					<StatCard label="Перамог %" value={winRate} featured />
 					<StatCard label="Серыя" value={stats.currentStreak} />
 					<StatCard label="Макс." value={stats.maxStreak} />
 				</div>
@@ -265,6 +273,6 @@ export default function PobachStatsPage() {
 					)}
 				</div>
 			</div>
-		</div>
+		</>
 	);
 }

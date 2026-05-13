@@ -239,6 +239,35 @@ g[tabindex="0"]:focus-visible {
 }
 
 /* ================================================================
+   Layout Utilities
+   ================================================================ */
+
+.page-container {
+	max-width: 1280px;
+	margin-inline: auto;
+	width: 100%;
+	padding-inline: 1.25rem;
+}
+@media (min-width: 640px) {
+	.page-container {
+		padding-inline: 2rem;
+	}
+}
+
+.page-narrow {
+	max-width: 42rem;
+}
+
+.page-wide {
+	max-width: 64rem;
+}
+
+.page-section {
+	padding-top: var(--sly-page-py);
+	padding-bottom: var(--sly-page-py);
+}
+
+/* ================================================================
    Component Classes
    ================================================================ */
 

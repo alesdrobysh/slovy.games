@@ -2,8 +2,7 @@ import Link from "next/link";
 
 export default function PrivacyPage() {
 	return (
-		<div className="min-h-screen flex flex-col">
-			<div className="flex-1 max-w-2xl mx-auto w-full px-5 sm:px-8 py-12 sm:py-20">
+		<div className="page-narrow page-container page-section">
 				<Link
 					href="/"
 					className="text-xs uppercase tracking-[0.2em] text-ink-soft hover:text-ink transition-colors mb-6 inline-block no-underline"
@@ -120,7 +119,6 @@ export default function PrivacyPage() {
 						</p>
 					</section>
 				</div>
-			</div>
 		</div>
 	);
 }

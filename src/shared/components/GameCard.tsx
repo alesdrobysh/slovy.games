@@ -32,7 +32,7 @@ export function GameCard({
 		>
 			<div className={`h-1.5 ${accentBg}`} aria-hidden />
 
-			<div className="p-7 sm:p-9 flex flex-col flex-1">
+			<div className="p-8 sm:p-10 flex flex-col flex-1">
 				<div className="flex items-start justify-between gap-4 mb-6">
 					<div>
 						<h2 className="font-display text-3xl sm:text-4xl font-medium tracking-tight text-ink">

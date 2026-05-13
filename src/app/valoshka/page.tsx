@@ -16,14 +16,14 @@ export default function ValoshkaPage() {
 	});
 
 	return (
-		<div className="min-h-screen flex flex-col">
+		<>
 			<HeaderWithInspector
 				displayDate={displayDate}
 				currentDate={puzzle.date}
 			/>
-			<main className="flex-1">
+			<main>
 				<GamePage puzzle={puzzle} />
 			</main>
-		</div>
+		</>
 	);
 }

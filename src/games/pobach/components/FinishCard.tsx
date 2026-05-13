@@ -42,7 +42,7 @@ export default function FinishCard({
 	return (
 		<div
 			data-testid="finish-card"
-			className={`rounded-2xl p-7 sm:p-9 ring-1 my-6 animate-fade-in-up ${
+			className={`rounded-2xl p-8 sm:p-10 ring-1 my-6 animate-fade-in-up ${
 				isWin ? "bg-pobach-soft ring-pobach/30" : "bg-card ring-rule"
 			}`}
 		>

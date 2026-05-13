@@ -67,13 +67,25 @@ function loadPobachStats(): PobachStats | null {
 	}
 }
 
-function StatCard({ label, value }: { label: string; value: number | string }) {
+function StatCard({
+	label,
+	value,
+	featured = false,
+}: {
+	label: string;
+	value: number | string;
+	featured?: boolean;
+}) {
 	return (
-		<div className="bg-card ring-1 ring-rule rounded-2xl p-5">
+		<div
+			className={`bg-card ring-1 ring-rule rounded-2xl p-5 ${featured ? "sm:col-span-2 lg:col-span-1" : ""}`}
+		>
 			<p className="text-[10px] uppercase tracking-[0.2em] text-ink-soft mb-1 font-medium">
 				{label}
 			</p>
-			<p className="font-display text-3xl font-medium text-ink">{value}</p>
+			<p className={`font-display font-medium text-ink ${featured ? "text-4xl" : "text-3xl"}`}>
+				{value}
+			</p>
 		</div>
 	);
 }
@@ -153,15 +165,15 @@ function PobachStatsView({ stats }: { stats: PobachStats }) {
 			: null;
 
 	return (
-		<div className="space-y-6">
-			<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+		<div className="space-y-8">
+			<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 				<StatCard label="Згулялі" value={stats.gamesPlayed} />
-				<StatCard label="Перамог" value={`${stats.winRate}%`} />
+				<StatCard label="Перамог" value={`${stats.winRate}%`} featured />
 				<StatCard label="Бягучая серыя" value={stats.currentStreak} />
 				<StatCard label="Найлепшая серыя" value={stats.longestStreak} />
 			</div>
 			{stats.gamesWon > 0 && avgGuesses && (
-				<div className="grid gap-3 sm:grid-cols-2">
+				<div className="grid gap-4 sm:grid-cols-2">
 					<StatCard label="Лепшы вынік (спроб)" value={avgGuesses} />
 					<StatCard label="Перамог усяго" value={stats.gamesWon} />
 				</div>
@@ -183,10 +195,10 @@ function PobachStatsView({ stats }: { stats: PobachStats }) {
 
 function ValoshkaStatsView({ stats }: { stats: ValoshkaStats }) {
 	return (
-		<div className="space-y-6">
-			<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+		<div className="space-y-8">
+			<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 				<StatCard label="Гульняў зыграна" value={stats.gamesPlayed} />
-				<StatCard label="Бягучая серыя" value={stats.currentStreak} />
+				<StatCard label="Бягучая серыя" value={stats.currentStreak} featured />
 				<StatCard label="Найлепшая серыя" value={stats.longestStreak} />
 				<StatCard label="Слоў знойдзена" value={stats.totalWordsFound} />
 			</div>
@@ -218,9 +230,8 @@ export default function CombinedStatsPage() {
 	const isEmpty = !valoshka && !pobach;
 
 	return (
-		<div className="min-h-screen flex flex-col">
-			<div className="flex-1 max-w-screen-xl mx-auto w-full px-5 sm:px-8 py-10 sm:py-14">
-				<div className="mb-8 animate-fade-in-up">
+		<div className="page-container page-section">
+				<div className="mb-10 animate-fade-in-up">
 					<h1 className="font-display text-4xl sm:text-5xl font-medium tracking-tight text-ink">
 						Статыстыка
 					</h1>
@@ -243,7 +254,7 @@ export default function CombinedStatsPage() {
 					</div>
 				) : (
 					<>
-						<div className="flex gap-1 mb-8 bg-secondary rounded-full p-1 w-fit">
+						<div className="flex gap-1 mb-10 bg-secondary rounded-full p-1 w-fit">
 							{valoshka && (
 								<TabButton
 									active={activeTab === "valoshka"}
@@ -273,6 +284,5 @@ export default function CombinedStatsPage() {
 					</>
 				)}
 			</div>
-		</div>
 	);
 }
