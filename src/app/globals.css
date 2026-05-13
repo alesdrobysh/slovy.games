@@ -1,6 +1,10 @@
 @import "../shared/tokens/index.css";
 @import "tailwindcss";
 
+@utility font-display {
+	font-family: var(--sly-font-display);
+}
+
 /* === Base styles === */
 * {
 	box-sizing: border-box;

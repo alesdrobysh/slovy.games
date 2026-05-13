@@ -312,7 +312,7 @@ html.dark .theme-valoshka {
 	--color-warning: var(--sly-orange-500);
 	--color-destructive: var(--sly-red-500);
 
-	/* --- Typography --- */
+	/* --- Typography (kept as --font-family-* to avoid overriding Next.js font injection via @theme :root rule) --- */
 	--font-family-display: var(--sly-font-display);
 	--font-family-sans: var(--sly-font-sans);
 }
@@ -351,8 +351,7 @@ html.dark .theme-valoshka {
 	--text-muted: var(--sly-text-muted);
 	--border: var(--sly-border);
 	--card: var(--sly-bg-card);
-	--font-display: var(--sly-font-display);
-	--font-sans: var(--sly-font-sans);
+	/* Note: --font-display and --font-sans are injected by next/font on the <html> element — do not redefine here */
 }
 
 .theme-pobach {
