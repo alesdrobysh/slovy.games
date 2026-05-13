@@ -38,11 +38,6 @@ export function GameCard({
 						<h2 className="font-display text-3xl sm:text-4xl font-medium tracking-tight text-ink">
 							{game.nameBel}
 						</h2>
-						<p
-							className={`text-xs uppercase tracking-[0.2em] mt-2 ${accentText} font-semibold`}
-						>
-							{game.descriptionBel}
-						</p>
 					</div>
 					{isCompleted && (
 						<span
