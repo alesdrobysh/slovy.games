@@ -1,0 +1,143 @@
+import { scoreWord } from "@/games/valoshka/lib/scoring";
+import { validateWord } from "@/games/valoshka/lib/validation";
+import type { GameAction, GameState, Puzzle } from "@/games/valoshka/types";
+
+export function shuffleArray<T>(arr: T[]): T[] {
+	const a = [...arr];
+	for (let i = a.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[a[i], a[j]] = [a[j], a[i]];
+	}
+	return a;
+}
+
+export function createInitialState(puzzle: Puzzle): GameState {
+	return {
+		currentInput: "",
+		foundWords: [],
+		score: 0,
+		outerLetters: [...puzzle.outer],
+		errorType: null,
+		errorKey: 0,
+		lastFoundWord: null,
+		lastFoundIsPangram: false,
+		hint: {
+			targetWord: null,
+			revealedIndices: [],
+			isActive: false,
+		},
+	};
+}
+
+export function gameReducer(state: GameState, action: GameAction): GameState {
+	switch (action.type) {
+		case "TYPE_LETTER":
+			return {
+				...state,
+				currentInput: state.currentInput + action.letter,
+				errorType: null,
+			};
+
+		case "DELETE_LETTER":
+			return {
+				...state,
+				currentInput: state.currentInput.slice(0, -1),
+				errorType: null,
+			};
+
+		case "SUBMIT": {
+			const word = state.currentInput.toLowerCase();
+			const error = validateWord(
+				word,
+				action.center,
+				action.answers,
+				state.foundWords
+			);
+			if (error) {
+				return {
+					...state,
+					errorType: error,
+					errorKey: state.errorKey + 1,
+					currentInput: error === "already_found" ? "" : state.currentInput,
+				};
+			}
+			const pts = scoreWord(word, action.pangrams);
+			const isPangram = action.pangrams.includes(word);
+			const newFoundWords = [...state.foundWords, word];
+			return {
+				...state,
+				currentInput: "",
+				foundWords: newFoundWords,
+				score: state.score + pts,
+				errorType: null,
+				lastFoundWord: word,
+				lastFoundIsPangram: isPangram,
+				hint: {
+					...state.hint,
+					...(word === state.hint.targetWord
+						? { targetWord: null, revealedIndices: [], isActive: false }
+						: {}),
+				},
+			};
+		}
+
+		case "SHUFFLE":
+			return { ...state, outerLetters: shuffleArray(state.outerLetters) };
+
+		case "CLEAR_ERROR":
+			return { ...state, errorType: null };
+
+		case "CLEAR_LAST_FOUND":
+			return { ...state, lastFoundWord: null, lastFoundIsPangram: false };
+
+		case "RESTORE":
+			return { ...state, foundWords: action.foundWords, score: action.score };
+
+		case "START_HINT": {
+			const unfound = action.answers.filter(
+				(w: string) => !action.foundWords.includes(w)
+			);
+			if (unfound.length === 0) return state;
+			const target = unfound[Math.floor(Math.random() * unfound.length)];
+			const lastIdx = target.length - 1;
+			return {
+				...state,
+				hint: {
+					targetWord: target,
+					revealedIndices: [0, 1, lastIdx],
+					isActive: true,
+				},
+			};
+		}
+
+		case "REVEAL_NEXT_LETTER": {
+			const { targetWord, revealedIndices } = state.hint;
+			if (!targetWord) return state;
+			const allIndices = targetWord.split("").map((_, i: number) => i);
+			const hidden = allIndices.filter(
+				(i: number) =>
+					!revealedIndices.includes(i) && i !== targetWord.length - 1
+			);
+			if (hidden.length === 0) return state;
+			return {
+				...state,
+				hint: {
+					...state.hint,
+					revealedIndices: [...revealedIndices, hidden[0]],
+				},
+			};
+		}
+
+		case "CLEAR_HINT":
+			return {
+				...state,
+				hint: { targetWord: null, revealedIndices: [], isActive: false },
+			};
+
+		case "RESTORE_HINT":
+			return { ...state, hint: action.hint };
+
+		default:
+			return state;
+	}
+}
