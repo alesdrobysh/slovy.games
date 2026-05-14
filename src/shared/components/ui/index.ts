@@ -8,3 +8,5 @@ export type { StatCardProps } from "./StatCard";
 export { StatCard } from "./StatCard";
 export type { ToastProps } from "./Toast";
 export { Toast } from "./Toast";
+export type { TypographyProps, TypographyVariant } from "./Typography";
+export { Typography } from "./Typography";

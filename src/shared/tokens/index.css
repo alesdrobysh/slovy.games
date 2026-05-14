@@ -138,6 +138,29 @@
 }
 
 /* ================================================================
+   Typography utilities
+   ================================================================ */
+
+.typo-drop-cap::first-letter {
+	font-family: var(--font-d);
+	font-style: italic;
+	float: left;
+	font-size: 3.4em;
+	line-height: 0.75;
+	padding-right: 0.08em;
+	margin-top: 0.04em;
+	color: var(--sly-accent);
+}
+
+.typo-drop-cap.game-pobach::first-letter {
+	color: var(--pobach);
+}
+
+.typo-drop-cap.game-valoshka::first-letter {
+	color: var(--valoshka);
+}
+
+/* ================================================================
    Game theme contexts
    ================================================================ */
 
