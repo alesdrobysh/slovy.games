@@ -279,10 +279,10 @@ g[tabindex="0"]:focus-visible {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	gap: 0.5rem;
+	gap: var(--space-flow-sm);
 	border-radius: 6px;
 	border: none;
-	padding: 7px 14px;
+	padding: var(--space-flow-sm) var(--space-flow-md);
 	height: 32px;
 	font-family: var(--font-b);
 	font-size: 12px;
@@ -415,12 +415,12 @@ g[tabindex="0"]:focus-visible {
 
 .btn-sm {
 	height: 28px;
-	padding: 4px 10px;
+	padding: var(--space-flow-xs) var(--space-inset-xs);
 	font-size: 10px;
 }
 .btn-lg {
 	height: 36px;
-	padding: 9px 18px;
+	padding: var(--space-flow-sm) var(--space-flow-lg);
 	font-size: 14px;
 }
 

@@ -14,7 +14,7 @@ export function Badge({ children, variant = "accent" }: BadgeProps) {
 
 	return (
 		<span
-			className={`text-[10px] uppercase tracking-[0.2em] font-bold rounded-lg px-2.5 py-0.5 ${variantStyles[variant]}`}
+			className={`text-[10px] uppercase tracking-[0.2em] font-bold rounded-lg px-inset-xs py-0.5 ${variantStyles[variant]}`}
 		>
 			{children}
 		</span>

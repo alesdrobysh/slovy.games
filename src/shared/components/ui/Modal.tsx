@@ -66,7 +66,7 @@ export function Modal({
 				style={{ maxWidth, maxHeight: "90vh" }}
 			>
 				{title && (
-					<div className="flex items-center justify-between px-6 py-4 border-b border-rule">
+					<div className="flex items-center justify-between px-inset-lg py-4 border-b border-rule">
 						<h2
 							id="modal-title"
 							className="font-display text-xl font-semibold text-ink"
@@ -83,7 +83,7 @@ export function Modal({
 						</button>
 					</div>
 				)}
-				<div className="px-6 py-4">{children}</div>
+				<div className="px-inset-lg py-4">{children}</div>
 			</div>
 		</div>
 	);
