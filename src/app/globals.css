@@ -272,40 +272,173 @@ g[tabindex="0"]:focus-visible {
 }
 
 /* ================================================================
-   Component Classes
+   Button Variants
    ================================================================ */
 
-.btn-primary {
+.btn {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	gap: 0.5rem;
-	border-radius: 9999px;
-	padding: 8px 20px;
-	font-size: 14px;
-	font-weight: 600;
-	background: var(--sly-accent);
-	color: #fff;
+	border-radius: 6px;
 	border: none;
+	padding: 7px 14px;
+	height: 32px;
+	font-family: var(--font-b);
+	font-size: 12px;
+	font-weight: 700;
+	font-variant-caps: small-caps;
+	letter-spacing: 0.06em;
 	cursor: pointer;
-	transition:
-		filter 0.15s,
-		transform 0.1s;
+	transition: 150ms ease;
 	outline: none;
 }
-.btn-primary:focus-visible {
+
+/* === Variants === */
+
+.btn-solid {
+	border: none;
+}
+
+.btn-outline {
+	background: transparent;
+	border-style: solid;
+	border-width: 1px;
+}
+
+.btn-ghost {
+	padding: 0;
+	background: transparent;
+	border: none;
+	color: var(--fg-2);
+}
+
+/* === Colors === */
+
+/* primary: accent (terracotta / cornflower via --sly-accent) */
+.btn-primary {
+	--btn-color: var(--sly-accent);
+	--btn-on-color: #fff;
+}
+
+/* neutral: structural grey */
+.btn-neutral {
+	--btn-color: var(--border-strong);
+	--btn-on-color: var(--fg-2);
+}
+
+/* === Variant × Color interactions === */
+
+/* solid + primary: filled accent, white label, opacity hover */
+.btn-solid.btn-primary {
+	background: var(--sly-accent);
+	color: var(--btn-on-color);
+}
+.btn-solid.btn-primary:hover:not(:disabled) {
+	opacity: 0.86;
+}
+
+/* solid + neutral: filled neutral, ??? (brand new combo) */
+.btn-solid.btn-neutral {
+	background: var(--border-strong);
+	color: var(--surface);
+}
+.btn-solid.btn-neutral:hover:not(:disabled) {
+	opacity: 0.86;
+}
+
+/* outline + primary: accent border + label, invert on hover */
+.btn-outline.btn-primary {
+	border-color: var(--sly-accent);
+	color: var(--sly-accent);
+}
+.btn-outline.btn-primary:hover:not(:disabled) {
+	background: var(--sly-accent);
+	color: var(--btn-on-color);
+}
+
+/* outline + neutral: structural border + fg-2 label, surface-warm hover */
+.btn-outline.btn-neutral {
+	border-color: var(--border-strong);
+	background: var(--surface);
+	color: var(--fg-2);
+}
+.btn-outline.btn-neutral:hover:not(:disabled) {
+	background: var(--surface-warm);
+}
+
+/* ghost + primary: no chrome link, accent on hover */
+.btn-ghost.btn-primary {
+	color: var(--fg-2);
+}
+.btn-ghost.btn-primary:hover:not(:disabled) {
+	color: var(--sly-accent);
+}
+
+/* ghost + neutral: no chrome, surface-warm fill + fg on hover */
+.btn-ghost.btn-neutral {
+	color: var(--fg-2);
+}
+.btn-ghost.btn-neutral:hover:not(:disabled) {
+	background: var(--surface-warm);
+	color: var(--fg);
+}
+
+/* === Modifiers === */
+
+/* Dashed border (give-up style) */
+.btn-dashed {
+	border-style: dashed;
+}
+.btn-outline.btn-dashed {
+	border-color: var(--border-strong);
+	color: var(--muted);
+	background: var(--surface);
+}
+.btn-outline.btn-dashed:hover:not(:disabled) {
+	background: var(--surface-warm);
+	color: var(--muted);
+}
+
+/* Icon-only (no children, only startIcon) */
+.btn-icon-only {
+	width: 28px;
+	height: 28px;
+	padding: 0;
+}
+.btn-icon-only > svg {
+	width: 16px;
+	height: 16px;
+}
+
+/* === Size modifiers === */
+
+.btn-sm {
+	height: 28px;
+	padding: 4px 10px;
+	font-size: 10px;
+}
+.btn-lg {
+	height: 36px;
+	padding: 9px 18px;
+	font-size: 14px;
+}
+
+/* Ghost sizes override padding since ghost has padding:0 */
+.btn-ghost.btn-sm,
+.btn-ghost.btn-lg {
+	padding: 0;
+}
+
+/* === State === */
+
+.btn:focus-visible {
 	box-shadow:
 		0 0 0 2px var(--sly-bg),
 		0 0 0 4px var(--sly-accent);
 }
-.btn-primary:hover {
-	filter: brightness(1.05);
-}
-.btn-primary:active {
-	transform: scale(0.98);
-}
-.btn-primary:disabled {
-	opacity: 0.5;
+.btn:disabled {
+	opacity: 0.35;
 	cursor: not-allowed;
 }
 

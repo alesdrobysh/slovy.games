@@ -10,6 +10,7 @@ import {
 	pluralize,
 	pluralizeAttemptsNominative,
 } from "@/games/pobach/lib/utils";
+import { Button } from "@/shared/components/ui/Button";
 
 type StatCardData = {
 	label: string;
@@ -259,15 +260,15 @@ export default function PobachStatsPage() {
 				</div>
 
 				<div className="mt-8 flex justify-center relative">
-					<button
-						type="button"
+					<Button
 						onClick={onShareStats}
 						disabled={isSharing}
-						className="btn-primary"
+						variant="solid"
+						color="primary"
+						startIcon={<Share2 size={16} />}
 					>
-						<Share2 size={16} />
 						Падзяліцца статыстыкай
-					</button>
+					</Button>
 					{showToast && (
 						<div
 							aria-live="polite"

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Button } from "@/shared/components/ui/Button";
 
 interface BottomBannerProps {
 	ariaLabel: string;
@@ -58,14 +59,14 @@ export function BottomBanner({
 		>
 			<div className="w-full bg-card border-t border-rule px-5 py-4 flex items-center justify-between gap-4">
 				<p className="text-sm text-ink-muted flex-1">{message}</p>
-				<button
+				<Button
 					ref={buttonRef}
 					onClick={onAction}
-					type="button"
-					className="btn-primary shrink-0 text-sm px-4 py-2"
+					variant="solid"
+					color="primary"
 				>
 					{buttonLabel}
-				</button>
+				</Button>
 			</div>
 		</section>
 	);

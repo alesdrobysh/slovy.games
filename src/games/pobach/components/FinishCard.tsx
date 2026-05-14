@@ -10,6 +10,7 @@ import {
 	pluralizeHintsInstrumental,
 	pluralizeStreak,
 } from "@/games/pobach/lib/utils";
+import { Button } from "@/shared/components/ui/Button";
 import { useCountdown } from "@/shared/hooks/useCountdown";
 import DictionaryLink from "./DictionaryLink";
 import ShareButton from "./ShareButton";
@@ -83,13 +84,13 @@ export default function FinishCard({
 			{/* Countdown / new day */}
 			<div className="mt-4 text-sm text-ink-muted">
 				{isNewDayAvailable ? (
-					<button
+					<Button
+						variant="solid"
+						color="primary"
 						onClick={() => window.location.reload()}
-						type="button"
-						className="btn-primary bg-pobach"
 					>
 						Даступна новае слова!
-					</button>
+					</Button>
 				) : (
 					<div className="flex items-center gap-2">
 						<span>Наступнае слова праз</span>

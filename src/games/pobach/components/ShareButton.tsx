@@ -4,6 +4,7 @@ import { Share2 } from "lucide-react";
 import { useMemo } from "react";
 import type { Guess } from "@/games/pobach/core/entities/game";
 import { generateShareText } from "@/games/pobach/lib/share-text";
+import { Button } from "@/shared/components/ui/Button";
 import { Toast } from "@/shared/components/ui/Toast";
 import { useShare } from "@/shared/hooks/useShare";
 
@@ -26,16 +27,15 @@ export default function ShareButton({
 
 	return (
 		<div className="relative inline-block">
-			<button
+			<Button
 				onClick={share}
 				disabled={isSharing}
-				aria-label="Падзяліцца вынікамі гульні"
-				type="button"
-				className="btn-primary"
+				variant="solid"
+				color="primary"
+				startIcon={<Share2 size={16} />}
 			>
-				<Share2 size={16} />
 				Падзяліцца
-			</button>
+			</Button>
 			<Toast message="Скапіравана!" visible={showToast} />
 		</div>
 	);

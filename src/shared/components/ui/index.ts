@@ -1,9 +1,9 @@
 export type { BadgeProps } from "./Badge";
 export { Badge } from "./Badge";
+export type { ButtonProps, ButtonVariant, ButtonColor, ButtonSize } from "./Button";
+export { Button } from "./Button";
 export type { ModalProps } from "./Modal";
 export { Modal } from "./Modal";
-export type { PillButtonProps } from "./PillButton";
-export { PillButton } from "./PillButton";
 export type { StatCardProps } from "./StatCard";
 export { StatCard } from "./StatCard";
 export type { ToastProps } from "./Toast";

@@ -1,6 +1,6 @@
 "use client";
 
-import { PillButton } from "@/shared/components/ui/PillButton";
+import { Button } from "@/shared/components/ui/Button";
 
 interface ActionButtonsProps {
 	onDelete: () => void;
@@ -12,8 +12,8 @@ interface ActionButtonsProps {
 function ShuffleIcon() {
 	return (
 		<svg
-			width="18"
-			height="18"
+			width="20"
+			height="20"
 			viewBox="0 0 24 24"
 			fill="none"
 			stroke="currentColor"
@@ -34,8 +34,8 @@ function ShuffleIcon() {
 function LightbulbIcon() {
 	return (
 		<svg
-			width="18"
-			height="18"
+			width="20"
+			height="20"
 			viewBox="0 0 24 24"
 			fill="none"
 			stroke="currentColor"
@@ -58,33 +58,31 @@ export function ActionButtons({
 }: ActionButtonsProps) {
 	return (
 		<div className="flex items-center justify-center gap-3">
-			<PillButton variant="ghost" size="md" onClick={onDelete}>
+			<Button variant="outline" color="neutral" onClick={onDelete}>
 				Сцерці
-			</PillButton>
+			</Button>
 
-			<PillButton
+			<Button
 				variant="ghost"
-				size="md"
+				color="neutral"
+				aria-label="Змяшаць"
 				onClick={onShuffle}
-				icon={<ShuffleIcon />}
-			>
-				{""}
-			</PillButton>
+				startIcon={<ShuffleIcon />}
+			/>
 
 			{onHint && (
-				<PillButton
+				<Button
 					variant="ghost"
-					size="md"
+					color="neutral"
+					aria-label="Падказка"
 					onClick={onHint}
-					icon={<LightbulbIcon />}
-				>
-					{""}
-				</PillButton>
+					startIcon={<LightbulbIcon />}
+				/>
 			)}
 
-			<PillButton variant="primary" size="md" onClick={onSubmit}>
+			<Button variant="solid" color="primary" onClick={onSubmit}>
 				Увесці
-			</PillButton>
+			</Button>
 		</div>
 	);
 }
