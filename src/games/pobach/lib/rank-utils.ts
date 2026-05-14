@@ -16,11 +16,11 @@ export function getRankBadgeInfo(rank: number): {
  * Returns the CSS color variable for a given rank
  */
 export function getRankColor(rank: number): string {
-	if (rank === 1) return "var(--sly-rank-1)";
-	if (rank <= 10) return "var(--sly-rank-10)";
-	if (rank <= 100) return "var(--sly-rank-100)";
-	if (rank <= 1000) return "var(--sly-rank-1000)";
-	return "var(--sly-rank-default)";
+	if (rank === 1) return "var(--rank-1)";
+	if (rank <= 10) return "var(--rank-10)";
+	if (rank <= 100) return "var(--rank-100)";
+	if (rank <= 1000) return "var(--rank-1000)";
+	return "var(--rank-default)";
 }
 
 /**

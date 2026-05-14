@@ -54,11 +54,11 @@ type DistributionRange = {
 };
 
 const DISTRIBUTION_RANGES: DistributionRange[] = [
-	{ label: "1", min: 1, max: 1, color: "var(--sly-attempts-1)" },
-	{ label: "2–10", min: 2, max: 10, color: "var(--sly-attempts-10)" },
-	{ label: "11–50", min: 11, max: 50, color: "var(--sly-attempts-50)" },
-	{ label: "51–100", min: 51, max: 100, color: "var(--sly-attempts-100)" },
-	{ label: "100+", min: 101, max: Infinity, color: "var(--sly-attempts-many)" },
+	{ label: "1", min: 1, max: 1, color: "var(--attempts-1)" },
+	{ label: "2–10", min: 2, max: 10, color: "var(--attempts-10)" },
+	{ label: "11–50", min: 11, max: 50, color: "var(--attempts-50)" },
+	{ label: "51–100", min: 51, max: 100, color: "var(--attempts-100)" },
+	{ label: "100+", min: 101, max: Infinity, color: "var(--attempts-many)" },
 ];
 
 function getCountForRange(

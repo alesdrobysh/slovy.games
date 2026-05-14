@@ -84,14 +84,14 @@ export function ProgressBar({
 				>
 					<div
 						className="w-full rounded-full overflow-hidden"
-						style={{ height: "3px", background: "var(--sly-border)" }}
+						style={{ height: "3px", background: "var(--border)" }}
 					>
 						<div
 							className="h-full rounded-full origin-left"
 							style={{
 								transform: `scaleX(${pct / 100})`,
 								background:
-									"linear-gradient(90deg, var(--sly-cornflower-dark), var(--sly-cornflower-light))",
+									"linear-gradient(90deg, var(--accent-dark), var(--accent-light))",
 								transition: "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
 							}}
 						/>
@@ -115,10 +115,10 @@ export function ProgressBar({
 									height: isCurrent ? "12px" : "7px",
 									borderRadius: "50%",
 									background: isActive
-										? "var(--sly-cornflower)"
-										: "var(--sly-border)",
+										? "var(--valoshka)"
+										: "var(--border)",
 									border: isCurrent
-										? "2px solid var(--sly-cornflower-dark)"
+										? "2px solid var(--accent-dark)"
 										: "none",
 									transition: "all 0.3s ease",
 									zIndex: 1,

@@ -82,8 +82,8 @@ export function YesterdayModal({ currentDate }: YesterdayModalProps) {
 					background: "none",
 					border: "none",
 					cursor: "pointer",
-					color: "var(--sly-text-muted)",
-					fontFamily: "var(--sly-font-sans)",
+					color: "var(--fg-2)",
+					fontFamily: "var(--font-b)",
 					fontSize: "13px",
 					fontWeight: "600",
 					padding: 0,
@@ -102,9 +102,9 @@ export function YesterdayModal({ currentDate }: YesterdayModalProps) {
 					<div
 						style={{
 							padding: "0 0 12px",
-							borderBottom: "1px solid var(--sly-border)",
+							borderBottom: "1px solid var(--border)",
 							fontSize: "13px",
-							color: "var(--sly-text-muted)",
+							color: "var(--fg-2)",
 						}}
 					>
 						Вы знайшлі {progress.foundWords.length} з {puzzle.answers.length}{" "}
@@ -135,13 +135,13 @@ export function YesterdayModal({ currentDate }: YesterdayModalProps) {
 									fontSize: "14px",
 									fontWeight: isPangram ? "700" : "400",
 									color: isPangram
-										? "var(--sly-cornflower)"
+										? "var(--valoshka)"
 										: wasFound
-											? "var(--sly-text)"
-											: "var(--sly-text-muted)",
+											? "var(--fg)"
+											: "var(--fg-2)",
 									opacity: wasFound ? 1 : 0.45,
 									padding: "6px 0",
-									borderBottom: "1px solid var(--sly-border)",
+									borderBottom: "1px solid var(--border)",
 									display: "flex",
 									alignItems: "center",
 									gap: "8px",
@@ -152,9 +152,9 @@ export function YesterdayModal({ currentDate }: YesterdayModalProps) {
 									<span
 										style={{
 											fontSize: "9px",
-											background: "var(--sly-cornflower-bg-subtle)",
-											color: "var(--sly-cornflower)",
-											border: "1px solid var(--sly-cornflower-border-subtle)",
+											background: "var(--valoshka-dim)",
+											color: "var(--valoshka)",
+											border: "1px solid var(--accent-border)",
 											borderRadius: "4px",
 											padding: "1px 6px",
 											fontWeight: "700",
@@ -183,7 +183,7 @@ export function YesterdayModal({ currentDate }: YesterdayModalProps) {
 														<span
 															style={{
 																fontSize: "11px",
-																color: "var(--sly-text-muted)",
+																color: "var(--fg-2)",
 															}}
 														>
 															адправіць?
@@ -195,7 +195,7 @@ export function YesterdayModal({ currentDate }: YesterdayModalProps) {
 																background: "none",
 																border: "none",
 																cursor: "pointer",
-																color: "var(--sly-cornflower)",
+																color: "var(--valoshka)",
 																fontSize: "24px",
 																lineHeight: 1,
 																padding: "0 2px",
@@ -211,7 +211,7 @@ export function YesterdayModal({ currentDate }: YesterdayModalProps) {
 																background: "none",
 																border: "none",
 																cursor: "pointer",
-																color: "var(--sly-text-muted)",
+																color: "var(--fg-2)",
 																fontSize: "24px",
 																lineHeight: 1,
 																padding: "0 2px",
@@ -233,7 +233,7 @@ export function YesterdayModal({ currentDate }: YesterdayModalProps) {
 														background: "none",
 														border: "none",
 														cursor: fs === "sent" ? "default" : "pointer",
-														color: "var(--sly-text-muted)",
+														color: "var(--fg-2)",
 														fontSize: "24px",
 														lineHeight: 1,
 														padding: "0 2px",
@@ -260,7 +260,7 @@ export function YesterdayModal({ currentDate }: YesterdayModalProps) {
 										rel="noreferrer"
 										className="opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
 										style={{
-											color: "var(--sly-text-muted)",
+											color: "var(--fg-2)",
 											fontSize: "12px",
 											lineHeight: 1,
 											textDecoration: "none",

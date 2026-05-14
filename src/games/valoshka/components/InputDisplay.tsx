@@ -68,7 +68,7 @@ export function InputDisplay({
 						style={{
 							width: "2px",
 							height: "44px",
-							background: "var(--sly-cornflower)",
+							background: "var(--valoshka)",
 							display: "inline-block",
 							borderRadius: "1px",
 						}}

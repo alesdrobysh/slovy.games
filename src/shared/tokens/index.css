@@ -34,6 +34,39 @@
 	--font-d:        'Literata', Georgia, serif;
 	--font-b:        'Wix Madefor Text', system-ui, sans-serif;
 	--ease:          150ms ease;
+
+	/* Layout */
+	--page-py:     clamp(2.5rem, 5vw, 5rem);
+	--section-gap: clamp(3rem, 5vw, 5rem);
+
+	/* Theme accent — valoshka default; overridden by .theme-pobach */
+	--accent:        var(--valoshka);
+	--accent-dim:    var(--valoshka-dim);
+	--accent-light:  color-mix(in oklab, var(--valoshka) 80%, white 20%);
+	--accent-dark:   color-mix(in oklab, var(--valoshka) 80%, black 20%);
+	--accent-border: color-mix(in oklab, var(--valoshka) 22%, transparent);
+
+	/* Valoshka cell fill colors */
+	--cell-center:        #252850;
+	--cell-outer:         #7b9cf0;
+	--cell-center-hover:  #2a3670;
+	--cell-outer-hover:   #6a88e0;
+	--cell-letter-center: #fff;
+	--cell-letter-outer:  #fff;
+
+	/* Pobach rank colors */
+	--rank-1:       #16a34a;
+	--rank-10:      #16a34a;
+	--rank-100:     #84cc16;
+	--rank-1000:    var(--pobach);
+	--rank-default: #4b83c8;
+
+	/* Pobach attempt gradient */
+	--attempts-1:    color-mix(in oklab, var(--pobach) 100%, black 0%);
+	--attempts-10:   color-mix(in oklab, var(--pobach) 85%,  black 15%);
+	--attempts-50:   color-mix(in oklab, var(--pobach) 70%,  black 30%);
+	--attempts-100:  color-mix(in oklab, var(--pobach) 55%,  black 45%);
+	--attempts-many: color-mix(in oklab, var(--pobach) 40%,  black 60%);
 }
 
 [data-theme="dark"] {
@@ -50,6 +83,12 @@
 	--valoshka:      #5E7ADB;
 	--valoshka-dim:  #0C1424;
 	--ornament:      #565140;
+
+	/* Dark-mode cell overrides */
+	--cell-center:       #141e50;
+	--cell-outer:        #4a62a8;
+	--cell-center-hover: #1c2a68;
+	--cell-outer-hover:  #5a72b8;
 }
 
 /* ================================================================
@@ -88,81 +127,6 @@
 }
 
 /* ================================================================
-   Backward-compat aliases  (--sly-* → canonical)
-   Remove as components migrate to canonical names.
-   ================================================================ */
-
-:root {
-	/* Semantic */
-	--sly-bg:           var(--bg);
-	--sly-bg-card:      var(--surface);
-	--sly-bg-surface:   var(--surface-warm);
-	--sly-text:         var(--fg);
-	--sly-text-muted:   var(--fg-2);
-	--sly-border:       var(--border);
-	--sly-font-display: var(--font-d);
-	--sly-font-sans:    var(--font-b);
-	--sly-page-py:      clamp(2.5rem, 5vw, 5rem);
-	--sly-section-gap:  clamp(3rem, 5vw, 5rem);
-
-	/* Default accent (valoshka; overridden by .theme-pobach) */
-	--sly-accent:        var(--valoshka);
-	--sly-accent-subtle: var(--valoshka-dim);
-	--sly-accent-light:  color-mix(in oklab, var(--valoshka) 80%, white 20%);
-	--sly-accent-dark:   color-mix(in oklab, var(--valoshka) 80%, black 20%);
-	--sly-accent-border: color-mix(in oklab, var(--valoshka) 22%, transparent);
-
-	/* Primitive color aliases */
-	--sly-warm-50:    var(--bg);
-	--sly-warm-100:   var(--surface);
-	--sly-warm-200:   var(--surface-warm);
-	--sly-warm-300:   var(--ornament);
-	--sly-warm-600:   var(--fg-2);
-	--sly-warm-900:   var(--fg);
-	--sly-green-500:  #16a34a;
-	--sly-orange-500: var(--pobach);
-	--sly-blue-500:   var(--valoshka);
-
-	/* Valoshka — cornflower aliases */
-	--sly-cornflower:               var(--valoshka);
-	--sly-cornflower-dark:          color-mix(in oklab, var(--valoshka) 80%, black 20%);
-	--sly-cornflower-light:         color-mix(in oklab, var(--valoshka) 80%, white 20%);
-	--sly-cornflower-bg-subtle:     var(--valoshka-dim);
-	--sly-cornflower-border-subtle: color-mix(in oklab, var(--valoshka) 22%, transparent);
-
-	/* Valoshka — cell fill colors */
-	--sly-cell-center:        #252850;
-	--sly-cell-outer:         #7b9cf0;
-	--sly-cell-center-hover:  #2a3670;
-	--sly-cell-outer-hover:   #6a88e0;
-	--sly-cell-letter-center: #fff;
-	--sly-cell-letter-outer:  #fff;
-
-	/* Pobach — rank colors */
-	--sly-rank-1:       #16a34a;
-	--sly-rank-10:      #16a34a;
-	--sly-rank-100:     #84cc16;
-	--sly-rank-1000:    var(--pobach);
-	--sly-rank-default: #4b83c8;
-
-	/* Pobach — attempt gradient colors */
-	--sly-attempts-base: var(--pobach);
-	--sly-attempts-1:    color-mix(in oklab, var(--pobach) 100%, black 0%);
-	--sly-attempts-10:   color-mix(in oklab, var(--pobach) 85%,  black 15%);
-	--sly-attempts-50:   color-mix(in oklab, var(--pobach) 70%,  black 30%);
-	--sly-attempts-100:  color-mix(in oklab, var(--pobach) 55%,  black 45%);
-	--sly-attempts-many: color-mix(in oklab, var(--pobach) 40%,  black 60%);
-}
-
-[data-theme="dark"] {
-	/* Dark-mode cell overrides */
-	--sly-cell-center:       #141e50;
-	--sly-cell-outer:        #4a62a8;
-	--sly-cell-center-hover: #1c2a68;
-	--sly-cell-outer-hover:  #5a72b8;
-}
-
-/* ================================================================
    Typography utilities
    ================================================================ */
 
@@ -174,7 +138,7 @@
 	line-height: 0.75;
 	padding-right: 0.08em;
 	margin-top: 0.04em;
-	color: var(--sly-accent);
+	color: var(--accent);
 }
 
 .typo-drop-cap.game-pobach::first-letter {
@@ -190,9 +154,9 @@
    ================================================================ */
 
 .theme-pobach {
-	--sly-accent:        var(--pobach);
-	--sly-accent-subtle: var(--pobach-dim);
-	--sly-accent-light:  color-mix(in oklab, var(--pobach) 80%, white 20%);
-	--sly-accent-dark:   color-mix(in oklab, var(--pobach) 80%, black 20%);
-	--sly-accent-border: color-mix(in oklab, var(--pobach) 22%, transparent);
+	--accent:        var(--pobach);
+	--accent-dim:    var(--pobach-dim);
+	--accent-light:  color-mix(in oklab, var(--pobach) 80%, white 20%);
+	--accent-dark:   color-mix(in oklab, var(--pobach) 80%, black 20%);
+	--accent-border: color-mix(in oklab, var(--pobach) 22%, transparent);
 }

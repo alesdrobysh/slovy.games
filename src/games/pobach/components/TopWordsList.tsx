@@ -46,13 +46,13 @@ export default function TopWordsList({
 	};
 
 	return (
-		<div className="border-t border-[var(--sly-border)]">
+		<div className="border-t border-[var(--border)]">
 			<button
 				onClick={toggleExpanded}
 				aria-expanded={isExpanded}
 				aria-controls="top-words-list"
 				type="button"
-				className="w-full flex items-center justify-between px-6 py-3 text-sm text-[var(--sly-text-muted)] hover:text-[var(--sly-text)] hover:bg-[var(--sly-border)]/30 transition-colors"
+				className="w-full flex items-center justify-between px-6 py-3 text-sm text-[var(--fg-2)] hover:text-[var(--fg)] hover:bg-[var(--border)]/30 transition-colors"
 			>
 				Паказаць бліжэйшыя словы
 				<ChevronDown
@@ -68,8 +68,8 @@ export default function TopWordsList({
 							{Array.from({ length: 10 }, (_, i) => (
 								// biome-ignore lint/suspicious/noArrayIndexKey: static skeleton list
 								<div key={`skeleton-${i}`} className="flex gap-3 animate-pulse">
-									<div className="h-4 w-8 bg-[var(--sly-border)] rounded" />
-									<div className="h-4 w-24 bg-[var(--sly-border)] rounded" />
+									<div className="h-4 w-8 bg-[var(--border)] rounded" />
+									<div className="h-4 w-24 bg-[var(--border)] rounded" />
 								</div>
 							))}
 						</div>
@@ -91,7 +91,7 @@ export default function TopWordsList({
 					{topWords && (
 						<table className="w-full text-sm">
 							<thead>
-								<tr className="text-left text-xs text-[var(--sly-text-muted)] border-b border-[var(--sly-border)]">
+								<tr className="text-left text-xs text-[var(--fg-2)] border-b border-[var(--border)]">
 									<th className="pb-2 font-medium w-12">Месца</th>
 									<th className="pb-2 font-medium">Слова</th>
 								</tr>
@@ -100,9 +100,9 @@ export default function TopWordsList({
 								{topWords.map((word) => (
 									<tr
 										key={word.rank}
-										className={`border-b border-[var(--sly-border)]/50 last:border-0 ${word.rank === 1 ? "text-[var(--sly-rank-1)] font-semibold" : "text-[var(--sly-text)]"}`}
+										className={`border-b border-[var(--border)]/50 last:border-0 ${word.rank === 1 ? "text-[var(--rank-1)] font-semibold" : "text-[var(--fg)]"}`}
 									>
-										<td className="py-1.5 text-[var(--sly-text-muted)] font-mono text-xs">
+										<td className="py-1.5 text-[var(--fg-2)] font-mono text-xs">
 											#{word.rank}
 										</td>
 										<td className="py-1.5">

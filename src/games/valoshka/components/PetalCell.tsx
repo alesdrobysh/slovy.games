@@ -77,10 +77,10 @@ export function PetalCell({
 		return () => clearTimeout(timer);
 	}, [shuffleCount, shuffleIndex]);
 
-	const fill = isCenter ? "var(--sly-cell-center)" : "var(--sly-cell-outer)";
+	const fill = isCenter ? "var(--cell-center)" : "var(--cell-outer)";
 	const hoverFill = isCenter
-		? "var(--sly-cell-center-hover)"
-		: "var(--sly-cell-outer-hover)";
+		? "var(--cell-center-hover)"
+		: "var(--cell-outer-hover)";
 
 	// Shift outer petal letters toward the visual center of the petal body
 	const rad = (rotation * Math.PI) / 180;
@@ -137,12 +137,12 @@ export function PetalCell({
 				textAnchor="middle"
 				dominantBaseline="central"
 				style={{
-					fontFamily: "var(--sly-font-sans)",
+					fontFamily: "var(--font-b)",
 					fontSize: isCenter ? `${r * 0.52}px` : "22px",
 					fontWeight: "700",
 					fill: isCenter
-						? "var(--sly-cell-letter-center)"
-						: "var(--sly-cell-letter-outer)",
+						? "var(--cell-letter-center)"
+						: "var(--cell-letter-outer)",
 					userSelect: "none",
 					pointerEvents: "none",
 					letterSpacing: "0",

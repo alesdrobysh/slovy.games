@@ -615,9 +615,9 @@ function StatesSpecimen() {
 
 			<style>{`
 				.hover-demo .btn-solid.btn-primary { opacity: 0.86; }
-				.hover-demo .btn-outline.btn-primary { background: var(--sly-accent); color: #fff; }
+				.hover-demo .btn-outline.btn-primary { background: var(--accent); color: #fff; }
 				.hover-demo .btn-outline.btn-neutral { background: var(--surface-warm); }
-				.hover-demo .btn-ghost.btn-primary { color: var(--sly-accent); }
+				.hover-demo .btn-ghost.btn-primary { color: var(--accent); }
 				.hover-demo .btn-ghost.btn-neutral { background: var(--surface-warm); color: var(--fg); }
 			`}</style>
 		</div>

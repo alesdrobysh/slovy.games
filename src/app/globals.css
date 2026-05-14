@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 @utility font-display {
-	font-family: var(--sly-font-display);
+	font-family: var(--font-d);
 }
 
 /* === Base styles === */
@@ -11,9 +11,9 @@
 }
 
 body {
-	background: var(--sly-bg);
-	color: var(--sly-text);
-	font-family: var(--sly-font-sans), sans-serif;
+	background: var(--bg);
+	color: var(--fg);
+	font-family: var(--font-b), sans-serif;
 	-webkit-font-smoothing: antialiased;
 	transition:
 		background 0.25s ease,
@@ -21,7 +21,7 @@ body {
 }
 
 ::selection {
-	background: var(--sly-accent);
+	background: var(--accent);
 	color: #fff;
 }
 
@@ -208,7 +208,7 @@ body {
 
 /* Focus indicator for game cells */
 g[tabindex="0"]:focus-visible {
-	outline: 3px solid var(--sly-cornflower);
+	outline: 3px solid var(--valoshka);
 	outline-offset: 3px;
 	border-radius: 6px;
 }
@@ -267,8 +267,8 @@ g[tabindex="0"]:focus-visible {
 }
 
 .page-section {
-	padding-top: var(--sly-page-py);
-	padding-bottom: var(--sly-page-py);
+	padding-top: var(--page-py);
+	padding-bottom: var(--page-py);
 }
 
 /* ================================================================
@@ -315,9 +315,9 @@ g[tabindex="0"]:focus-visible {
 
 /* === Colors === */
 
-/* primary: accent (terracotta / cornflower via --sly-accent) */
+/* primary: accent (terracotta / cornflower via --accent) */
 .btn-primary {
-	--btn-color: var(--sly-accent);
+	--btn-color: var(--accent);
 	--btn-on-color: #fff;
 }
 
@@ -331,7 +331,7 @@ g[tabindex="0"]:focus-visible {
 
 /* solid + primary: filled accent, white label, opacity hover */
 .btn-solid.btn-primary {
-	background: var(--sly-accent);
+	background: var(--accent);
 	color: var(--btn-on-color);
 }
 .btn-solid.btn-primary:hover:not(:disabled) {
@@ -349,11 +349,11 @@ g[tabindex="0"]:focus-visible {
 
 /* outline + primary: accent border + label, invert on hover */
 .btn-outline.btn-primary {
-	border-color: var(--sly-accent);
-	color: var(--sly-accent);
+	border-color: var(--accent);
+	color: var(--accent);
 }
 .btn-outline.btn-primary:hover:not(:disabled) {
-	background: var(--sly-accent);
+	background: var(--accent);
 	color: var(--btn-on-color);
 }
 
@@ -372,7 +372,7 @@ g[tabindex="0"]:focus-visible {
 	color: var(--fg-2);
 }
 .btn-ghost.btn-primary:hover:not(:disabled) {
-	color: var(--sly-accent);
+	color: var(--accent);
 }
 
 /* ghost + neutral: no chrome, surface-warm fill + fg on hover */
@@ -434,8 +434,8 @@ g[tabindex="0"]:focus-visible {
 
 .btn:focus-visible {
 	box-shadow:
-		0 0 0 2px var(--sly-bg),
-		0 0 0 4px var(--sly-accent);
+		0 0 0 2px var(--bg),
+		0 0 0 4px var(--accent);
 }
 .btn:disabled {
 	opacity: 0.35;
@@ -446,9 +446,9 @@ g[tabindex="0"]:focus-visible {
 	display: flex;
 	align-items: center;
 	gap: 0.75rem;
-	background-color: var(--sly-bg-card);
+	background-color: var(--surface);
 	border-radius: 0.5rem;
-	border: 1px solid var(--sly-border);
+	border: 1px solid var(--border);
 	padding: 0.75rem 1rem;
 	animation: slide-up 0.2s ease-out;
 }

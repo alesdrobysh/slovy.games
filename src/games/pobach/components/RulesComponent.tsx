@@ -21,11 +21,11 @@ export default function RulesComponent({
 						</p>
 						<ul className="space-y-2">
 							{[
-								{ color: "var(--sly-rank-1)", word: "Лес", label: "перамога", rank: "№1" },
-								{ color: "var(--sly-rank-10)", word: "Дрэва", label: "вельмі блізка", rank: "№4" },
-								{ color: "var(--sly-rank-100)", word: "Птушка", label: "блізка", rank: "№45" },
-								{ color: "var(--sly-rank-1000)", word: "Грыб", label: "трохі далей", rank: "№215" },
-								{ color: "var(--sly-rank-default)", word: "Аўтамабіль", label: "вельмі далёка", rank: "№15000" },
+								{ color: "var(--rank-1)", word: "Лес", label: "перамога", rank: "№1" },
+								{ color: "var(--rank-10)", word: "Дрэва", label: "вельмі блізка", rank: "№4" },
+								{ color: "var(--rank-100)", word: "Птушка", label: "блізка", rank: "№45" },
+								{ color: "var(--rank-1000)", word: "Грыб", label: "трохі далей", rank: "№215" },
+								{ color: "var(--rank-default)", word: "Аўтамабіль", label: "вельмі далёка", rank: "№15000" },
 							].map((item) => (
 								<li key={item.word} className="flex items-start gap-3">
 									<span
@@ -65,8 +65,8 @@ export default function RulesComponent({
 			<div
 				className="p-3 rounded-xl"
 				style={{
-					background: "var(--sly-accent-subtle)",
-					border: "1px solid var(--sly-accent-border)",
+					background: "var(--accent-dim)",
+					border: "1px solid var(--accent-border)",
 				}}
 			>
 				<p className="text-xs text-ink-muted mb-2">Напрыклад, калі слова:</p>
@@ -75,7 +75,7 @@ export default function RulesComponent({
 					<li className="flex items-center gap-2">
 						<span
 							className="shrink-0 w-2.5 h-2.5 rounded-sm"
-							style={{ backgroundColor: "var(--sly-rank-1)" }}
+							style={{ backgroundColor: "var(--rank-1)" }}
 						/>
 						<span>
 							Лес — <strong>перамога</strong> (ранг 1)
@@ -84,28 +84,28 @@ export default function RulesComponent({
 					<li className="flex items-center gap-2">
 						<span
 							className="shrink-0 w-2.5 h-2.5 rounded-sm"
-							style={{ backgroundColor: "var(--sly-rank-10)" }}
+							style={{ backgroundColor: "var(--rank-10)" }}
 						/>
 						<span>Дрэва — вельмі блізка (ранг 4)</span>
 					</li>
 					<li className="flex items-center gap-2">
 						<span
 							className="shrink-0 w-2.5 h-2.5 rounded-sm"
-							style={{ backgroundColor: "var(--sly-rank-100)" }}
+							style={{ backgroundColor: "var(--rank-100)" }}
 						/>
 						<span>Птушка — блізка (ранг 45)</span>
 					</li>
 					<li className="flex items-center gap-2">
 						<span
 							className="shrink-0 w-2.5 h-2.5 rounded-sm"
-							style={{ backgroundColor: "var(--sly-rank-1000)" }}
+							style={{ backgroundColor: "var(--rank-1000)" }}
 						/>
 						<span>Грыб — далёка (ранг 215)</span>
 					</li>
 					<li className="flex items-center gap-2">
 						<span
 							className="shrink-0 w-2.5 h-2.5 rounded-sm"
-							style={{ backgroundColor: "var(--sly-rank-default)" }}
+							style={{ backgroundColor: "var(--rank-default)" }}
 						/>
 						<span>Аўтамабіль — вельмі далёка (ранг 15000)</span>
 					</li>

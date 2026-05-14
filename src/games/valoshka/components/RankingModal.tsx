@@ -31,7 +31,7 @@ export function RankingModal({
 
 	return (
 		<Modal isOpen={true} onClose={onClose} title="Рангі">
-			<p className="text-sm text-[var(--sly-text-muted)] mb-3">
+			<p className="text-sm text-[var(--fg-2)] mb-3">
 				Рангі залежаць ад адсотка магчымых балаў.
 			</p>
 
@@ -41,14 +41,14 @@ export function RankingModal({
 					display: "flex",
 					justifyContent: "space-between",
 					padding: "16px 0 8px",
-					borderBottom: "1px solid var(--sly-border)",
+					borderBottom: "1px solid var(--border)",
 				}}
 			>
 				<span
 					style={{
 						fontSize: "11px",
 						fontWeight: "700",
-						color: "var(--sly-text)",
+						color: "var(--fg)",
 						textTransform: "uppercase",
 						letterSpacing: "0.08em",
 					}}
@@ -59,7 +59,7 @@ export function RankingModal({
 					style={{
 						fontSize: "11px",
 						fontWeight: "700",
-						color: "var(--sly-text)",
+						color: "var(--fg)",
 						textTransform: "uppercase",
 						letterSpacing: "0.08em",
 					}}
@@ -81,8 +81,8 @@ export function RankingModal({
 							<div
 								key={r.name}
 								style={{
-									background: "var(--sly-cornflower-bg-subtle)",
-									border: "1px solid var(--sly-cornflower-border-subtle)",
+									background: "var(--valoshka-dim)",
+									border: "1px solid var(--accent-border)",
 									borderRadius: "999px",
 									padding: "10px 20px",
 									margin: "4px 0",
@@ -104,7 +104,7 @@ export function RankingModal({
 											width: "28px",
 											height: "28px",
 											borderRadius: "50%",
-											background: "var(--sly-cornflower)",
+											background: "var(--valoshka)",
 											display: "flex",
 											alignItems: "center",
 											justifyContent: "center",
@@ -121,7 +121,7 @@ export function RankingModal({
 											style={{
 												fontWeight: "700",
 												fontSize: "15px",
-												color: "var(--sly-cornflower)",
+												color: "var(--valoshka)",
 											}}
 										>
 											{r.name}
@@ -130,7 +130,7 @@ export function RankingModal({
 											<div
 												style={{
 													fontSize: "11px",
-													color: "var(--sly-text-muted)",
+													color: "var(--fg-2)",
 													marginTop: "1px",
 												}}
 											>
@@ -143,7 +143,7 @@ export function RankingModal({
 									style={{
 										fontWeight: "700",
 										fontSize: "15px",
-										color: "var(--sly-cornflower)",
+										color: "var(--valoshka)",
 									}}
 								>
 									{pts}
@@ -171,17 +171,17 @@ export function RankingModal({
 										height: "8px",
 										borderRadius: "50%",
 										background: isPast
-											? "var(--sly-cornflower)"
-											: "var(--sly-border)",
+											? "var(--valoshka)"
+											: "var(--border)",
 										flexShrink: 0,
 									}}
 								/>
-								<span style={{ fontSize: "14px", color: "var(--sly-text)" }}>
+								<span style={{ fontSize: "14px", color: "var(--fg)" }}>
 									{r.name}
 								</span>
 							</div>
 							<span
-								style={{ fontSize: "14px", color: "var(--sly-text-muted)" }}
+								style={{ fontSize: "14px", color: "var(--fg-2)" }}
 							>
 								{pts}
 							</span>

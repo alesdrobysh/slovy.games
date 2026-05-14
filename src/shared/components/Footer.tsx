@@ -4,7 +4,7 @@ export function Footer() {
 	return (
 		<footer
 			className="border-t border-rule"
-			style={{ marginTop: "var(--sly-section-gap)" }}
+			style={{ marginTop: "var(--section-gap)" }}
 		>
 			<div className="page-container py-10 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-6">
 				<p className="font-display italic text-ink-muted">
