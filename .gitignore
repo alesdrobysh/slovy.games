@@ -39,3 +39,6 @@ analytics_cache/
 
 # data files (large)
 src/data/coords.bin
+
+*storybook.log
+storybook-static
