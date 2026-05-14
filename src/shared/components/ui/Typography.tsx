@@ -1,10 +1,10 @@
 import type { CSSProperties, ElementType, ReactNode } from 'react';
 
 export type TypographyVariant =
-  | 'hero'
-  | 'gameTitle'
-  | 'winWord'
-  | 'navWordmark'
+  | 'display'
+  | 'title'
+  | 'heading'
+  | 'overline'
   | 'body'
   | 'caption';
 
@@ -17,7 +17,7 @@ const D = 'var(--font-d)';
 const B = 'var(--font-b)';
 
 const VARIANTS: Record<TypographyVariant, VariantConfig> = {
-  hero: {
+  display: {
     tag: 'h1',
     style: {
       fontFamily: D,
@@ -29,7 +29,7 @@ const VARIANTS: Record<TypographyVariant, VariantConfig> = {
       margin: 0,
     },
   },
-  gameTitle: {
+  title: {
     tag: 'h2',
     style: {
       fontFamily: D,
@@ -41,27 +41,25 @@ const VARIANTS: Record<TypographyVariant, VariantConfig> = {
       margin: 0,
     },
   },
-  winWord: {
-    tag: 'p',
+  heading: {
+    tag: 'h3',
     style: {
       fontFamily: D,
-      fontStyle: 'italic',
-      fontWeight: 350,
-      fontSize: '56px',
-      lineHeight: 1.0,
-      letterSpacing: '-0.04em',
+      fontWeight: 500,
+      fontSize: '24px',
+      lineHeight: 1,
       margin: 0,
     },
   },
-  navWordmark: {
+  overline: {
     tag: 'span',
     style: {
-      fontFamily: D,
-      fontStyle: 'italic',
+      fontFamily: B,
       fontWeight: 500,
-      fontSize: '22px',
-      lineHeight: 1,
-      letterSpacing: '-0.02em',
+      fontSize: '10px',
+      letterSpacing: '0.2em',
+      textTransform: 'uppercase',
+      margin: 0,
     },
   },
   body: {
@@ -74,7 +72,6 @@ const VARIANTS: Record<TypographyVariant, VariantConfig> = {
       lineHeight: 1.65,
       textAlign: 'justify',
       hyphens: 'auto',
-      // hangingPunctuation not in React.CSSProperties but valid CSS
       margin: 0,
     },
   },

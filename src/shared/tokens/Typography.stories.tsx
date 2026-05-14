@@ -21,28 +21,28 @@ interface ScaleRow {
 
 const SCALE: ScaleRow[] = [
   {
-    variant: 'hero',
-    label: 'hero',
+    variant: 'display',
+    label: 'display',
     spec: 'Literata italic 400 · clamp(80–140px) · lh 0.9 · ls −0.03em',
     sample: 'Словы',
   },
   {
-    variant: 'gameTitle',
-    label: 'gameTitle',
+    variant: 'title',
+    label: 'title',
     spec: 'Literata italic 500 · clamp(32–42px) · lh 0.9 · ls −0.03em',
     sample: 'Валошка',
   },
   {
-    variant: 'winWord',
-    label: 'winWord',
-    spec: 'Literata italic 350 · 56px · lh 1.0 · ls −0.04em',
+    variant: 'heading',
+    label: 'heading',
+    spec: 'Literata 500 · 24px · lh 1',
     sample: 'Сонейка',
   },
   {
-    variant: 'navWordmark',
-    label: 'navWordmark',
-    spec: 'Literata italic 500 · 22px · ls −0.02em',
-    sample: 'Словы',
+    variant: 'overline',
+    label: 'overline',
+    spec: 'Wix Madefor Text 500 · 10px · ls 0.2em · uppercase',
+    sample: 'Словы вывучаны',
   },
   {
     variant: 'body',
@@ -174,7 +174,7 @@ function DropCapCard({ game, title, accent }: DropCapCardProps) {
         {game === 'pobach' ? 'Семантычная' : 'Слоўная'}
       </span>
       <Typography
-        variant="gameTitle"
+        variant="title"
         style={{ color: 'var(--fg)', display: 'block', marginBottom: 16 }}
       >
         {title}
@@ -234,7 +234,7 @@ function OldstyleSpecimen() {
         >
           Lining (default)
         </p>
-        <Typography variant="winWord" style={{ color: 'var(--fg)' }}>
+        <Typography variant="display" style={{ color: 'var(--fg)', fontSize: '56px', fontWeight: 350 }}>
           1 2 3 4 5 6 7 8 9 0
         </Typography>
       </div>
@@ -252,7 +252,7 @@ function OldstyleSpecimen() {
         >
           Oldstyle (scores &amp; status)
         </p>
-        <Typography variant="winWord" oldstyleNums style={{ color: 'var(--fg)' }}>
+        <Typography variant="display" oldstyleNums style={{ color: 'var(--fg)', fontSize: '56px', fontWeight: 350 }}>
           1 2 3 4 5 6 7 8 9 0
         </Typography>
       </div>
