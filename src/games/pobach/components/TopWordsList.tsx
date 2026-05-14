@@ -3,7 +3,7 @@
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 import type { TopWord } from "@/games/pobach/core/entities/game";
-import DictionaryLink from "./DictionaryLink";
+import DictionaryLink from "@/shared/components/DictionaryLink";
 
 type TopWordsListProps = {
 	dayIndex: number;

@@ -1,6 +1,6 @@
 import type { Guess } from "@/games/pobach/core/entities/game";
 import { getBarPercentage, getRankColor } from "@/games/pobach/lib/rank-utils";
-import DictionaryLink from "./DictionaryLink";
+import DictionaryLink from "@/shared/components/DictionaryLink";
 
 type GuessCardProps = {
 	guess: Guess;

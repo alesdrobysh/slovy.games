@@ -12,7 +12,7 @@ import {
 } from "@/games/pobach/lib/utils";
 import { Button } from "@/shared/components/ui/Button";
 import { useCountdown } from "@/shared/hooks/useCountdown";
-import DictionaryLink from "./DictionaryLink";
+import DictionaryLink from "@/shared/components/DictionaryLink";
 import ShareButton from "./ShareButton";
 import TopWordsList from "./TopWordsList";
 

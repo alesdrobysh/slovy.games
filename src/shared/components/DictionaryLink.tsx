@@ -8,7 +8,7 @@ interface DictionaryLinkProps {
 const DictionaryLink: FC<DictionaryLinkProps> = (props) => (
 	<a
 		href={`https://verbum.by/?q=${encodeURIComponent(props.word)}`}
-		className={`hover:text-[var(--sly-accent)] transition-colors underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded-sm ${props.className ?? ""}`}
+		className={`hover:text-(--accent) transition-colors underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded-sm ${props.className ?? ""}`}
 		target="_blank"
 		rel="noopener noreferrer"
 		aria-label={`${props.word} (адкрыецца ў новым акне)`}
