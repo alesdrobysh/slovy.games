@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 	},
 };
 
-const THEME_SCRIPT = `(function(){try{var t=localStorage.getItem('theme');var dark=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(dark)document.documentElement.classList.add('dark');}catch(e){}})();`;
+const THEME_SCRIPT = `(function(){try{var t=localStorage.getItem('theme');var dark=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(dark)document.documentElement.dataset.theme='dark';}catch(e){}})();`;
 
 export default function RootLayout({
 	children,

@@ -1,420 +1,150 @@
 /* ================================================================
-   Slovy Design Tokens
-   Three-layer system: Primitive → Semantic → Component
-   
-   Naming convention: --sly-{category}-{variant}-{level}
-   e.g., --sly-warm-500, --sly-blue-400, --sly-text-sm
+   Canonical Design Tokens
    ================================================================ */
 
-/* === Layer 1: Primitive Tokens (raw values, not theme-aware) === */
 :root {
-	/* --- Neutral / Warm palette --- */
-	--sly-warm-50: #f7f3ed;
-	--sly-warm-100: #ede3d5;
-	--sly-warm-200: #e2d5c5;
-	--sly-warm-300: #d4c8ac;
-	--sly-warm-600: #7a6848;
-	--sly-warm-800: #6b5a51;
-	--sly-warm-900: #2c1f0e;
-	--sly-warm-950: #1b120e;
-
-	/* --- Warm dark values (for dark mode overrides) --- */
-	--sly-warm-dark-bg: #0e0f1a;
-	--sly-warm-dark-bg-card: #161828;
-	--sly-warm-dark-bg-surface: #1e2138;
-	--sly-warm-dark-text: #e8e4d8;
-	--sly-warm-dark-text-muted: #7a7a9a;
-	--sly-warm-dark-border: #2a2d48;
-
-	/* --- Blue accent (Valoshka / Hub) --- */
-	--sly-blue-300: #9aaee0;
-	--sly-blue-400: #8094c8;
-	--sly-blue-500: #5b6fa8;
-	--sly-blue-600: #3a4f80;
-
-	/* --- Orange accent (Pobach) --- */
-	--sly-orange-400: #f0a860;
-	--sly-orange-500: #e58e3f;
-	--sly-orange-600: #c07030;
-
-	/* --- Orange dark values --- */
-	--sly-orange-dark-bg: #1a1410;
-	--sly-orange-dark-bg-card: #251e18;
-	--sly-orange-dark-bg-surface: #2e241c;
-	--sly-orange-dark-text: #f0eae0;
-	--sly-orange-dark-text-muted: #9a8a7e;
-	--sly-orange-dark-border: #3a3028;
-
-	/* --- Green (Success / Rank) --- */
-	--sly-lime-400: #84cc16;
-	--sly-green-500: #16a34a;
-
-	/* --- Info blue --- */
-	--sly-info-500: #4b83c8;
-
-	/* --- Error red --- */
-	--sly-red-500: #ef4444;
-
-	/* --- Typography scale (1.25 ratio between steps) --- */
-	--sly-text-xs: 0.75rem; /* 12px */
-	--sly-text-sm: 0.875rem; /* 14px */
-	--sly-text-base: 1rem; /* 16px */
-	--sly-text-lg: 1.125rem; /* 18px */
-	--sly-text-xl: 1.25rem; /* 20px */
-	--sly-text-2xl: 1.5rem; /* 24px */
-	--sly-text-3xl: 1.875rem; /* 30px */
-	--sly-text-4xl: 2.25rem; /* 36px */
-	--sly-text-5xl: 3rem; /* 48px */
-
-	/* --- Font weights --- */
-	--sly-weight-normal: 400;
-	--sly-weight-medium: 500;
-	--sly-weight-semibold: 600;
-	--sly-weight-bold: 700;
-
-	/* --- Spacing (4pt scale) --- */
-	--sly-space-1: 0.25rem; /* 4px */
-	--sly-space-2: 0.5rem; /* 8px */
-	--sly-space-3: 0.75rem; /* 12px */
-	--sly-space-4: 1rem; /* 16px */
-	--sly-space-5: 1.25rem; /* 20px */
-	--sly-space-6: 1.5rem; /* 24px */
-	--sly-space-8: 2rem; /* 32px */
-	--sly-space-10: 2.5rem; /* 40px */
-	--sly-space-12: 3rem; /* 48px */
-	--sly-space-16: 4rem; /* 64px */
-	--sly-space-20: 5rem; /* 80px */
-	--sly-space-24: 6rem; /* 96px */
-
-	/* --- Border radius --- */
-	--sly-radius-sm: 6px;
-	--sly-radius-md: 8px;
-	--sly-radius-lg: 12px;
-	--sly-radius-xl: 16px;
-	--sly-radius-2xl: 24px;
-	--sly-radius-full: 9999px;
-
-	/* --- Shadows --- */
-	--sly-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-	--sly-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-	--sly-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-	--sly-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-
-	/* --- Transitions --- */
-	--sly-duration-fast: 150ms;
-	--sly-duration-normal: 250ms;
-	--sly-duration-slow: 400ms;
-	--sly-easing: cubic-bezier(0.4, 0, 0.2, 1);
-
-	/* --- Semantic Spacing --- */
-	--sly-page-py: clamp(2.5rem, 5vw, 5rem);
-	--sly-section-gap: clamp(3rem, 5vw, 5rem);
-	--sly-content-gap: 1.5rem;
-	--sly-tight-gap: 0.75rem;
-
-	/* --- Fonts --- */
-	--sly-font-display: var(--font-display), serif;
-	--sly-font-sans: var(--font-sans), sans-serif;
+	--bg:            #F6F3EC;
+	--surface:       #FFFDF8;
+	--surface-warm:  #F0EDE4;
+	--fg:            #1C1915;
+	--fg-2:          #524E47;
+	--muted:         #8A857C;
+	--border:        #D8D3C8;
+	--border-strong: #AAA49B;
+	--pobach:        #C2621C;
+	--pobach-dim:    #FDF4EB;
+	--valoshka:      #3555BF;
+	--valoshka-dim:  #EBF0FA;
+	--ornament:      #B5AFA5;
+	--font-d:        'Literata', Georgia, serif;
+	--font-b:        'Wix Madefor Text', system-ui, sans-serif;
+	--ease:          150ms ease;
 }
 
-/* === Layer 2: Semantic Tokens (Hub / Neutral — light) === */
-:root {
-	--sly-bg: var(--sly-warm-50);
-	--sly-bg-card: var(--sly-warm-100);
-	--sly-bg-surface: var(--sly-warm-200);
-	--sly-text: var(--sly-warm-900);
-	--sly-text-muted: var(--sly-warm-600);
-	--sly-border: var(--sly-warm-300);
-	--sly-accent: var(--sly-blue-500);
-	--sly-accent-subtle: rgba(91, 111, 168, 0.1);
-	--sly-accent-border: rgba(91, 111, 168, 0.22);
-	--sly-accent-light: var(--sly-blue-400);
-	--sly-accent-dark: var(--sly-blue-600);
-}
-
-/* === Layer 2: Semantic Tokens (Dark mode) === */
-html.dark {
-	--sly-bg: var(--sly-warm-dark-bg);
-	--sly-bg-card: var(--sly-warm-dark-bg-card);
-	--sly-bg-surface: var(--sly-warm-dark-bg-surface);
-	--sly-text: var(--sly-warm-dark-text);
-	--sly-text-muted: var(--sly-warm-dark-text-muted);
-	--sly-border: var(--sly-warm-dark-border);
-	--sly-accent: #7a8fc8;
-	--sly-accent-subtle: rgba(122, 143, 200, 0.12);
-	--sly-accent-border: rgba(122, 143, 200, 0.25);
-	--sly-accent-light: #9aaee0;
-	--sly-accent-dark: #5b6fa8;
-}
-
-/* === Pobach Theme Overrides === */
-.theme-pobach {
-	--sly-pobach-orange: var(--sly-orange-500);
-	--sly-pobach-bg: #f7f3ed;
-	--sly-accent: var(--sly-orange-500);
-	--sly-accent-subtle: rgba(229, 142, 63, 0.1);
-	--sly-accent-border: rgba(229, 142, 63, 0.22);
-	--sly-accent-light: var(--sly-orange-400);
-	--sly-accent-dark: var(--sly-orange-600);
-}
-html:not(.dark) .theme-pobach {
-	--sly-bg: #f7f3ed;
-	--sly-bg-card: #ede3d5;
-	--sly-bg-surface: #e2d5c5;
-	--sly-text: #1b120e;
-	--sly-text-muted: #6b5a51;
-	--sly-border: #e8e0d5;
-}
-html.dark .theme-pobach {
-	--sly-bg: var(--sly-orange-dark-bg);
-	--sly-bg-card: var(--sly-orange-dark-bg-card);
-	--sly-bg-surface: var(--sly-orange-dark-bg-surface);
-	--sly-text: var(--sly-orange-dark-text);
-	--sly-text-muted: var(--sly-orange-dark-text-muted);
-	--sly-border: var(--sly-orange-dark-border);
-	--sly-accent: var(--sly-orange-500);
-	--sly-accent-subtle: rgba(229, 142, 63, 0.12);
-	--sly-accent-border: rgba(229, 142, 63, 0.25);
-	--sly-accent-light: var(--sly-orange-400);
-	--sly-accent-dark: var(--sly-orange-600);
-}
-
-/* === Valoshka Theme Overrides === */
-.theme-valoshka {
-	--sly-valoshka-blue: var(--sly-blue-500);
-	--sly-valoshka-paper: #f5f0e8;
-	--sly-valoshka-dark-bg: #0e0f1a;
-}
-html:not(.dark) .theme-valoshka {
-	--sly-bg: #f5f0e8;
-	--sly-bg-card: #ede6d4;
-	--sly-bg-surface: #e2d8c4;
-	--sly-text: #2c1f0e;
-	--sly-text-muted: #7a6848;
-	--sly-border: #d4c8ac;
-	--sly-accent: var(--sly-blue-500);
-	--sly-accent-subtle: rgba(91, 111, 168, 0.1);
-	--sly-accent-border: rgba(91, 111, 168, 0.22);
-	--sly-accent-light: var(--sly-blue-400);
-	--sly-accent-dark: var(--sly-blue-600);
-}
-html.dark .theme-valoshka {
-	--sly-bg: #0e0f1a;
-	--sly-bg-card: #161828;
-	--sly-bg-surface: #1e2138;
-	--sly-text: #e8e4d8;
-	--sly-text-muted: #7a7a9a;
-	--sly-border: #2a2d48;
-	--sly-accent: #7a8fc8;
-	--sly-accent-subtle: rgba(122, 143, 200, 0.12);
-	--sly-accent-border: rgba(122, 143, 200, 0.25);
-	--sly-accent-light: #9aaee0;
-	--sly-accent-dark: #5b6fa8;
-}
-
-/* === Layer 3: Component Tokens === */
-
-/* Pobach game tokens */
-html:not(.dark) .theme-pobach {
-	--sly-rank-1: var(--sly-green-500);
-	--sly-rank-10: var(--sly-green-500);
-	--sly-rank-100: var(--sly-lime-400);
-	--sly-rank-1000: var(--sly-orange-500);
-	--sly-rank-default: var(--sly-info-500);
-	--sly-attempts-base: var(--sly-orange-500);
-	--sly-attempts-1: color-mix(
-		in oklab,
-		var(--sly-attempts-base) 100%,
-		black 0%
-	);
-	--sly-attempts-10: color-mix(
-		in oklab,
-		var(--sly-attempts-base) 85%,
-		black 15%
-	);
-	--sly-attempts-50: color-mix(
-		in oklab,
-		var(--sly-attempts-base) 70%,
-		black 30%
-	);
-	--sly-attempts-100: color-mix(
-		in oklab,
-		var(--sly-attempts-base) 55%,
-		black 45%
-	);
-	--sly-attempts-many: color-mix(
-		in oklab,
-		var(--sly-attempts-base) 40%,
-		black 60%
-	);
-	--sly-card-override: #fff;
-}
-html.dark .theme-pobach {
-	--sly-card-override: var(--sly-bg-card);
-}
-
-/* Valoshka game tokens */
-html:not(.dark) .theme-valoshka {
-	--sly-cornflower: var(--sly-blue-500);
-	--sly-cornflower-dark: var(--sly-blue-600);
-	--sly-cornflower-light: var(--sly-blue-400);
-	--sly-cornflower-bg-subtle: rgba(91, 111, 168, 0.1);
-	--sly-cornflower-border-subtle: rgba(91, 111, 168, 0.22);
-	--sly-cell-center: #252850;
-	--sly-cell-outer: #7b9cf0;
-	--sly-cell-center-hover: #2a3670;
-	--sly-cell-outer-hover: #6a88e0;
-	--sly-cell-letter-center: #fff;
-	--sly-cell-letter-outer: #fff;
-}
-html.dark .theme-valoshka {
-	--sly-cornflower: #7a8fc8;
-	--sly-cornflower-dark: #5b6fa8;
-	--sly-cornflower-light: #9aaee0;
-	--sly-cornflower-bg-subtle: rgba(122, 143, 200, 0.12);
-	--sly-cornflower-border-subtle: rgba(122, 143, 200, 0.25);
-	--sly-cell-center: #141e50;
-	--sly-cell-outer: #4a62a8;
-	--sly-cell-center-hover: #1c2a68;
-	--sly-cell-outer-hover: #5a72b8;
-	--sly-cell-letter-center: #fff;
-	--sly-cell-letter-outer: #fff;
+[data-theme="dark"] {
+	--bg:            #141210;
+	--surface:       #1E1B16;
+	--surface-warm:  #252118;
+	--fg:            #E5E2D6;
+	--fg-2:          #ABA69C;
+	--muted:         #6B655C;
+	--border:        #302C25;
+	--border-strong: #46403A;
+	--pobach:        #E07B35;
+	--pobach-dim:    #281808;
+	--valoshka:      #5E7ADB;
+	--valoshka-dim:  #0C1424;
+	--ornament:      #565140;
 }
 
 /* ================================================================
-   Tailwind v4 Semantic Theme
-   Maps --sly-* CSS variables to semantic Tailwind color tokens
-   so we can use bg-ink, text-ink-muted, ring-rule, etc.
+   Tailwind v4 semantic theme
    ================================================================ */
 
 @theme inline {
-	/* --- Text hierarchy --- */
-	--color-ink: var(--sly-text);
-	--color-ink-muted: var(--sly-text-muted);
-	--color-ink-soft: color-mix(in oklab, var(--sly-text-muted) 55%, transparent);
-
-	/* --- Backgrounds --- */
-	--color-paper: var(--sly-bg);
-	--color-card: var(--sly-bg-card);
-	--color-secondary: var(--sly-bg-surface);
-
-	/* --- Borders --- */
-	--color-rule: var(--sly-border);
-
-	/* --- Accents --- */
-	--color-pobach: var(--sly-orange-500);
-	--color-pobach-soft: oklch(from var(--sly-orange-500) l c h / 0.1);
-	--color-valoshka: var(--sly-blue-500);
-	--color-valoshka-soft: oklch(from var(--sly-blue-500) l c h / 0.1);
-
-	/* --- Semantic --- */
-	--color-success: var(--sly-green-500);
-	--color-warning: var(--sly-orange-500);
-	--color-destructive: var(--sly-red-500);
-
-	/* --- Typography (kept as --font-family-* to avoid overriding Next.js font injection via @theme :root rule) --- */
-	--font-family-display: var(--sly-font-display);
-	--font-family-sans: var(--sly-font-sans);
+	--color-paper:          var(--bg);
+	--color-card:           var(--surface);
+	--color-secondary:      var(--surface-warm);
+	--color-ink:            var(--fg);
+	--color-ink-muted:      var(--fg-2);
+	--color-ink-soft:       color-mix(in oklab, var(--fg-2) 55%, transparent);
+	--color-rule:           var(--border);
+	--color-rule-strong:    var(--border-strong);
+	--color-valoshka:       var(--valoshka);
+	--color-valoshka-soft:  color-mix(in oklab, var(--valoshka) 10%, transparent);
+	--color-pobach:         var(--pobach);
+	--color-pobach-soft:    color-mix(in oklab, var(--pobach) 10%, transparent);
+	--color-success:        #16a34a;
+	--color-warning:        var(--pobach);
+	--color-destructive:    #ef4444;
+	--color-ornament:       var(--ornament);
+	--font-family-display:  var(--font-d);
+	--font-family-sans:     var(--font-b);
 }
 
 /* ================================================================
-   Legacy Aliases
-   DEPRECATED — will be removed once all references use --sly-* names.
+   Backward-compat aliases  (--sly-* → canonical)
+   Remove as components migrate to canonical names.
    ================================================================ */
 
 :root {
-	--color-neutral-accent: var(--sly-accent);
-	--color-neutral-bg: var(--sly-bg);
-	--color-neutral-bg-card: var(--sly-bg-card);
-	--color-neutral-bg-surface: var(--sly-bg-surface);
-	--color-neutral-text: var(--sly-text);
-	--color-neutral-text-muted: var(--sly-text-muted);
-	--color-neutral-border: var(--sly-border);
+	/* Semantic */
+	--sly-bg:           var(--bg);
+	--sly-bg-card:      var(--surface);
+	--sly-bg-surface:   var(--surface-warm);
+	--sly-text:         var(--fg);
+	--sly-text-muted:   var(--fg-2);
+	--sly-border:       var(--border);
+	--sly-font-display: var(--font-d);
+	--sly-font-sans:    var(--font-b);
+	--sly-page-py:      clamp(2.5rem, 5vw, 5rem);
+	--sly-section-gap:  clamp(3rem, 5vw, 5rem);
 
-	--color-accent: var(--sly-accent);
-	--color-bg: var(--sly-bg);
-	--color-bg-card: var(--sly-bg-card);
-	--color-bg-surface: var(--sly-bg-surface);
-	--color-text: var(--sly-text);
-	--color-text-muted: var(--sly-text-muted);
-	--color-border: var(--sly-border);
-	--color-accent-subtle: var(--sly-accent-subtle);
-	--color-accent-border: var(--sly-accent-border);
-	--color-accent-light: var(--sly-accent-light);
-	--color-accent-dark: var(--sly-accent-dark);
+	/* Default accent (valoshka; overridden by .theme-pobach) */
+	--sly-accent:        var(--valoshka);
+	--sly-accent-subtle: var(--valoshka-dim);
+	--sly-accent-light:  color-mix(in oklab, var(--valoshka) 80%, white 20%);
+	--sly-accent-dark:   color-mix(in oklab, var(--valoshka) 80%, black 20%);
+	--sly-accent-border: color-mix(in oklab, var(--valoshka) 22%, transparent);
 
-	--accent: var(--sly-accent);
-	--bg: var(--sly-bg);
-	--bg-card: var(--sly-bg-card);
-	--bg-surface: var(--sly-bg-surface);
-	--text: var(--sly-text);
-	--text-muted: var(--sly-text-muted);
-	--border: var(--sly-border);
-	--card: var(--sly-bg-card);
-	/* Note: --font-display and --font-sans are injected by next/font on the <html> element — do not redefine here */
+	/* Primitive color aliases */
+	--sly-warm-50:    var(--bg);
+	--sly-warm-100:   var(--surface);
+	--sly-warm-200:   var(--surface-warm);
+	--sly-warm-300:   var(--ornament);
+	--sly-warm-600:   var(--fg-2);
+	--sly-warm-900:   var(--fg);
+	--sly-green-500:  #16a34a;
+	--sly-orange-500: var(--pobach);
+	--sly-blue-500:   var(--valoshka);
+
+	/* Valoshka — cornflower aliases */
+	--sly-cornflower:               var(--valoshka);
+	--sly-cornflower-dark:          color-mix(in oklab, var(--valoshka) 80%, black 20%);
+	--sly-cornflower-light:         color-mix(in oklab, var(--valoshka) 80%, white 20%);
+	--sly-cornflower-bg-subtle:     var(--valoshka-dim);
+	--sly-cornflower-border-subtle: color-mix(in oklab, var(--valoshka) 22%, transparent);
+
+	/* Valoshka — cell fill colors */
+	--sly-cell-center:        #252850;
+	--sly-cell-outer:         #7b9cf0;
+	--sly-cell-center-hover:  #2a3670;
+	--sly-cell-outer-hover:   #6a88e0;
+	--sly-cell-letter-center: #fff;
+	--sly-cell-letter-outer:  #fff;
+
+	/* Pobach — rank colors */
+	--sly-rank-1:       #16a34a;
+	--sly-rank-10:      #16a34a;
+	--sly-rank-100:     #84cc16;
+	--sly-rank-1000:    var(--pobach);
+	--sly-rank-default: #4b83c8;
+
+	/* Pobach — attempt gradient colors */
+	--sly-attempts-base: var(--pobach);
+	--sly-attempts-1:    color-mix(in oklab, var(--pobach) 100%, black 0%);
+	--sly-attempts-10:   color-mix(in oklab, var(--pobach) 85%,  black 15%);
+	--sly-attempts-50:   color-mix(in oklab, var(--pobach) 70%,  black 30%);
+	--sly-attempts-100:  color-mix(in oklab, var(--pobach) 55%,  black 45%);
+	--sly-attempts-many: color-mix(in oklab, var(--pobach) 40%,  black 60%);
 }
+
+[data-theme="dark"] {
+	/* Dark-mode cell overrides */
+	--sly-cell-center:       #141e50;
+	--sly-cell-outer:        #4a62a8;
+	--sly-cell-center-hover: #1c2a68;
+	--sly-cell-outer-hover:  #5a72b8;
+}
+
+/* ================================================================
+   Game theme contexts
+   ================================================================ */
 
 .theme-pobach {
-	--pobach-orange: var(--sly-pobach-orange);
-	--pobach-bg: var(--sly-pobach-bg);
-	--pobach-dark-bg: var(--sly-orange-dark-bg);
-	--rank-1: var(--sly-rank-1);
-	--rank-10: var(--sly-rank-10);
-	--rank-100: var(--sly-rank-100);
-	--rank-1000: var(--sly-rank-1000);
-	--rank-default: var(--sly-rank-default);
-	--attempts-base: var(--sly-attempts-base);
-	--attempts-1: var(--sly-attempts-1);
-	--attempts-10: var(--sly-attempts-10);
-	--attempts-50: var(--sly-attempts-50);
-	--attempts-100: var(--sly-attempts-100);
-	--attempts-many: var(--sly-attempts-many);
-	--card: var(--sly-card-override);
-}
-html.dark .theme-pobach {
-	--rank-1: var(--sly-rank-1);
-	--rank-10: var(--sly-rank-10);
-	--rank-100: var(--sly-rank-100);
-	--rank-1000: var(--sly-rank-1000);
-	--rank-default: var(--sly-rank-default);
-	--attempts-base: var(--sly-attempts-base);
-	--attempts-1: var(--sly-attempts-1);
-	--attempts-10: var(--sly-attempts-10);
-	--attempts-50: var(--sly-attempts-50);
-	--attempts-100: var(--sly-attempts-100);
-	--attempts-many: var(--sly-attempts-many);
-}
-
-.theme-valoshka {
-	--valoshka-blue: var(--sly-valoshka-blue);
-	--valoshka-paper: var(--sly-valoshka-paper);
-	--valoshka-dark-bg: var(--sly-valoshka-dark-bg);
-	--cornflower: var(--sly-cornflower);
-	--cornflower-dark: var(--sly-cornflower-dark);
-	--cornflower-light: var(--sly-cornflower-light);
-	--cornflower-bg-subtle: var(--sly-cornflower-bg-subtle);
-	--cornflower-border-subtle: var(--sly-cornflower-border-subtle);
-	--cell-center: var(--sly-cell-center);
-	--cell-outer: var(--sly-cell-outer);
-	--cell-center-hover: var(--sly-cell-center-hover);
-	--cell-outer-hover: var(--sly-cell-outer-hover);
-	--cell-letter-center: var(--sly-cell-letter-center);
-	--cell-letter-outer: var(--sly-cell-letter-outer);
-	--error: var(--sly-red-500);
-	--hint-bg: var(--sly-cornflower-bg-subtle);
-}
-html.dark .theme-valoshka {
-	--cornflower: var(--sly-cornflower);
-	--cornflower-dark: var(--sly-cornflower-dark);
-	--cornflower-light: var(--sly-cornflower-light);
-	--cornflower-bg-subtle: var(--sly-cornflower-bg-subtle);
-	--cornflower-border-subtle: var(--sly-cornflower-border-subtle);
-	--cell-center: var(--sly-cell-center);
-	--cell-outer: var(--sly-cell-outer);
-	--cell-center-hover: var(--sly-cell-center-hover);
-	--cell-outer-hover: var(--sly-cell-outer-hover);
-	--cell-letter-center: var(--sly-cell-letter-center);
-	--cell-letter-outer: var(--sly-cell-letter-outer);
-	--error: var(--sly-red-500);
-	--hint-bg: var(--sly-cornflower-bg-subtle);
+	--sly-accent:        var(--pobach);
+	--sly-accent-subtle: var(--pobach-dim);
+	--sly-accent-light:  color-mix(in oklab, var(--pobach) 80%, white 20%);
+	--sly-accent-dark:   color-mix(in oklab, var(--pobach) 80%, black 20%);
+	--sly-accent-border: color-mix(in oklab, var(--pobach) 22%, transparent);
 }
