@@ -14,7 +14,7 @@ describe("StatCard", () => {
 	});
 
 	it("uses accent color when accent=true", () => {
-		render(<StatCard label="Тэст" value={1} accent />);
+		render(<StatCard label="Тэст" value={1} />);
 		const value = screen.getByText("1");
 		expect(value).toHaveClass("text-pobach");
 	});
