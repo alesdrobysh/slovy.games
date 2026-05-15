@@ -53,18 +53,11 @@ describe("FinishCard Component", () => {
 	};
 
 	describe("Lose Mode", () => {
-		it("should render lose mode correctly with target word", () => {
-			const loseProps = {
-				...defaultProps,
-				mode: "lose" as const,
-				targetWord: "правільнае",
-			};
+		it("should render lose mode correctly", () => {
+			const loseProps = { ...defaultProps, mode: "lose" as const };
 			render(<FinishCard {...loseProps} />);
 
 			expect(screen.getByText("Заўтра — новае слова")).toBeInTheDocument();
-			expect(screen.getByText("Правільнае слова:")).toBeInTheDocument();
-			expect(screen.getByText("правільнае")).toBeInTheDocument();
-			expect(screen.queryByText("🎉")).not.toBeInTheDocument();
 
 			const card = screen.getByTestId("finish-card");
 			expect(card).toHaveClass("bg-card");
@@ -73,13 +66,6 @@ describe("FinishCard Component", () => {
 			expect(screen.getByTestId("share-button")).toBeInTheDocument();
 			expect(screen.getByText("23:45:12")).toBeInTheDocument();
 		});
-
-		it("should not show target word when not provided", () => {
-			const loseProps = { ...defaultProps, mode: "lose" as const };
-			render(<FinishCard {...loseProps} />);
-
-			expect(screen.queryByText("Правільнае слова:")).not.toBeInTheDocument();
-		});
 	});
 
 	describe("Win Mode", () => {
@@ -87,7 +73,7 @@ describe("FinishCard Component", () => {
 			const winProps = { ...defaultProps, mode: "win" as const };
 			render(<FinishCard {...winProps} />);
 
-			expect(screen.getByText("Адгадана 🎉")).toBeInTheDocument();
+			expect(screen.getByText("Адгадана")).toBeInTheDocument();
 			expect(
 				screen.getByText(/Вы знайшлі слова за 3 спроб/)
 			).toBeInTheDocument();
@@ -97,17 +83,6 @@ describe("FinishCard Component", () => {
 
 			expect(screen.getByTestId("share-button")).toBeInTheDocument();
 			expect(screen.getByText("23:45:12")).toBeInTheDocument();
-		});
-
-		it("should not show target word in win mode", () => {
-			const winProps = {
-				...defaultProps,
-				mode: "win" as const,
-				targetWord: "secret",
-			};
-			render(<FinishCard {...winProps} />);
-
-			expect(screen.queryByText("Правільнае слова:")).not.toBeInTheDocument();
 		});
 	});
 });

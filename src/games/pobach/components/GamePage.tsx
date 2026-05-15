@@ -75,10 +75,10 @@ export function GamePage() {
 				{isFinished && dayIndex !== null ? (
 					<FinishCard
 						mode={won ? "win" : "lose"}
-						targetWord={targetWord}
 						guesses={guesses}
 						dayIndex={dayIndex ?? 0}
 						sessionDayIndex={sessionDayIndex}
+						targetWord={targetWord}
 					/>
 				) : (
 					lastGuess && (
