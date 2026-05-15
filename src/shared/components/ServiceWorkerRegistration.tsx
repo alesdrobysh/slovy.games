@@ -29,7 +29,7 @@ export default function ServiceWorkerRegistration() {
 	return (
 		<BottomBanner
 			ariaLabel="Даступна абнаўленне"
-			message="Даступна новая версія гульні"
+			message="Даступна новая версія сайта"
 			buttonLabel="Абнавіць"
 			onAction={() => window.location.reload()}
 			isVisible={isVisible}

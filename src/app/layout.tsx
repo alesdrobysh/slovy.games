@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Literata, Wix_Madefor_Text } from "next/font/google";
 import { BannerProvider } from "@/shared/components/BannerContext";
 import CookieBanner from "@/shared/components/CookieBanner";
+import ServiceWorkerRegistration from "@/shared/components/ServiceWorkerRegistration";
 import { Footer } from "@/app/Footer";
 import { ThemeProvider } from "@/shared/hooks/useTheme";
 import { PostHogProvider } from "@/shared/lib/analytics";
@@ -58,6 +59,7 @@ export default function RootLayout({
 							<div className="flex-1">{children}</div>
 							<Footer />
 							<CookieBanner />
+							<ServiceWorkerRegistration />
 							<Analytics />
 						</BannerProvider>
 					</PostHogProvider>
