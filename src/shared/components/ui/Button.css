@@ -51,6 +51,12 @@
 	--btn-on-color: var(--fg-2);
 }
 
+/* danger: destructive red */
+.btn-danger {
+	--btn-color: var(--color-destructive);
+	--btn-on-color: #fff;
+}
+
 /* === Variant × Color interactions === */
 
 /* solid + primary: filled accent, white label, opacity hover */
@@ -89,6 +95,34 @@
 }
 .btn-outline.btn-neutral:hover:not(:disabled) {
 	background: var(--surface-warm);
+}
+
+/* solid + danger: filled red, white label */
+.btn-solid.btn-danger {
+	background: var(--color-destructive);
+	color: var(--btn-on-color);
+}
+.btn-solid.btn-danger:hover:not(:disabled) {
+	opacity: 0.86;
+}
+
+/* outline + danger: red border + label, filled on hover */
+.btn-outline.btn-danger {
+	border-color: var(--color-destructive);
+	color: var(--color-destructive);
+	background: transparent;
+}
+.btn-outline.btn-danger:hover:not(:disabled) {
+	background: var(--color-destructive);
+	color: var(--btn-on-color);
+}
+
+/* ghost + danger: no chrome, red on hover */
+.btn-ghost.btn-danger {
+	color: var(--fg-2);
+}
+.btn-ghost.btn-danger:hover:not(:disabled) {
+	color: var(--color-destructive);
 }
 
 /* ghost + primary: no chrome link, accent on hover */

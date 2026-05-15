@@ -2,6 +2,7 @@
 
 import { Button } from "@/shared/components/ui/Button";
 import { Modal } from "@/shared/components/ui/Modal";
+import { Typography } from "@/shared/components/ui/Typography";
 
 type GiveUpModalProps = {
 	isOpen: boolean;
@@ -16,17 +17,19 @@ export default function GiveUpModal({
 }: GiveUpModalProps) {
 	return (
 		<Modal isOpen={isOpen} onClose={onClose} title="Ўпэўнены?">
-			<p className="text-sm text-ink-muted mb-5">
-				Калі вы здасцеся, серыя перамог пачнецца спачатку. Працягваем?
-			</p>
+			<div className="flex flex-col gap-inset-lg">
+			<Typography variant="body" className="text-ink-muted">
+				Калі вы здасцеся, серыя перамог пачнецца спачатку
+			</Typography>
 
-			<div className="flex items-center justify-center gap-3">
+			<div className="flex items-center justify-center gap-flow-md">
 				<Button variant="outline" color="neutral" onClick={onClose}>
 					Працягнуць гульню
 				</Button>
-				<Button variant="outline" color="neutral" dashed onClick={onConfirm}>
+				<Button variant="solid" color="danger" onClick={onConfirm}>
 					Здацца
 				</Button>
+			</div>
 			</div>
 		</Modal>
 	);

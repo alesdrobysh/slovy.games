@@ -1,7 +1,7 @@
 import { type ElementType, type ReactNode, forwardRef } from "react";
 
 export type ButtonVariant = "solid" | "outline" | "ghost";
-export type ButtonColor = "primary" | "neutral";
+export type ButtonColor = "primary" | "neutral" | "danger";
 export type ButtonSize = "sm" | "md" | "lg" | "xl";
 
 export interface ButtonProps {
