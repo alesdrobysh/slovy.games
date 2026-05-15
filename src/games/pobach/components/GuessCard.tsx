@@ -1,6 +1,7 @@
 import type { Guess } from "@/games/pobach/core/entities/game";
 import { getBarPercentage, getRankColor } from "@/games/pobach/lib/rank-utils";
 import DictionaryLink from "@/shared/components/DictionaryLink";
+import { Typography } from "@/shared/components/ui/Typography";
 
 type GuessCardProps = {
 	guess: Guess;
@@ -16,29 +17,35 @@ export default function GuessCard({
 
 	return (
 		<article
-			className={`flex items-center gap-4 px-4 py-3 rounded-lg ring-1 ring-rule bg-card transition-all ${
+			className={`flex flex-col gap-flow-sm px-inset-md py-inset-sm rounded-lg ring-1 ring-rule bg-card transition-all ${
 				highlight ? "animate-pop-in ring-pobach/40" : ""
 			}`}
 			aria-label={`Слова ${guess.word}, ранг ${guess.rank}`}
 		>
-			<div
-				className="w-12 text-right font-display font-semibold tabular-nums shrink-0"
-				style={{ color: rankColor }}
-			>
-				{guess.rank}
+			<div className="flex items-center justify-between gap-flow-md min-w-0">
+				<div className="flex items-center gap-flow-sm min-w-0">
+					<Typography variant="body" as="span" className="text-ink font-bold truncate">
+						<DictionaryLink word={guess.word} />
+					</Typography>
+
+					{guess.isHint && (
+						<Typography variant="caption" as="span" className="text-ink-soft shrink-0">
+							(падказка)
+						</Typography>
+					)}
+				</div>
+
+				<Typography
+					variant="overline"
+					as="span"
+					className="shrink-0 tabular-nums normal-case tracking-normal"
+					style={{ color: rankColor }}
+				>
+					#{guess.rank}
+				</Typography>
 			</div>
 
-			<div className="flex-1 min-w-0 font-display text-base text-ink truncate">
-				<DictionaryLink word={guess.word} />
-			</div>
-
-			{guess.isHint && (
-				<span className="text-xs italic text-ink-muted shrink-0">
-					(падказка)
-				</span>
-			)}
-
-			<div className="w-32 h-1.5 rounded-full bg-ink/5 overflow-hidden shrink-0">
+			<div className="h-1.5 rounded-full bg-ink/5 overflow-hidden">
 				<div
 					className="h-full rounded-full transition-all"
 					style={{
