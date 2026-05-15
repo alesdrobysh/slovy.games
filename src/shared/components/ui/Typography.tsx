@@ -97,6 +97,7 @@ export interface TypographyProps {
   oldstyleNums?: boolean;
   className?: string;
   style?: CSSProperties;
+  [key: string]: unknown;
 }
 
 export function Typography({
@@ -108,6 +109,7 @@ export function Typography({
   oldstyleNums = false,
   className,
   style,
+  ...rest
 }: TypographyProps) {
   const config = VARIANTS[variant];
   const Tag = as ?? config.tag;
@@ -127,7 +129,7 @@ export function Typography({
     .join(' ') || undefined;
 
   return (
-    <Tag style={combinedStyle} className={classes}>
+    <Tag style={combinedStyle} className={classes} {...rest}>
       {children}
     </Tag>
   );

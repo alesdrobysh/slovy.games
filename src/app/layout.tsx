@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Literata, Wix_Madefor_Text } from "next/font/google";
 import { BannerProvider } from "@/shared/components/BannerContext";
 import CookieBanner from "@/shared/components/CookieBanner";
-import { Footer } from "@/shared/components/Footer";
+import { Footer } from "@/app/Footer";
 import { ThemeProvider } from "@/shared/hooks/useTheme";
 import { PostHogProvider } from "@/shared/lib/analytics";
 import "./globals.css";

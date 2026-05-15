@@ -124,6 +124,8 @@
 	--spacing-flow-sm:      var(--space-flow-sm);
 	--spacing-flow-md:      var(--space-flow-md);
 	--spacing-flow-lg:      var(--space-flow-lg);
+	--spacing-page-py:      var(--page-py);
+	--spacing-section-gap:  var(--section-gap);
 }
 
 /* ================================================================
