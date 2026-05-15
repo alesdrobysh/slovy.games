@@ -36,11 +36,6 @@ export default function HubPage() {
 						<p className="text-xl text-ink-muted italic font-display">
 							{formatToday()}
 						</p>
-						<span className="hidden sm:block w-px h-6 bg-rule" />
-						<p className="text-sm uppercase tracking-[0.2em] font-bold text-success flex items-center gap-2">
-							<span className="w-2 h-2 rounded-full bg-current animate-pulse" />
-							Даступна зараз
-						</p>
 					</div>
 				</div>
 			</div>
@@ -58,7 +53,7 @@ export default function HubPage() {
 							key={game.id}
 							className={`${
 								isFirst
-									? "lg:col-span-8 lg:aspect-[16/9]"
+									? "lg:col-span-8 lg:aspect-video"
 									: "lg:col-span-4 lg:mt-24"
 							}`}
 						>
@@ -81,18 +76,6 @@ export default function HubPage() {
 					</div>
 				)}
 			</section>
-
-			{/* Secondary Actions / Footer-ish */}
-			<div className="mt-32 pt-12 border-t-2 border-ink/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-8 animate-fade-in-up">
-				<div className="hidden lg:block text-right">
-					<p className="text-[10px] uppercase tracking-[0.3em] font-bold text-ink-soft mb-2">
-						Беларуская мова · Культура · Розум
-					</p>
-					<p className="text-sm text-ink-muted italic font-display">
-						Створана з любоўю да кожнага слова.
-					</p>
-				</div>
-			</div>
 		</div>
 		</>
 	);
