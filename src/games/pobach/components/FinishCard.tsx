@@ -99,7 +99,7 @@ export default function FinishCard({
 				)}
 			</div>
 
-			<TopWordsList dayIndex={dayIndex} mode={mode} />
+			<TopWordsList dayIndex={dayIndex} />
 		</div>
 	);
 }
