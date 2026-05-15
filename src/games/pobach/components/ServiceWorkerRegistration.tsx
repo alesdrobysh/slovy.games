@@ -5,7 +5,7 @@ import { useBannerSlot } from "@/shared/components/BannerContext";
 import { BottomBanner } from "@/shared/components/BottomBanner";
 
 export default function ServiceWorkerRegistration() {
-	const { isVisible, isPreempted, show } = useBannerSlot("sw-update", 2);
+	const { isVisible, show } = useBannerSlot("sw-update", 2);
 
 	useEffect(() => {
 		if (
@@ -33,9 +33,6 @@ export default function ServiceWorkerRegistration() {
 			buttonLabel="Абнавіць"
 			onAction={() => window.location.reload()}
 			isVisible={isVisible}
-			instant={isPreempted}
-			role="status"
-			focusOnShow
 		/>
 	);
 }

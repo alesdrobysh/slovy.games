@@ -8,7 +8,7 @@ import { useAnalytics } from "@/shared/lib/analytics";
 
 export default function CookieBanner() {
 	const { hasConsented, giveConsent } = useAnalytics();
-	const { isVisible, isPreempted, show, dismiss } = useBannerSlot("cookie", 1);
+	const { isVisible, show, dismiss } = useBannerSlot("cookie", 1);
 	const pathname = usePathname();
 
 	const themeClass = pathname?.startsWith("/pobach")
@@ -31,7 +31,6 @@ export default function CookieBanner() {
 				giveConsent();
 			}}
 			isVisible={isVisible}
-			instant={isPreempted}
 			themeClass={themeClass}
 		/>
 	);
