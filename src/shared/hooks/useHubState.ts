@@ -237,7 +237,7 @@ function buildGameStatusFromRaw(
 		progressText = p.attempts > 0 ? `Разгадана за ${p.attempts} спроб` : "Разгадана";
 	} else if (p.isInProgress) {
 		status = "in_progress";
-		progressText = p.guessCount > 0 ? `Знойдзена слова нумар  {p.guessCount + 1}` : "";
+		progressText = p.guessCount > 0 ? `Зроблена ${p.guessCount + 1} спроб` : "";
 	}
 
 	return { gameId: "pobach", status, progressText };
