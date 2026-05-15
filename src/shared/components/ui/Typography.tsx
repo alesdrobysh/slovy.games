@@ -36,7 +36,7 @@ const VARIANTS: Record<TypographyVariant, VariantConfig> = {
       fontFamily: D,
       fontStyle: 'italic',
       fontWeight: 500,
-      fontSize: 'clamp(48px, 7vw, 72px)',
+      fontSize: 'clamp(26px, 8vw, 72px)',
       lineHeight: 0.9,
       letterSpacing: '-0.03em',
       margin: 0,
