@@ -21,9 +21,9 @@ interface ScaleRow {
 
 const SCALE: ScaleRow[] = [
   {
-    variant: 'display',
-    label: 'display',
-    spec: 'Literata italic 400 · clamp(80–140px) · lh 0.9 · ls −0.03em',
+    variant: 'titleHero',
+    label: 'titleHero',
+    spec: 'Literata 500 · clamp(40–72px) · lh 0.9 · ls −0.03em',
     sample: 'Словы',
   },
   {
@@ -234,7 +234,7 @@ function OldstyleSpecimen() {
         >
           Lining (default)
         </p>
-        <Typography variant="display" style={{ color: 'var(--fg)', fontSize: '56px', fontWeight: 350 }}>
+        <Typography variant="titleHero" style={{ color: 'var(--fg)', fontSize: '56px' }}>
           1 2 3 4 5 6 7 8 9 0
         </Typography>
       </div>
@@ -252,7 +252,7 @@ function OldstyleSpecimen() {
         >
           Oldstyle (scores &amp; status)
         </p>
-        <Typography variant="display" oldstyleNums style={{ color: 'var(--fg)', fontSize: '56px', fontWeight: 350 }}>
+        <Typography variant="titleHero" oldstyleNums style={{ color: 'var(--fg)', fontSize: '56px' }}>
           1 2 3 4 5 6 7 8 9 0
         </Typography>
       </div>

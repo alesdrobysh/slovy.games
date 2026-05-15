@@ -1,7 +1,6 @@
 import type { CSSProperties, ElementType, ReactNode } from 'react';
 
 export type TypographyVariant =
-  | 'display'
   | 'titleHero'
   | 'title'
   | 'heading'
@@ -18,25 +17,12 @@ const D = 'var(--font-d)';
 const B = 'var(--font-b)';
 
 const VARIANTS: Record<TypographyVariant, VariantConfig> = {
-  display: {
+  titleHero: {
     tag: 'h1',
     style: {
       fontFamily: D,
-      fontStyle: 'italic',
-      fontWeight: 400,
-      fontSize: 'clamp(80px, 16vw, 140px)',
-      lineHeight: 0.9,
-      letterSpacing: '-0.03em',
-      margin: 0,
-    },
-  },
-  titleHero: {
-    tag: 'h2',
-    style: {
-      fontFamily: D,
-      fontStyle: 'italic',
       fontWeight: 500,
-      fontSize: 'clamp(26px, 8vw, 72px)',
+      fontSize: 'clamp(36px, 8vw, 72px)',
       lineHeight: 0.9,
       letterSpacing: '-0.03em',
       margin: 0,
