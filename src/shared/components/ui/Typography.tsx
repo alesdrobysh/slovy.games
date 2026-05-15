@@ -2,6 +2,7 @@ import type { CSSProperties, ElementType, ReactNode } from 'react';
 
 export type TypographyVariant =
   | 'display'
+  | 'titleHero'
   | 'title'
   | 'heading'
   | 'overline'
@@ -24,6 +25,18 @@ const VARIANTS: Record<TypographyVariant, VariantConfig> = {
       fontStyle: 'italic',
       fontWeight: 400,
       fontSize: 'clamp(80px, 16vw, 140px)',
+      lineHeight: 0.9,
+      letterSpacing: '-0.03em',
+      margin: 0,
+    },
+  },
+  titleHero: {
+    tag: 'h2',
+    style: {
+      fontFamily: D,
+      fontStyle: 'italic',
+      fontWeight: 500,
+      fontSize: 'clamp(48px, 7vw, 72px)',
       lineHeight: 0.9,
       letterSpacing: '-0.03em',
       margin: 0,
@@ -128,9 +141,22 @@ export function Typography({
     .filter(Boolean)
     .join(' ') || undefined;
 
+  let content = children;
+  if (dropCap && typeof children === 'string') {
+    const spaceIdx = children.indexOf(' ');
+    if (spaceIdx !== -1) {
+      content = (
+        <>
+          <span className="drop-cap-first-word">{children.slice(0, spaceIdx)}</span>
+          {children.slice(spaceIdx)}
+        </>
+      );
+    }
+  }
+
   return (
     <Tag style={combinedStyle} className={classes} {...rest}>
-      {children}
+      {content}
     </Tag>
   );
 }

@@ -2,19 +2,16 @@
 
 import { useEffect, useState } from "react";
 import type { GameInfo } from "@/shared/types";
+import type { GameCardStatus } from "@/shared/components/GameCard";
 
 /** Per-game status extracted from localStorage */
 export interface GameHubStatus {
 	/** The game this status is for */
 	gameId: string;
-	/** User has completed today's puzzle */
-	hasPlayedToday: boolean;
-	/** User started but hasn't finished (only Pobach tracks this) */
-	isInProgress: boolean;
+	/** Game play state */
+	status: GameCardStatus;
 	/** Human-readable progress line, e.g. "12 слоў знойдзена" — empty if no progress */
 	progressText: string;
-	/** What the action button should say */
-	ctaLabel: string;
 }
 
 /** Aggregated hub state for both games */
@@ -223,43 +220,27 @@ function buildGameStatusFromRaw(
 	p: ReturnType<typeof getPobachStatus>
 ): GameHubStatus {
 	if (game.id === "valoshka") {
-		let progressText = "";
-		let ctaLabel = "Гуляць";
-
-		if (v.hasPlayedToday && v.foundWords > 0) {
-			progressText = `${v.foundWords} слоў знойдзена`;
-			ctaLabel = "Працягнуць";
-		}
-
+		const inProgress = v.hasPlayedToday && v.foundWords > 0;
 		return {
 			gameId: "valoshka",
-			hasPlayedToday: v.hasPlayedToday,
-			isInProgress: false,
-			progressText,
-			ctaLabel,
+			status: inProgress ? "in_progress" : "not_started",
+			progressText: inProgress ? `${v.foundWords} слоў знойдзена` : "Чакае вас",
 		};
 	}
 
 	// Pobach
+	let status: GameCardStatus = "not_started";
 	let progressText = "";
-	let ctaLabel = "Гуляць";
 
 	if (p.won) {
-		progressText =
-			p.attempts > 0 ? `Разгадана за ${p.attempts} спроб` : "Разгадана";
-		ctaLabel = "Вынік";
+		status = "won";
+		progressText = p.attempts > 0 ? `Разгадана за ${p.attempts} спроб` : "Разгадана";
 	} else if (p.isInProgress) {
-		progressText = p.guessCount > 0 ? `Здагадка №${p.guessCount + 1}` : "";
-		ctaLabel = "Працягнуць";
+		status = "in_progress";
+		progressText = p.guessCount > 0 ? `Знойдзена слова нумар  {p.guessCount + 1}` : "";
 	}
 
-	return {
-		gameId: "pobach",
-		hasPlayedToday: p.hasPlayedToday,
-		isInProgress: p.isInProgress,
-		progressText,
-		ctaLabel,
-	};
+	return { gameId: "pobach", status, progressText };
 }
 
 /** Read localStorage once and return the full hub state.
@@ -305,10 +286,8 @@ function emptyHubState(games: GameInfo[]): HubState {
 	for (const game of games) {
 		statuses.set(game.id, {
 			gameId: game.id,
-			hasPlayedToday: false,
-			isInProgress: false,
-			progressText: "",
-			ctaLabel: "Гуляць",
+			status: "not_started",
+			progressText: "Чакае вас",
 		});
 	}
 	return {

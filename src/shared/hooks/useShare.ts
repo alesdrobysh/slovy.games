@@ -22,16 +22,21 @@ async function shareText(text: string): Promise<"share" | "clipboard" | false> {
 
 export function useShare(text: string) {
 	const [isSharing, setIsSharing] = useState(false);
-
+	const [showToast, setShowToast] = useState(false);
 
 	const doShare = useCallback(async () => {
 		if (isSharing) return;
 		setIsSharing(true);
 
-		await shareText(text);
+		const result = await shareText(text);
+
+		if (result) {
+			setShowToast(true);
+			setTimeout(() => setShowToast(false), 2000);
+		}
 
 		setIsSharing(false);
 	}, [text, isSharing]);
 
-	return { share: doShare, isSharing };
+	return { share: doShare, isSharing, showToast };
 }

@@ -20,7 +20,6 @@ const meta = {
 		error: null,
 		errorWord: null,
 		guessCount: 0,
-		bestRank: null,
 	},
 } satisfies Meta<typeof GuessInput>;
 
@@ -73,10 +72,7 @@ export const ManyGuesses: Story = {
 	render: (args) => wrap(<GuessInput {...args} />),
 };
 
-export const ManyGuessesWithBestRank: Story = {
-	args: { guessCount: 15, bestRank: 42 },
-	render: (args) => wrap(<GuessInput {...args} />),
-};
+
 
 export const Won: Story = {
 	args: { won: true },
@@ -97,7 +93,6 @@ export const Playground: Story = {
 		error: { control: "text" },
 		errorWord: { control: "text" },
 		guessCount: { control: { type: "number", min: 0 } },
-		bestRank: { control: { type: "number", min: 1 } },
 	},
 	render: (args) => wrap(<GuessInput {...args} />),
 };

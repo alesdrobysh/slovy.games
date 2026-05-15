@@ -5,7 +5,7 @@ const pr = new Intl.PluralRules("be-BY");
  */
 export function pluralizeForm(
 	count: number,
-	forms: { one: string; few: string; many: string }
+	forms: Record<string, string>
 ): string {
 	const rule = pr.select(count);
 	return forms[rule] || forms.many;

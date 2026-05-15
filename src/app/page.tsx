@@ -47,23 +47,13 @@ export default function HubPage() {
 			>
 				{games.map((game, i) => {
 					const status = hub.statuses.get(game.id);
-					const isFirst = i === 0;
 					return (
-						<div
-							key={game.id}
-							className={`${
-								isFirst
-									? "lg:col-span-8 lg:aspect-video"
-									: "lg:col-span-4 lg:mt-24"
-							}`}
-						>
+						<div key={game.id} className="lg:col-span-6">
 							<GameCard
 								game={game}
-								hasPlayedToday={status?.hasPlayedToday ?? false}
+								status={status?.status ?? "not_started"}
 								progressText={status?.progressText}
-								ctaLabel={status?.ctaLabel}
 								delay={i * 150}
-								featured={isFirst}
 							/>
 						</div>
 					);

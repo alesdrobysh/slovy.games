@@ -83,7 +83,7 @@ export function calculateDistribution(
 function pluralizeDays(count: number): string {
 	const pr = new Intl.PluralRules("be-BY");
 	const rule = pr.select(count);
-	const forms = {
+	const forms: Record<string, string> = {
 		one: "дзень",
 		few: "дні",
 		many: "дзён",

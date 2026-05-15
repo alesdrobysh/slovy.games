@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
 	reactCompiler: true,
 	transpilePackages: ["belmorph"],
 	skipTrailingSlashRedirect: true,
+
 	async rewrites() {
 		return [
 			{

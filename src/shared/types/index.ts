@@ -25,7 +25,7 @@ export interface HubGameStatus {
 export const GAMES: GameInfo[] = [
 	{
 		id: "valoshka",
-		name: "Valoshka",
+		name: "Valoška",
 		nameBel: "Валошка",
 		description:
 			"Складайце словы з сямі літар. Цэнтральная літара — абавязковая ў кожным слове.",
@@ -38,7 +38,7 @@ export const GAMES: GameInfo[] = [
 	},
 	{
 		id: "pobach",
-		name: "Pobach",
+		name: "Pobač",
 		nameBel: "Побач",
 		description:
 			"Адгадайце схаванае слова, параўноўваючы значэнне вашых варыянтаў з мэтай.",
