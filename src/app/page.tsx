@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { GameCard } from "@/shared/components/GameCard";
+import { Nav } from "@/shared/components/Nav";
 import { useHubState } from "@/shared/hooks/useHubState";
 import { GAMES } from "@/shared/types";
 
@@ -23,6 +23,8 @@ export default function HubPage() {
 	const games = GAMES.filter((g) => g.enabled);
 
 	return (
+		<>
+		<Nav />
 		<div className="page-container page-section relative">
 			{/* Editorial Header */}
 			<div className="mb-16 sm:mb-24 animate-fade-in-up">
@@ -82,23 +84,6 @@ export default function HubPage() {
 
 			{/* Secondary Actions / Footer-ish */}
 			<div className="mt-32 pt-12 border-t-2 border-ink/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-8 animate-fade-in-up">
-				<Link
-					href="/stats"
-					className="group flex items-center gap-4 no-underline"
-				>
-					<div className="w-12 h-12 rounded-full border border-rule flex items-center justify-center group-hover:bg-ink group-hover:text-paper transition-all">
-						<span className="text-lg">📈</span>
-					</div>
-					<div>
-						<span className="block text-xs uppercase tracking-[0.2em] font-bold text-ink-soft mb-0.5">
-							Ваш прагрэс
-						</span>
-						<span className="block text-lg font-display font-semibold text-ink group-hover:translate-x-1 transition-transform">
-							Агульная статыстыка →
-						</span>
-					</div>
-				</Link>
-
 				<div className="hidden lg:block text-right">
 					<p className="text-[10px] uppercase tracking-[0.3em] font-bold text-ink-soft mb-2">
 						Беларуская мова · Культура · Розум
@@ -109,5 +94,6 @@ export default function HubPage() {
 				</div>
 			</div>
 		</div>
+		</>
 	);
 }

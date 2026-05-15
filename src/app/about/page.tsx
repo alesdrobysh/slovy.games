@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { Nav } from "@/shared/components/Nav";
 
 export const metadata: Metadata = {
 	title: "Пра праект | Словы",
 };
 
-import Link from "next/link";
-
 export default function AboutPage() {
 	return (
+		<>
+		<Nav />
 		<div className="page-narrow page-container page-section">
 			<h1 className="font-display text-4xl sm:text-5xl font-medium tracking-tight text-ink mb-8 animate-fade-in-up">
 				Пра праект
@@ -127,5 +129,6 @@ export default function AboutPage() {
 				</Link>
 			</div>
 		</div>
+		</>
 	);
 }

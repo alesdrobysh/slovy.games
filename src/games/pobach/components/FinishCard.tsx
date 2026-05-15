@@ -73,7 +73,7 @@ export default function FinishCard({
 			{/* Streak */}
 			{isWin && streak > 0 && (
 				<Link
-					href="/stats"
+					href="/pobach/stats"
 					className="inline-flex items-center gap-1.5 text-pobach text-sm font-medium hover:opacity-80 transition-opacity no-underline"
 				>
 					<Flame size={16} />

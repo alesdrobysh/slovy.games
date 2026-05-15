@@ -63,7 +63,7 @@ export const Button = forwardRef<
 	const Tag = as ?? (href ? "a" : "button");
 	const content = (
 		<>
-			{startIcon}
+			{startIcon && <span aria-hidden="true">{startIcon}</span>}
 			{children}
 		</>
 	);

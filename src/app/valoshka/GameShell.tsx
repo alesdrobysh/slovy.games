@@ -1,18 +1,19 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { GamePage } from "@/games/valoshka/components/GamePage";
 import { HowToPlay } from "@/games/valoshka/components/HowToPlay";
 import { StorageInspector } from "@/games/valoshka/components/StorageInspector";
 import { YesterdayModal } from "@/games/valoshka/components/YesterdayModal";
-import { useGameNav } from "@/shared/components/GameNavContext";
+import type { Puzzle } from "@/games/valoshka/types";
+import { Nav } from "@/shared/components/Nav";
 
 interface Props {
-	displayDate: string;
+	puzzle: Puzzle;
 	currentDate: string;
 }
 
-export function HeaderWithInspector({ displayDate, currentDate }: Props) {
-	const { setGameNav, clearGameNav } = useGameNav();
+export function GameShell({ puzzle, currentDate }: Props) {
 	const [inspectorOpen, setInspectorOpen] = useState(false);
 	const [showHelp, setShowHelp] = useState(false);
 
@@ -30,16 +31,15 @@ export function HeaderWithInspector({ displayDate, currentDate }: Props) {
 		return () => window.removeEventListener("keydown", handler);
 	}, [toggleInspector]);
 
-	useEffect(() => {
-		setGameNav({
-			onHelpClick: handleHelpClick,
-			extraActions: <YesterdayModal currentDate={currentDate} />,
-		});
-		return () => clearGameNav();
-	}, [currentDate]); // eslint-disable-line react-hooks/exhaustive-deps
-
 	return (
 		<>
+			<Nav
+				onHelpClick={handleHelpClick}
+				extraActions={<YesterdayModal currentDate={currentDate} />}
+			/>
+			<main>
+				<GamePage puzzle={puzzle} />
+			</main>
 			<StorageInspector
 				open={inspectorOpen}
 				onClose={() => setInspectorOpen(false)}

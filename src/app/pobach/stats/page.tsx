@@ -2,7 +2,7 @@
 
 import { Share2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import Header from "@/games/pobach/components/Header";
+import { Nav } from "@/shared/components/Nav";
 import type { HistoryRecord } from "@/games/pobach/core/entities/game";
 import { formatRelativeDate } from "@/games/pobach/lib/stats";
 import { getHistory, getStats } from "@/games/pobach/lib/storage";
@@ -233,7 +233,7 @@ export default function PobachStatsPage() {
 
 	return (
 		<>
-			<Header />
+			<Nav />
 
 			<div className="page-narrow page-container py-6">
 				<div className="grid grid-cols-2 sm:grid-cols-4 gap-3">

@@ -1,15 +1,13 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import FinishCard from "./FinishCard";
 import GiveUpModal from "./GiveUpModal";
 import GuessCard from "./GuessCard";
 import GuessInput from "./GuessInput";
 import GuessList from "./GuessList";
-import Header from "./Header";
 import RulesComponent from "./RulesComponent";
 import { useGame } from "@/games/pobach/hooks/useGame";
-import { Modal } from "@/shared/components/ui/Modal";
 
 export function GamePage() {
 	const {
@@ -29,9 +27,7 @@ export function GamePage() {
 		actions: { setInput, handleSubmit, getHint, handleGiveUp },
 	} = useGame();
 
-	const [showHelp, setShowHelp] = useState(false);
 	const [showGiveUp, setShowGiveUp] = useState(false);
-	const handleHelpClick = useCallback(() => setShowHelp(true), []);
 
 	const handleGiveUpConfirm = () => {
 		setShowGiveUp(false);
@@ -42,9 +38,7 @@ export function GamePage() {
 	const sortedGuesses = [...guesses].sort((a, b) => a.rank - b.rank);
 
 	return (
-		<>
-			<Header onHelpClick={handleHelpClick} />
-			<main className="page-narrow page-container pt-8 pb-20">
+		<main className="page-narrow page-container pt-8 pb-20">
 				{/* Day badge */}
 				<div className="flex justify-start mb-8">
 					<span className="inline-flex items-center px-3 py-1 text-[0.75rem] font-medium text-pobach bg-pobach-soft rounded-full">
@@ -107,21 +101,11 @@ export function GamePage() {
 						</p>
 					</div>
 				)}
-			</main>
-
-			<Modal
-				isOpen={showHelp}
-				title="Як гуляць?"
-				onClose={() => setShowHelp(false)}
-			>
-				<RulesComponent />
-			</Modal>
-
 			<GiveUpModal
 				isOpen={showGiveUp}
 				onConfirm={handleGiveUpConfirm}
 				onClose={() => setShowGiveUp(false)}
 			/>
-		</>
+		</main>
 	);
 }

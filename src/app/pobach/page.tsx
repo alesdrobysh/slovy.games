@@ -1,5 +1,5 @@
-import { GamePage } from "@/games/pobach/components/GamePage";
+import { GameShell } from "./GameShell";
 
 export default function PobachPage() {
-	return <GamePage />;
+	return <GameShell />;
 }

@@ -1,7 +1,10 @@
 import Link from "next/link";
+import { Nav } from "@/shared/components/Nav";
 
 export default function PrivacyPage() {
 	return (
+		<>
+		<Nav />
 		<div className="page-narrow page-container page-section">
 			<Link
 				href="/"
@@ -118,5 +121,6 @@ export default function PrivacyPage() {
 				</section>
 			</div>
 		</div>
+		</>
 	);
 }
