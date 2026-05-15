@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import GuessInput from "./GuessInput";
 
 const meta = {
-	title: "Games/Побач/GuessInput",
+	title: "Pobach/GuessInput",
 	component: GuessInput,
 	tags: ["autodocs"],
 	parameters: {
