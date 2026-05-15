@@ -2,7 +2,7 @@ import { type ElementType, type ReactNode, forwardRef } from "react";
 
 export type ButtonVariant = "solid" | "outline" | "ghost";
 export type ButtonColor = "primary" | "neutral";
-export type ButtonSize = "sm" | "md" | "lg";
+export type ButtonSize = "sm" | "md" | "lg" | "xl";
 
 export interface ButtonProps {
 	children?: ReactNode;
@@ -52,7 +52,7 @@ export const Button = forwardRef<
 		"btn",
 		`btn-${variant}`,
 		`btn-${color}`,
-		!isIconOnly && `btn-${size}`,
+		`btn-${size}`,
 		dashed && "btn-dashed",
 		isIconOnly && "btn-icon-only",
 		className,

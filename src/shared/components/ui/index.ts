@@ -1,3 +1,5 @@
+export type { ErrorMessageProps } from "./ErrorMessage";
+export { ErrorMessage } from "./ErrorMessage";
 export type { BadgeProps } from "./Badge";
 export { Badge } from "./Badge";
 export type { ButtonProps, ButtonVariant, ButtonColor, ButtonSize } from "./Button";

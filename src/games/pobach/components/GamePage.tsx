@@ -40,7 +40,6 @@ export function GamePage() {
 
 	const isFinished = won || gameOver;
 	const sortedGuesses = [...guesses].sort((a, b) => a.rank - b.rank);
-	const bestRank = sortedGuesses[0]?.rank ?? null;
 
 	return (
 		<>
@@ -71,7 +70,6 @@ export function GamePage() {
 							onHint={getHint}
 							onGiveUp={() => setShowGiveUp(true)}
 							guessCount={guesses.length}
-							bestRank={bestRank}
 						/>
 					</form>
 				)}

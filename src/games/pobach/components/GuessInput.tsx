@@ -1,4 +1,7 @@
 import { useEffect, useRef } from "react";
+import { ArrowRight, Lightbulb } from "lucide-react";
+import { Button } from "@/shared/components/ui/Button";
+import { ErrorMessage } from "@/shared/components/ui/ErrorMessage";
 
 type GuessInputProps = {
 	input: string;
@@ -12,7 +15,6 @@ type GuessInputProps = {
 	error: string | null;
 	errorWord: string | null;
 	guessCount: number;
-	bestRank?: number | null;
 };
 
 export default function GuessInput({
@@ -27,7 +29,6 @@ export default function GuessInput({
 	error,
 	errorWord,
 	guessCount,
-	bestRank,
 }: GuessInputProps) {
 	const divRef = useRef<HTMLDivElement>(null);
 	const isDisabled = won || gameOver;
@@ -62,14 +63,14 @@ export default function GuessInput({
 	};
 
 	return (
-		<div className="mb-4">
+		<div className="mb-flow-lg">
 			{/* Input row */}
-			<div className="flex gap-2">
+			<div className="flex gap-flow-sm">
 				<span className="sr-only" id="guess-label">
 					Увядзіце слова для здагадкі
 				</span>
 				{/* biome-ignore lint/a11y/noLabelWithoutControl: contenteditable div serves as input */}
-				<label className="flex-1 bg-card border border-rule rounded-xl px-4 py-3 flex items-center focus-within:border-pobach focus-within:ring-2 focus-within:ring-pobach/20 transition-all cursor-text text-left">
+				<label className="flex-1 bg-card border border-rule rounded-xl px-inset-sm py-inset-sm flex items-center focus-within:border-pobach focus-within:ring-2 focus-within:ring-pobach/20 transition-all cursor-text text-left">
 					{/* biome-ignore lint/a11y/useSemanticElements: contenteditable suppresses Chrome Android autofill */}
 					<div
 						ref={divRef}
@@ -86,96 +87,54 @@ export default function GuessInput({
 						inputMode="text"
 						enterKeyHint="send"
 						suppressContentEditableWarning
-						className="text-lg text-ink outline-none min-h-[1.5rem] w-full empty:before:content-['Увядзіце\00a0слова...'] empty:before:text-ink-muted text-left"
+						className="text-lg text-ink outline-none min-h-inset-lg w-full empty:before:content-['Увядзіце\00a0слова...'] empty:before:text-ink-muted text-left"
 					/>
 				</label>
 
 				{!isDisabled && (
-					<button
-						onClick={onSubmit}
+					<Button
+						variant="solid"
+						color="primary"
+						onClick={() => onSubmit({ preventDefault: () => {} } as React.FormEvent)}
 						disabled={loading}
 						aria-label="Адправіць здагадку"
-						type="button"
-						className="hidden sm:flex w-12 h-12 items-center justify-center rounded-xl bg-pobach text-white hover:brightness-105 active:scale-[0.98] transition-all disabled:opacity-50 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pobach/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
-					>
-						<svg
-							width="16"
-							height="16"
-							viewBox="0 0 16 16"
-							fill="none"
-							aria-hidden="true"
-						>
-							<path
-								d="M2 8h12M9 3l5 5-5 5"
-								stroke="currentColor"
-								strokeWidth="2"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							/>
-						</svg>
-					</button>
+						size="xl"
+						className="hidden sm:flex shrink-0"
+						startIcon={<ArrowRight size={16} aria-hidden="true" />}
+					/>
 				)}
 			</div>
 
-			{/* Error message */}
 			{error && (
-				<div
-					id="error-message"
-					role="alert"
-					className="mt-2 text-sm text-destructive"
-				>
-					{errorWord && (
-						<>
-							<strong>&laquo;{errorWord}&raquo;</strong> —{" "}
-						</>
-					)}
-					{error}
-				</div>
+				<ErrorMessage id="error-message" message={error} word={errorWord} />
 			)}
 
 			{/* Action buttons row */}
-			<div className="flex items-center justify-center gap-3 mt-3 text-sm">
+			<div className="flex items-center justify-center gap-flow-md mt-flow-md">
 				{!won && !gameOver && (
-					<button
-						type="button"
+					<Button
+						variant="outline"
+						color="primary"
+						size="sm"
 						onClick={onHint}
 						disabled={loading}
 						aria-label="Атрымаць падказку"
-						className="flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-pobach border border-pobach rounded-full hover:bg-pobach/5 transition-colors disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pobach/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper"
+						startIcon={<Lightbulb size={12} aria-hidden="true" />}
 					>
-						<svg
-							width="12"
-							height="12"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							strokeWidth="2"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							aria-hidden="true"
-						>
-							<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
-							<path d="M9 18h6" />
-							<path d="M10 22h4" />
-						</svg>
 						Падказка
-					</button>
+					</Button>
 				)}
 				{!won && guessCount >= 10 && !gameOver && (
-					<button
-						type="button"
+					<Button
+						variant="outline"
+						color="neutral"
+						size="sm"
+						dashed
 						onClick={onGiveUp}
 						disabled={loading}
-						className="text-ink-muted hover:text-destructive transition-colors disabled:opacity-30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded-sm"
 					>
 						Здацца
-					</button>
-				)}
-				{bestRank !== null && (
-					<span className="ml-auto text-xs text-ink-soft">
-						Найлепшы ранг:{" "}
-						<span className="text-ink font-medium">{bestRank}</span>
-					</span>
+					</Button>
 				)}
 			</div>
 		</div>

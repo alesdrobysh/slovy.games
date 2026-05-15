@@ -350,9 +350,10 @@ const SIZE_ROWS: {
 ];
 
 const SIZES: { size: ButtonSize; spec: string }[] = [
-	{ size: "sm", spec: "28px · 4/10 padding · 10px" },
-	{ size: "md", spec: "32px · 7/14 padding · 12px" },
-	{ size: "lg", spec: "36px · 9/18 padding · 14px" },
+	{ size: "sm", spec: "28px · 4/10 padding · 10px · r6" },
+	{ size: "md", spec: "32px · 8/12 padding · 12px · r8" },
+	{ size: "lg", spec: "36px · 9/18 padding · 14px · r10" },
+	{ size: "xl", spec: "54px · 12/20 padding · 16px · r14" },
 ];
 
 function SizesSpecimen() {
@@ -375,14 +376,14 @@ function SizesSpecimen() {
 					maxWidth: 520,
 				}}
 			>
-				Three size steps — sm (compact), md (default), lg (prominent). Icon-only
-				buttons have intrinsic 28×28 sizing regardless of size prop.
+				Four size steps — sm (compact), md (default), lg (prominent), xl (hero). Icon-only
+				buttons stay square at the size's height.
 			</p>
 
 			<div
 				style={{
 					display: "grid",
-					gridTemplateColumns: "120px repeat(3, 1fr)",
+					gridTemplateColumns: "120px repeat(4, 1fr)",
 					gap: "0 16px",
 					padding: "0 0 8px",
 					alignItems: "end",
@@ -420,7 +421,7 @@ function SizesSpecimen() {
 					key={label}
 					style={{
 						display: "grid",
-						gridTemplateColumns: "120px repeat(3, 1fr)",
+						gridTemplateColumns: "120px repeat(4, 1fr)",
 						gap: "0 16px",
 						alignItems: "center",
 						padding: "14px 0",
@@ -451,11 +452,11 @@ function SizesSpecimen() {
 				</div>
 			))}
 
-			{/* Icon-only — intrinsic sizing */}
+			{/* Icon-only — one per size column */}
 			<div
 				style={{
 					display: "grid",
-					gridTemplateColumns: "120px repeat(3, 1fr)",
+					gridTemplateColumns: "120px repeat(4, 1fr)",
 					gap: "0 16px",
 					alignItems: "center",
 					padding: "14px 0",
@@ -471,24 +472,18 @@ function SizesSpecimen() {
 				>
 					icon-only
 				</code>
-				<div style={{ display: "flex", gap: 8 }}>
-					<Button
-						variant="ghost"
-						color="neutral"
-						aria-label="Share"
-						onClick={() => {}}
-						startIcon={<Share2 size={20} />}
-					/>
-					<Button
-						variant="solid"
-						color="primary"
-						aria-label="Submit"
-						onClick={() => {}}
-						startIcon={<Shuffle size={20} />}
-					/>
-				</div>
-				<div />
-				<div />
+				{SIZES.map((s) => (
+					<div key={s.size}>
+						<Button
+							variant="solid"
+							color="primary"
+							size={s.size}
+							aria-label="Submit"
+							onClick={() => {}}
+							startIcon={<Share2 />}
+						/>
+					</div>
+				))}
 			</div>
 		</div>
 	);

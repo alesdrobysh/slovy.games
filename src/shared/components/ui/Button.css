@@ -1,0 +1,180 @@
+.btn {
+	--btn-icon-size: 14px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-flow-sm);
+	border-radius: 8px;
+	border: none;
+	padding: var(--space-inset-xs) var(--space-inset-sm);
+	height: 32px;
+	font-family: var(--font-b);
+	font-size: 12px;
+	font-weight: 700;
+	font-variant-caps: small-caps;
+	letter-spacing: 0.06em;
+	cursor: pointer;
+	transition: var(--ease);
+	outline: none;
+}
+
+/* === Variants === */
+
+.btn-solid {
+	border: none;
+}
+
+.btn-outline {
+	background: transparent;
+	border-style: solid;
+	border-width: 1px;
+}
+
+.btn-ghost {
+	padding: 0;
+	background: transparent;
+	border: none;
+	color: var(--fg-2);
+}
+
+/* === Colors === */
+
+/* primary: accent (terracotta / cornflower via --accent) */
+.btn-primary {
+	--btn-color: var(--accent);
+	--btn-on-color: #fff;
+}
+
+/* neutral: structural grey */
+.btn-neutral {
+	--btn-color: var(--border-strong);
+	--btn-on-color: var(--fg-2);
+}
+
+/* === Variant × Color interactions === */
+
+/* solid + primary: filled accent, white label, opacity hover */
+.btn-solid.btn-primary {
+	background: var(--accent);
+	color: var(--btn-on-color);
+}
+.btn-solid.btn-primary:hover:not(:disabled) {
+	opacity: 0.86;
+}
+
+/* solid + neutral: filled neutral, ??? (brand new combo) */
+.btn-solid.btn-neutral {
+	background: var(--border-strong);
+	color: var(--surface);
+}
+.btn-solid.btn-neutral:hover:not(:disabled) {
+	opacity: 0.86;
+}
+
+/* outline + primary: accent border + label, invert on hover */
+.btn-outline.btn-primary {
+	border-color: var(--accent);
+	color: var(--accent);
+}
+.btn-outline.btn-primary:hover:not(:disabled) {
+	background: var(--accent);
+	color: var(--btn-on-color);
+}
+
+/* outline + neutral: structural border + fg-2 label, surface-warm hover */
+.btn-outline.btn-neutral {
+	border-color: var(--border-strong);
+	background: var(--surface);
+	color: var(--fg-2);
+}
+.btn-outline.btn-neutral:hover:not(:disabled) {
+	background: var(--surface-warm);
+}
+
+/* ghost + primary: no chrome link, accent on hover */
+.btn-ghost.btn-primary {
+	color: var(--fg-2);
+}
+.btn-ghost.btn-primary:hover:not(:disabled) {
+	color: var(--accent);
+}
+
+/* ghost + neutral: no chrome, surface-warm fill + fg on hover */
+.btn-ghost.btn-neutral {
+	color: var(--fg-2);
+}
+.btn-ghost.btn-neutral:hover:not(:disabled) {
+	background: var(--surface-warm);
+	color: var(--fg);
+}
+
+/* === Modifiers === */
+
+/* Dashed border (give-up style) */
+.btn-dashed {
+	border-style: dashed;
+}
+.btn-outline.btn-dashed {
+	border-color: var(--border-strong);
+	color: var(--muted);
+	background: var(--surface);
+}
+.btn-outline.btn-dashed:hover:not(:disabled) {
+	background: var(--surface-warm);
+	color: var(--muted);
+}
+
+/* Icon sizing — scales with button size via --btn-icon-size */
+.btn svg {
+	width: var(--btn-icon-size);
+	height: var(--btn-icon-size);
+	flex-shrink: 0;
+}
+
+/* Icon-only (no children, only startIcon) */
+.btn-icon-only {
+	aspect-ratio: 1;
+	padding: 0;
+}
+
+/* === Size modifiers === */
+
+.btn-sm {
+	--btn-icon-size: 12px;
+	height: 28px;
+	padding: var(--space-flow-xs) var(--space-inset-xs);
+	font-size: 10px;
+	border-radius: 6px;
+}
+.btn-lg {
+	--btn-icon-size: 16px;
+	height: 36px;
+	padding: var(--space-flow-sm) var(--space-flow-lg);
+	font-size: 14px;
+	border-radius: 10px;
+}
+.btn-xl {
+	--btn-icon-size: 22px;
+	height: 54px;
+	padding: var(--space-inset-sm) var(--space-inset-md);
+	font-size: 16px;
+	border-radius: 14px;
+}
+
+/* Ghost sizes override padding since ghost has padding:0 */
+.btn-ghost.btn-sm,
+.btn-ghost.btn-lg {
+	padding: 0;
+}
+
+/* === State === */
+
+.btn:focus-visible {
+	box-shadow:
+		0 0 0 2px var(--bg),
+		0 0 0 4px var(--accent);
+}
+.btn:disabled {
+	opacity: 0.35;
+	cursor: not-allowed;
+}
