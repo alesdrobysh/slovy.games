@@ -84,12 +84,10 @@ export function StatsPageContent({
 		<>
 			<Nav />
 
-			<div className="page-narrow page-container py-inset-lg">
+			<div className="page-narrow page-container py-inset-lg flex flex-col gap-y-flow-lg">
 				<div className="grid grid-cols-2 sm:grid-cols-4 gap-flow-md">
 					<StatCard label="Гульняў" value={stats.gamesPlayed} />
-					<div className="sm:col-span-2 lg:col-span-1">
-						<StatCard label="Перамог %" value={winRate} />
-					</div>
+					<StatCard label="Перамог %" value={winRate} />
 					<StatCard label="Серыя" value={stats.currentStreak} />
 					<StatCard label="Макс." value={stats.maxStreak} />
 				</div>
