@@ -17,16 +17,16 @@ import { Button } from "@/shared/components/ui/Button";
 import { Modal } from "@/shared/components/ui/Modal";
 import { Typography } from "@/shared/components/ui/Typography";
 import { Check, Ellipsis, ExternalLink, Flag, X } from "lucide-react";
-import { useModal } from "@/shared/hooks/useModal";
 
 type FlagState = "idle" | "confirming" | "sending" | "sent";
 
 interface YesterdayModalProps {
 	currentDate: string;
+	isOpen: boolean;
+	onClose: () => void;
 }
 
-export function YesterdayModal({ currentDate }: YesterdayModalProps) {
-	const yesterdayModal = useModal(false);
+export function YesterdayModal({ currentDate, isOpen, onClose }: YesterdayModalProps) {
 	const [puzzle, setPuzzle] = useState<Puzzle | null>(null);
 	const [progress, setProgress] = useState<SavedProgress | null>(null);
 	const [flagStates, setFlagStates] = useState<Record<string, FlagState>>({});
@@ -77,17 +77,11 @@ export function YesterdayModal({ currentDate }: YesterdayModalProps) {
 	const sorted = [...puzzle.answers].sort((a, b) => a.localeCompare(b, "be"));
 
 	return (
-		<>
-			{/* Header trigger */}
-			<Button variant="ghost" color="neutral" onClick={yesterdayModal.open}>
-				Учора
-			</Button>
-
-			<Modal
-				isOpen={yesterdayModal.isOpen}
-				onClose={yesterdayModal.close}
-				title="Учарашнія адказы"
-			>
+		<Modal
+			isOpen={isOpen}
+			onClose={onClose}
+			title="Учарашнія адказы"
+		>
 				{/* Progress summary */}
 				{progress && (
 					<div className="pb-flow-md border-b border-rule">
@@ -183,7 +177,6 @@ export function YesterdayModal({ currentDate }: YesterdayModalProps) {
 						);
 					})}
 				</ul>
-			</Modal>
-		</>
+		</Modal>
 	);
 }

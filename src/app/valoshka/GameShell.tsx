@@ -6,6 +6,7 @@ import { HowToPlay } from "@/games/valoshka/components/HowToPlay";
 import { StorageInspector } from "@/games/valoshka/components/StorageInspector";
 import { YesterdayModal } from "@/games/valoshka/components/YesterdayModal";
 import type { Puzzle } from "@/games/valoshka/types";
+import { Button } from "@/shared/components/ui/Button";
 import { Nav } from "@/shared/components/Nav";
 
 interface Props {
@@ -16,9 +17,12 @@ interface Props {
 export function GameShell({ puzzle, currentDate }: Props) {
 	const [inspectorOpen, setInspectorOpen] = useState(false);
 	const [showHelp, setShowHelp] = useState(false);
+	const [yesterdayOpen, setYesterdayOpen] = useState(false);
 
 	const toggleInspector = useCallback(() => setInspectorOpen((v) => !v), []);
 	const handleHelpClick = useCallback(() => setShowHelp(true), []);
+	const handleYesterdayOpen = useCallback(() => setYesterdayOpen(true), []);
+	const handleYesterdayClose = useCallback(() => setYesterdayOpen(false), []);
 
 	useEffect(() => {
 		const handler = (e: KeyboardEvent) => {
@@ -35,7 +39,11 @@ export function GameShell({ puzzle, currentDate }: Props) {
 		<>
 			<Nav
 				onHelpClick={handleHelpClick}
-				extraActions={<YesterdayModal currentDate={currentDate} />}
+				extraActions={
+					<Button variant="ghost" color="neutral" onClick={handleYesterdayOpen}>
+						Учора
+					</Button>
+				}
 			/>
 			<main>
 				<GamePage puzzle={puzzle} />
@@ -47,6 +55,11 @@ export function GameShell({ puzzle, currentDate }: Props) {
 			{showHelp && (
 				<HowToPlay isOpen={showHelp} onClose={() => setShowHelp(false)} />
 			)}
+			<YesterdayModal
+				currentDate={currentDate}
+				isOpen={yesterdayOpen}
+				onClose={handleYesterdayClose}
+			/>
 		</>
 	);
 }
