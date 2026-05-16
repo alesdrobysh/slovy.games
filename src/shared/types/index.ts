@@ -24,19 +24,6 @@ export interface HubGameStatus {
 
 export const GAMES: GameInfo[] = [
 	{
-		id: "valoshka",
-		name: "Valoška",
-		nameBel: "Валошка",
-		description:
-			"Складайце словы з сямі літар. Цэнтральная літара — абавязковая ў кожным слове.",
-		descriptionBel: "Складайце словы з 7 прапанаваных літар",
-		path: "/valoshka",
-		color: "#5b6fa8",
-		colorDark: "#7a8fc8",
-		icon: "🌸",
-		enabled: true,
-	},
-	{
 		id: "pobach",
 		name: "Pobač",
 		nameBel: "Побач",
@@ -49,4 +36,18 @@ export const GAMES: GameInfo[] = [
 		icon: "🔍",
 		enabled: true,
 	},
+	{
+		id: "valoshka",
+		name: "Valoška",
+		nameBel: "Валошка",
+		description:
+			"Складайце словы з сямі літар. Цэнтральная літара — абавязковая ў кожным слове.",
+		descriptionBel: "Складайце словы з 7 прапанаваных літар",
+		path: "/valoshka",
+		color: "#5b6fa8",
+		colorDark: "#7a8fc8",
+		icon: "🌸",
+		enabled: true,
+	},
+
 ];
