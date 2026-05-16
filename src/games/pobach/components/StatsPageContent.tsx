@@ -123,7 +123,7 @@ export function StatsPageContent({
 					{showToast && (
 						<div
 							aria-live="polite"
-							className="absolute -top-10 left-1/2 -translate-x-1/2 px-inset-sm py-1.5 rounded-lg bg-ink text-paper text-xs font-medium whitespace-nowrap shadow-lg"
+							className="absolute -top-10 left-1/2 -translate-x-1/2 px-inset-sm py-flow-sm rounded-lg bg-ink text-paper text-xs font-medium whitespace-nowrap shadow-lg"
 						>
 							Скапіравана!
 						</div>
