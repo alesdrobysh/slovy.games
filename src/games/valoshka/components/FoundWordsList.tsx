@@ -1,51 +1,47 @@
 "use client";
 
+import { Badge } from "@/shared/components/ui/Badge";
+import { Typography } from "@/shared/components/ui/Typography";
+
 interface FoundWordsListProps {
 	words: string[];
 	pangrams: string[];
-	lastFoundWord: string | null;
 }
 
 export function FoundWordsList({
 	words,
 	pangrams,
-	lastFoundWord,
 }: FoundWordsListProps) {
 	const sorted = [...words].sort((a, b) => a.localeCompare(b, "be"));
 	const count = words.length;
 
 	return (
-		<aside className="bg-card ring-1 ring-rule rounded-2xl p-5 max-h-[60vh] overflow-y-auto">
-			<div className="flex items-baseline justify-between mb-4">
-				<h2 className="font-display text-lg font-medium text-ink">
+		<aside className="bg-card ring-1 ring-rule rounded-2xl p-inset-md max-h-[60vh] overflow-y-auto">
+			<div className="flex items-baseline justify-between mb-flow-lg">
+				<Typography variant="subheading" as="h2">
 					{count === 0
 						? "Пакуль нічога"
 						: `${count} ${count === 1 ? "слова" : "слоў"}`}
-				</h2>
+				</Typography>
 			</div>
 
 			{count === 0 ? (
-				<p className="text-sm text-ink-soft">Пачніце ўводзіць словы...</p>
+				<Typography variant="body">Пачніце ўводзіць словы...</Typography>
 			) : (
-				<ul className="grid grid-cols-2 gap-y-1.5 gap-x-4 text-sm font-display">
+				<ul className="grid grid-cols-2 gap-y-flow-xs gap-x-flow-lg text-sm font-display">
 					{sorted.map((word) => {
 						const isPangram = pangrams.includes(word);
-						const isNew = word === lastFoundWord;
 						return (
 							<li
 								key={word}
-								className={`${
-									isNew ? "word-pop" : ""
-								} flex items-center gap-1.5 ${
-									isPangram ? "text-valoshka font-semibold" : "text-ink"
-								}`}
+								className="flex items-center gap-flow-xs"
 							>
-								{word}
-								{isPangram && (
-									<span className="text-[9px] bg-valoshka-soft text-valoshka rounded px-1 py-px font-bold uppercase tracking-wider">
-										панг
-									</span>
-								)}
+								<Typography
+									variant="body"
+									className={isPangram ? "text-valoshka" : ""}
+								>
+									{word}
+								</Typography>
 							</li>
 						);
 					})}

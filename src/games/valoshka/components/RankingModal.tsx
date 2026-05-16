@@ -2,6 +2,7 @@
 
 import { RANKS } from "@/games/valoshka/lib/scoring";
 import { Modal } from "@/shared/components/ui/Modal";
+import { Typography } from "@/shared/components/ui/Typography";
 
 interface RankingModalProps {
 	score: number;
@@ -31,45 +32,20 @@ export function RankingModal({
 
 	return (
 		<Modal isOpen={true} onClose={onClose} title="Рангі">
-			<p className="text-sm text-[var(--fg-2)] mb-3">
-				Рангі залежаць ад адсотка магчымых балаў.
-			</p>
+			<div className="mb-flow-md">
+				<Typography variant="body">
+					Рангі залежаць ад адсотка магчымых балаў.
+				</Typography>
+			</div>
 
 			{/* Column headers */}
-			<div
-				style={{
-					display: "flex",
-					justifyContent: "space-between",
-					padding: "16px 0 8px",
-					borderBottom: "1px solid var(--border)",
-				}}
-			>
-				<span
-					style={{
-						fontSize: "11px",
-						fontWeight: "700",
-						color: "var(--fg)",
-						textTransform: "uppercase",
-						letterSpacing: "0.08em",
-					}}
-				>
-					Ранг
-				</span>
-				<span
-					style={{
-						fontSize: "11px",
-						fontWeight: "700",
-						color: "var(--fg)",
-						textTransform: "uppercase",
-						letterSpacing: "0.08em",
-					}}
-				>
-					Мін. балы
-				</span>
+			<div className="flex justify-between pt-flow-lg pb-flow-sm border-b border-rule">
+				<Typography variant="overline">Ранг</Typography>
+				<Typography variant="overline">Мін. балы</Typography>
 			</div>
 
 			{/* Rank rows */}
-			<div style={{ padding: "8px 0 20px" }}>
+			<div className="pt-flow-sm pb-inset-md">
 				{ranksReversed.map((r) => {
 					const originalIdx = RANKS.indexOf(r);
 					const isCurrent = originalIdx === rankIdx;
@@ -80,74 +56,26 @@ export function RankingModal({
 						return (
 							<div
 								key={r.name}
-								style={{
-									background: "var(--valoshka-dim)",
-									border: "1px solid var(--accent-border)",
-									borderRadius: "999px",
-									padding: "10px 20px",
-									margin: "4px 0",
-									display: "flex",
-									alignItems: "center",
-									justifyContent: "space-between",
-									gap: "8px",
-								}}
+								className="bg-(--accent-dim) border border-(--accent-border) rounded-full py-flow-sm px-inset-md my-flow-xs flex items-center justify-between gap-flow-sm"
 							>
-								<div
-									style={{
-										display: "flex",
-										alignItems: "center",
-										gap: "12px",
-									}}
-								>
-									<span
-										style={{
-											width: "28px",
-											height: "28px",
-											borderRadius: "50%",
-											background: "var(--valoshka)",
-											display: "flex",
-											alignItems: "center",
-											justifyContent: "center",
-											color: "white",
-											fontSize: "11px",
-											fontWeight: "700",
-											flexShrink: 0,
-										}}
-									>
+								<div className="flex items-center gap-flow-md">
+									<span className="size-7 rounded-full bg-valoshka flex items-center justify-center text-white text-xs font-bold shrink-0">
 										{score}
 									</span>
 									<div>
-										<div
-											style={{
-												fontWeight: "700",
-												fontSize: "15px",
-												color: "var(--valoshka)",
-											}}
-										>
+										<Typography variant="smallSerif" as="div" className="text-valoshka">
 											{r.name}
-										</div>
+										</Typography>
 										{nextRank && (
-											<div
-												style={{
-													fontSize: "11px",
-													color: "var(--fg-2)",
-													marginTop: "1px",
-												}}
-											>
+											<Typography variant="label">
 												яшчэ {pointsToNext} да наступнага
-											</div>
+											</Typography>
 										)}
 									</div>
 								</div>
-								<span
-									style={{
-										fontWeight: "700",
-										fontSize: "15px",
-										color: "var(--valoshka)",
-									}}
-								>
+								<Typography variant="smallSerif" className="text-valoshka">
 									{pts}
-								</span>
+								</Typography>
 							</div>
 						);
 					}
@@ -155,36 +83,15 @@ export function RankingModal({
 					return (
 						<div
 							key={r.name}
-							style={{
-								display: "flex",
-								alignItems: "center",
-								justifyContent: "space-between",
-								padding: "8px 20px",
-							}}
+							className="flex items-center justify-between py-flow-sm px-inset-md"
 						>
-							<div
-								style={{ display: "flex", alignItems: "center", gap: "12px" }}
-							>
+							<div className="flex items-center gap-flow-md">
 								<span
-									style={{
-										width: "8px",
-										height: "8px",
-										borderRadius: "50%",
-										background: isPast
-											? "var(--valoshka)"
-											: "var(--border)",
-										flexShrink: 0,
-									}}
+									className={`size-2 rounded-full shrink-0 ${isPast ? "bg-valoshka" : "bg-rule"}`}
 								/>
-								<span style={{ fontSize: "14px", color: "var(--fg)" }}>
-									{r.name}
-								</span>
+								<Typography variant="body" as="span" className="text-ink">{r.name}</Typography>
 							</div>
-							<span
-								style={{ fontSize: "14px", color: "var(--fg-2)" }}
-							>
-								{pts}
-							</span>
+							<Typography variant="body" as="span" className="text-ink-muted">{pts}</Typography>
 						</div>
 					);
 				})}

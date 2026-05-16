@@ -4,10 +4,13 @@ export type TypographyVariant =
   | 'titleHero'
   | 'title'
   | 'heading'
+  | 'subheading'
+  | 'displaySm'
   | 'overline'
   | 'body'
   | 'caption'
   | 'smallSerif'
+  | 'label'
   | 'gameInput';
 
 interface VariantConfig {
@@ -52,6 +55,26 @@ const VARIANTS: Record<TypographyVariant, VariantConfig> = {
       margin: 0,
     },
   },
+  subheading: {
+    tag: 'h3',
+    style: {
+      fontFamily: D,
+      fontWeight: 500,
+      fontSize: '18px',
+      lineHeight: 1.2,
+      margin: 0,
+    },
+  },
+  displaySm: {
+    tag: 'span',
+    style: {
+      fontFamily: D,
+      fontWeight: 500,
+      fontSize: '16px',
+      lineHeight: 1.2,
+      margin: 0,
+    },
+  },
   overline: {
     tag: 'span',
     style: {
@@ -84,6 +107,16 @@ const VARIANTS: Record<TypographyVariant, VariantConfig> = {
       fontWeight: 400,
       fontSize: '14px',
       lineHeight: 1.65,
+      margin: 0,
+    },
+  },
+  label: {
+    tag: 'span',
+    style: {
+      fontFamily: B,
+      fontWeight: 400,
+      fontSize: '12px',
+      lineHeight: 1.5,
       margin: 0,
     },
   },

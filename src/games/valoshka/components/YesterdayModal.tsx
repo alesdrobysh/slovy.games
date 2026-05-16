@@ -12,7 +12,11 @@ import {
 	loadProgress,
 } from "@/games/valoshka/lib/storage";
 import type { Puzzle, SavedProgress } from "@/games/valoshka/types";
+import { Badge } from "@/shared/components/ui/Badge";
+import { Button } from "@/shared/components/ui/Button";
 import { Modal } from "@/shared/components/ui/Modal";
+import { Typography } from "@/shared/components/ui/Typography";
+import { Check, Ellipsis, ExternalLink, Flag, X } from "lucide-react";
 import { useModal } from "@/shared/hooks/useModal";
 
 type FlagState = "idle" | "confirming" | "sending" | "sent";
@@ -75,22 +79,9 @@ export function YesterdayModal({ currentDate }: YesterdayModalProps) {
 	return (
 		<>
 			{/* Header trigger */}
-			<button
-				type="button"
-				onClick={yesterdayModal.open}
-				style={{
-					background: "none",
-					border: "none",
-					cursor: "pointer",
-					color: "var(--fg-2)",
-					fontFamily: "var(--font-b)",
-					fontSize: "13px",
-					fontWeight: "600",
-					padding: 0,
-				}}
-			>
+			<Button variant="ghost" color="neutral" onClick={yesterdayModal.open}>
 				Учора
-			</button>
+			</Button>
 
 			<Modal
 				isOpen={yesterdayModal.isOpen}
@@ -99,29 +90,16 @@ export function YesterdayModal({ currentDate }: YesterdayModalProps) {
 			>
 				{/* Progress summary */}
 				{progress && (
-					<div
-						style={{
-							padding: "0 0 12px",
-							borderBottom: "1px solid var(--border)",
-							fontSize: "13px",
-							color: "var(--fg-2)",
-						}}
-					>
-						Вы знайшлі {progress.foundWords.length} з {puzzle.answers.length}{" "}
-						слоў ({progress.score} пт)
+					<div className="pb-flow-md border-b border-rule">
+						<Typography variant="body">
+							Вы знайшлі {progress.foundWords.length} з {puzzle.answers.length}{" "}
+							слоў ({progress.score} пт)
+						</Typography>
 					</div>
 				)}
 
 				{/* Word list */}
-				<ul
-					style={{
-						margin: 0,
-						padding: "8px 0 0",
-						listStyle: "none",
-						overflowY: "auto",
-						maxHeight: "60vh",
-					}}
-				>
+				<ul className="m-0 pt-flow-sm list-none overflow-y-auto max-h-[40vh]">
 					{sorted.map((word) => {
 						const isPangram = puzzle.pangrams.includes(word);
 						const wasFound = progress
@@ -130,144 +108,75 @@ export function YesterdayModal({ currentDate }: YesterdayModalProps) {
 						return (
 							<li
 								key={word}
-								className="group"
-								style={{
-									fontSize: "14px",
-									fontWeight: isPangram ? "700" : "400",
-									color: isPangram
-										? "var(--valoshka)"
+								className={`group text-sm flex items-center gap-flow-sm py-flow-xs border-b border-rule ${
+									isPangram
+										? "font-bold text-valoshka"
 										: wasFound
-											? "var(--fg)"
-											: "var(--fg-2)",
-									opacity: wasFound ? 1 : 0.45,
-									padding: "6px 0",
-									borderBottom: "1px solid var(--border)",
-									display: "flex",
-									alignItems: "center",
-									gap: "8px",
-								}}
+											? "text-ink"
+											: "text-ink-muted opacity-45"
+								}`}
 							>
-								{word}
-								{isPangram && (
-									<span
-										style={{
-											fontSize: "9px",
-											background: "var(--valoshka-dim)",
-											color: "var(--valoshka)",
-											border: "1px solid var(--accent-border)",
-											borderRadius: "4px",
-											padding: "1px 6px",
-											fontWeight: "700",
-											letterSpacing: "0.08em",
-											textTransform: "uppercase",
-										}}
-									>
-										панграма
-									</span>
-								)}
-								<span
-									style={{
-										marginLeft: "auto",
-										display: "flex",
-										alignItems: "center",
-										gap: "4px",
-										flexShrink: 0,
-									}}
-								>
+								<Typography variant="caption">{word}</Typography>
+								<span className="ml-auto flex items-center gap-flow-xs shrink-0">
 									{showFlags &&
 										(() => {
 											const fs = getFlagState(word);
 											if (fs === "confirming") {
 												return (
 													<>
-														<span
-															style={{
-																fontSize: "11px",
-																color: "var(--fg-2)",
-															}}
-														>
+														<Typography variant="label" className="text-ink-muted">
 															адправіць?
-														</span>
-														<button
-															type="button"
+														</Typography>
+														<Button
+															variant="ghost"
+															color="primary"
 															onClick={() => handleConfirm(word, puzzle.date)}
-															style={{
-																background: "none",
-																border: "none",
-																cursor: "pointer",
-																color: "var(--valoshka)",
-																fontSize: "24px",
-																lineHeight: 1,
-																padding: "0 2px",
-															}}
-															title="Пацвердзіць"
+															aria-label="Пацвердзіць"
 														>
-															✓
-														</button>
-														<button
-															type="button"
+															<Check />
+														</Button>
+														<Button
+															variant="ghost"
+															color="neutral"
 															onClick={() => setWordFlagState(word, "idle")}
-															style={{
-																background: "none",
-																border: "none",
-																cursor: "pointer",
-																color: "var(--fg-2)",
-																fontSize: "24px",
-																lineHeight: 1,
-																padding: "0 2px",
-															}}
-															title="Адмяніць"
+															aria-label="Адмяніць"
 														>
-															✕
-														</button>
+															<X />
+														</Button>
 													</>
 												);
 											}
 											return (
-												<button
-													type="button"
+												<Button
+													variant="ghost"
+													color="neutral"
 													onClick={() => handleFlagClick(word)}
 													disabled={fs === "sending"}
-													className="opacity-0 group-hover:opacity-100"
-													style={{
-														background: "none",
-														border: "none",
-														cursor: fs === "sent" ? "default" : "pointer",
-														color: "var(--fg-2)",
-														fontSize: "24px",
-														lineHeight: 1,
-														padding: "0 2px",
-														opacity:
-															fs === "sent"
-																? 0.6
-																: fs === "sending"
-																	? 0.4
-																	: undefined,
-													}}
-													title={
+													className={
+														fs === "idle"
+															? "opacity-0 group-hover:opacity-100"
+															: fs === "sent"
+																? "opacity-60"
+																: "opacity-40"
+													}
+													aria-label={
 														fs === "sent"
 															? "Адпраўлена"
 															: "Паведаміць пра памылку ў слове"
 													}
 												>
-													{fs === "sent" ? "✓" : fs === "sending" ? "…" : "⚑"}
-												</button>
+													{fs === "sent" ? <Check /> : fs === "sending" ? <Ellipsis /> : <Flag />}
+												</Button>
 											);
 										})()}
 									<a
 										href={`https://verbum.by/tsblm2022/${encodeURIComponent(word)}`}
 										target="_blank"
 										rel="noreferrer"
-										className="opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
-										style={{
-											color: "var(--fg-2)",
-											fontSize: "12px",
-											lineHeight: 1,
-											textDecoration: "none",
-										}}
+										className="opacity-100 sm:opacity-0 sm:group-hover:opacity-100 text-ink-muted text-xs leading-none no-underline"
 										title={`Знайсці "${word}" у слоўніку`}
 									>
-										↗
+										<ExternalLink />
 									</a>
 								</span>
 							</li>

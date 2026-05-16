@@ -9,6 +9,9 @@ import { HintDisplay } from "./HintDisplay";
 import { HowToPlay, useHowToPlay } from "./HowToPlay";
 import { InputDisplay } from "./InputDisplay";
 import { ProgressBar } from "./ProgressBar";
+import { Button } from "@/shared/components/ui/Button";
+import { Typography } from "@/shared/components/ui/Typography";
+import { ChevronDown } from "lucide-react";
 
 interface GamePageProps {
 	puzzle: Puzzle;
@@ -22,41 +25,34 @@ export function GamePage({ puzzle }: GamePageProps) {
 		<div className="mx-auto max-w-5xl px-5 sm:px-8 select-none font-sans">
 			{/* Mobile: collapsible words toggle */}
 			<div className="lg:hidden border-b border-rule py-2">
-				<button
-					type="button"
+				<Button
+					variant="ghost"
+					color="neutral"
 					onClick={actions.toggleWordsOpen}
-					className="flex items-center gap-1.5 text-sm font-semibold text-ink-muted bg-transparent border-none cursor-pointer p-1"
+					className="w-full flex items-center gap-flow-xs"
 				>
-					Словы ({state.foundWords.length})
+					Словы ({state.foundWords.length}/{puzzle.answers.length})
 					{!state.wordsOpen && state.foundWords.length > 0 && (
-						<span className="text-ink-muted font-normal ml-2">
+						<Typography variant="label" className="ml-flow-sm truncate min-w-0">
 							{state.foundWords
-								.slice(-2)
-								.map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+								.slice()
+								.reverse()
 								.join("  ")}
-						</span>
+						</Typography>
 					)}
-					<span
-						className="text-[10px] inline-block transition-transform"
-						style={{
-							transform: state.wordsOpen ? "rotate(180deg)" : "rotate(0deg)",
-						}}
-					>
-						▾
-					</span>
-				</button>
+					<ChevronDown
+						className={`transition-transform ${state.wordsOpen ? "rotate-180" : ""}`}
+						size={14}
+					/>
+				</Button>
 			</div>
 
 			{/* Mobile: collapsible words panel */}
 			{state.wordsOpen && (
-				<div
-					className="lg:hidden py-3"
-					style={{ maxHeight: "40vh", overflowY: "auto" }}
-				>
+				<div className="lg:hidden py-flow-sm px-flow-sm max-h-[40vh] overflow-y-auto">
 					<FoundWordsList
 						words={state.foundWords}
 						pangrams={puzzle.pangrams}
-						lastFoundWord={state.lastFoundWord}
 					/>
 				</div>
 			)}
@@ -64,7 +60,7 @@ export function GamePage({ puzzle }: GamePageProps) {
 			{/* Main area */}
 			<div className="flex flex-col items-center gap-2 py-2 sm:gap-4 sm:py-4 lg:flex-row lg:items-start lg:gap-14 lg:py-8">
 				{/* Left: game controls */}
-				<div className="flex flex-col items-center gap-2 sm:gap-4 w-full max-w-sm lg:max-w-none lg:w-[380px]">
+				<div className="flex flex-col items-center gap-2 sm:gap-4 w-full max-w-sm lg:max-w-none lg:w-95">
 					<div className="w-full">
 						<ProgressBar
 							score={state.score}
@@ -95,11 +91,8 @@ export function GamePage({ puzzle }: GamePageProps) {
 					</div>
 
 					<div
-						style={{
-							width: "100%",
-							maxWidth: "min(370px, calc(100vw - 60px))",
-							touchAction: "none",
-						}}
+						className="w-full touch-none"
+						style={{ maxWidth: "min(370px, calc(100vw - 60px))" }}
 					>
 						<Cornflower
 							center={puzzle.center}
@@ -122,7 +115,6 @@ export function GamePage({ puzzle }: GamePageProps) {
 					<FoundWordsList
 						words={state.foundWords}
 						pangrams={puzzle.pangrams}
-						lastFoundWord={state.lastFoundWord}
 					/>
 				</div>
 			</div>

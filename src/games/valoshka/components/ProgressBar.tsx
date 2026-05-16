@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { RankingModal } from "@/games/valoshka/components/RankingModal";
 import { getRank, getRankIndex, RANKS } from "@/games/valoshka/lib/scoring";
 import { Badge } from "@/shared/components/ui/Badge";
+import { Button } from "@/shared/components/ui/Button";
 import { useShare } from "@/shared/hooks/useShare";
 
 function buildShareText(
@@ -49,28 +50,26 @@ export function ProgressBar({
 	return (
 		<>
 			<div className="w-full max-w-sm">
-				<div className="flex items-center justify-between mb-3">
-					<div className="flex items-center gap-2">
-						<button
-							type="button"
+				<div className="flex items-center justify-between mb-flow-md">
+					<div className="flex items-center gap-flow-sm">
+						<Button
+							variant="ghost"
+							color="neutral"
 							onClick={() => setShowRanking(true)}
-							className="cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded-sm"
 						>
 							<Badge>{rank.name}</Badge>
-						</button>
-						<button
-							type="button"
+						</Button>
+						<Button
+							variant="ghost"
+							color={showToast ? "primary" : "neutral"}
 							onClick={share}
-							className={`text-xs font-semibold py-0.5 px-1.5 rounded transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper ${
-								showToast ? "text-valoshka" : "text-ink-muted hover:text-ink"
-							}`}
 						>
 							{showToast ? "Скапіравана!" : "Падзяліцца"}
-						</button>
+						</Button>
 					</div>
 					<span className="text-sm font-semibold tabular-nums text-ink-muted font-sans">
 						<span className="text-ink">{score}</span>
-						<span className="mx-1 text-rule">/</span>
+						<span className="mx-flow-xs text-rule">/</span>
 						{maxScore}
 					</span>
 				</div>
@@ -83,8 +82,8 @@ export function ProgressBar({
 					onClick={() => setShowRanking(true)}
 				>
 					<div
-						className="w-full rounded-full overflow-hidden"
-						style={{ height: "3px", background: "var(--border)" }}
+						className="w-full rounded-full overflow-hidden bg-rule"
+						style={{ height: "3px" }}
 					>
 						<div
 							className="h-full rounded-full origin-left"
@@ -107,21 +106,15 @@ export function ProgressBar({
 							<div
 								key={r.name}
 								title={r.name}
+								className={`absolute rounded-full z-1 transition-all duration-300 ${isActive ? "bg-valoshka" : "bg-rule"}`}
 								style={{
-									position: "absolute",
 									left: `${dotPct}%`,
 									transform: "translateX(-50%)",
 									width: isCurrent ? "12px" : "7px",
 									height: isCurrent ? "12px" : "7px",
-									borderRadius: "50%",
-									background: isActive
-										? "var(--valoshka)"
-										: "var(--border)",
 									border: isCurrent
 										? "2px solid var(--accent-dark)"
 										: "none",
-									transition: "all 0.3s ease",
-									zIndex: 1,
 								}}
 							/>
 						);
