@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 export interface BadgeProps {
 	children: ReactNode;
-	variant?: "accent" | "success" | "neutral";
+	variant?: "accent" | "success" | "neutral" | "pobach";
 }
 
 export function Badge({ children, variant = "accent" }: BadgeProps) {
@@ -10,6 +10,7 @@ export function Badge({ children, variant = "accent" }: BadgeProps) {
 		accent: "bg-valoshka/5 text-valoshka border border-valoshka/20",
 		success: "bg-success/5 text-success border border-success/20",
 		neutral: "bg-ink/5 text-ink-muted border border-rule",
+		pobach: "bg-pobach-soft text-pobach border border-pobach/20",
 	};
 
 	return (
