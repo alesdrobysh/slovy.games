@@ -14,16 +14,9 @@ import {
 } from "@/games/pobach/lib/utils";
 import { Button } from "@/shared/components/ui/Button";
 import { StatCard } from "@/shared/components/ui/StatCard";
+import { Typography } from "@/shared/components/ui/Typography";
 import { useShare } from "@/shared/hooks/useShare";
 import { DistributionChart } from "./DistributionChart";
-
-function SectionTitle({ children }: { children: React.ReactNode }) {
-	return (
-		<h2 className="font-display text-lg font-medium text-ink mt-8 mb-4">
-			{children}
-		</h2>
-	);
-}
 
 function HistoryItem({ game }: { game: HistoryRecord }) {
 	return (
@@ -33,10 +26,10 @@ function HistoryItem({ game }: { game: HistoryRecord }) {
 					game.won ? "bg-success" : "bg-destructive"
 				}`}
 			/>
-			<div className="font-semibold text-sm text-ink flex-1">
+			<Typography variant="body" as="div" className="flex-1 text-ink">
 				<span className="font-display">#{game.dayIndex + 1}</span> Дзень
-			</div>
-			<div className="text-xs text-ink-muted flex items-center gap-3">
+			</Typography>
+			<Typography variant="caption" as="div" className="flex items-center gap-3 text-ink-muted">
 				{game.won ? (
 					<span>
 						<span className="font-display tabular-nums">{game.attempts}</span>{" "}
@@ -54,7 +47,7 @@ function HistoryItem({ game }: { game: HistoryRecord }) {
 					) : null;
 				})()}
 				<span>{formatRelativeDate(game.dayIndex)}</span>
-			</div>
+			</Typography>
 		</div>
 	);
 }
@@ -101,15 +94,15 @@ export function StatsPageContent({
 					<StatCard label="Макс." value={stats.maxStreak} />
 				</div>
 
-				<SectionTitle>Размеркаванне спроб</SectionTitle>
+				<Typography variant="heading" as="h2" className="mt-8 mb-4 text-ink">Размеркаванне спроб</Typography>
 				<DistributionChart distribution={stats.distribution} />
 
-				<SectionTitle>Гісторыя гульняў</SectionTitle>
+				<Typography variant="heading" as="h2" className="mt-8 mb-4 text-ink">Гісторыя гульняў</Typography>
 				<div className="bg-card ring-1 ring-rule rounded-2xl px-4">
 					{history.length === 0 ? (
-						<div className="py-6 text-center text-sm text-ink-muted">
+						<Typography variant="body" as="div" className="py-6 text-center text-ink-muted">
 							Пакуль няма гісторыі гульняў
-						</div>
+						</Typography>
 					) : (
 						history.map((game) => (
 							<HistoryItem key={game.dayIndex} game={game} />
