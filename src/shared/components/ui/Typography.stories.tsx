@@ -57,6 +57,12 @@ const SCALE: ScaleRow[] = [
     spec: 'Wix Madefor Text italic 400 · 14px · lh 1.65',
     sample: 'Словы адсартаваны па частаце ўжывання ў сучаснай беларускай мове.',
   },
+  {
+    variant: 'smallSerif',
+    label: 'smallSerif',
+    spec: 'Literata 500 · 14px · lh 1',
+    sample: 'В _ Р _ Б _ Й',
+  },
 ];
 
 function SpecRow({ variant, label, spec, sample }: ScaleRow) {

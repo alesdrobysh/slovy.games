@@ -6,7 +6,8 @@ export type TypographyVariant =
   | 'heading'
   | 'overline'
   | 'body'
-  | 'caption';
+  | 'caption'
+  | 'smallSerif';
 
 interface VariantConfig {
   style: CSSProperties;
@@ -82,6 +83,16 @@ const VARIANTS: Record<TypographyVariant, VariantConfig> = {
       fontWeight: 400,
       fontSize: '14px',
       lineHeight: 1.65,
+      margin: 0,
+    },
+  },
+  smallSerif: {
+    tag: 'span',
+    style: {
+      fontFamily: D,
+      fontWeight: 500,
+      fontSize: '14px',
+      lineHeight: 1,
       margin: 0,
     },
   },
