@@ -20,7 +20,7 @@ import { DistributionChart } from "./DistributionChart";
 
 function HistoryItem({ game }: { game: HistoryRecord }) {
 	return (
-		<div className="flex items-center gap-3 py-3.5 border-b border-rule last:border-0">
+		<div className="flex items-center gap-flow-md py-flow-lg border-b border-rule last:border-0">
 			<span
 				className={`w-2.5 h-2.5 rounded-full shrink-0 ${
 					game.won ? "bg-success" : "bg-destructive"
@@ -29,7 +29,7 @@ function HistoryItem({ game }: { game: HistoryRecord }) {
 			<Typography variant="body" as="div" className="flex-1 text-ink">
 				<span className="font-display">#{game.dayIndex + 1}</span> Дзень
 			</Typography>
-			<Typography variant="caption" as="div" className="flex items-center gap-3 text-ink-muted">
+			<Typography variant="caption" as="div" className="flex items-center gap-flow-md text-ink-muted">
 				{game.won ? (
 					<span>
 						<span className="font-display tabular-nums">{game.attempts}</span>{" "}
@@ -84,8 +84,8 @@ export function StatsPageContent({
 		<>
 			<Nav />
 
-			<div className="page-narrow page-container py-6">
-				<div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+			<div className="page-narrow page-container py-inset-lg">
+				<div className="grid grid-cols-2 sm:grid-cols-4 gap-flow-md">
 					<StatCard label="Гульняў" value={stats.gamesPlayed} />
 					<div className="sm:col-span-2 lg:col-span-1">
 						<StatCard label="Перамог %" value={winRate} />
@@ -94,13 +94,13 @@ export function StatsPageContent({
 					<StatCard label="Макс." value={stats.maxStreak} />
 				</div>
 
-				<Typography variant="heading" as="h2" className="mt-8 mb-4 text-ink">Размеркаванне спроб</Typography>
+				<Typography variant="heading" as="h2" className="mt-inset-xl mb-flow-lg text-ink">Размеркаванне спроб</Typography>
 				<DistributionChart distribution={stats.distribution} />
 
-				<Typography variant="heading" as="h2" className="mt-8 mb-4 text-ink">Гісторыя гульняў</Typography>
-				<div className="bg-card ring-1 ring-rule rounded-2xl px-4">
+				<Typography variant="heading" as="h2" className="mt-inset-xl mb-flow-lg text-ink">Гісторыя гульняў</Typography>
+				<div className="bg-card ring-1 ring-rule rounded-2xl px-flow-lg">
 					{history.length === 0 ? (
-						<Typography variant="body" as="div" className="py-6 text-center text-ink-muted">
+						<Typography variant="body" as="div" className="py-inset-lg text-center text-ink-muted">
 							Пакуль няма гісторыі гульняў
 						</Typography>
 					) : (
@@ -110,7 +110,7 @@ export function StatsPageContent({
 					)}
 				</div>
 
-				<div className="mt-8 flex justify-center relative">
+				<div className="mt-inset-xl flex justify-center relative">
 					<Button
 						onClick={share}
 						disabled={isSharing}
@@ -123,7 +123,7 @@ export function StatsPageContent({
 					{showToast && (
 						<div
 							aria-live="polite"
-							className="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-lg bg-ink text-paper text-xs font-medium whitespace-nowrap shadow-lg"
+							className="absolute -top-10 left-1/2 -translate-x-1/2 px-inset-sm py-1.5 rounded-lg bg-ink text-paper text-xs font-medium whitespace-nowrap shadow-lg"
 						>
 							Скапіравана!
 						</div>
