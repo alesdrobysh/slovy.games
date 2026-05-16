@@ -29,7 +29,7 @@ export default function HubPage() {
 			<div className="page-container page-section relative">
 				{/* Editorial Header */}
 				<div className="mb-section-gap animate-fade-in-up">
-					<div className="max-w-3xl flex flex-col gap-inset-lg">
+					<div className="max-w-3xl flex flex-col">
 						<Typography variant="titleHero" as="h1">
 							Штодзённыя інтэлектуальныя гульні
 						</Typography>

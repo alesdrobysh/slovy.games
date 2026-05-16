@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Nav } from "@/shared/components/Nav";
+import { Typography } from "@/shared/components/ui/Typography";
 
 export default function PrivacyPage() {
 	return (
@@ -8,116 +9,116 @@ export default function PrivacyPage() {
 		<div className="page-narrow page-container page-section">
 			<Link
 				href="/"
-				className="text-xs uppercase tracking-[0.2em] text-ink-soft hover:text-ink transition-colors mb-6 inline-block no-underline"
+				className="text-ink-soft hover:text-ink transition-colors mb-inset-lg inline-block no-underline"
 			>
-				← Назад
+				<Typography variant="overline" as="span">← Назад</Typography>
 			</Link>
 
-			<h1 className="font-display text-4xl sm:text-5xl font-medium tracking-tight text-ink mb-8">
+			<Typography variant="title" as="h1" className="mb-inset-xl">
 				Прыватнасць
-			</h1>
+			</Typography>
 
-			<div className="space-y-8 text-sm leading-relaxed text-ink-muted">
-				<section>
-					<h2 className="font-display text-xl font-semibold text-ink mb-3">
+			<div className="space-y-inset-xl">
+				<section className="space-y-flow-md">
+					<Typography variant="heading" as="h2">
 						Збор даных
-					</h2>
-					<p className="mb-3">
+					</Typography>
+					<Typography variant="body">
 						Мы збіраем толькі мінімальныя даныя, неабходныя для працы гульні:
-					</p>
-					<ul className="space-y-1 ml-4 list-disc">
-						<li>Ідэнтыфікатар сесіі (для захавання прагрэсу)</li>
-						<li>Гісторыя вашых спробаў і здагадак</li>
-						<li>Статыстыка гульні (колькасць спробаў, час)</li>
+					</Typography>
+					<ul className="space-y-flow-xs ml-flow-lg list-disc">
+						<Typography variant="body" as="li">Ідэнтыфікатар сесіі (для захавання прагрэсу)</Typography>
+						<Typography variant="body" as="li">Гісторыя вашых спробаў і здагадак</Typography>
+						<Typography variant="body" as="li">Статыстыка гульні (колькасць спробаў, час)</Typography>
 					</ul>
-					<p className="mt-3">
+					<Typography variant="body">
 						Усе даныя захоўваюцца ананімна і не змяшчаюць асабістай
 						інфармацыі.
-					</p>
+					</Typography>
 				</section>
 
-				<section>
-					<h2 className="font-display text-xl font-semibold text-ink mb-3">
+				<section className="space-y-flow-md">
+					<Typography variant="heading" as="h2">
 						Мэта выкарыстання
-					</h2>
-					<p className="mb-3">Даныя выкарыстоўваюцца выключна для:</p>
-					<ul className="space-y-1 ml-4 list-disc">
-						<li>Захавання вашага прагрэсу ў гульні</li>
-						<li>Паказу статыстыкі і дасягненняў</li>
-						<li>Аналізу папулярнасці слоў для паляпшэння слоўніка</li>
-						<li>Тэхнічнай падтрымкі працы сайта</li>
+					</Typography>
+					<Typography variant="body">Даныя выкарыстоўваюцца выключна для:</Typography>
+					<ul className="space-y-flow-xs ml-flow-lg list-disc">
+						<Typography variant="body" as="li">Захавання вашага прагрэсу ў гульні</Typography>
+						<Typography variant="body" as="li">Паказу статыстыкі і дасягненняў</Typography>
+						<Typography variant="body" as="li">Аналізу папулярнасці слоў для паляпшэння слоўніка</Typography>
+						<Typography variant="body" as="li">Тэхнічнай падтрымкі працы сайта</Typography>
 					</ul>
 				</section>
 
-				<section>
-					<h2 className="font-display text-xl font-semibold text-ink mb-3">
+				<section className="space-y-flow-md">
+					<Typography variant="heading" as="h2">
 						Аналітыка
-					</h2>
-					<p className="mb-3">
+					</Typography>
+					<Typography variant="body">
 						Мы выкарыстоўваем Vercel Analytics для збору агульнай статыстыкі
 						наведванняў сайта. Гэта дазваляе нам разумець, як карыстальнікі
 						выкарыстоўваюць гульню, і паляпшаць яе.
-					</p>
-					<p className="mb-3">
+					</Typography>
+					<Typography variant="body">
 						Vercel Analytics не збірае асабістых даных і не выкарыстоўвае
 						cookies.
-					</p>
-					<p>
+					</Typography>
+					<Typography variant="body">
 						Мы таксама выкарыстоўваем PostHog для аналізу гульнявой актыўнасці:
 						колькасць спробаў, выкарыстанне падказак, водгукі пра словы. Усе
 						даныя ананімныя і не ўтрымліваюць асабістай інфармацыі.
-					</p>
+					</Typography>
 				</section>
 
-				<section>
-					<h2 className="font-display text-xl font-semibold text-ink mb-3">
+				<section className="space-y-flow-md">
+					<Typography variant="heading" as="h2">
 						Доступ да даных
-					</h2>
-					<p className="mb-3">
+					</Typography>
+					<Typography variant="body">
 						Вашы даныя не перадаюцца трэцім асобам. Мы не выкарыстоўваем
 						рэкламу і не прадаем інфармацыю знешнім сэрвісам.
-					</p>
-					<p>
+					</Typography>
+					<Typography variant="body">
 						Толькі адміністратары сайта маюць доступ да тэхнічных даных для
 						падтрымкі працы сістэмы.
-					</p>
+					</Typography>
 				</section>
 
-				<section>
-					<h2 className="font-display text-xl font-semibold text-ink mb-3">
+				<section className="space-y-flow-md">
+					<Typography variant="heading" as="h2">
 						Захаванне даных
-					</h2>
-					<p className="mb-3">
+					</Typography>
+					<Typography variant="body">
 						Даныя захоўваюцца ананімна без IP-адрасоў або іншай
 						ідэнтыфікуючай інфармацыі. Вы можаце ачысціць свой прагрэс у любы
 						момант праз налады браўзера.
-					</p>
-					<p className="mb-3">
+					</Typography>
+					<Typography variant="body">
 						Мы не захоўваем IP-адрасы, геалакацыю або іншую тэхнічную інфармацыю
 						пра карыстальнікаў.
-					</p>
-					<p>
+					</Typography>
+					<Typography variant="body">
 						Мы не збіраем дакладную геалакацыю (GPS). Мы вызначаем толькі
 						прыблізнае месцазнаходжанне (Краіна, Горад) на аснове IP-адраса для
 						агульнай статыстыкі. Самі IP-адрасы мы не захоўваем.
-					</p>
+					</Typography>
 				</section>
 
-				<section>
-					<h2 className="font-display text-xl font-semibold text-ink mb-3">
+				<section className="space-y-flow-md">
+					<Typography variant="heading" as="h2">
 						Кантакт
-					</h2>
-					<p>
+					</Typography>
+					<Typography variant="body">
 						Калі ў вас ёсць пытанні пра прыватнасць або вы хочаце выдаліць свае
 						даныя, звяжыцеся з намі па пошце{" "}
 						<a
-							href="mailto:support@pobach.app"
+							href="mailto:support@slovy.games"
 							className="text-valoshka hover:underline"
 						>
-							support@pobach.app
+							support@slovy.games
 						</a>
 						.
-					</p>
+					</Typography>
 				</section>
 			</div>
 		</div>

@@ -30,7 +30,8 @@ const VARIANTS: Record<TypographyVariant, VariantConfig> = {
       fontSize: 'clamp(36px, 8vw, 72px)',
       lineHeight: 0.9,
       letterSpacing: '-0.03em',
-      margin: 0,
+      margin: "0 0 2rem 0",
+
     },
   },
   title: {
@@ -42,7 +43,7 @@ const VARIANTS: Record<TypographyVariant, VariantConfig> = {
       fontSize: 'clamp(32px, 5vw, 42px)',
       lineHeight: 0.9,
       letterSpacing: '-0.03em',
-      margin: 0,
+      margin: "0 0 1.5rem 0",
     },
   },
   heading: {
@@ -52,7 +53,7 @@ const VARIANTS: Record<TypographyVariant, VariantConfig> = {
       fontWeight: 500,
       fontSize: '24px',
       lineHeight: 1,
-      margin: 0,
+      margin: "0 0 0.75rem 0",
     },
   },
   subheading: {
@@ -62,7 +63,7 @@ const VARIANTS: Record<TypographyVariant, VariantConfig> = {
       fontWeight: 500,
       fontSize: '18px',
       lineHeight: 1.2,
-      margin: 0,
+      margin: "0 0 0.75rem 0",
     },
   },
   displaySm: {
