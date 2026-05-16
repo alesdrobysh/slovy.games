@@ -6,6 +6,7 @@ import type { Guess } from "@/games/pobach/core/entities/game";
 import { getCurrentDayIndex, getStats } from "@/games/pobach/lib/storage";
 import {
 	pluralize,
+	pluralizeHintsAccusative,
 	pluralizeHintsInstrumental,
 	pluralizeStreak,
 } from "@/games/pobach/lib/utils";
@@ -73,14 +74,15 @@ export default function FinishCard({
 				</>
 			)}
 
-			{isWin && (
-				<Typography
-					variant="body"
-					style={{ marginBottom: "var(--space-flow-sm)" }}
-				>
-					{`Вы знайшлі слова за ${attempts} ${pluralize(attempts)}${hintsCount > 0 ? ` з ${hintsCount} ${pluralizeHintsInstrumental(hintsCount)}` : ""}.`}
-				</Typography>
-			)}
+			<Typography
+				variant="body"
+				style={{ marginBottom: "var(--space-flow-sm)" }}
+			>
+				{isWin
+					? `Вы адгадалі слова за ${attempts} ${pluralize(attempts)}${hintsCount > 0 ? ` з ${hintsCount} ${pluralizeHintsInstrumental(hintsCount)}` : ""}. Заўтра будзе новае слова.`
+					: `Дзякуй за гульню.${hintsCount > 0 ? ` Выкарыстана ${hintsCount} ${pluralizeHintsAccusative(hintsCount)}.` : ""} Заўтра будзе новае слова.`
+				}
+			</Typography>
 
 			{isWin && (
 				<div style={{ marginBottom: "var(--space-flow-lg)" }}>
