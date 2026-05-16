@@ -63,6 +63,12 @@ const SCALE: ScaleRow[] = [
     spec: 'Literata 500 · 14px · lh 1',
     sample: 'В _ Р _ Б _ Й',
   },
+  {
+    variant: 'gameInput',
+    label: 'gameInput',
+    spec: 'Literata 500 · 40px · lh 1 · ls 0.01em',
+    sample: 'ВАРАБ',
+  },
 ];
 
 function SpecRow({ variant, label, spec, sample }: ScaleRow) {

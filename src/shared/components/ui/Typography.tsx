@@ -7,7 +7,8 @@ export type TypographyVariant =
   | 'overline'
   | 'body'
   | 'caption'
-  | 'smallSerif';
+  | 'smallSerif'
+  | 'gameInput';
 
 interface VariantConfig {
   style: CSSProperties;
@@ -93,6 +94,17 @@ const VARIANTS: Record<TypographyVariant, VariantConfig> = {
       fontWeight: 500,
       fontSize: '14px',
       lineHeight: 1,
+      margin: 0,
+    },
+  },
+  gameInput: {
+    tag: 'span',
+    style: {
+      fontFamily: D,
+      fontWeight: 500,
+      fontSize: '40px',
+      lineHeight: 1,
+      letterSpacing: '0.01em',
       margin: 0,
     },
   },

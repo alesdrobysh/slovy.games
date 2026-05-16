@@ -2,6 +2,7 @@
 
 import { ERROR_MESSAGES } from "@/games/valoshka/lib/validation";
 import type { ValidationError } from "@/games/valoshka/types";
+import { Typography } from "@/shared/components/ui/Typography";
 
 const SUCCESS_MESSAGES = [
 	"Добра!",
@@ -40,16 +41,14 @@ export function InputDisplay({
 				{errorType ? (
 					<span
 						key={`err-${errorKey}`}
-						className="petal-rise rounded-full px-4 py-1.5 text-sm font-semibold bg-destructive text-white font-sans z-30"
-						style={{ letterSpacing: "0.01em" }}
+						className="petal-rise rounded-full px-inset-sm py-flow-xs text-sm font-semibold font-sans bg-destructive text-white z-30"
 					>
 						{ERROR_MESSAGES[errorType]}
 					</span>
 				) : lastFoundWord ? (
 					<span
 						key={`suc-${successKey}`}
-						className="petal-rise rounded-full px-4 py-1.5 text-sm font-semibold bg-valoshka text-white font-sans z-30"
-						style={{ letterSpacing: "0.01em" }}
+						className="petal-rise rounded-full px-inset-sm py-flow-xs text-sm font-semibold font-sans bg-valoshka text-white z-30"
 					>
 						{lastFoundIsPangram ? "Панграма! 🤍" : successMsg}
 					</span>
@@ -78,15 +77,13 @@ export function InputDisplay({
 						{value.split("").map((ch, i) => {
 							const isCenter = ch === center;
 							return (
-								<span
+								<Typography
 									key={`letter-${i}-${ch}`}
-									className={`font-display text-[40px] leading-none ${
-										isCenter ? "text-valoshka" : "text-ink"
-									}`}
-									style={{ letterSpacing: "0.01em" }}
+									variant="gameInput"
+									className={isCenter ? "text-valoshka" : "text-ink"}
 								>
 									{ch.toUpperCase()}
-								</span>
+								</Typography>
 							);
 						})}
 					</div>
