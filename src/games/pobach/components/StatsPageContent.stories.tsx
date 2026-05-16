@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import type { GameStats, HistoryRecord } from "@/games/pobach/core/entities/game";
+import { ThemeProvider } from "@/shared/hooks/useTheme";
 import { StatsPageContent } from "./StatsPageContent";
 
 const meta = {
@@ -8,9 +9,11 @@ const meta = {
 	parameters: { layout: "fullscreen" },
 	decorators: [
 		(Story) => (
-			<div className="theme-pobach" style={{ background: "var(--bg)", minHeight: "100vh" }}>
-				<Story />
-			</div>
+			<ThemeProvider>
+				<div className="theme-pobach" style={{ background: "var(--bg)", minHeight: "100vh" }}>
+					<Story />
+				</div>
+			</ThemeProvider>
 		),
 	],
 } satisfies Meta<typeof StatsPageContent>;
