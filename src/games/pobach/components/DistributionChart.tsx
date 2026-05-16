@@ -38,7 +38,7 @@ export function DistributionChart({
 	const maxCount = Math.max(...rangeCounts.map((r) => r.count), 1);
 
 	return (
-		<div className="space-y-2">
+		<div className="space-y-flow-sm">
 			{rangeCounts.map((range) => {
 				const percentage =
 					range.count > 0
@@ -46,14 +46,14 @@ export function DistributionChart({
 						: 0;
 
 				return (
-					<div key={range.label} className="flex items-center gap-3 text-sm">
+					<div key={range.label} className="flex items-center gap-flow-md text-sm">
 						<div className="w-14 text-right text-ink-muted shrink-0 whitespace-nowrap font-display tabular-nums">
 							{range.label}
 						</div>
 						<div className="flex-1 h-10 bg-rule rounded-lg overflow-hidden relative">
 							{range.count > 0 ? (
 								<div
-									className="h-full min-w-12 rounded-lg flex items-center justify-end pr-3 transition-all duration-500"
+									className="h-full min-w-12 rounded-lg flex items-center justify-end pr-inset-sm transition-all duration-500"
 									style={{
 										width: `${percentage}%`,
 										backgroundColor: range.color,
