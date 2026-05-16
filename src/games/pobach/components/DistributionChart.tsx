@@ -71,6 +71,10 @@ export function DistributionChart({
 								<div
 									className="h-full w-12 rounded-lg flex items-center justify-center"
 									style={{ backgroundColor: range.color }}
+									role="progressbar"
+									aria-valuenow={0}
+									aria-valuemin={0}
+									aria-valuemax={maxCount}
 								>
 									<span className="text-white font-bold text-sm font-display">
 										0
