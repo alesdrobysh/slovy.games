@@ -2,7 +2,6 @@
 "use client";
 
 import { Share2 } from "lucide-react";
-import { useState } from "react";
 import { Nav } from "@/shared/components/Nav";
 import type {
 	GameStats,
@@ -15,6 +14,7 @@ import {
 } from "@/games/pobach/lib/utils";
 import { Button } from "@/shared/components/ui/Button";
 import { StatCard } from "@/shared/components/ui/StatCard";
+import { useShare } from "@/shared/hooks/useShare";
 import { DistributionChart } from "./DistributionChart";
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
@@ -59,26 +59,6 @@ function HistoryItem({ game }: { game: HistoryRecord }) {
 	);
 }
 
-async function handleShare(
-	text: string
-): Promise<"share" | "clipboard" | false> {
-	if (navigator.share) {
-		try {
-			await navigator.share({ text });
-			return "share";
-		} catch (err) {
-			if (err instanceof Error && err.name === "AbortError") return false;
-		}
-	}
-
-	try {
-		await navigator.clipboard.writeText(text);
-		return "clipboard";
-	} catch {
-		return false;
-	}
-}
-
 export function StatsPageContent({
 	stats,
 	history,
@@ -86,39 +66,26 @@ export function StatsPageContent({
 	stats: GameStats;
 	history: HistoryRecord[];
 }) {
-	const [showToast, setShowToast] = useState(false);
-	const [isSharing, setIsSharing] = useState(false);
-
 	const winRate =
 		stats.gamesPlayed > 0
 			? Math.round((stats.gamesWon / stats.gamesPlayed) * 100)
 			: 0;
 
-	const onShareStats = async () => {
-		if (isSharing) return;
-		setIsSharing(true);
+	const shareText = [
+		"Мая статыстыка ў «Побач»:",
+		`Перамог: ${stats.gamesWon}/${stats.gamesPlayed} (${winRate}%)`,
+		`Макс. серыя: ${stats.maxStreak}`,
+		stats.bestAttempts > 0
+			? `Лепшы вынік: ${stats.bestAttempts} ${pluralizeAttemptsNominative(
+					stats.bestAttempts
+				)}`
+			: null,
+		"pobach.app",
+	]
+		.filter(Boolean)
+		.join("\n");
 
-		const text = [
-			"Мая статыстыка ў «Побач»:",
-			`Перамог: ${stats.gamesWon}/${stats.gamesPlayed} (${winRate}%)`,
-			`Макс. серыя: ${stats.maxStreak}`,
-			stats.bestAttempts > 0
-				? `Лепшы вынік: ${stats.bestAttempts} ${pluralizeAttemptsNominative(
-						stats.bestAttempts
-					)}`
-				: null,
-			"pobach.app",
-		]
-			.filter(Boolean)
-			.join("\n");
-
-		const result = await handleShare(text);
-		if (result === "clipboard") {
-			setShowToast(true);
-			setTimeout(() => setShowToast(false), 2000);
-		}
-		setIsSharing(false);
-	};
+	const { share, isSharing, showToast } = useShare(shareText);
 
 	return (
 		<>
@@ -152,7 +119,7 @@ export function StatsPageContent({
 
 				<div className="mt-8 flex justify-center relative">
 					<Button
-						onClick={onShareStats}
+						onClick={share}
 						disabled={isSharing}
 						variant="solid"
 						color="primary"
