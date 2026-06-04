@@ -4,7 +4,7 @@ import { Nav } from "@/shared/components/Nav";
 import { Typography } from "@/shared/components/ui/Typography";
 
 export const metadata: Metadata = {
-	title: "Пра праект | Словы",
+	title: "Пра праект",
 };
 
 export default function AboutPage() {
