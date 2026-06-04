@@ -1,15 +1,15 @@
 import type { Rank } from "@/games/valoshka/types";
 
 export const RANKS: Rank[] = [
-	{ name: "Зярнятка", threshold: 0 },
-	{ name: "Парастак", threshold: 5 },
-	{ name: "Лісточак", threshold: 12 },
-	{ name: "Бутон", threshold: 25 },
-	{ name: "Кветачка", threshold: 40 },
-	{ name: "Краса", threshold: 55 },
-	{ name: "Суквецце", threshold: 70 },
-	{ name: "Вянок", threshold: 85 },
-	{ name: "Валошка", threshold: 100 },
+	{ name: "Пачатковец", threshold: 0 },
+	{ name: "Аматар", threshold: 5 },
+	{ name: "Кемлівец", threshold: 12 },
+	{ name: "Знаўца", threshold: 25 },
+	{ name: "Разумнік", threshold: 40 },
+	{ name: "Майстар", threshold: 55 },
+	{ name: "Эрудыт", threshold: 70 },
+	{ name: "Светач", threshold: 85 },
+	{ name: "Васілёк", threshold: 100 },
 ];
 
 export function scoreWord(word: string, pangrams: string[]): number {
