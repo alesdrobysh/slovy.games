@@ -92,7 +92,7 @@ export function GameCard({
 						</div>
 					</div>
 
-					<div className="border-t border-rule/20 pt-inset-lg">
+					<div className="pt-inset-lg">
 						<div className="mb-inset-xl flex items-center justify-between">
 							<div className="flex flex-col gap-flow-sm">
 								<Typography variant="overline" as="span" className="text-ink-soft">
