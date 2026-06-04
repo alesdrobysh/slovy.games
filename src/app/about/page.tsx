@@ -26,18 +26,17 @@ export default function AboutPage() {
 			<div className="space-y-inset-xl">
 				<section className="space-y-flow-md">
 					<Typography variant="body">
-						<span className="font-display text-ink">Словы</span> — гэта платформа
-						штодзённых беларускіх слоўных гульняў. Дзве галаваломкі кожны дзень:{" "}
-						<em>Побач</em> і <em>Валошка</em>.
+						<span className="font-display text-ink">Словы</span> — гэта штодзённыя
+						беларускія галаваломкі. Мы натхняемся найлепшымі ўзорамі слоўных гульняў
+						і ствараем сваё — з беларускімі словамі.
 					</Typography>
 					<Typography variant="body">
-						Мы натхняемся выдавецкай якасцю NYT Games і інтэлектуальнай глыбінёй
-						Contexto.me — але робім гэта на беларускай мове, з беларускімі словамі
-						і беларускім светапоглядам.
+						У «Побач» мы шукаем сэнсавыя сувязі паміж словамі праз машыннае
+						навучанне, а ў «Валошцы» — складаем як мага больш слоў з выбраных літар.
 					</Typography>
 					<Typography variant="body">
-						Праект бясплатны і не збірае пра вас даных. Усе гульнявыя станы і
-						статыстыка захоўваюцца лакальна на вашым прыстасаванні.
+						Праект цалкам бясплатны і беражэ вашу прыватнасць. Мы не збіраем
+						ніякіх даных: увесь ваш прагрэс захоўваецца выключна на вашай прыладзе.
 					</Typography>
 				</section>
 
@@ -45,28 +44,17 @@ export default function AboutPage() {
 
 				<section className="space-y-flow-md">
 					<Typography variant="heading" as="h2">
-						Як гэта працуе?
+						Падзякі і рэсурсы
 					</Typography>
 					<Typography variant="body">
-						Побач выкарыстоўвае алгарытмы машыннага навучання для вызначэння
-						семантычнай блізкасці слоў. Мадэль аналізуе, як часта словы
-						ўжываюцца разам у тэкстах, і будуе &ldquo;карту&rdquo; іх сэнсаў.
-					</Typography>
-				</section>
-
-				<section className="space-y-flow-md">
-					<Typography variant="heading" as="h2">
-						Credits
-					</Typography>
-					<Typography variant="body">
-						База слоў:{" "}
+						Для стварэння гульняў выкарыстоўваюцца адкрытыя лексічныя базы{" "}
 						<a
 							href="https://github.com/Belarus/GrammarDB"
 							target="_blank"
 							rel="noopener noreferrer"
 							className="text-valoshka hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded-sm"
 						>
-							Belarus/GrammarDB
+							GrammarDB
 						</a>{" "}
 						і{" "}
 						<a
@@ -75,7 +63,7 @@ export default function AboutPage() {
 							rel="noopener noreferrer"
 							className="text-valoshka hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded-sm"
 						>
-							verbumby/slouniki
+							verbumby
 						</a>
 						.
 					</Typography>
@@ -86,9 +74,9 @@ export default function AboutPage() {
 						Кантакт
 					</Typography>
 					<Typography variant="body">
-						Маеце пытанні або прапановы?{" "}
+						Маеце пытанні ці прапановы? Пішыце нам:{" "}
 						<a
-							href="mailto:slovy.games"
+							href="mailto:support@slovy.games"
 							className="text-valoshka hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-paper rounded-sm"
 						>
 							support@slovy.games
