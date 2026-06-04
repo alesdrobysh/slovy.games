@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { GameInfo } from "@/shared/types";
 import { Typography } from "@/shared/components/ui/Typography";
 import { CornflowerContour } from "@/shared/components/CornflowerContour";
+import { PobachContour } from "@/shared/components/PobachContour";
 
 export type GameCardStatus = "not_started" | "in_progress" | "won" | "given_up";
 
@@ -29,12 +30,7 @@ function GameIllustration({ gameId, className }: { gameId: string; className?: s
 	}
 	if (gameId === "pobach") {
 		return (
-			<svg viewBox="0 0 100 100" className={`${className} opacity-[0.07] dark:opacity-[0.15]`} fill="none" xmlns="http://www.w3.org/2000/svg">
-				<circle cx="50" cy="50" r="35" stroke="currentColor" strokeWidth="0.5" className="text-pobach" />
-				<circle cx="50" cy="50" r="25" stroke="currentColor" strokeWidth="0.5" strokeDasharray="3 6" className="text-pobach" />
-				<path d="M50 5 L50 15 M95 50 L85 50 M50 95 L50 85 M5 50 L15 50" stroke="currentColor" strokeWidth="1" className="text-pobach" />
-				<path d="M30 30 L70 70 M70 30 L30 70" stroke="currentColor" strokeWidth="0.3" strokeDasharray="1 3" className="text-pobach" />
-			</svg>
+			<PobachContour className={`${className} opacity-[0.07] dark:opacity-[0.15] text-pobach`} />
 		);
 	}
 	return null;
