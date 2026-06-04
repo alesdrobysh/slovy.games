@@ -3,6 +3,7 @@
 import Link from "next/link";
 import type { GameInfo } from "@/shared/types";
 import { Typography } from "@/shared/components/ui/Typography";
+import { CornflowerContour } from "@/shared/components/CornflowerContour";
 
 export type GameCardStatus = "not_started" | "in_progress" | "won" | "given_up";
 
@@ -23,11 +24,7 @@ interface GameCardProps {
 function GameIllustration({ gameId, className }: { gameId: string; className?: string }) {
 	if (gameId === "valoshka") {
 		return (
-			<svg viewBox="0 0 100 100" className={`${className} opacity-[0.07] dark:opacity-[0.15]`} fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path d="M50 10 L58 35 L85 42 L65 60 L70 85 L50 72 L30 85 L35 60 L15 42 L42 35 Z" stroke="currentColor" strokeWidth="0.5" strokeLinejoin="round" className="text-valoshka" />
-				<circle cx="50" cy="50" r="15" stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 4" className="text-valoshka" />
-				<path d="M50 20 V80 M20 50 H80" stroke="currentColor" strokeWidth="0.3" className="text-valoshka" />
-			</svg>
+			<CornflowerContour className={`${className} opacity-[0.07] dark:opacity-[0.15] text-valoshka`} />
 		);
 	}
 	if (gameId === "pobach") {
