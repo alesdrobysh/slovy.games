@@ -24,7 +24,7 @@ export default function CookieBanner() {
 	return (
 		<BottomBanner
 			ariaLabel="Паведамленне пра cookies"
-			message="Мы выкарыстоўваем cookies, каб захоўваць ваш прагрэс і аналізаваць статыстыку гульні."
+			message="Мы выкарыстоўваем ананімную аналітыку, каб паляпшаць гульні. Ваш прагрэс заўсёды застаецца толькі на вашай прыладзе."
 			buttonLabel="Зразумела"
 			onAction={() => {
 				dismiss();
