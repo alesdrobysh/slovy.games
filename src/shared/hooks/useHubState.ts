@@ -230,7 +230,7 @@ function buildGameStatusFromRaw(
 
 	// Pobach
 	let status: GameCardStatus = "not_started";
-	let progressText = "";
+	let progressText = "Чакае вас";
 
 	if (p.won) {
 		status = "won";
