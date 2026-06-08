@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface PetalCellProps {
 	cx: number;
@@ -35,13 +35,28 @@ export function PetalCell({
 }: PetalCellProps) {
 	const groupRef = useRef<SVGGElement>(null);
 	const pointerStartRef = useRef<{ x: number; y: number } | null>(null);
+	const keyboardPressTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
+		null
+	);
+	const [isPressed, setIsPressed] = useState(false);
+
+	const releasePress = useCallback(() => {
+		setIsPressed(false);
+	}, []);
+
+	const cancelPress = useCallback(() => {
+		pointerStartRef.current = null;
+		releasePress();
+	}, [releasePress]);
 
 	const handlePointerDown = useCallback((e: React.PointerEvent) => {
 		pointerStartRef.current = { x: e.clientX, y: e.clientY };
+		setIsPressed(true);
 	}, []);
 
 	const handlePointerUp = useCallback(
 		(e: React.PointerEvent) => {
+			releasePress();
 			if (!pointerStartRef.current) return;
 			const dx = e.clientX - pointerStartRef.current.x;
 			const dy = e.clientY - pointerStartRef.current.y;
@@ -51,7 +66,20 @@ export function PetalCell({
 				onClick();
 			}
 		},
-		[onClick]
+		[onClick, releasePress]
+	);
+
+	const handleKeyDown = useCallback(
+		(e: React.KeyboardEvent) => {
+			if (e.key !== "Enter") return;
+			onClick();
+			setIsPressed(true);
+			if (keyboardPressTimerRef.current) {
+				clearTimeout(keyboardPressTimerRef.current);
+			}
+			keyboardPressTimerRef.current = setTimeout(releasePress, 120);
+		},
+		[onClick, releasePress]
 	);
 
 	useEffect(() => {
@@ -60,6 +88,14 @@ export function PetalCell({
 		const preventScroll = (e: TouchEvent) => e.preventDefault();
 		el.addEventListener("touchstart", preventScroll, { passive: false });
 		return () => el.removeEventListener("touchstart", preventScroll);
+	}, []);
+
+	useEffect(() => {
+		return () => {
+			if (keyboardPressTimerRef.current) {
+				clearTimeout(keyboardPressTimerRef.current);
+			}
+		};
 	}, []);
 
 	useEffect(() => {
@@ -93,10 +129,19 @@ export function PetalCell({
 		<g
 			ref={groupRef}
 			tabIndex={0}
-			onKeyDown={(e) => e.key === "Enter" && onClick()}
+			onKeyDown={handleKeyDown}
 			onPointerDown={handlePointerDown}
 			onPointerUp={handlePointerUp}
-			style={{ cursor: "pointer", touchAction: "none" }}
+			onPointerCancel={cancelPress}
+			onPointerLeave={cancelPress}
+			style={{
+				cursor: "pointer",
+				touchAction: "none",
+				transform: isPressed ? "scale(0.9)" : "scale(1)",
+				transformBox: "fill-box",
+				transformOrigin: "center",
+				transition: "transform 0.12s cubic-bezier(0.4, 0, 0.2, 1)",
+			}}
 			className={isCenter ? "cell-center-glow" : undefined}
 		>
 			{isCenter ? (
