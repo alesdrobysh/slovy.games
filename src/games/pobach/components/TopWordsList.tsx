@@ -29,7 +29,7 @@ export default function TopWordsList({ dayIndex }: TopWordsListProps) {
 		setError(null);
 
 		try {
-			const response = await fetch(`/api/top-words?dayIndex=${dayIndex}`);
+			const response = await fetch(`/api/pobach/top-words?dayIndex=${dayIndex}`);
 			if (!response.ok) {
 				throw new Error("Failed to load top words");
 			}
