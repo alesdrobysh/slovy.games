@@ -44,7 +44,7 @@ export function GamePageContent({ state, actions }: GamePageContentProps) {
 
 	return (
 		<main className="page-narrow page-container pt-inset-xl pb-page-py">
-			<Badge variant="pobach">Дзень #{dayIndex != null ? dayIndex : ""}</Badge>
+			<Badge variant="pobach">Дзень #{sessionDayIndex ?? dayIndex ?? ""}</Badge>
 
 			{/* Input form */}
 			{!isFinished && (
