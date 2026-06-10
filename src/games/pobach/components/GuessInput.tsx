@@ -92,16 +92,18 @@ export default function GuessInput({
 				</label>
 
 				{!isDisabled && (
-					<Button
-						variant="solid"
-						color="primary"
-						onClick={() => onSubmit({ preventDefault: () => {} } as React.FormEvent)}
-						disabled={loading}
-						aria-label="Адправіць здагадку"
-						size="xl"
-						className="hidden sm:flex shrink-0"
-						startIcon={<ArrowRight size={16} aria-hidden="true" />}
-					/>
+					<div className="hidden sm:contents">
+						<Button
+							variant="solid"
+							color="primary"
+							onClick={() => onSubmit({ preventDefault: () => {} } as React.FormEvent)}
+							disabled={loading}
+							aria-label="Адправіць здагадку"
+							size="xl"
+							className="shrink-0"
+							startIcon={<ArrowRight size={16} aria-hidden="true" />}
+						/>
+					</div>
 				)}
 			</div>
 
