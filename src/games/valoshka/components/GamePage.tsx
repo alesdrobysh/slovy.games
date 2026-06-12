@@ -83,11 +83,7 @@ export function GamePage({ puzzle }: GamePageProps) {
 
 					<div className="w-full max-w-sm" style={{ height: "38px" }}>
 						{state.hint.isActive && (
-							<HintDisplay
-								hint={state.hint}
-								wordsEarnTokenCount={state.wordsEarnTokenCount}
-								onRevealNext={actions.handleRevealNextLetter}
-							/>
+							<HintDisplay hint={state.hint} />
 						)}
 					</div>
 

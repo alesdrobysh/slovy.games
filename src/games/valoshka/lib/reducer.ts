@@ -126,26 +126,6 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 			};
 		}
 
-		case "REVEAL_NEXT_LETTER": {
-			if (state.wordsEarnTokenCount < 3) return state;
-			const { targetWord, revealedIndices } = state.hint;
-			if (!targetWord) return state;
-			const allIndices = targetWord.split("").map((_, i: number) => i);
-			const hidden = allIndices.filter(
-				(i: number) =>
-					!revealedIndices.includes(i) && i !== targetWord.length - 1
-			);
-			if (hidden.length === 0) return state;
-			return {
-				...state,
-				wordsEarnTokenCount: state.wordsEarnTokenCount - 3,
-				hint: {
-					...state.hint,
-					revealedIndices: [...revealedIndices, hidden[0]],
-				},
-			};
-		}
-
 		default:
 			return state;
 	}

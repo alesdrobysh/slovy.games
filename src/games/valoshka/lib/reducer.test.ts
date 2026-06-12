@@ -57,26 +57,6 @@ describe("START_HINT — token spending", () => {
 	});
 });
 
-describe("REVEAL_NEXT_LETTER — token spending", () => {
-	it("decrements wordsEarnTokenCount by 3", () => {
-		const s = state({
-			wordsEarnTokenCount: 6,
-			hint: { targetWord: "абвгд", revealedIndices: [0, 4], isActive: true },
-		});
-		const next = gameReducer(s, { type: "REVEAL_NEXT_LETTER" });
-		expect(next.wordsEarnTokenCount).toBe(3);
-	});
-
-	it("does nothing when wordsEarnTokenCount < 3", () => {
-		const s = state({
-			wordsEarnTokenCount: 2,
-			hint: { targetWord: "абвгд", revealedIndices: [0, 4], isActive: true },
-		});
-		const next = gameReducer(s, { type: "REVEAL_NEXT_LETTER" });
-		expect(next.wordsEarnTokenCount).toBe(2);
-		expect(next.hint.revealedIndices).toEqual([0, 4]);
-	});
-});
 
 describe("proportional reveal on START_HINT", () => {
 	it("reveals indices [0, 3] for a 4-letter word", () => {

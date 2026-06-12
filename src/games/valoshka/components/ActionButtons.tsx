@@ -36,17 +36,16 @@ export function ActionButtons({
 				startIcon={<Shuffle size={20} />}
 			/>
 
-			<div className="relative overflow-hidden rounded-[inherit]" style={{ display: "inline-flex" }}>
-				{!disabled && (
-					<span
-						aria-hidden
-						className="pointer-events-none absolute inset-0 transition-all duration-500"
-						style={{
-							background: "var(--color-amber-400, #fbbf24)",
-							clipPath: `inset(${100 - fillPct}% 0 0 0)`,
-						}}
-					/>
-				)}
+			<div
+				style={{
+					display: "inline-flex",
+					borderRadius: "var(--radius-btn, 8px)",
+					background: disabled
+						? undefined
+						: `linear-gradient(to top, var(--color-amber-400, #fbbf24) ${fillPct}%, transparent ${fillPct}%)`,
+					transition: "background 0.4s ease",
+				}}
+			>
 				<Button
 					variant="ghost"
 					color="neutral"

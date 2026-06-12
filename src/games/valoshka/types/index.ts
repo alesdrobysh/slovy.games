@@ -62,5 +62,4 @@ export type GameAction =
 	| { type: "CLEAR_ERROR" }
 	| { type: "CLEAR_LAST_FOUND" }
 	| { type: "RESTORE_STATE"; foundWords: string[]; score: number; hint?: HintState; wordsEarnTokenCount?: number }
-	| { type: "START_HINT"; answers: string[]; foundWords: string[] }
-	| { type: "REVEAL_NEXT_LETTER" };
+	| { type: "START_HINT"; answers: string[]; foundWords: string[] };

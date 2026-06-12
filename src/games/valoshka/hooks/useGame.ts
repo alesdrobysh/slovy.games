@@ -22,7 +22,6 @@ export interface UseGameActions {
 	handleShuffle(): void;
 	handleSubmit(): void;
 	handleStartHint(): void;
-	handleRevealNextLetter(): void;
 	toggleWordsOpen(): void;
 }
 
@@ -150,10 +149,6 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 		});
 	}, [puzzle.answers, gameState.foundWords]);
 
-	const handleRevealNextLetter = useCallback(() => {
-		dispatch({ type: "REVEAL_NEXT_LETTER" });
-	}, []);
-
 	const toggleWordsOpen = useCallback(() => {
 		setWordsOpen((o) => !o);
 	}, []);
@@ -166,7 +161,6 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 			handleShuffle,
 			handleSubmit,
 			handleStartHint,
-			handleRevealNextLetter,
 			toggleWordsOpen,
 		},
 	};

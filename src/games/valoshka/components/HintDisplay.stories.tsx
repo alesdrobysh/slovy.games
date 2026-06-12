@@ -5,10 +5,7 @@ const meta = {
 	title: "Valoshka/HintDisplay",
 	component: HintDisplay,
 	tags: ["autodocs"],
-	args: {
-		wordsEarnTokenCount: 3,
-		onRevealNext: () => {},
-	},
+	args: {},
 } satisfies Meta<typeof HintDisplay>;
 
 export default meta;
