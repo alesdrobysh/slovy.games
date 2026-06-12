@@ -34,7 +34,6 @@ export function PetalCell({
 	shuffleIndex = 0,
 }: PetalCellProps) {
 	const groupRef = useRef<SVGGElement>(null);
-	const pointerStartRef = useRef<{ x: number; y: number } | null>(null);
 	const keyboardPressTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
 		null
 	);
@@ -44,30 +43,14 @@ export function PetalCell({
 		setIsPressed(false);
 	}, []);
 
-	const cancelPress = useCallback(() => {
-		pointerStartRef.current = null;
+	const handlePointerDown = useCallback(() => {
+		setIsPressed(true);
+		onClick();
+	}, [onClick]);
+
+	const handlePointerUp = useCallback(() => {
 		releasePress();
 	}, [releasePress]);
-
-	const handlePointerDown = useCallback((e: React.PointerEvent) => {
-		pointerStartRef.current = { x: e.clientX, y: e.clientY };
-		setIsPressed(true);
-	}, []);
-
-	const handlePointerUp = useCallback(
-		(e: React.PointerEvent) => {
-			releasePress();
-			if (!pointerStartRef.current) return;
-			const dx = e.clientX - pointerStartRef.current.x;
-			const dy = e.clientY - pointerStartRef.current.y;
-			const distance = Math.sqrt(dx * dx + dy * dy);
-			pointerStartRef.current = null;
-			if (distance < 10) {
-				onClick();
-			}
-		},
-		[onClick, releasePress]
-	);
 
 	const handleKeyDown = useCallback(
 		(e: React.KeyboardEvent) => {
@@ -81,14 +64,6 @@ export function PetalCell({
 		},
 		[onClick, releasePress]
 	);
-
-	useEffect(() => {
-		const el = groupRef.current;
-		if (!el) return;
-		const preventScroll = (e: TouchEvent) => e.preventDefault();
-		el.addEventListener("touchstart", preventScroll, { passive: false });
-		return () => el.removeEventListener("touchstart", preventScroll);
-	}, []);
 
 	useEffect(() => {
 		return () => {
@@ -132,8 +107,8 @@ export function PetalCell({
 			onKeyDown={handleKeyDown}
 			onPointerDown={handlePointerDown}
 			onPointerUp={handlePointerUp}
-			onPointerCancel={cancelPress}
-			onPointerLeave={cancelPress}
+			onPointerCancel={releasePress}
+			onPointerLeave={releasePress}
 			style={{
 				cursor: "pointer",
 				touchAction: "none",
