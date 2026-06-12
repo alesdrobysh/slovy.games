@@ -18,6 +18,7 @@ export interface SavedProgress {
 	foundWords: string[];
 	score: number;
 	hint?: HintState;
+	wordsEarnTokenCount?: number;
 }
 
 export interface Rank {
@@ -41,6 +42,7 @@ export interface GameState {
 	lastFoundWord: string | null;
 	lastFoundIsPangram: boolean;
 	hint: HintState;
+	wordsEarnTokenCount: number;
 }
 
 export interface GameStats {
@@ -59,8 +61,6 @@ export type GameAction =
 	| { type: "SHUFFLE" }
 	| { type: "CLEAR_ERROR" }
 	| { type: "CLEAR_LAST_FOUND" }
-	| { type: "RESTORE"; foundWords: string[]; score: number }
+	| { type: "RESTORE_STATE"; foundWords: string[]; score: number; hint?: HintState; wordsEarnTokenCount?: number }
 	| { type: "START_HINT"; answers: string[]; foundWords: string[] }
-	| { type: "REVEAL_NEXT_LETTER" }
-	| { type: "CLEAR_HINT" }
-	| { type: "RESTORE_HINT"; hint: HintState };
+	| { type: "REVEAL_NEXT_LETTER" };
