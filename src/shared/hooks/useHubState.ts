@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import type { GameInfo } from "@/shared/types";
 import type { GameCardStatus } from "@/shared/components/GameCard";
+import { getMskDayIndex } from "@/shared/lib/timezone";
+import { EPOCH_DATE } from "@/games/pobach/lib/config";
 
 /** Per-game status extracted from localStorage */
 export interface GameHubStatus {
@@ -114,11 +116,8 @@ function getValoshkaStatus(): {
 
 // ─── Pobach state ──────────────────────────────────────────────────
 
-/** Epoch used by Pobach day index calculation */
-const POBACH_EPOCH = new Date("2026-01-15T00:00:00Z");
-
 function pobachTodayIndex(): number {
-	return Math.floor((Date.now() - POBACH_EPOCH.getTime()) / 86400000);
+	return getMskDayIndex(EPOCH_DATE);
 }
 
 function getPobachStatus(): {

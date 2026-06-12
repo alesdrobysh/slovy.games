@@ -1,4 +1,8 @@
 import type { GameStats, SavedProgress } from "@/games/valoshka/types";
+import {
+	getMskDateString,
+	getMskYesterdayDateString,
+} from "@/shared/lib/timezone";
 
 const storageKey = (date: string) => `vulej_${date}`;
 const STATS_KEY = "vulej_stats";
@@ -26,9 +30,7 @@ export function saveProgress(progress: SavedProgress): void {
 }
 
 export function getYesterdayDateString(): string {
-	const d = new Date();
-	d.setUTCDate(d.getUTCDate() - 1);
-	return d.toISOString().slice(0, 10);
+	return getMskYesterdayDateString();
 }
 
 export const DEFAULT_STATS: GameStats = {
@@ -107,8 +109,8 @@ export function updateStatsForDate(
 	}
 	if (streak > longest) longest = streak;
 
-	// Check if streak is current (last played date was today or yesterday)
-	const today = new Date().toISOString().slice(0, 10);
+	// Check if streak is current (last played date was today or yesterday in MSK)
+	const today = getMskDateString();
 	const yesterday = getYesterdayDateString();
 	const lastPlayed = sorted[sorted.length - 1];
 	if (lastPlayed === today || lastPlayed === yesterday) {

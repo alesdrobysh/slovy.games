@@ -1,13 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-function msUntilNextMidnightUtc(): number {
-	const now = new Date();
-	const tomorrow = new Date(now);
-	tomorrow.setUTCHours(24, 0, 0, 0);
-	return tomorrow.getTime() - now.getTime();
-}
+import { msUntilNextMskMidnight } from "@/shared/lib/timezone";
 
 function formatDuration(ms: number): string {
 	const totalSeconds = Math.max(0, Math.floor(ms / 1000));
@@ -22,7 +16,7 @@ export function useCountdown(): string {
 
 	useEffect(() => {
 		function update() {
-			setTimeLeft(formatDuration(msUntilNextMidnightUtc()));
+			setTimeLeft(formatDuration(msUntilNextMskMidnight()));
 		}
 
 		update();

@@ -1,4 +1,5 @@
 import { EPOCH_DATE } from "../../lib/config";
+import { getMskDayIndex } from "@/shared/lib/timezone";
 import { findOptimalLCGParams, type LCGParams } from "../../lib/lcg-optimizer";
 import { lemmatize } from "../../lib/lemmatizer";
 import { type PoolData, PoolingService } from "../../lib/pooling-service";
@@ -131,10 +132,7 @@ export class GameService {
 	 * Used by both getDailySecret and other methods that need consistent day calculation.
 	 */
 	private calculateDayIndex(): number {
-		const epoch = new Date(EPOCH_DATE);
-		const now = new Date();
-		const msPerDay = 1000 * 60 * 60 * 24;
-		return Math.floor((now.getTime() - epoch.getTime()) / msPerDay);
+		return getMskDayIndex(EPOCH_DATE);
 	}
 
 	/**

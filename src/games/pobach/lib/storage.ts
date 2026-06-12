@@ -10,15 +10,13 @@ import { calculateStats } from "@/games/pobach/lib/stats";
 const STORAGE_KEY = "pobach_storage";
 
 import { EPOCH_DATE } from "./config";
+import { getMskDayIndex } from "@/shared/lib/timezone";
 
 const SESSION_KEY = "pobach_session_id";
 
-// Get current day index (same logic as backend)
+// Get current day index using Minsk time (UTC+3)
 export function getCurrentDayIndex(): number {
-	const epoch = new Date(EPOCH_DATE);
-	const now = new Date();
-	const msPerDay = 1000 * 60 * 60 * 24;
-	return Math.floor((now.getTime() - epoch.getTime()) / msPerDay);
+	return getMskDayIndex(EPOCH_DATE);
 }
 
 // Initialize empty stats
