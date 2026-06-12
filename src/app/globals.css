@@ -207,7 +207,10 @@ body {
 	animation: cursor-blink 1s step-start infinite;
 }
 
-/* Focus indicator for game cells */
+/* Focus indicator for game cells — suppress native outline, restore only for keyboard */
+g[tabindex="0"]:focus {
+	outline: none;
+}
 g[tabindex="0"]:focus-visible {
 	outline: 3px solid var(--valoshka);
 	outline-offset: 3px;

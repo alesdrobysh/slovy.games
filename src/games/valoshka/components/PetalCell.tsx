@@ -43,10 +43,14 @@ export function PetalCell({
 		setIsPressed(false);
 	}, []);
 
-	const handlePointerDown = useCallback(() => {
-		setIsPressed(true);
-		onClick();
-	}, [onClick]);
+	const handlePointerDown = useCallback(
+		(e: React.PointerEvent) => {
+			(e.currentTarget as SVGGElement).blur();
+			setIsPressed(true);
+			onClick();
+		},
+		[onClick]
+	);
 
 	const handlePointerUp = useCallback(() => {
 		releasePress();
