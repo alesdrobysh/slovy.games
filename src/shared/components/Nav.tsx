@@ -67,7 +67,7 @@ export function Nav({
 	);
 
 	return (
-		<header className="sticky top-0 z-30 border-b border-rule/60 bg-paper/70 backdrop-blur-md">
+		<header className="border-b border-rule/60 bg-paper/70">
 			<div className="mx-auto flex max-w-7xl items-center h-16 sm:h-20 px-flow-lg sm:px-inset-lg gap-flow-lg">
 				{game ? (
 					/* ── Game mode ── */
