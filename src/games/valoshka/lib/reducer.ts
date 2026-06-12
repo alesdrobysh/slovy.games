@@ -11,6 +11,13 @@ export function shuffleArray<T>(arr: T[]): T[] {
 	return a;
 }
 
+function hintRevealIndices(wordLength: number): number[] {
+	const count = Math.max(2, Math.ceil(wordLength * 0.33));
+	const last = wordLength - 1;
+	if (count === 2) return [0, last];
+	return [0, 1, last];
+}
+
 export function createInitialState(puzzle: Puzzle): GameState {
 	return {
 		currentInput: "",
@@ -26,6 +33,7 @@ export function createInitialState(puzzle: Puzzle): GameState {
 			revealedIndices: [],
 			isActive: false,
 		},
+		wordsEarnTokenCount: 0,
 	};
 }
 
@@ -64,6 +72,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 			const pts = scoreWord(word, action.pangrams);
 			const isPangram = action.pangrams.includes(word);
 			const newFoundWords = [...state.foundWords, word];
+			const isHintedWord = word === state.hint.targetWord;
 			return {
 				...state,
 				currentInput: "",
@@ -72,12 +81,12 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 				errorType: null,
 				lastFoundWord: word,
 				lastFoundIsPangram: isPangram,
-				hint: {
-					...state.hint,
-					...(word === state.hint.targetWord
-						? { targetWord: null, revealedIndices: [], isActive: false }
-						: {}),
-				},
+				hint: isHintedWord
+					? { targetWord: null, revealedIndices: [], isActive: false }
+					: state.hint,
+				wordsEarnTokenCount: isHintedWord
+					? state.wordsEarnTokenCount
+					: Math.min(9, state.wordsEarnTokenCount + 1),
 			};
 		}
 
@@ -90,27 +99,35 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 		case "CLEAR_LAST_FOUND":
 			return { ...state, lastFoundWord: null, lastFoundIsPangram: false };
 
-		case "RESTORE":
-			return { ...state, foundWords: action.foundWords, score: action.score };
+		case "RESTORE_STATE":
+			return {
+				...state,
+				foundWords: action.foundWords,
+				score: action.score,
+				hint: action.hint ?? { targetWord: null, revealedIndices: [], isActive: false },
+				wordsEarnTokenCount: action.wordsEarnTokenCount ?? 0,
+			};
 
 		case "START_HINT": {
+			if (state.wordsEarnTokenCount < 3) return state;
 			const unfound = action.answers.filter(
 				(w: string) => !action.foundWords.includes(w)
 			);
 			if (unfound.length === 0) return state;
 			const target = unfound[Math.floor(Math.random() * unfound.length)];
-			const lastIdx = target.length - 1;
 			return {
 				...state,
+				wordsEarnTokenCount: state.wordsEarnTokenCount - 3,
 				hint: {
 					targetWord: target,
-					revealedIndices: [0, 1, lastIdx],
+					revealedIndices: hintRevealIndices(target.length),
 					isActive: true,
 				},
 			};
 		}
 
 		case "REVEAL_NEXT_LETTER": {
+			if (state.wordsEarnTokenCount < 3) return state;
 			const { targetWord, revealedIndices } = state.hint;
 			if (!targetWord) return state;
 			const allIndices = targetWord.split("").map((_, i: number) => i);
@@ -121,21 +138,13 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 			if (hidden.length === 0) return state;
 			return {
 				...state,
+				wordsEarnTokenCount: state.wordsEarnTokenCount - 3,
 				hint: {
 					...state.hint,
 					revealedIndices: [...revealedIndices, hidden[0]],
 				},
 			};
 		}
-
-		case "CLEAR_HINT":
-			return {
-				...state,
-				hint: { targetWord: null, revealedIndices: [], isActive: false },
-			};
-
-		case "RESTORE_HINT":
-			return { ...state, hint: action.hint };
 
 		default:
 			return state;
