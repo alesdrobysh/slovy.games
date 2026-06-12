@@ -22,7 +22,7 @@ export interface UseGameActions {
 	handleShuffle(): void;
 	handleSubmit(): void;
 	handleStartHint(): void;
-	handleCancelHint(): void;
+	handleRevealNextLetter(): void;
 	toggleWordsOpen(): void;
 }
 
@@ -46,24 +46,24 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 		const saved = loadProgress(puzzle.date);
 		if (saved) {
 			dispatch({
-				type: "RESTORE",
+				type: "RESTORE_STATE",
 				foundWords: saved.foundWords,
 				score: saved.score,
+				hint: saved.hint,
+				wordsEarnTokenCount: saved.wordsEarnTokenCount,
 			});
-			if (saved.hint) {
-				dispatch({ type: "RESTORE_HINT", hint: saved.hint });
-			}
 		}
 	}, [puzzle.date]);
 
-	// Save progress whenever foundWords or hint changes
+	// Save progress whenever relevant state changes
 	useEffect(() => {
-		if (gameState.foundWords.length > 0 || gameState.hint.isActive) {
+		if (gameState.foundWords.length > 0 || gameState.hint.isActive || gameState.wordsEarnTokenCount > 0) {
 			saveProgress({
 				date: puzzle.date,
 				foundWords: gameState.foundWords,
 				score: gameState.score,
 				hint: gameState.hint.isActive ? gameState.hint : undefined,
+				wordsEarnTokenCount: gameState.wordsEarnTokenCount,
 			});
 			const rankIdx = getRankIndex(gameState.score, puzzle.max_score);
 			updateStatsForDate(puzzle.date, rankIdx, gameState.foundWords.length);
@@ -72,6 +72,7 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 		gameState.foundWords,
 		gameState.score,
 		gameState.hint,
+		gameState.wordsEarnTokenCount,
 		puzzle.date,
 		puzzle.max_score,
 	]);
@@ -149,8 +150,8 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 		});
 	}, [puzzle.answers, gameState.foundWords]);
 
-	const handleCancelHint = useCallback(() => {
-		dispatch({ type: "CLEAR_HINT" });
+	const handleRevealNextLetter = useCallback(() => {
+		dispatch({ type: "REVEAL_NEXT_LETTER" });
 	}, []);
 
 	const toggleWordsOpen = useCallback(() => {
@@ -165,7 +166,7 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 			handleShuffle,
 			handleSubmit,
 			handleStartHint,
-			handleCancelHint,
+			handleRevealNextLetter,
 			toggleWordsOpen,
 		},
 	};
