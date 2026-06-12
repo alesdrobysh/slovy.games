@@ -1,20 +1,22 @@
 "use client";
 
-import { X } from "lucide-react";
+import { Eye } from "lucide-react";
 import { Button } from "@/shared/components/ui/Button";
 import { Typography } from "@/shared/components/ui/Typography";
 import type { HintState } from "@/games/valoshka/types";
 
 interface HintDisplayProps {
 	hint: HintState;
-	onCancel: () => void;
+	wordsEarnTokenCount: number;
+	onRevealNext: () => void;
 }
 
-export function HintDisplay({ hint, onCancel }: HintDisplayProps) {
+export function HintDisplay({ hint, wordsEarnTokenCount, onRevealNext }: HintDisplayProps) {
 	if (!hint.targetWord || !hint.isActive) return null;
 
 	const word = hint.targetWord;
 	const length = word.length;
+	const canReveal = wordsEarnTokenCount >= 3;
 
 	const chars = word.split("").map((char, idx) => ({
 		char: char.toUpperCase(),
@@ -34,23 +36,16 @@ export function HintDisplay({ hint, onCancel }: HintDisplayProps) {
 			}}
 		>
 			<div className="flex items-baseline gap-flow-sm min-w-0 flex-1">
-							<Typography
-								variant="smallSerif"
-								as="span"
-								className="tracking-[0.2em]"
-							>
+				<Typography
+					variant="smallSerif"
+					as="span"
+					className="tracking-[0.2em]"
+				>
 					{chars.map((c, idx) =>
 						c.revealed || c.isLast ? (
-							<span
-								key={`${idx}-${c.char}`}
-							>
-								{c.char}
-							</span>
+							<span key={`${idx}-${c.char}`}>{c.char}</span>
 						) : (
-							<span
-								key={`${idx}-blank`}
-
-							>_</span>
+							<span key={`${idx}-blank`}>_</span>
 						)
 					)}
 				</Typography>
@@ -63,9 +58,10 @@ export function HintDisplay({ hint, onCancel }: HintDisplayProps) {
 				variant="ghost"
 				color="neutral"
 				size="sm"
-				startIcon={<X />}
-				aria-label="скасаваць"
-				onClick={onCancel}
+				startIcon={<Eye size={16} />}
+				aria-label="адкрыць наступную літару"
+				onClick={onRevealNext}
+				disabled={!canReveal}
 				className="shrink-0"
 			/>
 		</div>

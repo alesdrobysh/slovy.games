@@ -85,7 +85,8 @@ export function GamePage({ puzzle }: GamePageProps) {
 						{state.hint.isActive && (
 							<HintDisplay
 								hint={state.hint}
-								onCancel={actions.handleCancelHint}
+								wordsEarnTokenCount={state.wordsEarnTokenCount}
+								onRevealNext={actions.handleRevealNextLetter}
 							/>
 						)}
 					</div>
@@ -107,6 +108,7 @@ export function GamePage({ puzzle }: GamePageProps) {
 						onShuffle={actions.handleShuffle}
 						onSubmit={actions.handleSubmit}
 						onHint={actions.handleStartHint}
+						wordsEarnTokenCount={state.wordsEarnTokenCount}
 					/>
 				</div>
 

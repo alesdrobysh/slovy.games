@@ -6,7 +6,8 @@ const meta = {
 	component: HintDisplay,
 	tags: ["autodocs"],
 	args: {
-		onCancel: () => {},
+		wordsEarnTokenCount: 3,
+		onRevealNext: () => {},
 	},
 } satisfies Meta<typeof HintDisplay>;
 
