@@ -5,6 +5,7 @@ import type { GameInfo } from "@/shared/types";
 import type { GameCardStatus } from "@/shared/components/GameCard";
 import { getMskDayIndex } from "@/shared/lib/timezone";
 import { EPOCH_DATE } from "@/games/pobach/lib/config";
+import { pluralize } from "@/shared/lib/pluralize";
 
 /** Per-game status extracted from localStorage */
 export interface GameHubStatus {
@@ -223,7 +224,7 @@ function buildGameStatusFromRaw(
 		return {
 			gameId: "valoshka",
 			status: inProgress ? "in_progress" : "not_started",
-			progressText: inProgress ? `${v.foundWords} слоў знойдзена` : "Чакае вас",
+			progressText: inProgress ? `${v.foundWords} ${pluralize(v.foundWords, "слова")} знойдзена` : "Чакае вас",
 		};
 	}
 
@@ -233,10 +234,10 @@ function buildGameStatusFromRaw(
 
 	if (p.won) {
 		status = "won";
-		progressText = p.attempts > 0 ? `Разгадана за ${p.attempts} спроб` : "Разгадана";
+		progressText = p.attempts > 0 ? `Разгадана за ${p.attempts} ${pluralize(p.attempts, "спроба", "accusative")}` : "Разгадана";
 	} else if (p.isInProgress) {
 		status = "in_progress";
-		progressText = p.guessCount > 0 ? `Зроблена ${p.guessCount} спроб` : "";
+		progressText = p.guessCount > 0 ? `Зроблена ${p.guessCount} ${pluralize(p.guessCount, "спроба", "accusative")}` : "";
 	}
 
 	return { gameId: "pobach", status, progressText };

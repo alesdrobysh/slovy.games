@@ -2,6 +2,7 @@ import { BookOpen } from "lucide-react";
 import type { Guess } from "@/games/pobach/core/entities/game";
 import { Typography } from "@/shared/components/ui/Typography";
 import GuessCard from "./GuessCard";
+import { pluralize } from "@/shared/lib/pluralize";
 
 type GuessListProps = {
 	guesses: Guess[];
@@ -29,7 +30,7 @@ export default function GuessList({ guesses, lastGuess }: GuessListProps) {
 					className="ml-auto"
 				>
 					<Typography variant="overline" as="span" className="text-pobach">
-						Спроб: {guesses.length}
+						{guesses.length} {pluralize(guesses.length, "спроба")}
 					</Typography>
 				</output>
 			</div>

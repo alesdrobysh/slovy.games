@@ -17,6 +17,7 @@ import { Button } from "@/shared/components/ui/Button";
 import { Modal } from "@/shared/components/ui/Modal";
 import { Typography } from "@/shared/components/ui/Typography";
 import { Check, Ellipsis, ExternalLink, Flag, X } from "lucide-react";
+import { pluralize } from "@/shared/lib/pluralize";
 
 type FlagState = "idle" | "confirming" | "sending" | "sent";
 
@@ -87,7 +88,7 @@ export function YesterdayModal({ currentDate, isOpen, onClose }: YesterdayModalP
 					<div className="pb-flow-md border-b border-rule">
 						<Typography variant="body">
 							Вы знайшлі {progress.foundWords.length} з {puzzle.answers.length}{" "}
-							слоў ({progress.score} пт)
+							{pluralize(puzzle.answers.length, "слова", "genitive")} ({progress.score} пт)
 						</Typography>
 					</div>
 				)}

@@ -2,6 +2,7 @@
 
 import { Badge } from "@/shared/components/ui/Badge";
 import { Typography } from "@/shared/components/ui/Typography";
+import { pluralize } from "@/shared/lib/pluralize";
 
 interface FoundWordsListProps {
 	words: string[];
@@ -21,7 +22,7 @@ export function FoundWordsList({
 				<Typography variant="subheading" as="h2">
 					{count === 0
 						? "Пакуль нічога"
-						: `${count} ${count === 1 ? "слова" : "слоў"}`}
+						: `${count} ${pluralize(count, "слова")}`}
 				</Typography>
 			</div>
 

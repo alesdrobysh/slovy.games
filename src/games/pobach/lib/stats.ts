@@ -3,6 +3,7 @@ import type {
 	HistoryRecord,
 } from "@/games/pobach/core/entities/game";
 import { getCurrentDayIndex } from "@/games/pobach/lib/storage";
+import { pluralize } from "@/shared/lib/pluralize";
 
 export function calculateStats(history: HistoryRecord[]): GameStats {
 	const gamesPlayed = history.length;
@@ -80,22 +81,11 @@ export function calculateDistribution(
 	return distribution;
 }
 
-function pluralizeDays(count: number): string {
-	const pr = new Intl.PluralRules("be-BY");
-	const rule = pr.select(count);
-	const forms: Record<string, string> = {
-		one: "дзень",
-		few: "дні",
-		many: "дзён",
-	};
-	return forms[rule] || forms.many;
-}
-
 export function formatRelativeDate(dayIndex: number): string {
 	const today = getCurrentDayIndex();
 	const diff = today - dayIndex;
 
 	if (diff === 0) return "Сёння";
 	if (diff === 1) return "Учора";
-	return `${diff} ${pluralizeDays(diff)} таму`;
+	return `${diff} ${pluralize(diff, "дзень")} таму`;
 }

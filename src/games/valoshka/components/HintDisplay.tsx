@@ -2,6 +2,7 @@
 
 import { Typography } from "@/shared/components/ui/Typography";
 import type { HintState } from "@/games/valoshka/types";
+import { pluralize } from "@/shared/lib/pluralize";
 
 interface HintDisplayProps {
 	hint: HintState;
@@ -19,7 +20,7 @@ export function HintDisplay({ hint }: HintDisplayProps) {
 		isLast: idx === word.length - 1,
 	}));
 
-	const letterLabel = length === 1 ? "літара" : length < 5 ? "літары" : "літар";
+	const letterLabel = pluralize(length, "літара");
 
 	return (
 		<div
