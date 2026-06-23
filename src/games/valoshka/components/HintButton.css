@@ -45,7 +45,11 @@
 }
 
 .hint-btn--ready:not(:disabled):hover {
-	background: var(--hint-amber-hover);
+	background: linear-gradient(
+		to top,
+		var(--hint-amber-hover) var(--hint-fill),
+		transparent var(--hint-fill)
+	);
 	color: var(--hint-amber-icon);
 }
 
