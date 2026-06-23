@@ -1,18 +1,11 @@
 "use client";
 
-import {
-	BarChart2,
-	ChevronLeft,
-	HelpCircle,
-	Moon,
-	Sun,
-} from "lucide-react";
+import { BarChart2, ChevronLeft, HelpCircle, Moon, Sun } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/shared/components/ui/Button";
 import { Typography } from "@/shared/components/ui/Typography";
 import { useTheme } from "@/shared/hooks/useTheme";
-
 
 const GAME_ROUTES: Record<
 	string,
@@ -34,7 +27,7 @@ function getGameConfig(pathname: string | null) {
 	if (!pathname) return null;
 	return (
 		Object.entries(GAME_ROUTES).find(([route]) =>
-			pathname.startsWith(route),
+			pathname.startsWith(route)
 		)?.[1] ?? null
 	);
 }
@@ -53,6 +46,9 @@ export function Nav({
 	const { theme, toggleTheme } = useTheme();
 
 	const game = getGameConfig(pathname);
+	const segments = pathname.split("/");
+	segments.pop();
+	const backHref = segments.join("/") || "/";
 
 	const themeToggle = (
 		<Button
@@ -74,7 +70,7 @@ export function Nav({
 					<>
 						<Button
 							as={Link}
-							href="/"
+							href={backHref}
 							variant="ghost"
 							color="neutral"
 							size="lg"
@@ -121,7 +117,10 @@ export function Nav({
 					/* ── Hub mode ── */
 					<>
 						<div className="flex-1 flex items-center">
-							<Link href="/" className="no-underline hover:opacity-80 transition-opacity">
+							<Link
+								href="/"
+								className="no-underline hover:opacity-80 transition-opacity"
+							>
 								<Typography variant="heading" className="text-ink">
 									Словы
 								</Typography>
