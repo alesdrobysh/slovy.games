@@ -110,6 +110,28 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 
 		case "START_HINT": {
 			if (state.wordsEarnTokenCount < 3) return state;
+
+			if (state.hint.isActive && state.hint.targetWord) {
+				const word = state.hint.targetWord;
+				const last = word.length - 1;
+				let nextIndex: number | null = null;
+				for (let i = 1; i < last; i++) {
+					if (!state.hint.revealedIndices.includes(i)) {
+						nextIndex = i;
+						break;
+					}
+				}
+				if (nextIndex === null) return state;
+				return {
+					...state,
+					wordsEarnTokenCount: state.wordsEarnTokenCount - 3,
+					hint: {
+						...state.hint,
+						revealedIndices: [...state.hint.revealedIndices, nextIndex],
+					},
+				};
+			}
+
 			const unfound = action.answers.filter(
 				(w: string) => !action.foundWords.includes(w)
 			);
