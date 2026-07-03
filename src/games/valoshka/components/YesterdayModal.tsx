@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Ellipsis, ExternalLink, Flag, X } from "lucide-react";
+import { Check, Ellipsis, Flag, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
 	UNWANTED_DATE_ENTRY,
@@ -13,6 +13,7 @@ import {
 	loadProgress,
 } from "@/games/valoshka/lib/storage";
 import type { Puzzle, SavedProgress } from "@/games/valoshka/types";
+import DictionaryLink from "@/shared/components/DictionaryLink";
 import { Badge } from "@/shared/components/ui/Badge";
 import { Button } from "@/shared/components/ui/Button";
 import { Modal } from "@/shared/components/ui/Modal";
@@ -110,7 +111,9 @@ export function YesterdayModal({
 										: "text-ink-muted opacity-45"
 							}`}
 						>
-							<Typography variant="caption">{word}</Typography>
+							<Typography variant="caption">
+								<DictionaryLink word={word} />
+							</Typography>
 							<span className="ml-auto flex items-center gap-flow-xs shrink-0">
 								{showFlags &&
 									(() => {
@@ -172,15 +175,7 @@ export function YesterdayModal({
 											</Button>
 										);
 									})()}
-								<a
-									href={`https://verbum.by/tsblm2022/${encodeURIComponent(word)}`}
-									target="_blank"
-									rel="noreferrer"
-									className="opacity-100 sm:opacity-0 sm:group-hover:opacity-100 text-ink-muted text-xs leading-none no-underline"
-									title={`Знайсці "${word}" у слоўніку`}
-								>
-									<ExternalLink />
-								</a>
+
 							</span>
 						</li>
 					);

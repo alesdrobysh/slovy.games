@@ -21,6 +21,7 @@ export interface SavedProgress {
 	hintCredits?: number;
 	wordsEarnTokenCount?: number;
 	milestonesAwarded?: number[];
+	vasiliokReached?: boolean;
 }
 
 export interface Rank {
@@ -46,6 +47,7 @@ export interface GameState {
 	hint: HintState;
 	hintCredits: number;
 	milestonesAwarded: number[];
+	vasiliokReached: boolean;
 }
 
 export interface GameStats {
@@ -78,5 +80,6 @@ export type GameAction =
 			hintCredits?: number;
 			wordsEarnTokenCount?: number;
 			milestonesAwarded?: number[];
+			vasiliokReached?: boolean;
 	  }
 	| { type: "START_HINT"; answers: string[]; foundWords: string[] };

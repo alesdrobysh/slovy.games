@@ -35,6 +35,7 @@ export function createInitialState(puzzle: Puzzle): GameState {
 		},
 		hintCredits: 2,
 		milestonesAwarded: [],
+		vasiliokReached: false,
 	};
 }
 
@@ -76,14 +77,18 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 			const newScore = state.score + pts;
 			const isHintedWord = word === state.hint.targetWord;
 
-			const MILESTONES = [25, 50, 75];
+			const MILESTONES = [25, 50, 75, 100];
 			const pct = action.maxScore > 0 ? (newScore / action.maxScore) * 100 : 0;
 			const newMilestones = [...state.milestonesAwarded];
 			let milestoneBonus = 0;
+			let vasiliokReached = state.vasiliokReached;
 			for (const m of MILESTONES) {
 				if (pct >= m && !newMilestones.includes(m)) {
 					newMilestones.push(m);
 					milestoneBonus += 1;
+					if (m === 100) {
+						vasiliokReached = true;
+					}
 				}
 			}
 
@@ -96,6 +101,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 				lastFoundWord: word,
 				lastFoundIsPangram: isPangram,
 				milestonesAwarded: newMilestones,
+				vasiliokReached,
 				hint: isHintedWord
 					? { targetWord: null, revealedIndices: [], isActive: false }
 					: state.hint,
@@ -130,6 +136,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 						? action.wordsEarnTokenCount + 2
 						: 2),
 				milestonesAwarded: action.milestonesAwarded ?? [],
+				vasiliokReached: action.vasiliokReached ?? false,
 			};
 
 		case "START_HINT": {

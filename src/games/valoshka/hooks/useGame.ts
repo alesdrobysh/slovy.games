@@ -1,6 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useReducer, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
+import { triggerConfetti } from "@/games/valoshka/lib/confetti";
+import { vibrate } from "@/games/valoshka/lib/haptics";
 import { createInitialState, gameReducer } from "@/games/valoshka/lib/reducer";
 import { getRankIndex } from "@/games/valoshka/lib/scoring";
 import {
@@ -42,11 +44,15 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 	const [shuffleCount, setShuffleCount] = useState(0);
 	const [successKey, setSuccessKey] = useState(0);
 	const [companionGridOpen, setCompanionGridOpen] = useState(false);
+	const prevVasiliokReached = useRef(false);
 
 	// Restore progress from localStorage on mount
 	useEffect(() => {
 		const saved = loadProgress(puzzle.date);
 		if (saved) {
+			const alreadyVasiliok =
+				saved.vasiliokReached ||
+				saved.score >= puzzle.max_score;
 			dispatch({
 				type: "RESTORE_STATE",
 				foundWords: saved.foundWords,
@@ -55,7 +61,11 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 				hintCredits: saved.hintCredits,
 				wordsEarnTokenCount: saved.wordsEarnTokenCount,
 				milestonesAwarded: saved.milestonesAwarded,
+				vasiliokReached: alreadyVasiliok,
 			});
+			if (alreadyVasiliok) {
+				prevVasiliokReached.current = true;
+			}
 		}
 	}, [puzzle.date]);
 
@@ -73,6 +83,7 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 				hint: gameState.hint.isActive ? gameState.hint : undefined,
 				hintCredits: gameState.hintCredits,
 				milestonesAwarded: gameState.milestonesAwarded,
+				vasiliokReached: gameState.vasiliokReached,
 			});
 			const rankIdx = getRankIndex(gameState.score, puzzle.max_score);
 			updateStatsForDate(puzzle.date, rankIdx, gameState.foundWords.length);
@@ -83,6 +94,7 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 		gameState.hint,
 		gameState.hintCredits,
 		gameState.milestonesAwarded,
+		gameState.vasiliokReached,
 		puzzle.date,
 		puzzle.max_score,
 	]);
@@ -104,6 +116,16 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 			return () => clearTimeout(t);
 		}
 	}, [gameState.lastFoundWord]);
+
+	// Trigger celebration when vasiliok is reached
+	useEffect(() => {
+		if (!gameState.vasiliokReached) return;
+		if (!prevVasiliokReached.current) {
+			prevVasiliokReached.current = true;
+			vibrate("long");
+		}
+		triggerConfetti();
+	}, [gameState.vasiliokReached]);
 
 	// Keyboard input
 	const handleKey = useCallback(

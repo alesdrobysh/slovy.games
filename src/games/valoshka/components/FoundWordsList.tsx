@@ -1,5 +1,6 @@
 "use client";
 
+import DictionaryLink from "@/shared/components/DictionaryLink";
 import { Badge } from "@/shared/components/ui/Badge";
 import { Typography } from "@/shared/components/ui/Typography";
 import { pluralize } from "@/shared/lib/pluralize";
@@ -35,7 +36,7 @@ export function FoundWordsList({ words, pangrams }: FoundWordsListProps) {
 									variant="body"
 									className={isPangram ? "text-valoshka" : ""}
 								>
-									{word}
+									<DictionaryLink word={word} />
 								</Typography>
 							</li>
 						);
