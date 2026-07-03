@@ -79,11 +79,11 @@ export function Nav({
 							startIcon={<ChevronLeft strokeWidth={2.5} />}
 						/>
 
-						<div>
+						<div className="flex-1 text-center">
 							<Typography
 								variant="heading"
 								as="span"
-								className={`flex-1 text-center ${game.accentClass}`}
+								className={game.accentClass}
 							>
 								{game.title}
 							</Typography>
