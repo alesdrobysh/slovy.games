@@ -14,6 +14,7 @@ export interface UseGameState extends GameState {
 	wordsOpen: boolean;
 	shuffleCount: number;
 	successKey: number;
+	companionGridOpen: boolean;
 }
 
 export interface UseGameActions {
@@ -23,6 +24,7 @@ export interface UseGameActions {
 	handleSubmit(): void;
 	handleStartHint(): void;
 	toggleWordsOpen(): void;
+	toggleCompanionGrid(): void;
 }
 
 export interface UseGameReturn {
@@ -39,6 +41,7 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 	const [wordsOpen, setWordsOpen] = useState(false);
 	const [shuffleCount, setShuffleCount] = useState(0);
 	const [successKey, setSuccessKey] = useState(0);
+	const [companionGridOpen, setCompanionGridOpen] = useState(false);
 
 	// Restore progress from localStorage on mount
 	useEffect(() => {
@@ -49,20 +52,27 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 				foundWords: saved.foundWords,
 				score: saved.score,
 				hint: saved.hint,
+				hintCredits: saved.hintCredits,
 				wordsEarnTokenCount: saved.wordsEarnTokenCount,
+				milestonesAwarded: saved.milestonesAwarded,
 			});
 		}
 	}, [puzzle.date]);
 
 	// Save progress whenever relevant state changes
 	useEffect(() => {
-		if (gameState.foundWords.length > 0 || gameState.hint.isActive || gameState.wordsEarnTokenCount > 0) {
+		if (
+			gameState.foundWords.length > 0 ||
+			gameState.hint.isActive ||
+			gameState.hintCredits > 0
+		) {
 			saveProgress({
 				date: puzzle.date,
 				foundWords: gameState.foundWords,
 				score: gameState.score,
 				hint: gameState.hint.isActive ? gameState.hint : undefined,
-				wordsEarnTokenCount: gameState.wordsEarnTokenCount,
+				hintCredits: gameState.hintCredits,
+				milestonesAwarded: gameState.milestonesAwarded,
 			});
 			const rankIdx = getRankIndex(gameState.score, puzzle.max_score);
 			updateStatsForDate(puzzle.date, rankIdx, gameState.foundWords.length);
@@ -71,7 +81,8 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 		gameState.foundWords,
 		gameState.score,
 		gameState.hint,
-		gameState.wordsEarnTokenCount,
+		gameState.hintCredits,
+		gameState.milestonesAwarded,
 		puzzle.date,
 		puzzle.max_score,
 	]);
@@ -104,6 +115,7 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 					answers: puzzle.answers,
 					pangrams: puzzle.pangrams,
 					center: puzzle.center,
+					maxScore: puzzle.max_score,
 				});
 			} else if (e.key === "Backspace") {
 				dispatch({ type: "DELETE_LETTER" });
@@ -111,7 +123,7 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 				dispatch({ type: "TYPE_LETTER", letter: e.key.toLowerCase() });
 			}
 		},
-		[puzzle.answers, puzzle.pangrams, puzzle.center]
+		[puzzle.answers, puzzle.pangrams, puzzle.center, puzzle.max_score]
 	);
 
 	useEffect(() => {
@@ -138,8 +150,9 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 			answers: puzzle.answers,
 			pangrams: puzzle.pangrams,
 			center: puzzle.center,
+			maxScore: puzzle.max_score,
 		});
-	}, [puzzle.answers, puzzle.pangrams, puzzle.center]);
+	}, [puzzle.answers, puzzle.pangrams, puzzle.center, puzzle.max_score]);
 
 	const handleStartHint = useCallback(() => {
 		dispatch({
@@ -153,8 +166,18 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 		setWordsOpen((o) => !o);
 	}, []);
 
+	const toggleCompanionGrid = useCallback(() => {
+		setCompanionGridOpen((o) => !o);
+	}, []);
+
 	return {
-		state: { ...gameState, wordsOpen, shuffleCount, successKey },
+		state: {
+			...gameState,
+			wordsOpen,
+			shuffleCount,
+			successKey,
+			companionGridOpen,
+		},
 		actions: {
 			handleLetter,
 			handleDelete,
@@ -162,6 +185,7 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 			handleSubmit,
 			handleStartHint,
 			toggleWordsOpen,
+			toggleCompanionGrid,
 		},
 	};
 }

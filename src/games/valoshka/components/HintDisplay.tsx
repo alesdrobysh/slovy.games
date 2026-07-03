@@ -1,7 +1,7 @@
 "use client";
 
-import { Typography } from "@/shared/components/ui/Typography";
 import type { HintState } from "@/games/valoshka/types";
+import { Typography } from "@/shared/components/ui/Typography";
 import { pluralize } from "@/shared/lib/pluralize";
 
 interface HintDisplayProps {
@@ -32,11 +32,7 @@ export function HintDisplay({ hint }: HintDisplayProps) {
 			}}
 		>
 			<div className="flex items-baseline gap-flow-sm min-w-0 flex-1">
-				<Typography
-					variant="smallSerif"
-					as="span"
-					className="tracking-[0.2em]"
-				>
+				<Typography variant="smallSerif" as="span" className="tracking-[0.2em]">
 					{chars.map((c, idx) =>
 						c.revealed || c.isLast ? (
 							<span key={`${idx}-${c.char}`}>{c.char}</span>

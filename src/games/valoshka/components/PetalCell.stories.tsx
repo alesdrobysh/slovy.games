@@ -165,8 +165,8 @@ function RotationsSpecimen() {
 					maxWidth: 520,
 				}}
 			>
-				Each outer petal rotates to point outward from the center. Six
-				positions at 60° increments form the full cornflower.
+				Each outer petal rotates to point outward from the center. Six positions
+				at 60° increments form the full cornflower.
 			</p>
 
 			<div

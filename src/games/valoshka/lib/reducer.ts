@@ -33,7 +33,8 @@ export function createInitialState(puzzle: Puzzle): GameState {
 			revealedIndices: [],
 			isActive: false,
 		},
-		wordsEarnTokenCount: 0,
+		hintCredits: 2,
+		milestonesAwarded: [],
 	};
 }
 
@@ -72,21 +73,35 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 			const pts = scoreWord(word, action.pangrams);
 			const isPangram = action.pangrams.includes(word);
 			const newFoundWords = [...state.foundWords, word];
+			const newScore = state.score + pts;
 			const isHintedWord = word === state.hint.targetWord;
+
+			const MILESTONES = [25, 50, 75];
+			const pct = action.maxScore > 0 ? (newScore / action.maxScore) * 100 : 0;
+			const newMilestones = [...state.milestonesAwarded];
+			let milestoneBonus = 0;
+			for (const m of MILESTONES) {
+				if (pct >= m && !newMilestones.includes(m)) {
+					newMilestones.push(m);
+					milestoneBonus += 1;
+				}
+			}
+
 			return {
 				...state,
 				currentInput: "",
 				foundWords: newFoundWords,
-				score: state.score + pts,
+				score: newScore,
 				errorType: null,
 				lastFoundWord: word,
 				lastFoundIsPangram: isPangram,
+				milestonesAwarded: newMilestones,
 				hint: isHintedWord
 					? { targetWord: null, revealedIndices: [], isActive: false }
 					: state.hint,
-				wordsEarnTokenCount: isHintedWord
-					? state.wordsEarnTokenCount
-					: state.wordsEarnTokenCount + word.length / 10,
+				hintCredits: isHintedWord
+					? state.hintCredits + milestoneBonus
+					: state.hintCredits + word.length / 10 + milestoneBonus,
 			};
 		}
 
@@ -109,11 +124,16 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 					revealedIndices: [],
 					isActive: false,
 				},
-				wordsEarnTokenCount: action.wordsEarnTokenCount ?? 0,
+				hintCredits:
+					action.hintCredits ??
+					(action.wordsEarnTokenCount != null
+						? action.wordsEarnTokenCount + 2
+						: 2),
+				milestonesAwarded: action.milestonesAwarded ?? [],
 			};
 
 		case "START_HINT": {
-			if (state.wordsEarnTokenCount < 1) return state;
+			if (state.hintCredits < 1) return state;
 
 			if (state.hint.isActive && state.hint.targetWord) {
 				const word = state.hint.targetWord;
@@ -128,7 +148,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 				if (nextIndex === null) return state;
 				return {
 					...state,
-					wordsEarnTokenCount: state.wordsEarnTokenCount - 1,
+					hintCredits: state.hintCredits - 1,
 					hint: {
 						...state.hint,
 						revealedIndices: [...state.hint.revealedIndices, nextIndex],
@@ -143,7 +163,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 			const target = unfound[Math.floor(Math.random() * unfound.length)];
 			return {
 				...state,
-				wordsEarnTokenCount: state.wordsEarnTokenCount - 1,
+				hintCredits: state.hintCredits - 1,
 				hint: {
 					targetWord: target,
 					revealedIndices: hintRevealIndices(target.length),

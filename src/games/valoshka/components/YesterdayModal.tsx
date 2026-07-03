@@ -1,5 +1,6 @@
 "use client";
 
+import { Check, Ellipsis, ExternalLink, Flag, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import {
 	UNWANTED_DATE_ENTRY,
@@ -16,7 +17,6 @@ import { Badge } from "@/shared/components/ui/Badge";
 import { Button } from "@/shared/components/ui/Button";
 import { Modal } from "@/shared/components/ui/Modal";
 import { Typography } from "@/shared/components/ui/Typography";
-import { Check, Ellipsis, ExternalLink, Flag, X } from "lucide-react";
 import { pluralize } from "@/shared/lib/pluralize";
 
 type FlagState = "idle" | "confirming" | "sending" | "sent";
@@ -27,7 +27,11 @@ interface YesterdayModalProps {
 	onClose: () => void;
 }
 
-export function YesterdayModal({ currentDate, isOpen, onClose }: YesterdayModalProps) {
+export function YesterdayModal({
+	currentDate,
+	isOpen,
+	onClose,
+}: YesterdayModalProps) {
 	const [puzzle, setPuzzle] = useState<Puzzle | null>(null);
 	const [progress, setProgress] = useState<SavedProgress | null>(null);
 	const [flagStates, setFlagStates] = useState<Record<string, FlagState>>({});
@@ -78,106 +82,110 @@ export function YesterdayModal({ currentDate, isOpen, onClose }: YesterdayModalP
 	const sorted = [...puzzle.answers].sort((a, b) => a.localeCompare(b, "be"));
 
 	return (
-		<Modal
-			isOpen={isOpen}
-			onClose={onClose}
-			title="Учарашнія адказы"
-		>
-				{/* Progress summary */}
-				{progress && (
-					<div className="pb-flow-md border-b border-rule">
-						<Typography variant="body">
-							Вы знайшлі {progress.foundWords.length} з {puzzle.answers.length}{" "}
-							{pluralize(puzzle.answers.length, "слова", "genitive")} ({progress.score} пт)
-						</Typography>
-					</div>
-				)}
+		<Modal isOpen={isOpen} onClose={onClose} title="Учарашнія адказы">
+			{/* Progress summary */}
+			{progress && (
+				<div className="pb-flow-md border-b border-rule">
+					<Typography variant="body">
+						Вы знайшлі {progress.foundWords.length} з {puzzle.answers.length}{" "}
+						{pluralize(puzzle.answers.length, "слова", "genitive")} (
+						{progress.score} пт)
+					</Typography>
+				</div>
+			)}
 
-				{/* Word list */}
-				<ul className="m-0 pt-flow-sm list-none overflow-y-auto max-h-[40vh]">
-					{sorted.map((word) => {
-						const isPangram = puzzle.pangrams.includes(word);
-						const wasFound = progress
-							? progress.foundWords.includes(word)
-							: true;
-						return (
-							<li
-								key={word}
-								className={`group text-sm flex items-center gap-flow-sm py-flow-xs border-b border-rule ${
-									isPangram
-										? "font-bold text-valoshka"
-										: wasFound
-											? "text-ink"
-											: "text-ink-muted opacity-45"
-								}`}
-							>
-								<Typography variant="caption">{word}</Typography>
-								<span className="ml-auto flex items-center gap-flow-xs shrink-0">
-									{showFlags &&
-										(() => {
-											const fs = getFlagState(word);
-											if (fs === "confirming") {
-												return (
-													<>
-														<Typography variant="label" className="text-ink-muted">
-															адправіць?
-														</Typography>
-														<Button
-															variant="ghost"
-															color="primary"
-															onClick={() => handleConfirm(word, puzzle.date)}
-															aria-label="Пацвердзіць"
-														>
-															<Check />
-														</Button>
-														<Button
-															variant="ghost"
-															color="neutral"
-															onClick={() => setWordFlagState(word, "idle")}
-															aria-label="Адмяніць"
-														>
-															<X />
-														</Button>
-													</>
-												);
-											}
+			{/* Word list */}
+			<ul className="m-0 pt-flow-sm list-none overflow-y-auto max-h-[40vh]">
+				{sorted.map((word) => {
+					const isPangram = puzzle.pangrams.includes(word);
+					const wasFound = progress ? progress.foundWords.includes(word) : true;
+					return (
+						<li
+							key={word}
+							className={`group text-sm flex items-center gap-flow-sm py-flow-xs border-b border-rule ${
+								isPangram
+									? "font-bold text-valoshka"
+									: wasFound
+										? "text-ink"
+										: "text-ink-muted opacity-45"
+							}`}
+						>
+							<Typography variant="caption">{word}</Typography>
+							<span className="ml-auto flex items-center gap-flow-xs shrink-0">
+								{showFlags &&
+									(() => {
+										const fs = getFlagState(word);
+										if (fs === "confirming") {
 											return (
-												<Button
-													variant="ghost"
-													color="neutral"
-													onClick={() => handleFlagClick(word)}
-													disabled={fs === "sending"}
-													className={
-														fs === "idle"
-															? "opacity-0 group-hover:opacity-100"
-															: fs === "sent"
-																? "opacity-60"
-																: "opacity-40"
-													}
-													aria-label={
-														fs === "sent"
-															? "Адпраўлена"
-															: "Паведаміць пра памылку ў слове"
-													}
-												>
-													{fs === "sent" ? <Check /> : fs === "sending" ? <Ellipsis /> : <Flag />}
-												</Button>
+												<>
+													<Typography
+														variant="label"
+														className="text-ink-muted"
+													>
+														адправіць?
+													</Typography>
+													<Button
+														variant="ghost"
+														color="primary"
+														onClick={() => handleConfirm(word, puzzle.date)}
+														aria-label="Пацвердзіць"
+													>
+														<Check />
+													</Button>
+													<Button
+														variant="ghost"
+														color="neutral"
+														onClick={() => setWordFlagState(word, "idle")}
+														aria-label="Адмяніць"
+													>
+														<X />
+													</Button>
+												</>
 											);
-										})()}
-									<a
-										href={`https://verbum.by/tsblm2022/${encodeURIComponent(word)}`}
-										target="_blank"
-										rel="noreferrer"
-										className="opacity-100 sm:opacity-0 sm:group-hover:opacity-100 text-ink-muted text-xs leading-none no-underline"
-										title={`Знайсці "${word}" у слоўніку`}
-									>
-										<ExternalLink />
-									</a>
-								</span>
-							</li>
-						);
-					})}
-				</ul>
+										}
+										return (
+											<Button
+												variant="ghost"
+												color="neutral"
+												onClick={() => handleFlagClick(word)}
+												disabled={fs === "sending"}
+												className={
+													fs === "idle"
+														? "opacity-0 group-hover:opacity-100"
+														: fs === "sent"
+															? "opacity-60"
+															: "opacity-40"
+												}
+												aria-label={
+													fs === "sent"
+														? "Адпраўлена"
+														: "Паведаміць пра памылку ў слове"
+												}
+											>
+												{fs === "sent" ? (
+													<Check />
+												) : fs === "sending" ? (
+													<Ellipsis />
+												) : (
+													<Flag />
+												)}
+											</Button>
+										);
+									})()}
+								<a
+									href={`https://verbum.by/tsblm2022/${encodeURIComponent(word)}`}
+									target="_blank"
+									rel="noreferrer"
+									className="opacity-100 sm:opacity-0 sm:group-hover:opacity-100 text-ink-muted text-xs leading-none no-underline"
+									title={`Знайсці "${word}" у слоўніку`}
+								>
+									<ExternalLink />
+								</a>
+							</span>
+						</li>
+					);
+				})}
+			</ul>
 		</Modal>
 	);
 }

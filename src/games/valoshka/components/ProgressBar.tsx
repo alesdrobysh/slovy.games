@@ -112,9 +112,7 @@ export function ProgressBar({
 									transform: "translateX(-50%)",
 									width: isCurrent ? "12px" : "7px",
 									height: isCurrent ? "12px" : "7px",
-									border: isCurrent
-										? "2px solid var(--accent-dark)"
-										: "none",
+									border: isCurrent ? "2px solid var(--accent-dark)" : "none",
 								}}
 							/>
 						);

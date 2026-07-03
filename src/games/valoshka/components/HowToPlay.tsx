@@ -27,11 +27,19 @@ export function HowToPlay({ onClose, isOpen }: HowToPlayProps) {
 						Як налічваюцца балы?
 					</summary>
 					<ul className="mt-flow-xs pl-flow-lg space-y-flow-xs list-disc">
-						<li><Typography variant="body">4 літары = 1 бал</Typography></li>
-						<li><Typography variant="body">5 літар = 5 балаў, 6 літар = 6 балаў і г.д.</Typography></li>
 						<li>
-							<Typography variant="body"><strong className="text-valoshka">Панграма</strong>{" "}
-							— слова з усіх 7 літар: +7 бонусных балаў</Typography>
+							<Typography variant="body">4 літары = 1 бал</Typography>
+						</li>
+						<li>
+							<Typography variant="body">
+								5 літар = 5 балаў, 6 літар = 6 балаў і г.д.
+							</Typography>
+						</li>
+						<li>
+							<Typography variant="body">
+								<strong className="text-valoshka">Панграма</strong> — слова з
+								усіх 7 літар: +7 бонусных балаў
+							</Typography>
 						</li>
 					</ul>
 				</details>
@@ -44,6 +52,28 @@ export function HowToPlay({ onClose, isOpen }: HowToPlayProps) {
 						<Typography variant="body">
 							Чым больш слоў вы знаходзіце, тым вышэй ваш ранг. Націсніце на
 							бягучы ранг над шкалай прагрэсу, каб убачыць усе ўзроўні.
+						</Typography>
+					</div>
+				</details>
+
+				<details>
+					<summary className="cursor-pointer text-valoshka font-medium hover:opacity-80 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-card rounded-sm">
+						Як працуюць падказкі?
+					</summary>
+					<div className="mt-flow-xs space-y-flow-sm">
+						<Typography variant="body">
+							<strong>Кожны дзень</strong> вы атрымліваеце 2 бясплатныя
+							падказкі. Дадатковыя падказкі зарабляюцца за кожнае знойдзенае
+							слова (даўжыня слова / 10).
+						</Typography>
+						<Typography variant="body">
+							<strong>Бонусы за прагрэс:</strong> +1 падказка пры дасягненні
+							25%, 50% і 75% ад максімальнага бала.
+						</Typography>
+						<Typography variant="body">
+							<strong>Сетка слоў</strong> (кнопка побач з лямпачкай) паказвае
+							колькасць ня знойдзеных слоў паводле першай літары і даўжыні, а
+							таксама двухлітарныя пачаткі. Бясплатна і без абмежаванняў.
 						</Typography>
 					</div>
 				</details>

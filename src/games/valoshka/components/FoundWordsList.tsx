@@ -9,10 +9,7 @@ interface FoundWordsListProps {
 	pangrams: string[];
 }
 
-export function FoundWordsList({
-	words,
-	pangrams,
-}: FoundWordsListProps) {
+export function FoundWordsList({ words, pangrams }: FoundWordsListProps) {
 	const sorted = [...words].sort((a, b) => a.localeCompare(b, "be"));
 	const count = words.length;
 
@@ -33,10 +30,7 @@ export function FoundWordsList({
 					{sorted.map((word) => {
 						const isPangram = pangrams.includes(word);
 						return (
-							<li
-								key={word}
-								className="flex items-center gap-flow-xs"
-							>
+							<li key={word} className="flex items-center gap-flow-xs">
 								<Typography
 									variant="body"
 									className={isPangram ? "text-valoshka" : ""}

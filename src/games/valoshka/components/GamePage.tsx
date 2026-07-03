@@ -1,17 +1,18 @@
 "use client";
 
+import { ChevronDown } from "lucide-react";
 import { useGame } from "@/games/valoshka/hooks/useGame";
 import type { Puzzle } from "@/games/valoshka/types";
+import { Button } from "@/shared/components/ui/Button";
+import { Typography } from "@/shared/components/ui/Typography";
 import { ActionButtons } from "./ActionButtons";
+import { CompanionGrid } from "./CompanionGrid";
 import { Cornflower } from "./Cornflower";
 import { FoundWordsList } from "./FoundWordsList";
 import { HintDisplay } from "./HintDisplay";
 import { HowToPlay, useHowToPlay } from "./HowToPlay";
 import { InputDisplay } from "./InputDisplay";
 import { ProgressBar } from "./ProgressBar";
-import { Button } from "@/shared/components/ui/Button";
-import { Typography } from "@/shared/components/ui/Typography";
-import { ChevronDown } from "lucide-react";
 
 interface GamePageProps {
 	puzzle: Puzzle;
@@ -34,10 +35,7 @@ export function GamePage({ puzzle }: GamePageProps) {
 					Словы ({state.foundWords.length}/{puzzle.answers.length})
 					{!state.wordsOpen && state.foundWords.length > 0 && (
 						<Typography variant="label" className="ml-flow-sm truncate min-w-0">
-							{state.foundWords
-								.slice()
-								.reverse()
-								.join("  ")}
+							{state.foundWords.slice().reverse().join("  ")}
 						</Typography>
 					)}
 					<ChevronDown
@@ -50,10 +48,7 @@ export function GamePage({ puzzle }: GamePageProps) {
 			{/* Mobile: collapsible words panel */}
 			{state.wordsOpen && (
 				<div className="lg:hidden py-flow-sm px-flow-sm max-h-[40vh] overflow-y-auto">
-					<FoundWordsList
-						words={state.foundWords}
-						pangrams={puzzle.pangrams}
-					/>
+					<FoundWordsList words={state.foundWords} pangrams={puzzle.pangrams} />
 				</div>
 			)}
 
@@ -82,9 +77,7 @@ export function GamePage({ puzzle }: GamePageProps) {
 					/>
 
 					<div className="w-full max-w-sm" style={{ height: "38px" }}>
-						{state.hint.isActive && (
-							<HintDisplay hint={state.hint} />
-						)}
+						{state.hint.isActive && <HintDisplay hint={state.hint} />}
 					</div>
 
 					<div
@@ -104,22 +97,28 @@ export function GamePage({ puzzle }: GamePageProps) {
 						onShuffle={actions.handleShuffle}
 						onSubmit={actions.handleSubmit}
 						onHint={actions.handleStartHint}
-						wordsEarnTokenCount={state.wordsEarnTokenCount}
+						onOpenGrid={actions.toggleCompanionGrid}
+						hintCredits={state.hintCredits}
 					/>
 				</div>
 
 				{/* Right: found words — desktop only */}
 				<div className="hidden lg:block flex-1 min-h-0 pt-10">
-					<FoundWordsList
-						words={state.foundWords}
-						pangrams={puzzle.pangrams}
-					/>
+					<FoundWordsList words={state.foundWords} pangrams={puzzle.pangrams} />
 				</div>
 			</div>
 
 			{showHowToPlay && (
 				<HowToPlay isOpen={showHowToPlay} onClose={closeHowToPlay} />
 			)}
+
+			<CompanionGrid
+				isOpen={state.companionGridOpen}
+				onClose={actions.toggleCompanionGrid}
+				answers={puzzle.answers}
+				foundWords={state.foundWords}
+				pangrams={puzzle.pangrams}
+			/>
 		</div>
 	);
 }

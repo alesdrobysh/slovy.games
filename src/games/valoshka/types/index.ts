@@ -18,7 +18,9 @@ export interface SavedProgress {
 	foundWords: string[];
 	score: number;
 	hint?: HintState;
+	hintCredits?: number;
 	wordsEarnTokenCount?: number;
+	milestonesAwarded?: number[];
 }
 
 export interface Rank {
@@ -42,7 +44,8 @@ export interface GameState {
 	lastFoundWord: string | null;
 	lastFoundIsPangram: boolean;
 	hint: HintState;
-	wordsEarnTokenCount: number;
+	hintCredits: number;
+	milestonesAwarded: number[];
 }
 
 export interface GameStats {
@@ -57,9 +60,23 @@ export interface GameStats {
 export type GameAction =
 	| { type: "TYPE_LETTER"; letter: string }
 	| { type: "DELETE_LETTER" }
-	| { type: "SUBMIT"; answers: string[]; pangrams: string[]; center: string }
+	| {
+			type: "SUBMIT";
+			answers: string[];
+			pangrams: string[];
+			center: string;
+			maxScore: number;
+	  }
 	| { type: "SHUFFLE" }
 	| { type: "CLEAR_ERROR" }
 	| { type: "CLEAR_LAST_FOUND" }
-	| { type: "RESTORE_STATE"; foundWords: string[]; score: number; hint?: HintState; wordsEarnTokenCount?: number }
+	| {
+			type: "RESTORE_STATE";
+			foundWords: string[];
+			score: number;
+			hint?: HintState;
+			hintCredits?: number;
+			wordsEarnTokenCount?: number;
+			milestonesAwarded?: number[];
+	  }
 	| { type: "START_HINT"; answers: string[]; foundWords: string[] };

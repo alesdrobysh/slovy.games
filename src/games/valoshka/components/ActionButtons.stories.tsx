@@ -11,6 +11,9 @@ const meta = {
 		onDelete: () => {},
 		onShuffle: () => {},
 		onSubmit: () => {},
+		onHint: () => {},
+		onOpenGrid: () => {},
+		hintCredits: 2,
 	},
 } satisfies Meta<typeof ActionButtons>;
 
@@ -18,4 +21,3 @@ export default meta;
 type Story = StoryObj<typeof ActionButtons>;
 
 export const Default: Story = {};
-

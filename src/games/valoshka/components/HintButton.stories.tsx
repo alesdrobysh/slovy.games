@@ -28,62 +28,62 @@ const label = (text: string) => (
 
 export const Empty: Story = {
 	name: "0.0 — empty",
-	args: { wordsEarnTokenCount: 0 },
+	args: { hintCredits: 0 },
 };
 
 export const Step01: Story = {
 	name: "0.1 — 1/10",
-	args: { wordsEarnTokenCount: 0.1 },
+	args: { hintCredits: 0.1 },
 };
 
 export const Step02: Story = {
 	name: "0.2 — 2/10",
-	args: { wordsEarnTokenCount: 0.2 },
+	args: { hintCredits: 0.2 },
 };
 
 export const Step03: Story = {
 	name: "0.3 — 3/10",
-	args: { wordsEarnTokenCount: 0.3 },
+	args: { hintCredits: 0.3 },
 };
 
 export const Step04: Story = {
 	name: "0.4 — 4/10",
-	args: { wordsEarnTokenCount: 0.4 },
+	args: { hintCredits: 0.4 },
 };
 
 export const Step05: Story = {
 	name: "0.5 — 5/10",
-	args: { wordsEarnTokenCount: 0.5 },
+	args: { hintCredits: 0.5 },
 };
 
 export const Step06: Story = {
 	name: "0.6 — 6/10",
-	args: { wordsEarnTokenCount: 0.6 },
+	args: { hintCredits: 0.6 },
 };
 
 export const Step07: Story = {
 	name: "0.7 — 7/10",
-	args: { wordsEarnTokenCount: 0.7 },
+	args: { hintCredits: 0.7 },
 };
 
 export const Step08: Story = {
 	name: "0.8 — 8/10",
-	args: { wordsEarnTokenCount: 0.8 },
+	args: { hintCredits: 0.8 },
 };
 
 export const Step09: Story = {
 	name: "0.9 — 9/10",
-	args: { wordsEarnTokenCount: 0.9 },
+	args: { hintCredits: 0.9 },
 };
 
 export const Ready1: Story = {
 	name: "1.0 — ready (1 hint)",
-	args: { wordsEarnTokenCount: 1 },
+	args: { hintCredits: 1 },
 };
 
 export const Banked2: Story = {
 	name: "2.5 — banked (2 hints)",
-	args: { wordsEarnTokenCount: 2.5 },
+	args: { hintCredits: 2.5 },
 };
 
 export const AllStates: Story = {
@@ -122,11 +122,11 @@ export const AllStates: Story = {
 						gap: 8,
 					}}
 				>
-					<HintButton {...args} wordsEarnTokenCount={count} />
+					<HintButton {...args} hintCredits={count} />
 					{label(desc)}
 				</div>
 			))}
 		</div>
 	),
-	args: { wordsEarnTokenCount: 0 },
+	args: { hintCredits: 0 },
 };

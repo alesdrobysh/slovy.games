@@ -1,6 +1,6 @@
 "use client";
 
-import { Shuffle } from "lucide-react";
+import { Grid3x3, Shuffle } from "lucide-react";
 import { Button } from "@/shared/components/ui/Button";
 import { HintButton } from "./HintButton";
 
@@ -9,7 +9,8 @@ interface ActionButtonsProps {
 	onShuffle: () => void;
 	onSubmit: () => void;
 	onHint: () => void;
-	wordsEarnTokenCount: number;
+	onOpenGrid: () => void;
+	hintCredits: number;
 }
 
 export function ActionButtons({
@@ -17,7 +18,8 @@ export function ActionButtons({
 	onShuffle,
 	onSubmit,
 	onHint,
-	wordsEarnTokenCount,
+	onOpenGrid,
+	hintCredits,
 }: ActionButtonsProps) {
 	return (
 		<div className="flex items-center justify-center gap-3">
@@ -34,7 +36,16 @@ export function ActionButtons({
 				startIcon={<Shuffle size={20} />}
 			/>
 
-			<HintButton wordsEarnTokenCount={wordsEarnTokenCount} onClick={onHint} />
+			<HintButton hintCredits={hintCredits} onClick={onHint} />
+
+			<Button
+				variant="ghost"
+				color="neutral"
+				aria-label="Сетка слоў"
+				onClick={onOpenGrid}
+				size="lg"
+				startIcon={<Grid3x3 size={20} />}
+			/>
 
 			<Button variant="solid" color="primary" size="lg" onClick={onSubmit}>
 				Увесці

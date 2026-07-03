@@ -4,14 +4,15 @@ import { Lightbulb } from "lucide-react";
 import "./HintButton.css";
 
 interface HintButtonProps {
-	wordsEarnTokenCount: number;
+	hintCredits: number;
 	onClick: () => void;
 }
 
-export function HintButton({ wordsEarnTokenCount, onClick }: HintButtonProps) {
-	const disabled = wordsEarnTokenCount < 1;
-	const fillPct = Math.min(wordsEarnTokenCount, 1) * 100;
-	const hasToken = wordsEarnTokenCount >= 1;
+export function HintButton({ hintCredits, onClick }: HintButtonProps) {
+	const disabled = Math.floor(hintCredits) < 1;
+	const fillPct = (hintCredits % 1) * 100;
+	const hasCredit = Math.floor(hintCredits) >= 1;
+	const creditCount = Math.floor(hintCredits);
 
 	return (
 		<button
@@ -19,10 +20,13 @@ export function HintButton({ wordsEarnTokenCount, onClick }: HintButtonProps) {
 			disabled={disabled}
 			onClick={onClick}
 			aria-label="Падказка"
-			className={`hint-btn${hasToken ? " hint-btn--ready" : ""}`}
+			className={`hint-btn${hasCredit ? " hint-btn--ready" : ""}`}
 			style={{ "--hint-fill": `${fillPct}%` } as React.CSSProperties}
 		>
 			<Lightbulb />
+			{creditCount > 0 && (
+				<span className="hint-btn__badge">{creditCount}</span>
+			)}
 		</button>
 	);
 }

@@ -63,7 +63,11 @@ export function RankingModal({
 										{score}
 									</span>
 									<div>
-										<Typography variant="smallSerif" as="div" className="text-valoshka">
+										<Typography
+											variant="smallSerif"
+											as="div"
+											className="text-valoshka"
+										>
 											{r.name}
 										</Typography>
 										{nextRank && (
@@ -89,9 +93,13 @@ export function RankingModal({
 								<span
 									className={`size-2 rounded-full shrink-0 ${isPast ? "bg-valoshka" : "bg-rule"}`}
 								/>
-								<Typography variant="body" as="span" className="text-ink">{r.name}</Typography>
+								<Typography variant="body" as="span" className="text-ink">
+									{r.name}
+								</Typography>
 							</div>
-							<Typography variant="body" as="span" className="text-ink-muted">{pts}</Typography>
+							<Typography variant="body" as="span" className="text-ink-muted">
+								{pts}
+							</Typography>
 						</div>
 					);
 				})}
