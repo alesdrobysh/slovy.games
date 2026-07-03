@@ -9,9 +9,9 @@ interface HintButtonProps {
 }
 
 export function HintButton({ wordsEarnTokenCount, onClick }: HintButtonProps) {
-	const disabled = wordsEarnTokenCount < 3;
-	const fillPct = Math.min(wordsEarnTokenCount / 3, 1) * 100;
-	const hasToken = wordsEarnTokenCount >= 3;
+	const disabled = wordsEarnTokenCount < 1;
+	const fillPct = Math.min(wordsEarnTokenCount, 1) * 100;
+	const hasToken = wordsEarnTokenCount >= 1;
 
 	return (
 		<button

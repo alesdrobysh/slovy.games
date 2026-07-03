@@ -86,7 +86,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 					: state.hint,
 				wordsEarnTokenCount: isHintedWord
 					? state.wordsEarnTokenCount
-					: Math.min(9, state.wordsEarnTokenCount + 1),
+					: state.wordsEarnTokenCount + word.length / 10,
 			};
 		}
 
@@ -104,12 +104,16 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 				...state,
 				foundWords: action.foundWords,
 				score: action.score,
-				hint: action.hint ?? { targetWord: null, revealedIndices: [], isActive: false },
+				hint: action.hint ?? {
+					targetWord: null,
+					revealedIndices: [],
+					isActive: false,
+				},
 				wordsEarnTokenCount: action.wordsEarnTokenCount ?? 0,
 			};
 
 		case "START_HINT": {
-			if (state.wordsEarnTokenCount < 3) return state;
+			if (state.wordsEarnTokenCount < 1) return state;
 
 			if (state.hint.isActive && state.hint.targetWord) {
 				const word = state.hint.targetWord;
@@ -124,7 +128,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 				if (nextIndex === null) return state;
 				return {
 					...state,
-					wordsEarnTokenCount: state.wordsEarnTokenCount - 3,
+					wordsEarnTokenCount: state.wordsEarnTokenCount - 1,
 					hint: {
 						...state.hint,
 						revealedIndices: [...state.hint.revealedIndices, nextIndex],
@@ -139,7 +143,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 			const target = unfound[Math.floor(Math.random() * unfound.length)];
 			return {
 				...state,
-				wordsEarnTokenCount: state.wordsEarnTokenCount - 3,
+				wordsEarnTokenCount: state.wordsEarnTokenCount - 1,
 				hint: {
 					targetWord: target,
 					revealedIndices: hintRevealIndices(target.length),
