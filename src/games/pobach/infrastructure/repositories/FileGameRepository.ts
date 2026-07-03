@@ -34,9 +34,24 @@ export class FileGameRepository implements IGameRepository {
 			const words: string[] = wordsData.words || wordsData; // Support both {words: [...]} and [...]
 			const targetsData = JSON.parse(targetsJson);
 
+			// Validate targets.json format — must be an object with history + pool, not a plain array
+			if (Array.isArray(targetsData)) {
+				throw new Error(
+					"targets.json has invalid format: got an array, expected {history: {...}, pool: [...]}. " +
+						"Restore it with: git checkout HEAD -- src/data/targets.json"
+				);
+			}
+
 			// Expect unified format: {history: {...}, pool: [...]}
 			const history: Record<string, string> = targetsData.history || {};
 			const pool: string[] = targetsData.pool || [];
+
+			if (!Array.isArray(pool) || pool.length === 0) {
+				throw new Error(
+					"targets.json is missing the 'pool' field or pool is empty. " +
+						"Expected format: {history: {...}, pool: [...]} with a non-empty pool array."
+				);
+			}
 
 			// targets becomes pool for backward compatibility with existing code
 			const targets = pool;
