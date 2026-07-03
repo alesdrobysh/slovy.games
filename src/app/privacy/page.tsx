@@ -1,6 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Nav } from "@/shared/components/Nav";
 import { Typography } from "@/shared/components/ui/Typography";
+
+export const metadata: Metadata = {
+	title: "Прыватнасць",
+};
 
 export default function PrivacyPage() {
 	return (

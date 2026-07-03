@@ -74,7 +74,7 @@ export function RankingModal({
 									</div>
 								</div>
 								<Typography variant="smallSerif" className="text-valoshka">
-									{pts}
+									{score}
 								</Typography>
 							</div>
 						);
