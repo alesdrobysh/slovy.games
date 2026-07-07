@@ -2,6 +2,7 @@
 
 import { Sparkles } from "lucide-react";
 import { Typography } from "@/shared/components/ui/Typography";
+import { TryOtherGamesLink } from "@/shared/components/TryOtherGamesLink";
 
 export function VasiliokCard() {
 	return (
@@ -22,6 +23,9 @@ export function VasiliokCard() {
 				Вы дасягнулі найвышэйшага рангу! Цудоўная гульня. Да новых сустрэч з
 				родным словам.
 			</Typography>
+			<div className="mt-inset-lg">
+				<TryOtherGamesLink className="text-valoshka" />
+			</div>
 		</div>
 	);
 }
