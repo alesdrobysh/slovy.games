@@ -9,7 +9,6 @@ import type { GameStats } from "@/games/valoshka/types";
 import { Button } from "@/shared/components/ui/Button";
 import { StatCard } from "@/shared/components/ui/StatCard";
 import { Typography } from "@/shared/components/ui/Typography";
-import { useAnimatedValue } from "@/shared/hooks/useAnimatedValue";
 import { useShare } from "@/shared/hooks/useShare";
 import {
 	getMskDateString,
@@ -53,11 +52,11 @@ export function StatsPage() {
 		setStats(loadStats());
 	}, []);
 
-	const streak = useAnimatedValue(stats.currentStreak);
-	const longest = useAnimatedValue(stats.longestStreak);
-	const played = useAnimatedValue(stats.datesPlayed.length);
-	const words = useAnimatedValue(stats.totalWordsFound);
-	const cornflowers = useAnimatedValue(stats.topRankCount);
+	const streak = stats.currentStreak;
+	const longest = stats.longestStreak;
+	const played = stats.datesPlayed.length;
+	const words = stats.totalWordsFound;
+	const cornflowers = stats.topRankCount;
 
 	const history = useMemo(() => buildHistory(stats), [stats]);
 
