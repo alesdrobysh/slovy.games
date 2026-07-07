@@ -19,7 +19,7 @@ function buildShareText(
 	const dots = Array.from({ length: visibleRanks }, (_, i) =>
 		i <= rankIdx ? "🟡" : "⬜"
 	).join("");
-	return `Валошка ${dateStr}\nРанг: ${rank.name} (${score} пт)\n${dots}`;
+	return `Валошка ${dateStr}\nРанг: ${rank.name} (${score} пт)\n${dots}\nslovy.games`;
 }
 
 interface ProgressBarProps {

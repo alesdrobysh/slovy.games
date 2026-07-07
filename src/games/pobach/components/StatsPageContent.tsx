@@ -73,7 +73,7 @@ export function StatsPageContent({
 					stats.bestAttempts
 				)}`
 			: null,
-		"pobach.app",
+		"slovy.games",
 	]
 		.filter(Boolean)
 		.join("\n");

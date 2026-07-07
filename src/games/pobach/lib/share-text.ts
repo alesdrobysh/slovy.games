@@ -61,5 +61,5 @@ export function generateShareText({
 				guessCount
 			)}${hintsText}`;
 
-	return `Побач ${formattedDate}\n${status}\n${emojiLines}\npobach.app`;
+	return `Побач ${formattedDate}\n${status}\n${emojiLines}\nslovy.games`;
 }
