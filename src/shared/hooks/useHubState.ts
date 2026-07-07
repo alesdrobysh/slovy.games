@@ -74,6 +74,7 @@ function getValoshkaStatus(): {
 	streak: number;
 	longestStreak: number;
 	totalPlayed: number;
+	vasiliokReached: boolean;
 } {
 	const today = todayString();
 	let hasPlayedToday = false;
@@ -82,6 +83,7 @@ function getValoshkaStatus(): {
 	let streak = 0;
 	let longestStreak = 0;
 	let totalPlayed = 0;
+	let vasiliokReached = false;
 
 	try {
 		const raw = localStorage.getItem(`vulej_${today}`);
@@ -92,6 +94,7 @@ function getValoshkaStatus(): {
 			);
 			foundWords = progress.foundWords?.length ?? 0;
 			score = progress.score ?? 0;
+			vasiliokReached = progress.vasiliokReached ?? false;
 		}
 
 		const statsRaw = localStorage.getItem("vulej_stats");
@@ -112,6 +115,7 @@ function getValoshkaStatus(): {
 		streak,
 		longestStreak,
 		totalPlayed,
+		vasiliokReached,
 	};
 }
 
@@ -220,6 +224,13 @@ function buildGameStatusFromRaw(
 	p: ReturnType<typeof getPobachStatus>
 ): GameHubStatus {
 	if (game.id === "valoshka") {
+		if (v.vasiliokReached) {
+			return {
+				gameId: "valoshka",
+				status: "won",
+				progressText: "Усе словы знойдзены",
+			};
+		}
 		const inProgress = v.hasPlayedToday && v.foundWords > 0;
 		return {
 			gameId: "valoshka",
