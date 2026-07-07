@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 import { useGame } from "@/games/valoshka/hooks/useGame";
 import type { Puzzle } from "@/games/valoshka/types";
@@ -76,6 +77,16 @@ export function GamePage({ puzzle }: GamePageProps) {
 								</Typography>
 							</div>
 						)}
+
+					{(state.vasiliokReached ||
+						state.foundWords.length === puzzle.answers.length) && (
+						<Link
+							href="/"
+							className="text-sm text-valoshka hover:text-valoshka/80 underline underline-offset-4 transition-colors mt-flow-md"
+						>
+							Паспрабуйце іншыя гульні →
+						</Link>
+					)}
 
 					<div className="w-full">
 						<ProgressBar
