@@ -41,7 +41,3 @@ export function trackValoshkaHintUsed() {
 export function trackValoshkaVasiliokReached(totalWords: number, score: number) {
 	capture("valoshka_vasiliok_reached", { totalWords, score });
 }
-
-export function trackValoshkaAllWordsFound(totalWords: number) {
-	capture("valoshka_all_words_found", { totalWords });
-}

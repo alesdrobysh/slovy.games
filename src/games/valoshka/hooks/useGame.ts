@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
-import { trackValoshkaAllWordsFound, trackValoshkaGameStarted, trackValoshkaHintUsed, trackValoshkaVasiliokReached, trackValoshkaWordFound } from "@/games/valoshka/lib/analytics";
+import { trackValoshkaGameStarted, trackValoshkaHintUsed, trackValoshkaVasiliokReached, trackValoshkaWordFound } from "@/games/valoshka/lib/analytics";
 import { triggerConfetti } from "@/games/valoshka/lib/confetti";
 import { vibrate } from "@/games/valoshka/lib/haptics";
 import { createInitialState, gameReducer } from "@/games/valoshka/lib/reducer";
@@ -147,10 +147,6 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 			const latestWord = gameState.foundWords[count - 1];
 			const isPangram = puzzle.pangrams.includes(latestWord);
 			trackValoshkaWordFound(latestWord, isPangram, gameState.score);
-		}
-		// Check all words found
-		if (count === puzzle.answers.length && prevWordCount.current < count) {
-			trackValoshkaAllWordsFound(count);
 		}
 		prevWordCount.current = count;
 	}, [gameState.foundWords, puzzle.pangrams, puzzle.answers.length, gameState.score]);

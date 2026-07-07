@@ -60,26 +60,7 @@ export function GamePage({ puzzle }: GamePageProps) {
 				<div className="flex flex-col items-center gap-2 sm:gap-4 w-full max-w-sm lg:max-w-none lg:w-95">
 					{state.vasiliokReached && <VasiliokCard />}
 
-					{!state.vasiliokReached &&
-						state.foundWords.length === puzzle.answers.length && (
-							<div className="rounded-2xl p-inset-xl sm:p-inset-2xl ring-1 my-6 animate-fade-in-up bg-success/10 ring-success/30">
-								<Typography
-									variant="title"
-									as="h2"
-									style={{
-										marginBottom: "var(--space-flow-lg)",
-									}}
-								>
-									Усе словы знойдзены!
-								</Typography>
-								<Typography variant="body">
-									Вы знайшлі ўсе магчымыя словы. Цудоўная гульня!
-								</Typography>
-							</div>
-						)}
-
-					{(state.vasiliokReached ||
-						state.foundWords.length === puzzle.answers.length) && (
+					{state.vasiliokReached && (
 						<Link
 							href="/"
 							className="text-sm text-valoshka hover:text-valoshka/80 underline underline-offset-4 transition-colors mt-flow-md"
