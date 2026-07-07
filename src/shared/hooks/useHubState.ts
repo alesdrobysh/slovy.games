@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import type { GameInfo } from "@/shared/types";
 import type { GameCardStatus } from "@/shared/components/GameCard";
-import { getMskDayIndex } from "@/shared/lib/timezone";
+import { getMskDateString, getMskDayIndex } from "@/shared/lib/timezone";
 import { EPOCH_DATE } from "@/games/pobach/lib/config";
 import { pluralize } from "@/shared/lib/pluralize";
 
@@ -31,9 +31,9 @@ export interface HubState {
 	totalPlayed: number;
 }
 
-/** Today as YYYY-MM-DD string (same format both games use) */
+/** Today as YYYY-MM-DD string in MSK (consistent with puzzle dates and progress keys) */
 function todayString(): string {
-	return new Date().toISOString().slice(0, 10);
+	return getMskDateString();
 }
 
 const MONTHS_GEN = [
