@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
+import { trackValoshkaAllWordsFound, trackValoshkaGameStarted, trackValoshkaHintUsed, trackValoshkaVasiliokReached, trackValoshkaWordFound } from "@/games/valoshka/lib/analytics";
 import { triggerConfetti } from "@/games/valoshka/lib/confetti";
 import { vibrate } from "@/games/valoshka/lib/haptics";
 import { createInitialState, gameReducer } from "@/games/valoshka/lib/reducer";
@@ -123,9 +124,36 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 		if (!prevVasiliokReached.current) {
 			prevVasiliokReached.current = true;
 			vibrate("long");
+			trackValoshkaVasiliokReached(
+				gameState.foundWords.length,
+				gameState.score
+			);
 		}
 		triggerConfetti();
 	}, [gameState.vasiliokReached]);
+
+	// Track new words found
+	const prevWordCount = useRef(0);
+	useEffect(() => {
+		const count = gameState.foundWords.length;
+		if (count === 0) {
+			prevWordCount.current = 0;
+			return;
+		}
+		if (count > prevWordCount.current) {
+			if (prevWordCount.current === 0) {
+				trackValoshkaGameStarted();
+			}
+			const latestWord = gameState.foundWords[count - 1];
+			const isPangram = puzzle.pangrams.includes(latestWord);
+			trackValoshkaWordFound(latestWord, isPangram, gameState.score);
+		}
+		// Check all words found
+		if (count === puzzle.answers.length && prevWordCount.current < count) {
+			trackValoshkaAllWordsFound(count);
+		}
+		prevWordCount.current = count;
+	}, [gameState.foundWords, puzzle.pangrams, puzzle.answers.length, gameState.score]);
 
 	// Keyboard input
 	const handleKey = useCallback(
@@ -182,6 +210,7 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 			answers: puzzle.answers,
 			foundWords: gameState.foundWords,
 		});
+		trackValoshkaHintUsed();
 	}, [puzzle.answers, gameState.foundWords]);
 
 	const toggleWordsOpen = useCallback(() => {
