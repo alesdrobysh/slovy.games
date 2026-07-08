@@ -10,9 +10,10 @@ import {
 	pluralizeHintsInstrumental,
 	pluralizeStreak,
 } from "@/games/pobach/lib/utils";
+import { NextGameCountdown } from "@/shared/components/NextGameCountdown";
+import { TryOtherGamesLink } from "@/shared/components/TryOtherGamesLink";
 import { Button } from "@/shared/components/ui/Button";
 import { Typography } from "@/shared/components/ui/Typography";
-import { useCountdown } from "@/shared/hooks/useCountdown";
 import ShareButton from "./ShareButton";
 import TopWordsList from "./TopWordsList";
 
@@ -31,7 +32,6 @@ export default function FinishCard({
 	mode,
 	targetWord,
 }: FinishCardProps) {
-	const countdown = useCountdown();
 	const attempts = guesses.length;
 	const hintsCount = guesses.filter((g) => g.isHint).length;
 	const streak = mode === "win" ? getStats().currentStreak : 0;
@@ -97,32 +97,13 @@ export default function FinishCard({
 				</Button>
 			)}
 
-			<div style={{ marginTop: "var(--space-flow-lg)" }}>
-				{isNewDayAvailable ? (
-					<Button
-						variant="outline"
-						color="primary"
-						onClick={() => window.location.reload()}
-					>
-						Даступна новае слова!
-					</Button>
-				) : (
-					<div
-						className="flex items-center"
-						style={{ gap: "var(--space-flow-sm)" }}
-					>
-						<Typography variant="caption" as="span">
-							Наступнае слова праз
-						</Typography>
-						<Typography
-							variant="caption"
-							as="span"
-							style={{ fontVariantNumeric: "tabular-nums" }}
-						>
-							{countdown}
-						</Typography>
-					</div>
-				)}
+			<NextGameCountdown
+				isNewDayAvailable={isNewDayAvailable}
+				newGameLabel="Даступна новае слова!"
+			/>
+
+			<div className="mt-inset-lg">
+				<TryOtherGamesLink className="text-pobach" />
 			</div>
 
 			<div style={{ marginTop: "var(--space-inset-md)", marginLeft: "calc(var(--space-inset-md) * -1)", marginRight: "calc(var(--space-inset-md) * -1)" }}>

@@ -57,7 +57,7 @@ export function GamePage({ puzzle }: GamePageProps) {
 			<div className="flex flex-col items-center gap-2 py-2 sm:gap-4 sm:py-4 lg:flex-row lg:items-start lg:gap-14 lg:py-8">
 				{/* Left: game controls */}
 				<div className="flex flex-col items-center gap-2 sm:gap-4 w-full max-w-sm lg:max-w-none lg:w-95">
-					{state.vasiliokReached && <VasiliokCard />}
+					{state.vasiliokReached && <VasiliokCard date={puzzle.date} />}
 
 					<div className="w-full">
 						<ProgressBar
