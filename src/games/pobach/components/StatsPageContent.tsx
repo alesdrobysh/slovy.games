@@ -78,7 +78,7 @@ export function StatsPageContent({
 		.filter(Boolean)
 		.join("\n");
 
-	const { share, isSharing, showToast } = useShare(shareText);
+	const { share, isSharing, showToast } = useShare(shareText, { game: "pobach", context: "stats" });
 
 	return (
 		<>

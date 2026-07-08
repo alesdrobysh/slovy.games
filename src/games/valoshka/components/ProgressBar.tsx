@@ -45,7 +45,7 @@ export function ProgressBar({
 		() => buildShareText(date, rank, score, rankIdx),
 		[date, rank, score, rankIdx]
 	);
-	const { share, showToast } = useShare(shareText);
+	const { share, showToast } = useShare(shareText, { game: "valoshka", context: "in_progress" });
 
 	return (
 		<>

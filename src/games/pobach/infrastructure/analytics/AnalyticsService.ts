@@ -13,14 +13,14 @@ export class AnalyticsService {
 	}
 
 	trackGameStart(): void {
-		posthog.capture("game_started", {
+		posthog.capture("pobach_game_started", {
 			session_id: this.sessionId,
 			day_index: this.dayIndex,
 		});
 	}
 
 	trackGuess(word: string, rank: number, similarity: number): void {
-		posthog.capture("guess", {
+		posthog.capture("pobach_guess_submitted", {
 			session_id: this.sessionId,
 			day_index: this.dayIndex,
 			word,
@@ -30,7 +30,7 @@ export class AnalyticsService {
 	}
 
 	trackUnknownWord(word: string): void {
-		posthog.capture("unknown_word", {
+		posthog.capture("pobach_unknown_word_submitted", {
 			session_id: this.sessionId,
 			day_index: this.dayIndex,
 			word,
@@ -38,7 +38,7 @@ export class AnalyticsService {
 	}
 
 	trackHint(word: string, rank: number): void {
-		posthog.capture("hint_used", {
+		posthog.capture("pobach_hint_used", {
 			session_id: this.sessionId,
 			day_index: this.dayIndex,
 			word,
@@ -47,7 +47,7 @@ export class AnalyticsService {
 	}
 
 	trackWin(attempts: number): void {
-		posthog.capture("game_won", {
+		posthog.capture("pobach_game_won", {
 			session_id: this.sessionId,
 			day_index: this.dayIndex,
 			attempts,
@@ -55,7 +55,7 @@ export class AnalyticsService {
 	}
 
 	trackGiveUp(attempts: number, bestRank: number): void {
-		posthog.capture("game_gave_up", {
+		posthog.capture("pobach_game_gave_up", {
 			session_id: this.sessionId,
 			day_index: this.dayIndex,
 			attempts,

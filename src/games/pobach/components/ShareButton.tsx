@@ -22,7 +22,7 @@ export default function ShareButton({
 		() => generateShareText({ dayIndex, guesses, won }),
 		[dayIndex, guesses, won]
 	);
-	const { share, isSharing } = useShare(text);
+	const { share, isSharing } = useShare(text, { game: "pobach", context: "finish" });
 
 	return (
 		<Button

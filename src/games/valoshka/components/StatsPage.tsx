@@ -85,7 +85,7 @@ export function StatsPage() {
 		return lines.join("\n");
 	}, [stats]);
 
-	const { share, isSharing, showToast } = useShare(shareText);
+	const { share, isSharing, showToast } = useShare(shareText, { game: "valoshka", context: "stats" });
 
 	const hasVasiliok = stats.topRankCount > 0;
 

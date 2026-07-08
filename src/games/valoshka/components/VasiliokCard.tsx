@@ -36,7 +36,7 @@ export function VasiliokCard({ date }: VasiliokCardProps) {
 				newGameLabel="Даступна новая галаваломка!"
 			/>
 			<div className="mt-inset-lg">
-				<TryOtherGamesLink className="text-valoshka" />
+				<TryOtherGamesLink className="text-valoshka" fromGame="valoshka" />
 			</div>
 		</div>
 	);

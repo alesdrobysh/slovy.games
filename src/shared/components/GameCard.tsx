@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import posthog from "posthog-js";
 import type { GameInfo } from "@/shared/types";
 import { Typography } from "@/shared/components/ui/Typography";
 import { CornflowerContour } from "@/shared/components/CornflowerContour";
@@ -51,6 +52,7 @@ export function GameCard({
 	return (
 		<Link
 			href={game.path}
+			onClick={() => posthog.capture("game_card_clicked", { game: game.id, status })}
 			className="group relative flex flex-col bg-card ring-1 ring-rule/50 rounded-4xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-ink/10 hover:ring-ink/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/30 focus-visible:ring-offset-4 focus-visible:ring-offset-paper animate-fade-in-up no-underline h-full"
 			style={{ animationDelay: `${delay}ms` }}
 		>

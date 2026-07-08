@@ -103,7 +103,7 @@ export default function FinishCard({
 			/>
 
 			<div className="mt-inset-lg">
-				<TryOtherGamesLink className="text-pobach" />
+				<TryOtherGamesLink className="text-pobach" fromGame="pobach" />
 			</div>
 
 			<div style={{ marginTop: "var(--space-inset-md)", marginLeft: "calc(var(--space-inset-md) * -1)", marginRight: "calc(var(--space-inset-md) * -1)" }}>

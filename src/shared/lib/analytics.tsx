@@ -70,6 +70,7 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
 		setHasConsented(true);
 		if (initPostHog()) {
 			setIsInitialized(true);
+			posthog.capture("cookie_consent_given");
 		}
 	}, []);
 

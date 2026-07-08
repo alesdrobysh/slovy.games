@@ -1,11 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
-import { trackValoshkaGameStarted, trackValoshkaHintUsed, trackValoshkaVasiliokReached, trackValoshkaWordFound } from "@/games/valoshka/lib/analytics";
+import { trackValoshkaGameStarted, trackValoshkaHintUsed, trackValoshkaRankUp, trackValoshkaVasiliokReached, trackValoshkaWordFound } from "@/games/valoshka/lib/analytics";
 import { triggerConfetti } from "@/games/valoshka/lib/confetti";
 import { vibrate } from "@/games/valoshka/lib/haptics";
 import { createInitialState, gameReducer } from "@/games/valoshka/lib/reducer";
-import { getRankIndex } from "@/games/valoshka/lib/scoring";
+import { getRankIndex, RANKS } from "@/games/valoshka/lib/scoring";
 import {
 	loadProgress,
 	saveProgress,
@@ -46,6 +46,7 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 	const [successKey, setSuccessKey] = useState(0);
 	const [companionGridOpen, setCompanionGridOpen] = useState(false);
 	const prevVasiliokReached = useRef(false);
+	const prevRankIdx = useRef<number | null>(null);
 
 	// Restore progress from localStorage on mount
 	useEffect(() => {
@@ -67,8 +68,11 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 			if (alreadyVasiliok) {
 				prevVasiliokReached.current = true;
 			}
+			prevRankIdx.current = getRankIndex(saved.score, puzzle.max_score);
+		} else {
+			prevRankIdx.current = 0;
 		}
-	}, [puzzle.date]);
+	}, [puzzle.date, puzzle.max_score]);
 
 	// Save progress whenever relevant state changes
 	useEffect(() => {
@@ -126,13 +130,14 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 			vibrate("long");
 			trackValoshkaVasiliokReached(
 				gameState.foundWords.length,
-				gameState.score
+				gameState.score,
+				puzzle.date
 			);
 		}
 		triggerConfetti();
-	}, [gameState.vasiliokReached]);
+	}, [gameState.vasiliokReached, puzzle.date]);
 
-	// Track new words found
+	// Track new words found and rank crossings
 	const prevWordCount = useRef(0);
 	useEffect(() => {
 		const count = gameState.foundWords.length;
@@ -142,14 +147,26 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 		}
 		if (count > prevWordCount.current) {
 			if (prevWordCount.current === 0) {
-				trackValoshkaGameStarted();
+				trackValoshkaGameStarted(puzzle.date);
 			}
 			const latestWord = gameState.foundWords[count - 1];
 			const isPangram = puzzle.pangrams.includes(latestWord);
-			trackValoshkaWordFound(latestWord, isPangram, gameState.score);
+			trackValoshkaWordFound(latestWord, isPangram, gameState.score, puzzle.date);
 		}
 		prevWordCount.current = count;
-	}, [gameState.foundWords, puzzle.pangrams, puzzle.answers.length, gameState.score]);
+
+		const newRankIdx = getRankIndex(gameState.score, puzzle.max_score);
+		if (prevRankIdx.current !== null && newRankIdx > prevRankIdx.current) {
+			trackValoshkaRankUp(
+				RANKS[prevRankIdx.current].name,
+				RANKS[newRankIdx].name,
+				count,
+				gameState.score,
+				puzzle.date
+			);
+		}
+		prevRankIdx.current = newRankIdx;
+	}, [gameState.foundWords, gameState.score, puzzle.pangrams, puzzle.answers.length, puzzle.max_score, puzzle.date]);
 
 	// Keyboard input
 	const handleKey = useCallback(
@@ -206,8 +223,8 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 			answers: puzzle.answers,
 			foundWords: gameState.foundWords,
 		});
-		trackValoshkaHintUsed();
-	}, [puzzle.answers, gameState.foundWords]);
+		trackValoshkaHintUsed(puzzle.date);
+	}, [puzzle.answers, gameState.foundWords, puzzle.date]);
 
 	const toggleWordsOpen = useCallback(() => {
 		setWordsOpen((o) => !o);

@@ -1,5 +1,6 @@
 "use client";
 
+import posthog from "posthog-js";
 import { useCallback, useState } from "react";
 
 async function shareText(text: string): Promise<"share" | "clipboard" | false> {
@@ -20,7 +21,12 @@ async function shareText(text: string): Promise<"share" | "clipboard" | false> {
 	}
 }
 
-export function useShare(text: string) {
+export interface UseShareOptions {
+	game: string;
+	context: "finish" | "stats" | "in_progress";
+}
+
+export function useShare(text: string, options: UseShareOptions) {
 	const [isSharing, setIsSharing] = useState(false);
 	const [showToast, setShowToast] = useState(false);
 
@@ -30,13 +36,24 @@ export function useShare(text: string) {
 
 		const result = await shareText(text);
 
+		posthog.capture("share_clicked", {
+			game: options.game,
+			context: options.context,
+			method:
+				result === "share"
+					? "native_share"
+					: result === "clipboard"
+						? "clipboard"
+						: "failed",
+		});
+
 		if (result) {
 			setShowToast(true);
 			setTimeout(() => setShowToast(false), 2000);
 		}
 
 		setIsSharing(false);
-	}, [text, isSharing]);
+	}, [text, isSharing, options.game, options.context]);
 
 	return { share: doShare, isSharing, showToast };
 }

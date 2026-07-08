@@ -26,18 +26,28 @@ function capture(event: string, props?: Record<string, unknown>) {
 	}
 }
 
-export function trackValoshkaGameStarted() {
-	capture("valoshka_game_started");
+export function trackValoshkaGameStarted(date: string) {
+	capture("valoshka_game_started", { date });
 }
 
-export function trackValoshkaWordFound(word: string, isPangram: boolean, score: number) {
-	capture("valoshka_word_found", { word, isPangram, score });
+export function trackValoshkaWordFound(word: string, isPangram: boolean, score: number, date: string) {
+	capture("valoshka_word_found", { word, isPangram, score, date });
 }
 
-export function trackValoshkaHintUsed() {
-	capture("valoshka_hint_used");
+export function trackValoshkaHintUsed(date: string) {
+	capture("valoshka_hint_used", { date });
 }
 
-export function trackValoshkaVasiliokReached(totalWords: number, score: number) {
-	capture("valoshka_vasiliok_reached", { totalWords, score });
+export function trackValoshkaVasiliokReached(totalWords: number, score: number, date: string) {
+	capture("valoshka_vasiliok_reached", { totalWords, score, date });
+}
+
+export function trackValoshkaRankUp(
+	fromRank: string,
+	toRank: string,
+	wordsFound: number,
+	score: number,
+	date: string
+) {
+	capture("valoshka_rank_up", { fromRank, toRank, wordsFound, score, date });
 }
