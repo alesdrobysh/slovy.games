@@ -14,6 +14,7 @@ import {
 	getMskDateString,
 	getMskYesterdayDateString,
 } from "@/shared/lib/timezone";
+import { pluralize } from "@/shared/lib/pluralize";
 
 interface HistoryEntry {
 	date: string;
@@ -160,7 +161,7 @@ export function StatsPage() {
 									<span className="font-display tabular-nums">
 										{entry.foundCount}
 									</span>{" "}
-									слоў
+									{pluralize(entry.foundCount, "слова")}
 								</span>
 								<span>{formatDateLabel(entry.date)}</span>
 							</Typography>
