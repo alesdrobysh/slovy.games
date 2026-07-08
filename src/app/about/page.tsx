@@ -16,7 +16,7 @@ export default function AboutPage() {
 				href="/"
 				className="text-ink-soft hover:text-ink transition-colors mb-inset-lg inline-block no-underline"
 			>
-				<Typography variant="overline" as="span">← Да гульняў</Typography>
+				<Typography variant="overline" as="span">Да гульняў</Typography>
 			</Link>
 
 			<Typography variant="title" as="h1" className="mb-inset-xl">
