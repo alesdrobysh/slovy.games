@@ -9,7 +9,7 @@ import { calculateStats } from "@/games/pobach/lib/stats";
 
 const STORAGE_KEY = "pobach_storage";
 
-import { EPOCH_DATE } from "./config";
+import { POBACH_EPOCH_DATE as EPOCH_DATE } from "@/shared/config";
 import { getMskDayIndex } from "@/shared/lib/timezone";
 
 const SESSION_KEY = "pobach_session_id";

@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { GameInfo } from "@/shared/types";
 import type { GameCardStatus } from "@/shared/components/GameCard";
-import { getMskDateString, getMskDayIndex } from "@/shared/lib/timezone";
-import { EPOCH_DATE } from "@/games/pobach/lib/config";
+import { POBACH_EPOCH_DATE } from "@/shared/config";
 import { pluralize } from "@/shared/lib/pluralize";
+import { getMskDateString, getMskDayIndex } from "@/shared/lib/timezone";
+import type { GameInfo } from "@/shared/types";
 
 /** Per-game status extracted from localStorage */
 export interface GameHubStatus {
@@ -122,7 +122,7 @@ function getValoshkaStatus(): {
 // ─── Pobach state ──────────────────────────────────────────────────
 
 function pobachTodayIndex(): number {
-	return getMskDayIndex(EPOCH_DATE);
+	return getMskDayIndex(POBACH_EPOCH_DATE);
 }
 
 function getPobachStatus(): {
@@ -235,7 +235,9 @@ function buildGameStatusFromRaw(
 		return {
 			gameId: "valoshka",
 			status: inProgress ? "in_progress" : "not_started",
-			progressText: inProgress ? `${v.foundWords} ${pluralize(v.foundWords, "слова")} знойдзена` : "Чакае вас",
+			progressText: inProgress
+				? `${v.foundWords} ${pluralize(v.foundWords, "слова")} знойдзена`
+				: "Чакае вас",
 		};
 	}
 
@@ -245,10 +247,16 @@ function buildGameStatusFromRaw(
 
 	if (p.won) {
 		status = "won";
-		progressText = p.attempts > 0 ? `Разгадана за ${p.attempts} ${pluralize(p.attempts, "спроба", "accusative")}` : "Разгадана";
+		progressText =
+			p.attempts > 0
+				? `Разгадана за ${p.attempts} ${pluralize(p.attempts, "спроба", "accusative")}`
+				: "Разгадана";
 	} else if (p.isInProgress) {
 		status = "in_progress";
-		progressText = p.guessCount > 0 ? `Зроблена ${p.guessCount} ${pluralize(p.guessCount, "спроба", "accusative")}` : "";
+		progressText =
+			p.guessCount > 0
+				? `Зроблена ${p.guessCount} ${pluralize(p.guessCount, "спроба", "accusative")}`
+				: "";
 	}
 
 	return { gameId: "pobach", status, progressText };

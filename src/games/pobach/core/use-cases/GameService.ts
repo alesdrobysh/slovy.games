@@ -1,4 +1,4 @@
-import { EPOCH_DATE } from "../../lib/config";
+import { POBACH_EPOCH_DATE as EPOCH_DATE } from "@/shared/config";
 import { getMskDayIndex } from "@/shared/lib/timezone";
 import { findOptimalLCGParams, type LCGParams } from "../../lib/lcg-optimizer";
 import { lemmatize } from "../../lib/lemmatizer";

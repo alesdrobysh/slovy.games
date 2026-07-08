@@ -1,10 +1,10 @@
 import type { Guess } from "@/games/pobach/core/entities/game";
-import { EPOCH_DATE } from "@/games/pobach/lib/config";
 import {
 	pluralize,
 	pluralizeAttemptsGenitive,
 	pluralizeHintsInstrumental,
 } from "@/games/pobach/lib/utils";
+import { POBACH_EPOCH_DATE as EPOCH_DATE } from "@/shared/config";
 
 export interface ShareTextInput {
 	dayIndex: number;

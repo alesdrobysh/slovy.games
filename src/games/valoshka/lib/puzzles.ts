@@ -1,13 +1,12 @@
 import puzzlesData from "@/games/valoshka/data/puzzles.json";
 import type { Puzzle } from "@/games/valoshka/types";
+import { VALOSHKA_EPOCH_DATE } from "@/shared/config";
 import { getMskDayIndex } from "@/shared/lib/timezone";
-
-const EPOCH = new Date("2026-03-18T00:00:00Z");
 
 export function getPuzzleForToday(): Puzzle {
 	const puzzles = puzzlesData as Puzzle[];
 
-	const dayIndex = getMskDayIndex(EPOCH);
+	const dayIndex = getMskDayIndex(VALOSHKA_EPOCH_DATE);
 	const idx = ((dayIndex % puzzles.length) + puzzles.length) % puzzles.length;
 	return puzzles[idx];
 }
