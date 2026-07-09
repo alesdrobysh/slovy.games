@@ -1,9 +1,5 @@
 import type { Guess } from "@/games/pobach/core/entities/game";
-import {
-	pluralize,
-	pluralizeAttemptsGenitive,
-	pluralizeHintsInstrumental,
-} from "@/games/pobach/lib/utils";
+import { pluralize } from "@/shared/lib/pluralize";
 import { POBACH_EPOCH_DATE as EPOCH_DATE } from "@/shared/config";
 
 export interface ShareTextInput {
@@ -53,13 +49,11 @@ export function generateShareText({
 	const hintsCount = guesses.filter((g) => g.isHint).length;
 	const hintsText =
 		hintsCount > 0
-			? ` (з ${hintsCount} ${pluralizeHintsInstrumental(hintsCount)})`
+			? ` (з ${hintsCount} ${pluralize(hintsCount, "падказка", "instrumental")})`
 			: "";
 	const status = won
-		? `Адгадана за ${guessCount} ${pluralize(guessCount)}${hintsText}`
-		: `Не адгадана пасля ${guessCount} ${pluralizeAttemptsGenitive(
-				guessCount
-			)}${hintsText}`;
+		? `Адгадана за ${guessCount} ${pluralize(guessCount, "спроба", "accusative")}${hintsText}`
+		: `Не адгадана пасля ${guessCount} ${pluralize(guessCount, "спроба", "genitive")}${hintsText}`;
 
 	return `Побач ${formattedDate}\n${status}\n${emojiLines}\nslovy.games`;
 }

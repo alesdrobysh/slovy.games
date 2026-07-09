@@ -4,12 +4,7 @@ import { Flame, Sparkles } from "lucide-react";
 import Link from "next/link";
 import type { Guess } from "@/games/pobach/core/entities/game";
 import { getCurrentDayIndex, getStats } from "@/games/pobach/lib/storage";
-import {
-	pluralize,
-	pluralizeHintsAccusative,
-	pluralizeHintsInstrumental,
-	pluralizeStreak,
-} from "@/games/pobach/lib/utils";
+import { pluralize } from "@/shared/lib/pluralize";
 import { NextGameCountdown } from "@/shared/components/NextGameCountdown";
 import { TryOtherGamesLink } from "@/shared/components/TryOtherGamesLink";
 import { Button } from "@/shared/components/ui/Button";
@@ -79,8 +74,8 @@ export default function FinishCard({
 				style={{ marginBottom: "var(--space-flow-sm)" }}
 			>
 				{isWin
-					? `Вы адгадалі слова за ${attempts} ${pluralize(attempts)}${hintsCount > 0 ? ` з ${hintsCount} ${pluralizeHintsInstrumental(hintsCount)}` : ""}. Заўтра будзе новае слова.`
-					: `Дзякуй за гульню.${hintsCount > 0 ? ` Выкарыстана ${hintsCount} ${pluralizeHintsAccusative(hintsCount)}.` : ""} Заўтра будзе новае слова.`
+					? `Вы адгадалі слова за ${attempts} ${pluralize(attempts, "спроба", "accusative")}${hintsCount > 0 ? ` з ${hintsCount} ${pluralize(hintsCount, "падказка", "instrumental")}` : ""}. Заўтра будзе новае слова.`
+					: `Дзякуй за гульню.${hintsCount > 0 ? ` Выкарыстана ${hintsCount} ${pluralize(hintsCount, "падказка")}.` : ""} Заўтра будзе новае слова.`
 				}
 			</Typography>
 
@@ -93,7 +88,7 @@ export default function FinishCard({
 			{isWin && streak > 0 && (
 				<Button variant="ghost" color="primary" as={Link} href="/pobach/stats">
 					<Flame size={14} />
-					{streak} {pluralizeStreak(streak)}
+					{streak} {pluralize(streak, "перамога")} запар
 				</Button>
 			)}
 

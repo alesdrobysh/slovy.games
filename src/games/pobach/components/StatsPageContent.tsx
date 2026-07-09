@@ -8,10 +8,7 @@ import type {
 	HistoryRecord,
 } from "@/games/pobach/core/entities/game";
 import { formatRelativeDate } from "@/games/pobach/lib/stats";
-import {
-	pluralize,
-	pluralizeAttemptsNominative,
-} from "@/games/pobach/lib/utils";
+import { pluralize } from "@/shared/lib/pluralize";
 import { Button } from "@/shared/components/ui/Button";
 import { StatCard } from "@/shared/components/ui/StatCard";
 import { Typography } from "@/shared/components/ui/Typography";
@@ -33,7 +30,7 @@ function HistoryItem({ game }: { game: HistoryRecord }) {
 				{game.won ? (
 					<span>
 						<span className="font-display tabular-nums">{game.attempts}</span>{" "}
-						{pluralize(game.attempts)}
+						{pluralize(game.attempts, "спроба")}
 					</span>
 				) : (
 					<span>Не адгадана</span>
@@ -69,9 +66,7 @@ export function StatsPageContent({
 		`Перамог: ${stats.gamesWon}/${stats.gamesPlayed} (${winRate}%)`,
 		`Макс. серыя: ${stats.maxStreak}`,
 		stats.bestAttempts > 0
-			? `Лепшы вынік: ${stats.bestAttempts} ${pluralizeAttemptsNominative(
-					stats.bestAttempts
-				)}`
+			? `Лепшы вынік: ${stats.bestAttempts} ${pluralize(stats.bestAttempts, "спроба")}`
 			: null,
 		"slovy.games",
 	]

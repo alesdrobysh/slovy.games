@@ -255,7 +255,7 @@ function buildGameStatusFromRaw(
 		status = "in_progress";
 		progressText =
 			p.guessCount > 0
-				? `Зроблена ${p.guessCount} ${pluralize(p.guessCount, "спроба", "accusative")}`
+				? `Зроблена ${p.guessCount} ${pluralize(p.guessCount, "спроба")}`
 				: "";
 	}
 
