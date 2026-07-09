@@ -4,6 +4,7 @@ import DictionaryLink from "@/shared/components/DictionaryLink";
 import { Badge } from "@/shared/components/ui/Badge";
 import { Typography } from "@/shared/components/ui/Typography";
 import { pluralize } from "@/shared/lib/pluralize";
+import { useDictReady } from "@/shared/hooks/useDictReady";
 
 interface FoundWordsListProps {
 	words: string[];
@@ -11,6 +12,8 @@ interface FoundWordsListProps {
 }
 
 export function FoundWordsList({ words, pangrams }: FoundWordsListProps) {
+	"use no memo";
+	useDictReady();
 	const sorted = [...words].sort((a, b) => a.localeCompare(b, "be"));
 	const count = words.length;
 

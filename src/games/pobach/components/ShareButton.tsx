@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import type { Guess } from "@/games/pobach/core/entities/game";
 import { generateShareText } from "@/games/pobach/lib/share-text";
 import { Button } from "@/shared/components/ui/Button";
+import { useDictReady } from "@/shared/hooks/useDictReady";
 import { useShare } from "@/shared/hooks/useShare";
 
 type ShareButtonProps = {
@@ -18,9 +19,10 @@ export default function ShareButton({
 	guesses,
 	won,
 }: ShareButtonProps) {
+	const dictIsReady = useDictReady();
 	const text = useMemo(
 		() => generateShareText({ dayIndex, guesses, won }),
-		[dayIndex, guesses, won]
+		[dayIndex, guesses, won, dictIsReady]
 	);
 	const { share, isSharing } = useShare(text, { game: "pobach", context: "finish" });
 

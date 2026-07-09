@@ -3,12 +3,15 @@
 import type { HintState } from "@/games/valoshka/types";
 import { Typography } from "@/shared/components/ui/Typography";
 import { pluralize } from "@/shared/lib/pluralize";
+import { useDictReady } from "@/shared/hooks/useDictReady";
 
 interface HintDisplayProps {
 	hint: HintState;
 }
 
 export function HintDisplay({ hint }: HintDisplayProps) {
+	"use no memo";
+	useDictReady();
 	if (!hint.targetWord || !hint.isActive) return null;
 
 	const word = hint.targetWord;

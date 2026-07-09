@@ -4,6 +4,7 @@ import { buildHintGrid } from "@/games/valoshka/lib/hint-grid";
 import { Modal } from "@/shared/components/ui/Modal";
 import { Typography } from "@/shared/components/ui/Typography";
 import { pluralize } from "@/shared/lib/pluralize";
+import { useDictReady } from "@/shared/hooks/useDictReady";
 
 interface CompanionGridProps {
 	isOpen: boolean;
@@ -20,6 +21,8 @@ export function CompanionGrid({
 	foundWords,
 	pangrams,
 }: CompanionGridProps) {
+	"use no memo";
+	useDictReady();
 	const grid = buildHintGrid(answers, foundWords, pangrams);
 
 	const firstLetters = Array.from(grid.firstLetterGrid.keys()).sort();

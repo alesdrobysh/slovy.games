@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import type { GameCardStatus } from "@/shared/components/GameCard";
 import { POBACH_EPOCH_DATE } from "@/shared/config";
-import { pluralize } from "@/shared/lib/pluralize";
+import { dictReady, pluralize } from "@/shared/lib/pluralize";
 import { getMskDateString, getMskDayIndex } from "@/shared/lib/timezone";
 import type { GameInfo } from "@/shared/types";
 
@@ -270,31 +270,46 @@ export function useHubState(games: GameInfo[]): HubState {
 
 	useEffect(() => {
 		// Read both stores once after mount
-		const vs = getValoshkaStatus();
-		const ps = getPobachStatus();
+		function buildState(): HubState {
+			const vs = getValoshkaStatus();
+			const ps = getPobachStatus();
 
-		// Aggregate
-		let maxStreak = 0;
-		let maxLongest = 0;
-		if (vs.streak > maxStreak) maxStreak = vs.streak;
-		if (vs.longestStreak > maxLongest) maxLongest = vs.longestStreak;
-		if (ps.streak > maxStreak) maxStreak = ps.streak;
-		if (ps.longestStreak > maxLongest) maxLongest = ps.longestStreak;
-		const totalPlayed = vs.totalPlayed + ps.totalPlayed;
+			// Aggregate
+			let maxStreak = 0;
+			let maxLongest = 0;
+			if (vs.streak > maxStreak) maxStreak = vs.streak;
+			if (vs.longestStreak > maxLongest) maxLongest = vs.longestStreak;
+			if (ps.streak > maxStreak) maxStreak = ps.streak;
+			if (ps.longestStreak > maxLongest) maxLongest = ps.longestStreak;
+			const totalPlayed = vs.totalPlayed + ps.totalPlayed;
 
-		// Build per-game statuses
-		const statuses = new Map<string, GameHubStatus>();
-		for (const game of games) {
-			statuses.set(game.id, buildGameStatusFromRaw(game, vs, ps));
+			// Build per-game statuses
+			const statuses = new Map<string, GameHubStatus>();
+			for (const game of games) {
+				statuses.set(game.id, buildGameStatusFromRaw(game, vs, ps));
+			}
+
+			return {
+				todayLabel: formatTodayBe(),
+				statuses,
+				currentStreak: maxStreak,
+				longestStreak: maxLongest,
+				totalPlayed,
+			};
 		}
 
-		setState({
-			todayLabel: formatTodayBe(),
-			statuses,
-			currentStreak: maxStreak,
-			longestStreak: maxLongest,
-			totalPlayed,
+		setState(buildState());
+
+		// The dictionary used by `pluralize` may still be loading when the
+		// state above is first built, in which case progress text falls back
+		// to unpluralized words — rebuild once it's ready to pick that up.
+		let cancelled = false;
+		dictReady.then(() => {
+			if (!cancelled) setState(buildState());
 		});
+		return () => {
+			cancelled = true;
+		};
 	}, [games]);
 
 	return state;

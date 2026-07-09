@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { Guess } from "@/games/pobach/core/entities/game";
 import { getCurrentDayIndex, getStats } from "@/games/pobach/lib/storage";
 import { pluralize } from "@/shared/lib/pluralize";
+import { useDictReady } from "@/shared/hooks/useDictReady";
 import { NextGameCountdown } from "@/shared/components/NextGameCountdown";
 import { TryOtherGamesLink } from "@/shared/components/TryOtherGamesLink";
 import { Button } from "@/shared/components/ui/Button";
@@ -27,6 +28,8 @@ export default function FinishCard({
 	mode,
 	targetWord,
 }: FinishCardProps) {
+	"use no memo";
+	useDictReady();
 	const attempts = guesses.length;
 	const hintsCount = guesses.filter((g) => g.isHint).length;
 	const streak = mode === "win" ? getStats().currentStreak : 0;

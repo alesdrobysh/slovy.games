@@ -15,6 +15,7 @@ import {
 	getMskYesterdayDateString,
 } from "@/shared/lib/timezone";
 import { pluralize } from "@/shared/lib/pluralize";
+import { useDictReady } from "@/shared/hooks/useDictReady";
 
 interface HistoryEntry {
 	date: string;
@@ -48,6 +49,8 @@ function buildHistory(stats: GameStats): HistoryEntry[] {
 }
 
 export function StatsPage() {
+	"use no memo";
+	useDictReady();
 	const [stats, setStats] = useState<GameStats>(DEFAULT_STATS);
 	useEffect(() => {
 		setStats(loadStats());

@@ -3,6 +3,7 @@ import type { Guess } from "@/games/pobach/core/entities/game";
 import { Typography } from "@/shared/components/ui/Typography";
 import GuessCard from "./GuessCard";
 import { pluralize } from "@/shared/lib/pluralize";
+import { useDictReady } from "@/shared/hooks/useDictReady";
 
 type GuessListProps = {
 	guesses: Guess[];
@@ -10,6 +11,8 @@ type GuessListProps = {
 };
 
 export default function GuessList({ guesses, lastGuess }: GuessListProps) {
+	"use no memo";
+	useDictReady();
 	return (
 		<div>
 			<div className="flex items-center justify-between mb-flow-md">

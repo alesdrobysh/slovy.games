@@ -19,6 +19,7 @@ import { Button } from "@/shared/components/ui/Button";
 import { Modal } from "@/shared/components/ui/Modal";
 import { Typography } from "@/shared/components/ui/Typography";
 import { pluralize } from "@/shared/lib/pluralize";
+import { useDictReady } from "@/shared/hooks/useDictReady";
 
 type FlagState = "idle" | "confirming" | "sending" | "sent";
 
@@ -33,9 +34,11 @@ export function YesterdayModal({
 	isOpen,
 	onClose,
 }: YesterdayModalProps) {
+	"use no memo";
 	const [puzzle, setPuzzle] = useState<Puzzle | null>(null);
 	const [progress, setProgress] = useState<SavedProgress | null>(null);
 	const [flagStates, setFlagStates] = useState<Record<string, FlagState>>({});
+	useDictReady();
 
 	const showFlags = Boolean(
 		UNWANTED_FORM_ACTION && UNWANTED_WORD_ENTRY && UNWANTED_DATE_ENTRY

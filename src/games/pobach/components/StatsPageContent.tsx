@@ -9,6 +9,7 @@ import type {
 } from "@/games/pobach/core/entities/game";
 import { formatRelativeDate } from "@/games/pobach/lib/stats";
 import { pluralize } from "@/shared/lib/pluralize";
+import { useDictReady } from "@/shared/hooks/useDictReady";
 import { Button } from "@/shared/components/ui/Button";
 import { StatCard } from "@/shared/components/ui/StatCard";
 import { Typography } from "@/shared/components/ui/Typography";
@@ -16,6 +17,7 @@ import { useShare } from "@/shared/hooks/useShare";
 import { DistributionChart } from "./DistributionChart";
 
 function HistoryItem({ game }: { game: HistoryRecord }) {
+	"use no memo";
 	return (
 		<div className="flex items-center gap-flow-md py-flow-lg border-b border-rule last:border-0">
 			<span
@@ -56,6 +58,8 @@ export function StatsPageContent({
 	stats: GameStats;
 	history: HistoryRecord[];
 }) {
+	"use no memo";
+	useDictReady();
 	const winRate =
 		stats.gamesPlayed > 0
 			? Math.round((stats.gamesWon / stats.gamesPlayed) * 100)
