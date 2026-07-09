@@ -28,7 +28,7 @@ const VARIANTS: Record<TypographyVariant, VariantConfig> = {
       fontFamily: D,
       fontWeight: 500,
       fontSize: 'clamp(36px, 8vw, 72px)',
-      lineHeight: 0.9,
+      lineHeight: 1,
       letterSpacing: '-0.03em',
       margin: "0 0 2rem 0",
 
