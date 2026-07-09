@@ -31,7 +31,7 @@ export default function HubPage() {
 				<div className="mb-section-gap animate-fade-in-up">
 					<div className="max-w-3xl flex flex-col">
 						<Typography variant="titleHero" as="h1">
-							Штодзённыя беларускія слоўныя гульні
+							Штодзённыя беларускія слоўныя галаваломкі
 						</Typography>
 						<div className="flex flex-wrap items-center gap-x-inset-lg gap-y-flow-md">
 							<Typography variant="caption" className="text-ink-muted">
