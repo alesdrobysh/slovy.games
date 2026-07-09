@@ -5,4 +5,4 @@
  * shared code depending on `@/games/*`.
  */
 export const POBACH_EPOCH_DATE = "2026-01-15T00:00:00Z";
-export const VALOSHKA_EPOCH_DATE = "2026-03-18T00:00:00Z";
+export const VALOSHKA_EPOCH_DATE = "2026-07-10T00:00:00Z";
