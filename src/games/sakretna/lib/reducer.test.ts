@@ -34,6 +34,8 @@ describe("createInitialState", () => {
 	});
 });
 
+const NO_TITLE = new Set<string>();
+
 describe("SUBMIT_GUESS", () => {
 	it("records a successful guess and reveals words", () => {
 		const s = createInitialState();
@@ -41,6 +43,7 @@ describe("SUBMIT_GUESS", () => {
 			type: "SUBMIT_GUESS",
 			rawGuess: "сталіца",
 			tokens,
+			titleLemmas: NO_TITLE,
 		});
 		expect(next.errorType).toBeNull();
 		expect(next.foundLemmas).toContain("сталіца");
@@ -54,6 +57,7 @@ describe("SUBMIT_GUESS", () => {
 			type: "SUBMIT_GUESS",
 			rawGuess: "горада",
 			tokens,
+			titleLemmas: NO_TITLE,
 		});
 		expect(next.errorType).toBeNull();
 		expect(next.foundLemmas).toContain("горад");
@@ -65,11 +69,13 @@ describe("SUBMIT_GUESS", () => {
 			type: "SUBMIT_GUESS",
 			rawGuess: "сталіца",
 			tokens,
+			titleLemmas: NO_TITLE,
 		});
 		const b = gameReducer(a, {
 			type: "SUBMIT_GUESS",
 			rawGuess: "сталіцы",
 			tokens,
+			titleLemmas: NO_TITLE,
 		});
 		expect(b.errorType).toBe("already_found");
 		expect(b.foundLemmas).toEqual(["сталіца"]);
@@ -81,6 +87,7 @@ describe("SUBMIT_GUESS", () => {
 			type: "SUBMIT_GUESS",
 			rawGuess: "аўтамабіль",
 			tokens,
+			titleLemmas: NO_TITLE,
 		});
 		expect(next.errorType).toBe("not_in_article");
 		expect(next.foundLemmas).toEqual([]);
@@ -93,30 +100,63 @@ describe("SUBMIT_GUESS", () => {
 			type: "SUBMIT_GUESS",
 			rawGuess: "сталіца",
 			tokens,
+			titleLemmas: NO_TITLE,
 		});
 		expect(next.errorType).toBe("no_guesses_after_finish");
 		expect(next.foundLemmas).toEqual([]);
+	});
+
+	it("auto-wins once every title lemma has been guessed", () => {
+		const titleLemmas = new Set(["мінск"]);
+		const s = createInitialState();
+		const next = gameReducer(s, {
+			type: "SUBMIT_GUESS",
+			rawGuess: "мінск",
+			tokens,
+			titleLemmas,
+		});
+		expect(next.won).toBe(true);
+		expect(next.finishedAt).not.toBeNull();
+	});
+
+	it("does not win while some title lemmas are still missing", () => {
+		const titleLemmas = new Set(["мінск", "сталіца"]);
+		const s = createInitialState();
+		const next = gameReducer(s, {
+			type: "SUBMIT_GUESS",
+			rawGuess: "мінск",
+			tokens,
+			titleLemmas,
+		});
+		expect(next.won).toBe(false);
+		expect(next.finishedAt).toBeNull();
 	});
 });
 
 describe("USE_HINT", () => {
 	it("increments hintsUsed up to 1", () => {
 		const s = createInitialState();
-		const a = gameReducer(s, { type: "USE_HINT" });
+		const a = gameReducer(s, { type: "USE_HINT", lemma: "горад" });
 		expect(a.hintsUsed).toBe(1);
-		const b = gameReducer(a, { type: "USE_HINT" });
+		const b = gameReducer(a, { type: "USE_HINT", lemma: "мінск" });
 		expect(b.hintsUsed).toBe(1);
+	});
+
+	it("reveals the given lemma as if it were found", () => {
+		const s = createInitialState();
+		const next = gameReducer(s, { type: "USE_HINT", lemma: "горад" });
+		expect(next.foundLemmas).toContain("горад");
+	});
+
+	it("reveals nothing when there's no eligible word", () => {
+		const s = createInitialState();
+		const next = gameReducer(s, { type: "USE_HINT", lemma: null });
+		expect(next.hintsUsed).toBe(1);
+		expect(next.foundLemmas).toEqual([]);
 	});
 });
 
-describe("CLAIM_WIN / GIVE_UP", () => {
-	it("CLAIM_WIN marks won and records finishedAt", () => {
-		const s = createInitialState();
-		const next = gameReducer(s, { type: "CLAIM_WIN" });
-		expect(next.won).toBe(true);
-		expect(next.finishedAt).not.toBeNull();
-	});
-
+describe("GIVE_UP", () => {
 	it("GIVE_UP marks givenUp and records finishedAt", () => {
 		const s = createInitialState();
 		const next = gameReducer(s, { type: "GIVE_UP" });
@@ -152,6 +192,7 @@ describe("stateToProgress", () => {
 			type: "SUBMIT_GUESS",
 			rawGuess: "сталіца",
 			tokens,
+			titleLemmas: NO_TITLE,
 		});
 		const p = stateToProgress("2026-07-11", "minsk", next);
 		expect(p.date).toBe("2026-07-11");

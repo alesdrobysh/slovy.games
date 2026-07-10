@@ -5,19 +5,15 @@ import { Button } from "@/shared/components/ui/Button";
 
 interface ArticleActionsProps {
 	onUseHint: () => void;
-	onClaimWin: () => void;
 	onGiveUp: () => void;
 	hintAvailable: boolean;
-	titleVisible: boolean;
 	finished: boolean;
 }
 
 export function ArticleActions({
 	onUseHint,
-	onClaimWin,
 	onGiveUp,
 	hintAvailable,
-	titleVisible,
 	finished,
 }: ArticleActionsProps) {
 	return (
@@ -32,17 +28,6 @@ export function ArticleActions({
 				className="sm:size-md"
 			>
 				{hintAvailable ? "Падказка" : "Выкарыстана"}
-			</Button>
-			<Button
-				variant="outline"
-				color="neutral"
-				size="sm"
-				onClick={onClaimWin}
-				disabled={!titleVisible || finished}
-				dashed
-				className="sm:size-md"
-			>
-				Здагадаўся!
 			</Button>
 			<Button
 				variant="ghost"

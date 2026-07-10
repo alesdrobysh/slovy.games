@@ -12,19 +12,42 @@ import {
 	recordResult,
 	saveProgress,
 } from "@/games/sakretna/lib/storage";
-import { collectLemmas } from "@/games/sakretna/lib/tokenize";
+import { collectLemmas, titleLemmas } from "@/games/sakretna/lib/tokenize";
 import type { ArticleToken, GameState, PickedArticle } from "../types";
 
 export interface UseSakretnaGameReturn {
 	state: GameState;
 	tokens: ArticleToken[];
 	lemmaSet: Set<string>;
+	titleLemmaSet: Set<string>;
 	ready: boolean;
 	setInput: (value: string) => void;
 	submitGuess: () => void;
 	useHint: () => void;
-	claimWin: () => void;
 	giveUp: () => void;
+}
+
+/** Pick a random still-hidden, non-free, non-title word to reveal as a hint. */
+function pickHintLemma(
+	tokens: ArticleToken[],
+	foundLemmas: ReadonlySet<string>,
+	titleLemmaSet: ReadonlySet<string>
+): string | null {
+	const candidates = new Set<string>();
+	for (const t of tokens) {
+		if (
+			t.type === "word" &&
+			t.lemma &&
+			!t.isFree &&
+			!foundLemmas.has(t.lemma) &&
+			!titleLemmaSet.has(t.lemma)
+		) {
+			candidates.add(t.lemma);
+		}
+	}
+	if (candidates.size === 0) return null;
+	const pool = [...candidates];
+	return pool[Math.floor(Math.random() * pool.length)];
 }
 
 export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
@@ -68,11 +91,13 @@ export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
 	}, [state, date, article.id, ready]);
 
 	const lemmaSet = collectLemmas(tokens);
+	const titleLemmaSet = titleLemmas(article.title);
 
 	return {
 		state,
 		tokens,
 		lemmaSet,
+		titleLemmaSet,
 		ready,
 		setInput: (value) => dispatch({ type: "SET_INPUT", value }),
 		submitGuess: () =>
@@ -80,9 +105,13 @@ export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
 				type: "SUBMIT_GUESS",
 				rawGuess: state.currentInput,
 				tokens,
+				titleLemmas: titleLemmaSet,
 			}),
-		useHint: () => dispatch({ type: "USE_HINT" }),
-		claimWin: () => dispatch({ type: "CLAIM_WIN" }),
+		useHint: () =>
+			dispatch({
+				type: "USE_HINT",
+				lemma: pickHintLemma(tokens, new Set(state.foundLemmas), titleLemmaSet),
+			}),
 		giveUp: () => dispatch({ type: "GIVE_UP" }),
 	};
 }

@@ -13,10 +13,8 @@ type Story = StoryObj<typeof ArticleActions>;
 export const Available: Story = {
 	args: {
 		onUseHint: () => {},
-		onClaimWin: () => {},
 		onGiveUp: () => {},
 		hintAvailable: true,
-		titleVisible: true,
 		finished: false,
 	},
 };
@@ -24,10 +22,8 @@ export const Available: Story = {
 export const HintUsed: Story = {
 	args: {
 		onUseHint: () => {},
-		onClaimWin: () => {},
 		onGiveUp: () => {},
 		hintAvailable: false,
-		titleVisible: true,
 		finished: false,
 	},
 };
@@ -35,10 +31,8 @@ export const HintUsed: Story = {
 export const Finished: Story = {
 	args: {
 		onUseHint: () => {},
-		onClaimWin: () => {},
 		onGiveUp: () => {},
 		hintAvailable: false,
-		titleVisible: true,
 		finished: true,
 	},
 };

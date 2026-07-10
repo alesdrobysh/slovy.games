@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { pluralize } from "@/shared/lib/pluralize";
 import type { ArticleToken } from "../types";
 
@@ -16,6 +17,16 @@ export function RedactedText({
 	revealTitle,
 	title,
 }: RedactedTextProps) {
+	const [peeked, setPeeked] = useState<ReadonlySet<number>>(new Set());
+	const togglePeek = (index: number) => {
+		setPeeked((prev) => {
+			const next = new Set(prev);
+			if (next.has(index)) next.delete(index);
+			else next.add(index);
+			return next;
+		});
+	};
+
 	return (
 		<div className="font-display text-ink leading-relaxed text-base sm:text-lg">
 			{revealTitle && title && (
@@ -39,19 +50,27 @@ export function RedactedText({
 							</span>
 						);
 					}
+					const isPeeked = peeked.has(i);
 					return (
-						<span
+						<button
 							key={key}
-							role="img"
-							aria-label={`${token.text.length} схаваных літар`}
-							className="inline-block align-baseline bg-ink/85 rounded-sm"
+							type="button"
+							aria-label={
+								isPeeked
+									? `Схавана, ${token.text.length} літар`
+									: `${token.text.length} схаваных літар, паказаць колькасць`
+							}
+							onClick={() => togglePeek(i)}
+							className="appearance-none border-0 p-0 inline-flex items-center justify-center align-baseline bg-ink/85 rounded-sm cursor-pointer text-paper text-[0.6em] leading-none font-sans"
 							style={{
 								width: `${token.text.length * 0.6}em`,
 								height: "0.9em",
 								marginLeft: "0.1em",
 								marginRight: "0.1em",
 							}}
-						/>
+						>
+							{isPeeked ? token.text.length : ""}
+						</button>
 					);
 				})}
 			</p>

@@ -58,9 +58,13 @@ export type ValidationError =
 	| "no_guesses_after_finish";
 
 export type GameAction =
-	| { type: "SUBMIT_GUESS"; rawGuess: string; tokens: ArticleToken[] }
-	| { type: "USE_HINT" }
-	| { type: "CLAIM_WIN" }
+	| {
+			type: "SUBMIT_GUESS";
+			rawGuess: string;
+			tokens: ArticleToken[];
+			titleLemmas: Set<string>;
+	  }
+	| { type: "USE_HINT"; lemma: string | null }
 	| { type: "GIVE_UP" }
 	| { type: "RESTORE"; progress: SavedProgress }
 	| { type: "CLEAR_ERROR" }

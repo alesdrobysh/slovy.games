@@ -45,27 +45,30 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 			}
 			if (!result.lemma) return state;
 			const lemma = result.lemma;
+			const foundLemmas = [...state.foundLemmas, lemma];
+			const won =
+				action.titleLemmas.size > 0 &&
+				[...action.titleLemmas].every((l) => foundLemmas.includes(l));
 			return {
 				...state,
 				currentInput: "",
 				errorType: null,
-				foundLemmas: [...state.foundLemmas, lemma],
+				foundLemmas,
 				guesses: [...state.guesses, lemma],
+				won,
+				finishedAt: won ? new Date().toISOString() : state.finishedAt,
 			};
 		}
 
 		case "USE_HINT":
 			if (state.won || state.givenUp) return state;
 			if (state.hintsUsed >= 1) return state;
-			return { ...state, hintsUsed: state.hintsUsed + 1 };
-
-		case "CLAIM_WIN":
-			if (state.won || state.givenUp) return state;
 			return {
 				...state,
-				won: true,
-				givenUp: false,
-				finishedAt: new Date().toISOString(),
+				hintsUsed: state.hintsUsed + 1,
+				foundLemmas: action.lemma
+					? [...state.foundLemmas, action.lemma]
+					: state.foundLemmas,
 			};
 
 		case "GIVE_UP":

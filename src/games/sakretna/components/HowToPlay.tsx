@@ -19,15 +19,16 @@ export function HowToPlay({ isOpen, onClose }: HowToPlayProps) {
 				</Typography>
 				<Typography variant="body">
 					<strong className="text-sakretna">Мэта</strong> — здагадацца, пра які
-					артыкул ідзе гаворка, і націснуць <strong>«Я здагадаўся!»</strong>.
+					артыкул ідзе гаворка. Як толькі вы ўведзяце ўсе словы назвы — перамога
+					залічваецца аўтаматычна.
 				</Typography>
 				<Typography variant="body">
 					<strong className="text-sakretna">Хто выйграў:</strong> чым менш спроб
 					— тым лепш. Даступная адна бясплатная падказка.
 				</Typography>
 				<Typography variant="body" className="text-ink-muted text-sm">
-					Падказка расшыфруе назву артыкула. Выкарыстоўвайце яе ў крайнім
-					выпадку — гэта залічваецца ў статыстыцы.
+					Падказка расшыфруе адно выпадковае слова ў артыкуле (не назву).
+					Выкарыстоўвайце яе ў крайнім выпадку — гэта залічваецца ў статыстыцы.
 				</Typography>
 			</div>
 		</Modal>

@@ -49,3 +49,19 @@ export function collectLemmas(tokens: ArticleToken[]): Set<string> {
 	}
 	return lemmas;
 }
+
+/**
+ * Distinct non-free word lemmas that make up an article title. Free/common
+ * words are excluded since they're never redacted and so don't need to be
+ * guessed to complete the title.
+ */
+export function titleLemmas(
+	title: string,
+	lemmaFn: (word: string) => string = clientLemmaOf
+): Set<string> {
+	const lemmas = new Set<string>();
+	for (const t of tokenize(title, lemmaFn)) {
+		if (t.type === "word" && t.lemma && !t.isFree) lemmas.add(t.lemma);
+	}
+	return lemmas;
+}
