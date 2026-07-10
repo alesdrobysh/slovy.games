@@ -1,9 +1,9 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { HowToPlay } from "@/games/redaktle/components/HowToPlay";
-import { RedactlePage } from "@/games/redaktle/components/RedactlePage";
-import type { PickedArticle } from "@/games/redaktle/types";
+import { HowToPlay } from "@/games/sakretna/components/HowToPlay";
+import { SakretnaPage } from "@/games/sakretna/components/SakretnaPage";
+import type { PickedArticle } from "@/games/sakretna/types";
 import { Nav } from "@/shared/components/Nav";
 
 interface Props {
@@ -18,7 +18,7 @@ export function GameShell({ picked }: Props) {
 		<>
 			<Nav onHelpClick={handleHelpClick} />
 			<main>
-				<RedactlePage picked={picked} />
+				<SakretnaPage picked={picked} />
 			</main>
 			<HowToPlay isOpen={showHelp} onClose={() => setShowHelp(false)} />
 		</>

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { tokenize } from "@/games/redaktle/lib/tokenize";
+import { tokenize } from "@/games/sakretna/lib/tokenize";
 import { RedactedText } from "./RedactedText";
 
 const EXCERPT =
@@ -7,7 +7,7 @@ const EXCERPT =
 const tokens = tokenize(EXCERPT);
 
 const meta = {
-	title: "Redaktle/RedactedText",
+	title: "Sakretna/RedactedText",
 	component: RedactedText,
 	parameters: { layout: "padded" },
 } satisfies Meta<typeof RedactedText>;

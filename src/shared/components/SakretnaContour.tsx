@@ -4,7 +4,7 @@
 const CX = 185;
 const CY = 185;
 
-interface RedactleContourProps {
+interface SakretnaContourProps {
 	className?: string;
 }
 
@@ -18,7 +18,7 @@ const BARS: Array<{ y: number; w: number }> = [
 	{ y: 120, w: 200 },
 ];
 
-export function RedactleContour({ className }: RedactleContourProps) {
+export function SakretnaContour({ className }: SakretnaContourProps) {
 	return (
 		<svg
 			viewBox="0 0 370 370"

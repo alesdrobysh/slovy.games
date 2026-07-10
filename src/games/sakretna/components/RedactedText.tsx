@@ -23,7 +23,7 @@ export function RedactedText({
 					<span className="text-ink-soft text-xs sm:text-sm uppercase tracking-widest">
 						Артыкул:{" "}
 					</span>
-					<strong className="text-redaktle">{title}</strong>
+					<strong className="text-sakretna">{title}</strong>
 				</p>
 			)}
 			<p className="break-words hyphens-auto">

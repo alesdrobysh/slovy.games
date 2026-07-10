@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import type { Article, SavedProgress } from "@/games/redaktle/types";
+import type { Article, SavedProgress } from "@/games/sakretna/types";
 import { FinishCard } from "./FinishCard";
 
 const ARTICLE: Article = {
@@ -11,7 +11,7 @@ const ARTICLE: Article = {
 };
 
 const meta = {
-	title: "Redaktle/FinishCard",
+	title: "Sakretna/FinishCard",
 	component: FinishCard,
 	parameters: { layout: "padded" },
 } satisfies Meta<typeof FinishCard>;

@@ -108,25 +108,25 @@ checkFileExists("vectors.bin");
 	ok(`vectors.bin — size matches ${words.length} × ${vecSize}`);
 }
 
-// 5. Validate redaktle articles.json
+// 5. Validate sakretna articles.json
 {
-	const articlesPath = join(GAMES_DIR, "redaktle", "data", "articles.json");
+	const articlesPath = join(GAMES_DIR, "sakretna", "data", "articles.json");
 	let articlesRaw;
 	try {
 		articlesRaw = readFileSync(articlesPath, "utf-8");
 	} catch {
-		fail("redaktle/data/articles.json is missing");
+		fail("sakretna/data/articles.json is missing");
 	}
 
 	let articles;
 	try {
 		articles = JSON.parse(articlesRaw);
 	} catch (err) {
-		fail(`redaktle/data/articles.json is not valid JSON: ${err.message}`);
+		fail(`sakretna/data/articles.json is not valid JSON: ${err.message}`);
 	}
 
 	if (!Array.isArray(articles) || articles.length === 0) {
-		fail("redaktle/data/articles.json must be a non-empty array");
+		fail("sakretna/data/articles.json must be a non-empty array");
 	}
 
 		const seenIds = new Set();
@@ -157,7 +157,7 @@ checkFileExists("vectors.bin");
 		}
 	}
 
-	ok(`redaktle/articles.json — ${articles.length} articles`);
+	ok(`sakretna/articles.json — ${articles.length} articles`);
 }
 
 console.log("\n✅ All data checks passed.\n");

@@ -1,5 +1,5 @@
 /**
- * Virtual mock for the "belmorph" package, used by redaktle tests.
+ * Virtual mock for the "belmorph" package, used by sakretna tests.
  * `belmorph` ships only an ESM `import` export condition so it can't be
  * `require()`d under ts-jest's CJS transform. The virtual mock registers
  * without Jest trying to resolve the real package first.

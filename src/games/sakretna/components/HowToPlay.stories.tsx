@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { HowToPlay } from "./HowToPlay";
 
 const meta = {
-	title: "Redaktle/HowToPlay",
+	title: "Sakretna/HowToPlay",
 	component: HowToPlay,
 	parameters: { layout: "fullscreen" },
 	args: {

@@ -1,11 +1,11 @@
-import { RedactleStatsPage } from "@/games/redaktle/components/RedactleStatsPage";
+import { SakretnaStatsPage } from "@/games/sakretna/components/SakretnaStatsPage";
 import { Nav } from "@/shared/components/Nav";
 
-export default function RedaktleStatsPage() {
+export default function SakretnaStatsRoute() {
 	return (
 		<>
 			<Nav />
-			<RedactleStatsPage />
+			<SakretnaStatsPage />
 		</>
 	);
 }

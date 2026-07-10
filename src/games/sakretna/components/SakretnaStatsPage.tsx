@@ -2,8 +2,8 @@
 
 import { Share2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
-import { DEFAULT_STATS, loadStats } from "@/games/redaktle/lib/storage";
-import type { GameStats } from "@/games/redaktle/types";
+import { DEFAULT_STATS, loadStats } from "@/games/sakretna/lib/storage";
+import type { GameStats } from "@/games/sakretna/types";
 import { Button } from "@/shared/components/ui/Button";
 import { StatCard } from "@/shared/components/ui/StatCard";
 import { Typography } from "@/shared/components/ui/Typography";
@@ -21,7 +21,7 @@ function formatDateLabel(date: string): string {
 	});
 }
 
-export function RedactleStatsPage() {
+export function SakretnaStatsPage() {
 	const [stats, setStats] = useState<GameStats>(DEFAULT_STATS);
 	useEffect(() => {
 		setStats(loadStats());
@@ -34,18 +34,18 @@ export function RedactleStatsPage() {
 
 	const shareText = useMemo(() => {
 		return [
-			"Мая статыстыка ў «Рэдактле»:",
+			"Мая статыстыка ў «Сакрэтна»:",
 			`Гульняў: ${stats.totalPlayed}`,
 			`Здагадана: ${stats.totalWins} (${winRate}%)`,
 			`Бягучая серыя: ${stats.currentStreak}`,
 			`Макс. серыя: ${stats.longestStreak}`,
 			`Падказак: ${stats.hintsUsedCount}`,
-			"slovy.games/redaktle",
+			"slovy.games/sakretna",
 		].join("\n");
 	}, [stats, winRate]);
 
 	const { share, isSharing, showToast } = useShare(shareText, {
-		game: "redaktle",
+		game: "sakretna",
 		context: "stats",
 	});
 
@@ -57,8 +57,8 @@ export function RedactleStatsPage() {
 	return (
 		<div className="mx-auto max-w-3xl px-5 sm:px-8 py-inset-lg flex flex-col gap-y-flow-lg">
 			<header className="flex flex-col gap-flow-xs">
-				<Typography variant="overline" as="span" className="text-redaktle">
-					Рэдактле
+				<Typography variant="overline" as="span" className="text-sakretna">
+					Сакрэтна
 				</Typography>
 				<Typography variant="title" as="h1">
 					Статыстыка

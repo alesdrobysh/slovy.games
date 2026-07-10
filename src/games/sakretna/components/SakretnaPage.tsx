@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRedactleGame } from "@/games/redaktle/hooks/useRedactleGame";
-import { ERROR_MESSAGES } from "@/games/redaktle/lib/validation";
+import { useSakretnaGame } from "@/games/sakretna/hooks/useSakretnaGame";
+import { ERROR_MESSAGES } from "@/games/sakretna/lib/validation";
 import type {
 	Article,
 	PickedArticle,
 	ValidationError,
-} from "@/games/redaktle/types";
+} from "@/games/sakretna/types";
 import { Typography } from "@/shared/components/ui/Typography";
 import { ArticleActions } from "./ArticleActions";
 import { FinishCard } from "./FinishCard";
@@ -15,7 +15,7 @@ import { GuessInput } from "./GuessInput";
 import { GuessList } from "./GuessList";
 import { ProgressLine, RedactedText } from "./RedactedText";
 
-interface RedactlePageProps {
+interface SakretnaPageProps {
 	picked: PickedArticle;
 }
 
@@ -28,7 +28,7 @@ function articleTitleLemmas(article: Article): Set<string> {
 	return lemmas;
 }
 
-export function RedactlePage({ picked }: RedactlePageProps) {
+export function SakretnaPage({ picked }: SakretnaPageProps) {
 	const { article, tokens, date } = picked;
 	const {
 		state,
@@ -39,7 +39,7 @@ export function RedactlePage({ picked }: RedactlePageProps) {
 		useHint,
 		claimWin,
 		giveUp,
-	} = useRedactleGame(picked);
+	} = useSakretnaGame(picked);
 	const [toastKey, setToastKey] = useState(0);
 	const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -70,8 +70,8 @@ export function RedactlePage({ picked }: RedactlePageProps) {
 		<>
 			<div className="mx-auto max-w-3xl px-4 sm:px-8 py-flow-lg sm:py-page-py flex flex-col gap-flow-lg sm:gap-inset-xl pb-[140px] sm:pb-0">
 				<header className="flex flex-col gap-flow-xs">
-					<Typography variant="overline" as="span" className="text-redaktle">
-						Рэдактле · {date}
+					<Typography variant="overline" as="span" className="text-sakretna">
+						Сакрэтна · {date}
 					</Typography>
 					<Typography variant="title" as="h1">
 						Здагадайцеся артыкул Вікіпедыі
@@ -129,7 +129,7 @@ export function RedactlePage({ picked }: RedactlePageProps) {
 						{toastMessage && (
 							<p
 								key={toastKey}
-								className="text-redaktle text-sm font-medium animate-fade-in"
+								className="text-sakretna text-sm font-medium animate-fade-in"
 								role="status"
 							>
 								{toastMessage}

@@ -4,8 +4,8 @@ import {
 } from "@/shared/lib/timezone";
 import type { GameStats, SavedProgress } from "../types";
 
-const STORAGE_KEY = (date: string) => `redaktle_${date}`;
-export const STATS_KEY = "redaktle_stats";
+const STORAGE_KEY = (date: string) => `sakretna_${date}`;
+export const STATS_KEY = "sakretna_stats";
 
 export const DEFAULT_STATS: GameStats = {
 	datesPlayed: [],

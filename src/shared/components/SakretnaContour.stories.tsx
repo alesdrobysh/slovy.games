@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { RedactleContour } from "./RedactleContour";
+import { SakretnaContour } from "./SakretnaContour";
 
 const meta = {
-	title: "Redaktle/RedactleContour",
-	component: RedactleContour,
+	title: "Sakretna/SakretnaContour",
+	component: SakretnaContour,
 	parameters: { layout: "centered" },
-} satisfies Meta<typeof RedactleContour>;
+} satisfies Meta<typeof SakretnaContour>;
 
 export default meta;
-type Story = StoryObj<typeof RedactleContour>;
+type Story = StoryObj<typeof SakretnaContour>;
 
 export const Default: Story = {
-	args: { className: "w-80 h-80 text-redaktle" },
+	args: { className: "w-80 h-80 text-sakretna" },
 };

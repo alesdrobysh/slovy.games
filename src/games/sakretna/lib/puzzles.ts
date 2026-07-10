@@ -1,7 +1,7 @@
-import articlesData from "@/games/redaktle/data/articles.json";
-import { serverLemmaOf } from "@/games/redaktle/lib/lemmatize.server";
-import { tokenize } from "@/games/redaktle/lib/tokenize";
-import { REDAKTLE_EPOCH_DATE } from "@/shared/config";
+import articlesData from "@/games/sakretna/data/articles.json";
+import { serverLemmaOf } from "@/games/sakretna/lib/lemmatize.server";
+import { tokenize } from "@/games/sakretna/lib/tokenize";
+import { SAKRETNA_EPOCH_DATE } from "@/shared/config";
 import { getMskDayIndex } from "@/shared/lib/timezone";
 import type { Article, PickedArticle } from "../types";
 
@@ -32,13 +32,13 @@ export function pickForDate(date: string): PickedArticle {
 }
 
 function pickDate(): string {
-	const dayIndex = getMskDayIndex(REDAKTLE_EPOCH_DATE);
-	return formatDateForDayIndex(REDAKTLE_EPOCH_DATE, dayIndex);
+	const dayIndex = getMskDayIndex(SAKRETNA_EPOCH_DATE);
+	return formatDateForDayIndex(SAKRETNA_EPOCH_DATE, dayIndex);
 }
 
 function dayIndexForDate(date: string): number {
 	const target = new Date(`${date}T00:00:00Z`).getTime();
-	const epoch = new Date(REDAKTLE_EPOCH_DATE).getTime();
+	const epoch = new Date(SAKRETNA_EPOCH_DATE).getTime();
 	return Math.floor((target - epoch) / 86400000);
 }
 

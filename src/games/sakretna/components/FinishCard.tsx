@@ -18,10 +18,10 @@ function buildShareText(
 	_article: Article,
 	progress: SavedProgress
 ): string {
-	const head = mode === "win" ? "Рэдактле: здагадаўся!" : "Рэдактле: здаўся";
+	const head = mode === "win" ? "Сакрэтна: здагадаўся!" : "Сакрэтна: здаўся";
 	const guesses = progress.guesses.length;
 	const hintFlag = progress.hintsUsed > 0 ? " (з падказкай)" : "";
-	return `${head}${hintFlag} — ${guesses} спроб, ${progress.foundLemmas.length} расшыфраваных слоў. slovy.games/redaktle`;
+	return `${head}${hintFlag} — ${guesses} спроб, ${progress.foundLemmas.length} расшыфраваных слоў. slovy.games/sakretna`;
 }
 
 export function FinishCard({
@@ -32,12 +32,12 @@ export function FinishCard({
 }: FinishCardProps) {
 	const shareText = buildShareText(mode, article, progress);
 	const { share, showToast } = useShare(shareText, {
-		game: "redaktle",
+		game: "sakretna",
 		context: "finish",
 	});
 
 	const Icon = mode === "win" ? CheckCircle2 : Frown;
-	const accent = mode === "win" ? "text-redaktle" : "text-ink-muted";
+	const accent = mode === "win" ? "text-sakretna" : "text-ink-muted";
 	const title = mode === "win" ? "Так, гэта была правільная назва!" : "Адказ";
 
 	return (
@@ -56,7 +56,7 @@ export function FinishCard({
 				>
 					Артыкул
 				</Typography>
-				<Typography variant="subheading" as="p" className="text-redaktle">
+				<Typography variant="subheading" as="p" className="text-sakretna">
 					{article.title}
 				</Typography>
 			</div>
@@ -65,7 +65,7 @@ export function FinishCard({
 					href={article.source}
 					target="_blank"
 					rel="noopener noreferrer"
-					className="text-redaktle underline hover:opacity-80"
+					className="text-sakretna underline hover:opacity-80"
 				>
 					Адкрыць у Вікіпедыі
 				</a>
@@ -97,7 +97,7 @@ export function FinishCard({
 				)}
 			</div>
 			{showToast && (
-				<p className="text-redaktle text-sm" role="status">
+				<p className="text-sakretna text-sm" role="status">
 					Скапіявана ў буфер абмену
 				</p>
 			)}

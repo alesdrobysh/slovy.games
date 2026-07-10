@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
-import { GameShell } from "@/app/redaktle/GameShell";
-import { serverLemmaOf } from "@/games/redaktle/lib/lemmatize.server";
-import { getArticleById } from "@/games/redaktle/lib/puzzles";
-import { tokenize } from "@/games/redaktle/lib/tokenize";
+import { GameShell } from "@/app/sakretna/GameShell";
+import { serverLemmaOf } from "@/games/sakretna/lib/lemmatize.server";
+import { getArticleById } from "@/games/sakretna/lib/puzzles";
+import { tokenize } from "@/games/sakretna/lib/tokenize";
 
 export const dynamic = "force-dynamic";
 

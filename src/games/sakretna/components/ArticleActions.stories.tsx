@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { ArticleActions } from "./ArticleActions";
 
 const meta = {
-	title: "Redaktle/ArticleActions",
+	title: "Sakretna/ArticleActions",
 	component: ArticleActions,
 	parameters: { layout: "padded" },
 } satisfies Meta<typeof ArticleActions>;

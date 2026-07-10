@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { listArticles } from "@/games/redaktle/lib/puzzles";
-import { tokenize } from "@/games/redaktle/lib/tokenize";
-import { RedactlePage } from "./RedactlePage";
+import { listArticles } from "@/games/sakretna/lib/puzzles";
+import { tokenize } from "@/games/sakretna/lib/tokenize";
+import { SakretnaPage } from "./SakretnaPage";
 
 const article = listArticles()[0];
 const picked = {
@@ -11,22 +11,22 @@ const picked = {
 };
 
 const meta = {
-	title: "Redaktle/RedactlePage",
-	component: RedactlePage,
+	title: "Sakretna/SakretnaPage",
+	component: SakretnaPage,
 	parameters: { layout: "fullscreen" },
 	decorators: [
 		(Story) => (
-			<div className="theme-redaktle bg-paper min-h-screen">
+			<div className="theme-sakretna bg-paper min-h-screen">
 				<Story />
 			</div>
 		),
 	],
-} satisfies Meta<typeof RedactlePage>;
+} satisfies Meta<typeof SakretnaPage>;
 
 export default meta;
-type Story = StoryObj<typeof RedactlePage>;
+type Story = StoryObj<typeof SakretnaPage>;
 
 export const InProgress: Story = {
 	args: { picked },
-	render: (args) => <RedactlePage {...args} />,
+	render: (args) => <SakretnaPage {...args} />,
 };

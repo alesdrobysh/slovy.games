@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { GuessList } from "./GuessList";
 
 const meta = {
-	title: "Redaktle/GuessList",
+	title: "Sakretna/GuessList",
 	component: GuessList,
 	parameters: { layout: "padded" },
 } satisfies Meta<typeof GuessList>;

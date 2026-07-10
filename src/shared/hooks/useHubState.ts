@@ -270,9 +270,9 @@ function getPobachStatus(): {
 	};
 }
 
-// ─── Redaktle state ─────────────────────────────────────────────────
+// ─── Sakretna state ─────────────────────────────────────────────────
 
-function getRedaktleStatus(): {
+function getSakretnaStatus(): {
 	hasPlayedToday: boolean;
 	guessCount: number;
 	foundLemmas: number;
@@ -295,7 +295,7 @@ function getRedaktleStatus(): {
 	let totalPlayed = 0;
 
 	try {
-		const raw = localStorage.getItem(`redaktle_${today}`);
+		const raw = localStorage.getItem(`sakretna_${today}`);
 		if (raw) {
 			const progress = JSON.parse(raw);
 			hasPlayedToday = true;
@@ -305,7 +305,7 @@ function getRedaktleStatus(): {
 			givenUp = !!progress.givenUp;
 			hintsUsed = progress.hintsUsed ?? 0;
 		}
-		const statsRaw = localStorage.getItem("redaktle_stats");
+		const statsRaw = localStorage.getItem("sakretna_stats");
 		if (statsRaw) {
 			const stats = JSON.parse(statsRaw);
 			streak = stats.currentStreak ?? 0;
@@ -334,7 +334,7 @@ function buildGameStatusFromRaw(
 	game: GameInfo,
 	v: ReturnType<typeof getValoshkaStatus>,
 	p: ReturnType<typeof getPobachStatus>,
-	r: ReturnType<typeof getRedaktleStatus>
+	r: ReturnType<typeof getSakretnaStatus>
 ): GameHubStatus {
 	if (game.id === "valoshka") {
 		if (v.vasiliokReached) {
@@ -354,30 +354,30 @@ function buildGameStatusFromRaw(
 		};
 	}
 
-	if (game.id === "redaktle") {
+	if (game.id === "sakretna") {
 		if (r.won) {
 			return {
-				gameId: "redaktle",
+				gameId: "sakretna",
 				status: "won",
 				progressText: "Здагадана",
 			};
 		}
 		if (r.givenUp) {
 			return {
-				gameId: "redaktle",
+				gameId: "sakretna",
 				status: "given_up",
 				progressText: "Здаліся",
 			};
 		}
 		if (r.guessCount > 0) {
 			return {
-				gameId: "redaktle",
+				gameId: "sakretna",
 				status: "in_progress",
 				progressText: `Расшыфравана ${r.foundLemmas} ${pluralize(r.foundLemmas, "слова")}`,
 			};
 		}
 		return {
-			gameId: "redaktle",
+			gameId: "sakretna",
 			status: "not_started",
 			progressText: "Чакае вас",
 		};
@@ -415,7 +415,7 @@ export function useHubState(games: GameInfo[]): HubState {
 		function buildState(): HubState {
 			const vs = getValoshkaStatus();
 			const ps = getPobachStatus();
-			const rs = getRedaktleStatus();
+			const rs = getSakretnaStatus();
 
 			// Aggregate
 			let maxStreak = 0;

@@ -1,21 +1,21 @@
 "use client";
 
 import { useEffect, useReducer, useRef, useState } from "react";
-import { lemmaReady } from "@/games/redaktle/lib/lemmatize";
+import { lemmaReady } from "@/games/sakretna/lib/lemmatize";
 import {
 	createInitialState,
 	gameReducer,
 	stateToProgress,
-} from "@/games/redaktle/lib/reducer";
+} from "@/games/sakretna/lib/reducer";
 import {
 	loadProgress,
 	recordResult,
 	saveProgress,
-} from "@/games/redaktle/lib/storage";
-import { collectLemmas } from "@/games/redaktle/lib/tokenize";
+} from "@/games/sakretna/lib/storage";
+import { collectLemmas } from "@/games/sakretna/lib/tokenize";
 import type { ArticleToken, GameState, PickedArticle } from "../types";
 
-export interface UseRedactleGameReturn {
+export interface UseSakretnaGameReturn {
 	state: GameState;
 	tokens: ArticleToken[];
 	lemmaSet: Set<string>;
@@ -27,7 +27,7 @@ export interface UseRedactleGameReturn {
 	giveUp: () => void;
 }
 
-export function useRedactleGame(picked: PickedArticle): UseRedactleGameReturn {
+export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
 	const { article, tokens, date } = picked;
 	const [state, dispatch] = useReducer(
 		gameReducer,

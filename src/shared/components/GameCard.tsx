@@ -4,7 +4,7 @@ import Link from "next/link";
 import posthog from "posthog-js";
 import { CornflowerContour } from "@/shared/components/CornflowerContour";
 import { PobachContour } from "@/shared/components/PobachContour";
-import { RedactleContour } from "@/shared/components/RedactleContour";
+import { SakretnaContour } from "@/shared/components/SakretnaContour";
 import { Typography } from "@/shared/components/ui/Typography";
 import type { GameInfo } from "@/shared/types";
 
@@ -45,10 +45,10 @@ function GameIllustration({
 			/>
 		);
 	}
-	if (gameId === "redaktle") {
+	if (gameId === "sakretna") {
 		return (
-			<RedactleContour
-				className={`${className} opacity-[0.07] dark:opacity-[0.15] text-redaktle`}
+			<SakretnaContour
+				className={`${className} opacity-[0.07] dark:opacity-[0.15] text-sakretna`}
 			/>
 		);
 	}
@@ -67,32 +67,32 @@ export function GameCard({
 	const accentBg =
 		game.id === "pobach"
 			? "bg-pobach"
-			: game.id === "redaktle"
-				? "bg-redaktle"
+			: game.id === "sakretna"
+				? "bg-sakretna"
 				: "bg-valoshka";
 	const accentText =
 		game.id === "pobach"
 			? "text-pobach"
-			: game.id === "redaktle"
-				? "text-redaktle"
+			: game.id === "sakretna"
+				? "text-sakretna"
 				: "text-valoshka";
 	const accentRing =
 		accentBg === "bg-valoshka"
 			? "shadow-valoshka/30"
-			: accentBg === "bg-redaktle"
-				? "shadow-redaktle/30"
+			: accentBg === "bg-sakretna"
+				? "shadow-sakretna/30"
 				: "shadow-pobach/30";
 	const gameKey =
 		game.id === "pobach"
 			? "pobach"
-			: game.id === "redaktle"
-				? "redaktle"
+			: game.id === "sakretna"
+				? "sakretna"
 				: "valoshka";
 	const accentBorderClass =
 		game.id === "pobach"
 			? "border-pobach text-pobach hover:bg-pobach hover:text-white"
-			: game.id === "redaktle"
-				? "border-redaktle text-redaktle hover:bg-redaktle hover:text-white"
+			: game.id === "sakretna"
+				? "border-sakretna text-sakretna hover:bg-sakretna hover:text-white"
 				: "border-valoshka text-valoshka hover:bg-valoshka hover:text-white";
 
 	return (
