@@ -149,7 +149,7 @@ export interface TypographyProps {
   as?: ElementType;
   children: ReactNode;
   dropCap?: boolean;
-  game?: 'pobach' | 'valoshka';
+  game?: 'pobach' | 'valoshka' | 'redaktle';
   oldstyleNums?: boolean;
   className?: string;
   style?: CSSProperties;

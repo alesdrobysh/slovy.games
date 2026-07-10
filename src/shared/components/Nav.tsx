@@ -21,6 +21,11 @@ const GAME_ROUTES: Record<
 		accentClass: "text-valoshka",
 		statsHref: "/valoshka/stats",
 	},
+	"/redaktle": {
+		title: "Рэдактле",
+		accentClass: "text-redaktle",
+		statsHref: "/redaktle/stats",
+	},
 };
 
 function getGameConfig(pathname: string | null) {

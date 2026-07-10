@@ -270,11 +270,71 @@ function getPobachStatus(): {
 	};
 }
 
+// ─── Redaktle state ─────────────────────────────────────────────────
+
+function getRedaktleStatus(): {
+	hasPlayedToday: boolean;
+	guessCount: number;
+	foundLemmas: number;
+	won: boolean;
+	givenUp: boolean;
+	streak: number;
+	longestStreak: number;
+	totalPlayed: number;
+	hintsUsed: number;
+} {
+	const today = todayString();
+	let hasPlayedToday = false;
+	let guessCount = 0;
+	let foundLemmas = 0;
+	let won = false;
+	let givenUp = false;
+	let hintsUsed = 0;
+	let streak = 0;
+	let longestStreak = 0;
+	let totalPlayed = 0;
+
+	try {
+		const raw = localStorage.getItem(`redaktle_${today}`);
+		if (raw) {
+			const progress = JSON.parse(raw);
+			hasPlayedToday = true;
+			guessCount = progress.guesses?.length ?? 0;
+			foundLemmas = progress.foundLemmas?.length ?? 0;
+			won = !!progress.won;
+			givenUp = !!progress.givenUp;
+			hintsUsed = progress.hintsUsed ?? 0;
+		}
+		const statsRaw = localStorage.getItem("redaktle_stats");
+		if (statsRaw) {
+			const stats = JSON.parse(statsRaw);
+			streak = stats.currentStreak ?? 0;
+			longestStreak = stats.longestStreak ?? 0;
+			totalPlayed = stats.datesPlayed?.length ?? 0;
+		}
+	} catch {
+		// localStorage unavailable or corrupted
+	}
+
+	return {
+		hasPlayedToday,
+		guessCount,
+		foundLemmas,
+		won,
+		givenUp,
+		streak,
+		longestStreak,
+		totalPlayed,
+		hintsUsed,
+	};
+}
+
 // ─── Build game status from pre-read raw data ──────────────────────
 function buildGameStatusFromRaw(
 	game: GameInfo,
 	v: ReturnType<typeof getValoshkaStatus>,
-	p: ReturnType<typeof getPobachStatus>
+	p: ReturnType<typeof getPobachStatus>,
+	r: ReturnType<typeof getRedaktleStatus>
 ): GameHubStatus {
 	if (game.id === "valoshka") {
 		if (v.vasiliokReached) {
@@ -291,6 +351,35 @@ function buildGameStatusFromRaw(
 			progressText: inProgress
 				? `${v.foundWords} ${pluralize(v.foundWords, "слова")} знойдзена`
 				: "Чакае вас",
+		};
+	}
+
+	if (game.id === "redaktle") {
+		if (r.won) {
+			return {
+				gameId: "redaktle",
+				status: "won",
+				progressText: "Здагадана",
+			};
+		}
+		if (r.givenUp) {
+			return {
+				gameId: "redaktle",
+				status: "given_up",
+				progressText: "Здаліся",
+			};
+		}
+		if (r.guessCount > 0) {
+			return {
+				gameId: "redaktle",
+				status: "in_progress",
+				progressText: `Расшыфравана ${r.foundLemmas} ${pluralize(r.foundLemmas, "слова")}`,
+			};
+		}
+		return {
+			gameId: "redaktle",
+			status: "not_started",
+			progressText: "Чакае вас",
 		};
 	}
 
@@ -326,6 +415,7 @@ export function useHubState(games: GameInfo[]): HubState {
 		function buildState(): HubState {
 			const vs = getValoshkaStatus();
 			const ps = getPobachStatus();
+			const rs = getRedaktleStatus();
 
 			// Aggregate
 			let maxStreak = 0;
@@ -334,12 +424,14 @@ export function useHubState(games: GameInfo[]): HubState {
 			if (vs.longestStreak > maxLongest) maxLongest = vs.longestStreak;
 			if (ps.streak > maxStreak) maxStreak = ps.streak;
 			if (ps.longestStreak > maxLongest) maxLongest = ps.longestStreak;
-			const totalPlayed = vs.totalPlayed + ps.totalPlayed;
+			if (rs.streak > maxStreak) maxStreak = rs.streak;
+			if (rs.longestStreak > maxLongest) maxLongest = rs.longestStreak;
+			const totalPlayed = vs.totalPlayed + ps.totalPlayed + rs.totalPlayed;
 
 			// Build per-game statuses
 			const statuses = new Map<string, GameHubStatus>();
 			for (const game of games) {
-				statuses.set(game.id, buildGameStatusFromRaw(game, vs, ps));
+				statuses.set(game.id, buildGameStatusFromRaw(game, vs, ps, rs));
 			}
 
 			return {

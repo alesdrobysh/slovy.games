@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import posthog from "posthog-js";
-import type { GameInfo } from "@/shared/types";
-import { Typography } from "@/shared/components/ui/Typography";
 import { CornflowerContour } from "@/shared/components/CornflowerContour";
 import { PobachContour } from "@/shared/components/PobachContour";
+import { RedactleContour } from "@/shared/components/RedactleContour";
+import { Typography } from "@/shared/components/ui/Typography";
+import type { GameInfo } from "@/shared/types";
 
 export type GameCardStatus = "not_started" | "in_progress" | "won" | "given_up";
 
@@ -23,15 +24,32 @@ interface GameCardProps {
 	delay?: number;
 }
 
-function GameIllustration({ gameId, className }: { gameId: string; className?: string }) {
+function GameIllustration({
+	gameId,
+	className,
+}: {
+	gameId: string;
+	className?: string;
+}) {
 	if (gameId === "valoshka") {
 		return (
-			<CornflowerContour className={`${className} opacity-[0.07] dark:opacity-[0.15] text-valoshka`} />
+			<CornflowerContour
+				className={`${className} opacity-[0.07] dark:opacity-[0.15] text-valoshka`}
+			/>
 		);
 	}
 	if (gameId === "pobach") {
 		return (
-			<PobachContour className={`${className} opacity-[0.07] dark:opacity-[0.15] text-pobach`} />
+			<PobachContour
+				className={`${className} opacity-[0.07] dark:opacity-[0.15] text-pobach`}
+			/>
+		);
+	}
+	if (gameId === "redaktle") {
+		return (
+			<RedactleContour
+				className={`${className} opacity-[0.07] dark:opacity-[0.15] text-redaktle`}
+			/>
 		);
 	}
 	return null;
@@ -45,15 +63,45 @@ export function GameCard({
 }: GameCardProps) {
 	const isCompleted = status === "won" || status === "given_up";
 	const ctaLabel = CTA_LABEL[status];
-	const isPobach = game.id === "pobach";
-	const accentBg = isPobach ? "bg-pobach" : "bg-valoshka";
-	const accentText = isPobach ? "text-pobach" : "text-valoshka";
+	const _isPobach = game.id === "pobach";
+	const accentBg =
+		game.id === "pobach"
+			? "bg-pobach"
+			: game.id === "redaktle"
+				? "bg-redaktle"
+				: "bg-valoshka";
+	const accentText =
+		game.id === "pobach"
+			? "text-pobach"
+			: game.id === "redaktle"
+				? "text-redaktle"
+				: "text-valoshka";
+	const accentRing =
+		accentBg === "bg-valoshka"
+			? "shadow-valoshka/30"
+			: accentBg === "bg-redaktle"
+				? "shadow-redaktle/30"
+				: "shadow-pobach/30";
+	const gameKey =
+		game.id === "pobach"
+			? "pobach"
+			: game.id === "redaktle"
+				? "redaktle"
+				: "valoshka";
+	const accentBorderClass =
+		game.id === "pobach"
+			? "border-pobach text-pobach hover:bg-pobach hover:text-white"
+			: game.id === "redaktle"
+				? "border-redaktle text-redaktle hover:bg-redaktle hover:text-white"
+				: "border-valoshka text-valoshka hover:bg-valoshka hover:text-white";
 
 	return (
 		<Link
 			href={game.path}
-			onClick={() => posthog.capture("game_card_clicked", { game: game.id, status })}
-			className="group relative flex flex-col bg-card ring-1 ring-rule/50 rounded-4xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-ink/10 hover:ring-ink/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/30 focus-visible:ring-offset-4 focus-visible:ring-offset-paper animate-fade-in-up no-underline h-full"
+			onClick={() =>
+				posthog.capture("game_card_clicked", { game: game.id, status })
+			}
+			className="group relative flex flex-col bg-card ring-1 ring-rule/50 rounded-4xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-ink/10 hover:ring-ink/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/30 focus-visible:ring-offset-4 focus-visible:ring-offset-paper animate-fade-in-up no-underline h-full"
 			style={{ animationDelay: `${delay}ms` }}
 		>
 			<div className="absolute inset-0 bg-paper/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -61,7 +109,10 @@ export function GameCard({
 			<div className="relative flex flex-col h-full bg-card ring-1 ring-rule/30 rounded-3xl overflow-hidden transition-transform duration-500 group-hover:scale-[0.99]">
 				{/* Background Illustration */}
 				<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none overflow-hidden">
-					<GameIllustration gameId={game.id} className="w-[120%] h-[120%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform transition-all duration-2000 ease-out group-hover:scale-110 group-hover:rotate-6" />
+					<GameIllustration
+						gameId={game.id}
+						className="w-[120%] h-[120%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform transition-all duration-2000 ease-out group-hover:scale-110 group-hover:rotate-6"
+					/>
 				</div>
 
 				<div className="p-inset-xl sm:p-inset-2xl flex flex-col h-full relative z-10">
@@ -86,7 +137,7 @@ export function GameCard({
 								variant="caption"
 								as="p"
 								dropCap
-								game={isPobach ? "pobach" : "valoshka"}
+								game={gameKey}
 								className="text-ink-muted max-w-[45ch] overflow-hidden"
 							>
 								{game.description}
@@ -97,7 +148,11 @@ export function GameCard({
 					<div className="pt-inset-lg">
 						<div className="mb-inset-xl flex items-center justify-between">
 							<div className="flex flex-col gap-flow-sm">
-								<Typography variant="overline" as="span" className="text-ink-soft">
+								<Typography
+									variant="overline"
+									as="span"
+									className="text-ink-soft"
+								>
 									{isCompleted ? "Вынік" : "Статус"}
 								</Typography>
 								<Typography variant="body" as="span" className="text-ink">
@@ -105,7 +160,9 @@ export function GameCard({
 								</Typography>
 							</div>
 							{isCompleted && (
-								<span className={`w-3 h-3 rounded-full ${accentBg} shadow-sm ${accentBg === "bg-valoshka" ? "shadow-valoshka/30" : "shadow-pobach/30"}`} />
+								<span
+									className={`w-3 h-3 rounded-full ${accentBg} shadow-sm ${accentRing}`}
+								/>
 							)}
 						</div>
 
@@ -113,7 +170,7 @@ export function GameCard({
 							className={`flex items-center justify-center w-full px-inset-xl py-flow-lg rounded-2xl text-sm font-bold tracking-widest uppercase transition-all duration-300 border-2 ${
 								isCompleted
 									? "bg-secondary/50 border-rule text-ink hover:bg-rule"
-									: `${isPobach ? "border-pobach text-pobach hover:bg-pobach hover:text-white" : "border-valoshka text-valoshka hover:bg-valoshka hover:text-white"}`
+									: accentBorderClass
 							} hover:shadow-lg active:scale-95`}
 						>
 							{ctaLabel}

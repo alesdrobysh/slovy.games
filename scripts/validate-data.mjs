@@ -10,6 +10,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = join(__dirname, "..", "src", "data");
+const GAMES_DIR = join(__dirname, "..", "src", "games");
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -105,6 +106,58 @@ checkFileExists("vectors.bin");
 		);
 	}
 	ok(`vectors.bin — size matches ${words.length} × ${vecSize}`);
+}
+
+// 5. Validate redaktle articles.json
+{
+	const articlesPath = join(GAMES_DIR, "redaktle", "data", "articles.json");
+	let articlesRaw;
+	try {
+		articlesRaw = readFileSync(articlesPath, "utf-8");
+	} catch {
+		fail("redaktle/data/articles.json is missing");
+	}
+
+	let articles;
+	try {
+		articles = JSON.parse(articlesRaw);
+	} catch (err) {
+		fail(`redaktle/data/articles.json is not valid JSON: ${err.message}`);
+	}
+
+	if (!Array.isArray(articles) || articles.length === 0) {
+		fail("redaktle/data/articles.json must be a non-empty array");
+	}
+
+		const seenIds = new Set();
+	const seenTitles = new Set();
+	for (const [i, a] of articles.entries()) {
+		const where = `articles[${i}]`;
+		if (!a || typeof a !== "object") fail(`${where} is not an object`);
+		for (const field of ["id", "title", "body", "source", "retrieved"]) {
+			if (typeof a[field] !== "string" || a[field].length === 0) {
+				fail(`${where}.${field} is missing or empty`);
+			}
+		}
+		if (seenIds.has(a.id)) fail(`${where}.id duplicates: ${a.id}`);
+		if (seenTitles.has(a.title)) fail(`${where}.title duplicates: ${a.title}`);
+		seenIds.add(a.id);
+		seenTitles.add(a.title);
+
+		if (a.body.length < 1000 || a.body.length > 20000) {
+			fail(`${where}.body length ${a.body.length} outside 1000..20000`);
+		}
+		for (const banned of ["[[", "]]", "{{", "}}", "<ref", "</ref>"]) {
+			if (a.body.includes(banned)) {
+				fail(`${where}.body contains wiki markup: ${banned}`);
+			}
+		}
+		if (!a.source.startsWith("https://be.wikipedia.org/wiki/")) {
+			fail(`${where}.source must start with https://be.wikipedia.org/wiki/`);
+		}
+	}
+
+	ok(`redaktle/articles.json — ${articles.length} articles`);
 }
 
 console.log("\n✅ All data checks passed.\n");

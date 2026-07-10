@@ -32,6 +32,8 @@
 	--pobach-dim:    #FDF4EB;
 	--valoshka:      #3555BF;
 	--valoshka-dim:  #EBF0FA;
+	--redaktle:      #2E6B4F;
+	--redaktle-dim:  #E8F1EC;
 	--ornament:      #B5AFA5;
 	--font-d:        'Literata', Georgia, serif;
 	--font-b:        'Wix Madefor Text', system-ui, sans-serif;
@@ -84,6 +86,8 @@
 	--pobach-dim:    #281808;
 	--valoshka:      #5E7ADB;
 	--valoshka-dim:  #0C1424;
+	--redaktle:      #5C9C7E;
+	--redaktle-dim:  #102820;
 	--ornament:      #565140;
 
 	/* Dark-mode cell overrides */
@@ -110,6 +114,8 @@
 	--color-valoshka-soft:  color-mix(in oklab, var(--valoshka) 10%, transparent);
 	--color-pobach:         var(--pobach);
 	--color-pobach-soft:    color-mix(in oklab, var(--pobach) 10%, transparent);
+	--color-redaktle:       var(--redaktle);
+	--color-redaktle-soft:  color-mix(in oklab, var(--redaktle) 10%, transparent);
 	--color-success:        #16a34a;
 	--color-warning:        var(--pobach);
 	--color-destructive:    #ef4444;
@@ -155,6 +161,10 @@
 	color: var(--valoshka);
 }
 
+.typo-drop-cap.game-redaktle::first-letter {
+	color: var(--redaktle);
+}
+
 .typo-drop-cap .drop-cap-first-word {
 	font-variant: small-caps;
 	letter-spacing: 0.08em;
@@ -170,4 +180,12 @@
 	--accent-light:  color-mix(in oklab, var(--pobach) 80%, white 20%);
 	--accent-dark:   color-mix(in oklab, var(--pobach) 80%, black 20%);
 	--accent-border: color-mix(in oklab, var(--pobach) 22%, transparent);
+}
+
+.theme-redaktle {
+	--accent:        var(--redaktle);
+	--accent-dim:    var(--redaktle-dim);
+	--accent-light:  color-mix(in oklab, var(--redaktle) 80%, white 20%);
+	--accent-dark:   color-mix(in oklab, var(--redaktle) 80%, black 20%);
+	--accent-border: color-mix(in oklab, var(--redaktle) 22%, transparent);
 }
