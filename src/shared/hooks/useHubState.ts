@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { GameCardStatus } from "@/shared/components/GameCard";
-import { POBACH_EPOCH_DATE } from "@/shared/config";
+import { POBACH_EPOCH_DATE, VALOSHKA_EPOCH_DATE } from "@/shared/config";
 import { dictReady, pluralize } from "@/shared/lib/pluralize";
 import { getMskDateString, getMskDayIndex } from "@/shared/lib/timezone";
 import type { GameInfo } from "@/shared/types";
@@ -67,6 +67,57 @@ function formatTodayBe(): string {
 }
 
 // ─── Valoshka state ────────────────────────────────────────────────
+
+/** Drop per-day progress and stats entries dated before the current
+ *  epoch — these belonged to puzzles that no longer exist after an
+ *  epoch shift and would otherwise linger as unreachable localStorage
+ *  entries and skew stats. Idempotent: no-op once cleaned. */
+function purgePreEpochValoshkaProgress(): void {
+	const epoch = VALOSHKA_EPOCH_DATE.slice(0, 10);
+	try {
+		const staleKeys: string[] = [];
+		for (let i = 0; i < localStorage.length; i++) {
+			const key = localStorage.key(i);
+			if (!key || key === "vulej_stats" || !key.startsWith("vulej_")) continue;
+			const date = key.slice("vulej_".length);
+			if (date < epoch) staleKeys.push(key);
+		}
+		for (const key of staleKeys) localStorage.removeItem(key);
+
+		const statsRaw = localStorage.getItem("vulej_stats");
+		if (!statsRaw) return;
+		const stats = JSON.parse(statsRaw);
+		if (!Array.isArray(stats.datesPlayed)) return;
+		const keptDates = stats.datesPlayed.filter((d: string) => d >= epoch);
+		if (keptDates.length === stats.datesPlayed.length) return;
+
+		const perDateBest: Record<string, { rankIdx: number; foundCount: number }> =
+			{};
+		let totalWordsFound = 0;
+		let topRankCount = 0;
+		for (const d of keptDates) {
+			const entry = stats.perDateBest?.[d];
+			if (!entry) continue;
+			perDateBest[d] = entry;
+			totalWordsFound += entry.foundCount ?? 0;
+			if (entry.rankIdx === 8) topRankCount += 1;
+		}
+		localStorage.setItem(
+			"vulej_stats",
+			JSON.stringify({
+				...stats,
+				datesPlayed: keptDates,
+				perDateBest,
+				totalWordsFound,
+				topRankCount,
+				currentStreak: 0,
+			})
+		);
+	} catch {
+		// localStorage unavailable or corrupted
+	}
+}
+
 function getValoshkaStatus(): {
 	hasPlayedToday: boolean;
 	foundWords: number;
@@ -84,6 +135,8 @@ function getValoshkaStatus(): {
 	let longestStreak = 0;
 	let totalPlayed = 0;
 	let vasiliokReached = false;
+
+	purgePreEpochValoshkaProgress();
 
 	try {
 		const raw = localStorage.getItem(`vulej_${today}`);
