@@ -157,13 +157,18 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 
 		const newRankIdx = getRankIndex(gameState.score, puzzle.max_score);
 		if (prevRankIdx.current !== null && newRankIdx > prevRankIdx.current) {
-			trackValoshkaRankUp(
-				RANKS[prevRankIdx.current].name,
-				RANKS[newRankIdx].name,
-				count,
-				gameState.score,
-				puzzle.date
-			);
+			// Fire one event per intermediate rank crossed, not just the final one —
+			// a single word's score can jump past more than one threshold, and each
+			// rank needs its own event for a step-by-step funnel to see it.
+			for (let i = prevRankIdx.current + 1; i <= newRankIdx; i++) {
+				trackValoshkaRankUp(
+					RANKS[i - 1].name,
+					RANKS[i].name,
+					count,
+					gameState.score,
+					puzzle.date
+				);
+			}
 		}
 		prevRankIdx.current = newRankIdx;
 	}, [gameState.foundWords, gameState.score, puzzle.pangrams, puzzle.answers.length, puzzle.max_score, puzzle.date]);
