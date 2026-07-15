@@ -88,12 +88,6 @@ export function CompanionGrid({
 					</table>
 				</div>
 
-				{grid.unfoundPangramCount > 0 && (
-					<Typography variant="body">
-						{pluralize(grid.unfoundPangramCount, "панграма")} яшчэ не знойдзена
-					</Typography>
-				)}
-
 				{prefixes.length > 0 && (
 					<div>
 						<Typography variant="overline" as="span" className="text-(--muted)">
