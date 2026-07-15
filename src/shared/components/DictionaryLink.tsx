@@ -1,7 +1,9 @@
 import type { FC } from "react";
+import posthog from "posthog-js";
 
 interface DictionaryLinkProps {
 	word: string;
+	source: string;
 	className?: string;
 }
 
@@ -12,6 +14,7 @@ const DictionaryLink: FC<DictionaryLinkProps> = (props) => (
 		target="_blank"
 		rel="noopener noreferrer"
 		aria-label={`${props.word} (адкрыецца ў новым акне)`}
+		onClick={() => posthog.capture("dictionary_link_clicked", { word: props.word, source: props.source })}
 	>
 		{props.word}
 	</a>

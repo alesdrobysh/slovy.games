@@ -121,7 +121,7 @@ export default function TopWordsList({ dayIndex }: TopWordsListProps) {
 											</Typography>
 										</td>
 										<td className="py-flow-sm">
-											<DictionaryLink word={word.word} />
+											<DictionaryLink word={word.word} source="pobach_top_words" />
 										</td>
 									</tr>
 								))}

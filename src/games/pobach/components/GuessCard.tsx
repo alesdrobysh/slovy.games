@@ -25,7 +25,7 @@ export default function GuessCard({
 			<div className="flex items-center justify-between gap-flow-md min-w-0">
 				<div className="flex items-center gap-flow-sm min-w-0">
 					<Typography variant="body" as="span" className="text-ink font-bold truncate">
-						<DictionaryLink word={guess.word} />
+						<DictionaryLink word={guess.word} source="pobach_guess_card" />
 					</Typography>
 
 					{guess.isHint && (

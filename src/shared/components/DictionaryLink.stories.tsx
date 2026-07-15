@@ -9,12 +9,16 @@ const meta = {
 		word: {
 			control: { type: "text" },
 		},
+		source: {
+			control: { type: "text" },
+		},
 		className: {
 			control: { type: "text" },
 		},
 	},
 	args: {
 		word: "верабей",
+		source: "storybook",
 	},
 } satisfies Meta<typeof DictionaryLink>;
 
@@ -86,7 +90,7 @@ function InContextSpecimen() {
 						}}
 					>
 						{text}{" "}
-						<DictionaryLink word={word} />
+						<DictionaryLink word={word} source="storybook" />
 					</p>
 				))}
 			</div>

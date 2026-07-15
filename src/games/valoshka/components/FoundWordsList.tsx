@@ -39,7 +39,7 @@ export function FoundWordsList({ words, pangrams }: FoundWordsListProps) {
 									variant="body"
 									className={isPangram ? "text-valoshka" : ""}
 								>
-									<DictionaryLink word={word} />
+									<DictionaryLink word={word} source="valoshka_found_words" />
 								</Typography>
 							</li>
 						);

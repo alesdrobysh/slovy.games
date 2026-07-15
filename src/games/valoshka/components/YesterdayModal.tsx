@@ -115,7 +115,7 @@ export function YesterdayModal({
 							}`}
 						>
 							<Typography variant="caption">
-								<DictionaryLink word={word} />
+								<DictionaryLink word={word} source="valoshka_yesterday_modal" />
 							</Typography>
 							<span className="ml-auto flex items-center gap-flow-xs shrink-0">
 								{showFlags &&
