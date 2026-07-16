@@ -1,9 +1,9 @@
-import { BookOpen } from "lucide-react";
 import type { Guess } from "@/games/pobach/core/entities/game";
+import { DictionaryHint } from "@/shared/components/DictionaryHint";
 import { Typography } from "@/shared/components/ui/Typography";
-import GuessCard from "./GuessCard";
-import { pluralize } from "@/shared/lib/pluralize";
 import { useDictReady } from "@/shared/hooks/useDictReady";
+import { pluralize } from "@/shared/lib/pluralize";
+import GuessCard from "./GuessCard";
 
 type GuessListProps = {
 	guesses: Guess[];
@@ -16,17 +16,7 @@ export default function GuessList({ guesses, lastGuess }: GuessListProps) {
 	return (
 		<div>
 			<div className="flex items-center justify-between mb-flow-md">
-				{guesses.length > 0 && (
-					<Typography
-						variant="overline"
-						as="span"
-						className="flex items-center gap-flow-xs text-ink-muted normal-case tracking-normal"
-					>
-						<BookOpen size={12} />
-						<span className="hidden sm:inline">Слоўнік па кліку на слова</span>
-						<span className="sm:hidden">Націсніце на слова</span>
-					</Typography>
-				)}
+				{guesses.length > 0 && <DictionaryHint />}
 				<output
 					aria-live="polite"
 					aria-label={`Колькасць спроб: ${guesses.length}`}

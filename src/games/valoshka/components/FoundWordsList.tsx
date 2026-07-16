@@ -1,10 +1,11 @@
 "use client";
 
+import { DictionaryHint } from "@/shared/components/DictionaryHint";
 import DictionaryLink from "@/shared/components/DictionaryLink";
 import { Badge } from "@/shared/components/ui/Badge";
 import { Typography } from "@/shared/components/ui/Typography";
-import { pluralize } from "@/shared/lib/pluralize";
 import { useDictReady } from "@/shared/hooks/useDictReady";
+import { pluralize } from "@/shared/lib/pluralize";
 
 interface FoundWordsListProps {
 	words: string[];
@@ -25,6 +26,7 @@ export function FoundWordsList({ words, pangrams }: FoundWordsListProps) {
 						? "Пакуль нічога"
 						: `${count} ${pluralize(count, "слова")}`}
 				</Typography>
+				{count > 0 && <DictionaryHint />}
 			</div>
 
 			{count === 0 ? (

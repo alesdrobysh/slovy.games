@@ -13,13 +13,14 @@ import {
 	loadProgress,
 } from "@/games/valoshka/lib/storage";
 import type { Puzzle, SavedProgress } from "@/games/valoshka/types";
+import { DictionaryHint } from "@/shared/components/DictionaryHint";
 import DictionaryLink from "@/shared/components/DictionaryLink";
 import { Badge } from "@/shared/components/ui/Badge";
 import { Button } from "@/shared/components/ui/Button";
 import { Modal } from "@/shared/components/ui/Modal";
 import { Typography } from "@/shared/components/ui/Typography";
-import { pluralize } from "@/shared/lib/pluralize";
 import { useDictReady } from "@/shared/hooks/useDictReady";
+import { pluralize } from "@/shared/lib/pluralize";
 
 type FlagState = "idle" | "confirming" | "sending" | "sent";
 
@@ -95,6 +96,12 @@ export function YesterdayModal({
 						{pluralize(puzzle.answers.length, "слова", "genitive")} (
 						{progress.score} пт)
 					</Typography>
+				</div>
+			)}
+
+			{sorted.length > 0 && (
+				<div className="pt-flow-sm">
+					<DictionaryHint />
 				</div>
 			)}
 
@@ -178,7 +185,6 @@ export function YesterdayModal({
 											</Button>
 										);
 									})()}
-
 							</span>
 						</li>
 					);
