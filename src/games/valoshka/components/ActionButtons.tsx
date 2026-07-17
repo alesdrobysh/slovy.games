@@ -23,7 +23,13 @@ export function ActionButtons({
 }: ActionButtonsProps) {
 	return (
 		<div className="flex items-center justify-center gap-3">
-			<Button variant="outline" color="neutral" size="lg" onClick={onDelete}>
+			<Button
+				variant="outline"
+				color="neutral"
+				size="lg"
+				onClick={onDelete}
+				className="ph-no-rageclick"
+			>
 				Сцерці
 			</Button>
 
