@@ -3,24 +3,10 @@
 import { useMemo, useState } from "react";
 import { RankingModal } from "@/games/valoshka/components/RankingModal";
 import { getRank, getRankIndex, RANKS } from "@/games/valoshka/lib/scoring";
+import { generateShareText } from "@/games/valoshka/lib/share-text";
 import { Badge } from "@/shared/components/ui/Badge";
 import { Button } from "@/shared/components/ui/Button";
 import { useShare } from "@/shared/hooks/useShare";
-
-function buildShareText(
-	date: string,
-	rank: { name: string },
-	score: number,
-	rankIdx: number
-): string {
-	const [y, m, d] = date.split("-");
-	const dateStr = `${d}.${m}.${y}`;
-	const visibleRanks = rankIdx < RANKS.length - 1 ? rankIdx + 1 : RANKS.length;
-	const dots = Array.from({ length: visibleRanks }, (_, i) =>
-		i <= rankIdx ? "🟡" : "⬜"
-	).join("");
-	return `Валошка ${dateStr}\nРанг: ${rank.name} (${score} пт)\n${dots}\nslovy.games`;
-}
 
 interface ProgressBarProps {
 	score: number;
@@ -42,10 +28,13 @@ export function ProgressBar({
 	const pct = maxScore > 0 ? Math.min((score / maxScore) * 100, 100) : 0;
 	const [showRanking, setShowRanking] = useState(false);
 	const shareText = useMemo(
-		() => buildShareText(date, rank, score, rankIdx),
+		() => generateShareText({ date, rankName: rank.name, rankIdx, score }),
 		[date, rank, score, rankIdx]
 	);
-	const { share, showToast } = useShare(shareText, { game: "valoshka", context: "in_progress" });
+	const { share, showToast } = useShare(shareText, {
+		game: "valoshka",
+		context: "in_progress",
+	});
 
 	return (
 		<>
