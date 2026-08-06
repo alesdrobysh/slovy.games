@@ -1,6 +1,7 @@
-import type { Guess } from "@/games/pobach/core/entities/game";
-import { pluralize } from "@/shared/lib/pluralize";
+import type { Guess } from "@/games/pobach/types";
 import { POBACH_EPOCH_DATE as EPOCH_DATE } from "@/shared/config";
+import { pluralize } from "@/shared/lib/pluralize";
+import { dateForDayIndex } from "@/shared/lib/timezone";
 
 export interface ShareTextInput {
 	dayIndex: number;
@@ -13,8 +14,7 @@ export function generateShareText({
 	guesses,
 	won,
 }: ShareTextInput): string {
-	const epoch = new Date(EPOCH_DATE);
-	const date = new Date(epoch.getTime() + dayIndex * 24 * 60 * 60 * 1000);
+	const date = dateForDayIndex(EPOCH_DATE, dayIndex);
 	const day = String(date.getDate()).padStart(2, "0");
 	const month = String(date.getMonth() + 1).padStart(2, "0");
 	const year = date.getFullYear();

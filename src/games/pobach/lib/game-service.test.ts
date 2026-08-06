@@ -1,34 +1,26 @@
-import type { IGameRepository } from "../interfaces/IGameRepository";
-import { GameService } from "./GameService";
+import { GameService } from "./game-service";
 
-// Mock repository for testing
-class MockGameRepository implements IGameRepository {
-	private mockData = {
-		words: ["test", "word", "game", "mock"],
-		targets: ["test", "word"],
-		vectors: new Int8Array([1, 2, 3, 4]),
-		wordToIndex: new Map([
-			["test", 0],
-			["word", 1],
-			["game", 2],
-			["mock", 3],
-		]),
-		history: {} as Record<string, string>,
-		pool: ["test", "word"],
-	};
-
-	async loadGameData() {
-		return this.mockData;
-	}
-}
+const mockGameData = {
+	words: ["test", "word", "game", "mock"],
+	targets: ["test", "word"],
+	vectors: new Int8Array([1, 2, 3, 4]),
+	wordToIndex: new Map([
+		["test", 0],
+		["word", 1],
+		["game", 2],
+		["mock", 3],
+	]),
+	history: {} as Record<string, string>,
+	pool: ["test", "word"],
+};
 
 describe("GameService", () => {
 	let service: GameService;
-	let mockRepo: MockGameRepository;
+	let mockLoadData: jest.Mock;
 
 	beforeEach(async () => {
-		mockRepo = new MockGameRepository();
-		service = new GameService(mockRepo);
+		mockLoadData = jest.fn().mockResolvedValue(mockGameData);
+		service = new GameService(mockLoadData);
 		await service.initialize();
 	});
 
@@ -112,7 +104,7 @@ describe("GameService", () => {
 
 	describe("initialization", () => {
 		it("should throw error when methods called before initialization", () => {
-			const uninitializedService = new GameService(mockRepo);
+			const uninitializedService = new GameService(mockLoadData);
 
 			expect(() => {
 				uninitializedService.getDailySecret();

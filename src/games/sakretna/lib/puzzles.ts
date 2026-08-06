@@ -2,7 +2,11 @@ import articlesData from "@/games/sakretna/data/articles.json";
 import { serverLemmaOf } from "@/games/sakretna/lib/lemmatize.server";
 import { tokenize } from "@/games/sakretna/lib/tokenize";
 import { SAKRETNA_EPOCH_DATE } from "@/shared/config";
-import { getMskDayIndex } from "@/shared/lib/timezone";
+import {
+	dateForDayIndex,
+	dayIndexForDate,
+	getGameDay,
+} from "@/shared/lib/timezone";
 import type { Article, PickedArticle } from "../types";
 
 const ARTICLES = articlesData as Article[];
@@ -21,7 +25,7 @@ export function getArticleForToday(): PickedArticle {
 }
 
 export function pickForDate(date: string): PickedArticle {
-	const idx = dayIndexForDate(date);
+	const idx = dayIndexForDate(SAKRETNA_EPOCH_DATE, date);
 	const safe = ((idx % ARTICLES.length) + ARTICLES.length) % ARTICLES.length;
 	const article = ARTICLES[safe];
 	return {
@@ -32,17 +36,8 @@ export function pickForDate(date: string): PickedArticle {
 }
 
 function pickDate(): string {
-	const dayIndex = getMskDayIndex(SAKRETNA_EPOCH_DATE);
-	return formatDateForDayIndex(SAKRETNA_EPOCH_DATE, dayIndex);
-}
-
-function dayIndexForDate(date: string): number {
-	const target = new Date(`${date}T00:00:00Z`).getTime();
-	const epoch = new Date(SAKRETNA_EPOCH_DATE).getTime();
-	return Math.floor((target - epoch) / 86400000);
-}
-
-function formatDateForDayIndex(epoch: string, dayIndex: number): string {
-	const e = new Date(epoch).getTime() + dayIndex * 86400000;
-	return new Date(e).toISOString().slice(0, 10);
+	const dayIndex = getGameDay("sakretna");
+	return dateForDayIndex(SAKRETNA_EPOCH_DATE, dayIndex)
+		.toISOString()
+		.slice(0, 10);
 }

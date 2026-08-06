@@ -1,15 +1,11 @@
+import type { GameState, GuessResult, TopWord } from "@/games/pobach/types";
 import { POBACH_EPOCH_DATE as EPOCH_DATE } from "@/shared/config";
 import { getMskDayIndex } from "@/shared/lib/timezone";
-import { findOptimalLCGParams, type LCGParams } from "../../lib/lcg-optimizer";
-import { lemmatize } from "../../lib/lemmatizer";
-import { type PoolData, PoolingService } from "../../lib/pooling-service";
-import type { GameState, GuessResult, TopWord } from "../entities/game";
-import type { IGameRepository } from "../interfaces/IGameRepository";
+import { findOptimalLCGParams, type LCGParams } from "./lcg-optimizer";
+import { lemmatize } from "./lemmatizer";
+import { type GameData, loadGameData } from "./load-game-data";
+import { type PoolData, PoolingService } from "./pooling-service";
 
-/**
- * Core game service containing all business logic.
- * Uses dependency injection to receive data access capabilities.
- */
 export class GameService {
 	private words: string[] = [];
 	private targets: string[] = [];
@@ -26,17 +22,20 @@ export class GameService {
 
 	private poolingService?: PoolingService;
 
-	constructor(private repository: IGameRepository) {}
+	constructor(
+		private loadData: () => Promise<GameData> = () =>
+			loadGameData(`${process.cwd()}/src/data`)
+	) {}
 
 	/**
-	 * Initialize the service by loading game data from the repository.
+	 * Initialize the service by loading game data.
 	 * Must be called before using any other methods.
 	 */
 	public async initialize(): Promise<void> {
 		if (this.isInitialized) return;
 
 		try {
-			const data = await this.repository.loadGameData();
+			const data = await this.loadData();
 			this.words = data.words;
 			this.targets = data.targets;
 			this.vectors = data.vectors;

@@ -2,7 +2,7 @@
 
 import { Share2 } from "lucide-react";
 import { useMemo } from "react";
-import type { Guess } from "@/games/pobach/core/entities/game";
+import type { Guess } from "@/games/pobach/types";
 import { generateShareText } from "@/games/pobach/lib/share-text";
 import { Button } from "@/shared/components/ui/Button";
 import { useDictReady } from "@/shared/hooks/useDictReady";

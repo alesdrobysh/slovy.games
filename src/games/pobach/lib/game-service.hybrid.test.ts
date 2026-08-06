@@ -1,17 +1,14 @@
-import type { IGameRepository } from "../interfaces/IGameRepository";
-import { GameService } from "./GameService";
+import { GameService } from "./game-service";
 
 describe("GameService - Hybrid Word Rotation", () => {
-	let mockRepository: jest.Mocked<IGameRepository>;
+	let mockLoadData: jest.Mock;
 	let gameService: GameService;
 	const RealDate = global.Date;
 
 	beforeEach(() => {
-		mockRepository = {
-			loadGameData: jest.fn(),
-		} as jest.Mocked<IGameRepository>;
+		mockLoadData = jest.fn();
 
-		gameService = new GameService(mockRepository);
+		gameService = new GameService(mockLoadData);
 	});
 
 	afterEach(() => {
@@ -53,7 +50,7 @@ describe("GameService - Hybrid Word Rotation", () => {
 				wordToIndex.set(word.toLowerCase(), index);
 			});
 
-			mockRepository.loadGameData.mockResolvedValue({
+			mockLoadData.mockResolvedValue({
 				words: mockWords,
 				targets: mockTargets,
 				vectors: mockVectors,
@@ -77,7 +74,7 @@ describe("GameService - Hybrid Word Rotation", () => {
 				wordToIndex.set(word.toLowerCase(), index);
 			});
 
-			mockRepository.loadGameData.mockResolvedValue({
+			mockLoadData.mockResolvedValue({
 				words: mockWords,
 				targets: mockTargets,
 				vectors: mockVectors,
@@ -100,7 +97,7 @@ describe("GameService - Hybrid Word Rotation", () => {
 			});
 
 			const mockPool = ["словы3", "словы4"];
-			mockRepository.loadGameData.mockResolvedValue({
+			mockLoadData.mockResolvedValue({
 				words: mockWords,
 				targets: mockTargets,
 				vectors: mockVectors,
@@ -132,7 +129,7 @@ describe("GameService - Hybrid Word Rotation", () => {
 				wordToIndex.set(word.toLowerCase(), index);
 			});
 
-			mockRepository.loadGameData.mockResolvedValue({
+			mockLoadData.mockResolvedValue({
 				words: mockWords,
 				targets: mockTargets,
 				vectors: mockVectors,
@@ -165,7 +162,7 @@ describe("GameService - Hybrid Word Rotation", () => {
 				wordToIndex.set(word.toLowerCase(), index);
 			});
 
-			mockRepository.loadGameData.mockResolvedValue({
+			mockLoadData.mockResolvedValue({
 				words: mockWords,
 				targets: mockTargets,
 				vectors: mockVectors,
@@ -194,7 +191,7 @@ describe("GameService - Hybrid Word Rotation", () => {
 				wordToIndex.set(word.toLowerCase(), index);
 			});
 
-			mockRepository.loadGameData.mockResolvedValue({
+			mockLoadData.mockResolvedValue({
 				words: mockWords,
 				targets: mockTargets,
 				vectors: mockVectors,

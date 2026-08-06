@@ -1,4 +1,4 @@
-import type { Guess } from "@/games/pobach/core/entities/game";
+import type { Guess } from "@/games/pobach/types";
 import { DictionaryHint } from "@/shared/components/DictionaryHint";
 import { Typography } from "@/shared/components/ui/Typography";
 import { useDictReady } from "@/shared/hooks/useDictReady";

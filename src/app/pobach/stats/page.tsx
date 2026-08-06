@@ -1,12 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type {
-	GameStats,
-	HistoryRecord,
-} from "@/games/pobach/core/entities/game";
-import { getHistory, getStats } from "@/games/pobach/lib/storage";
 import { StatsPageContent } from "@/games/pobach/components/StatsPageContent";
+import { getHistory, getStats } from "@/games/pobach/lib/storage";
+import type { GameStats, HistoryRecord } from "@/games/pobach/types";
 
 export default function PobachStatsPage() {
 	const [stats, setStats] = useState<GameStats | null>(null);

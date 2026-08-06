@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import type { TopWord } from "@/games/pobach/core/entities/game";
+import type { TopWord } from "@/games/pobach/types";
 import TopWordsList from "./TopWordsList";
 
 const meta = {
@@ -88,9 +88,7 @@ export const Loaded: Story = {
 	],
 	render: (args) => (
 		<div style={wrap()}>
-			<p style={lab()}>
-				Loaded — click "Паказаць бліжэйшыя словы" to expand
-			</p>
+			<p style={lab()}>Loaded — click "Паказаць бліжэйшыя словы" to expand</p>
 			<TopWordsList {...args} />
 		</div>
 	),
@@ -129,7 +127,6 @@ export const FetchError: Story = {
 		</div>
 	),
 };
-
 
 // ─── Playground ───────────────────────────────────────────────────
 

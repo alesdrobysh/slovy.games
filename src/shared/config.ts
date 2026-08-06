@@ -7,3 +7,13 @@
 export const POBACH_EPOCH_DATE = "2026-01-15T00:00:00Z";
 export const VALOSHKA_EPOCH_DATE = "2026-07-10T00:00:00Z";
 export const SAKRETNA_EPOCH_DATE = "2026-07-11T00:00:00Z";
+
+/** Epoch registry keyed by game id, for callers that want a game's day
+ *  index without importing that game's specific epoch constant. */
+export const GAME_EPOCHS = {
+	pobach: POBACH_EPOCH_DATE,
+	valoshka: VALOSHKA_EPOCH_DATE,
+	sakretna: SAKRETNA_EPOCH_DATE,
+} as const;
+
+export type GameId = keyof typeof GAME_EPOCHS;

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import type { Guess } from "@/games/pobach/core/entities/game";
 import { getCurrentDayIndex } from "@/games/pobach/lib/storage";
+import type { Guess } from "@/games/pobach/types";
 import FinishCard from "./FinishCard";
 
 const TODAY = getCurrentDayIndex();

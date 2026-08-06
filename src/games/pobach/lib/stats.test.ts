@@ -1,4 +1,4 @@
-import type { HistoryRecord } from "@/games/pobach/core/entities/game";
+import type { HistoryRecord } from "@/games/pobach/types";
 import { calculateDistribution, calculateStreaks } from "./stats";
 
 describe("calculateDistribution", () => {

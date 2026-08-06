@@ -1,4 +1,4 @@
-import type { HistoryRecord } from "@/games/pobach/core/entities/game";
+import type { HistoryRecord } from "@/games/pobach/types";
 import { calculateStats } from "./stats";
 
 describe("Defeat Impact on Statistics", () => {

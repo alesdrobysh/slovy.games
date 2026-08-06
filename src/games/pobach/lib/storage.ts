@@ -1,22 +1,21 @@
+import { calculateStats } from "@/games/pobach/lib/stats";
 import type {
 	CurrentGame,
 	GameStats,
 	Guess,
 	HistoryRecord,
 	StorageV2,
-} from "@/games/pobach/core/entities/game";
-import { calculateStats } from "@/games/pobach/lib/stats";
+} from "@/games/pobach/types";
 
 const STORAGE_KEY = "pobach_storage";
 
-import { POBACH_EPOCH_DATE as EPOCH_DATE } from "@/shared/config";
-import { getMskDayIndex } from "@/shared/lib/timezone";
+import { getGameDay } from "@/shared/lib/timezone";
 
 const SESSION_KEY = "pobach_session_id";
 
 // Get current day index using Minsk time (UTC+3)
 export function getCurrentDayIndex(): number {
-	return getMskDayIndex(EPOCH_DATE);
+	return getGameDay("pobach");
 }
 
 // Initialize empty stats

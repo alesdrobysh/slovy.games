@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useMemo, useRef } from "react";
-import { AnalyticsService } from "@/games/pobach/infrastructure/analytics/AnalyticsService";
+import { AnalyticsService } from "@/games/pobach/lib/analytics-service";
 
 export function useAnalytics(sessionId: string, dayIndex: number | null) {
 	const analyticsRef = useRef<AnalyticsService | null>(null);

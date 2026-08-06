@@ -1,10 +1,12 @@
 import type { GameStats, SavedProgress } from "@/games/valoshka/types";
+import { VALOSHKA_EPOCH_DATE } from "@/shared/config";
 import {
 	getMskDateString,
 	getMskYesterdayDateString,
 } from "@/shared/lib/timezone";
 
-const storageKey = (date: string) => `vulej_${date}`;
+const STORAGE_PREFIX = "vulej_";
+const storageKey = (date: string) => `${STORAGE_PREFIX}${date}`;
 const STATS_KEY = "vulej_stats";
 
 export function loadProgress(date: string): SavedProgress | null {
@@ -59,6 +61,51 @@ export function saveStats(stats: GameStats): void {
 		localStorage.setItem(STATS_KEY, JSON.stringify(stats));
 	} catch {
 		// localStorage may be unavailable
+	}
+}
+
+/** Drop per-day progress and stats entries dated before the current
+ *  epoch — these belonged to puzzles that no longer exist after an
+ *  epoch shift and would otherwise linger as unreachable localStorage
+ *  entries and skew stats. Idempotent: no-op once cleaned. */
+export function purgeStalePreEpochProgress(): void {
+	if (typeof window === "undefined") return;
+	const epoch = VALOSHKA_EPOCH_DATE.slice(0, 10);
+	try {
+		const staleKeys: string[] = [];
+		for (let i = 0; i < localStorage.length; i++) {
+			const key = localStorage.key(i);
+			if (!key || key === STATS_KEY || !key.startsWith(STORAGE_PREFIX))
+				continue;
+			const date = key.slice(STORAGE_PREFIX.length);
+			if (date < epoch) staleKeys.push(key);
+		}
+		for (const key of staleKeys) localStorage.removeItem(key);
+
+		const stats = loadStats();
+		const keptDates = stats.datesPlayed.filter((d) => d >= epoch);
+		if (keptDates.length === stats.datesPlayed.length) return;
+
+		const perDateBest: GameStats["perDateBest"] = {};
+		let totalWordsFound = 0;
+		let topRankCount = 0;
+		for (const d of keptDates) {
+			const entry = stats.perDateBest[d];
+			if (!entry) continue;
+			perDateBest[d] = entry;
+			totalWordsFound += entry.foundCount ?? 0;
+			if (entry.rankIdx === 8) topRankCount += 1;
+		}
+		saveStats({
+			...stats,
+			datesPlayed: keptDates,
+			perDateBest,
+			totalWordsFound,
+			topRankCount,
+			currentStreak: 0,
+		});
+	} catch {
+		// localStorage unavailable or corrupted
 	}
 }
 

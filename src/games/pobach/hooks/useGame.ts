@@ -1,9 +1,19 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import type { CurrentGame, Guess } from "@/games/pobach/core/entities/game";
 import { useAnalytics } from "@/games/pobach/hooks/useAnalytics";
+import {
+	fetchGuess,
+	fetchHint,
+	fetchTargetWord,
+} from "@/games/pobach/lib/api-client";
 import { triggerConfetti } from "@/games/pobach/lib/confetti";
+import {
+	didDayRollover,
+	insertGuessSorted,
+	isDuplicateGuess,
+	normalizeGuessWord,
+} from "@/games/pobach/lib/game-transitions";
 import { vibrate } from "@/games/pobach/lib/haptics";
 import {
 	cleanupOldHistoryEntries,
@@ -14,6 +24,7 @@ import {
 	saveGameResult,
 	saveGameState,
 } from "@/games/pobach/lib/storage";
+import type { CurrentGame, Guess } from "@/games/pobach/types";
 
 export interface GameState {
 	input: string;
@@ -97,13 +108,8 @@ export function useGame(): UseGameReturn {
 					triggerConfetti();
 				} else {
 					// Fetch target word for "gave up" games
-					fetch("/api/pobach/target-word", {
-						method: "POST",
-						headers: { "Content-Type": "application/json" },
-						body: JSON.stringify({ dayIndex: currentGame.dayIndex }),
-					})
-						.then((res) => res.json())
-						.then((data) => {
+					fetchTargetWord(currentGame.dayIndex)
+						.then(({ data }) => {
 							if (data.targetWord) {
 								setTargetWord(data.targetWord);
 							}
@@ -138,13 +144,10 @@ export function useGame(): UseGameReturn {
 	const handleSubmit = useCallback(
 		async (e: React.FormEvent) => {
 			e.preventDefault();
-			const wordToGuess = input
-				.trim()
-				.toLowerCase()
-				.replace(/[\u2019\u02BC`]/g, "'");
+			const wordToGuess = normalizeGuessWord(input);
 			if (!wordToGuess || loading || won) return;
 
-			if (guesses.some((g) => g.word === wordToGuess)) {
+			if (isDuplicateGuess(guesses, wordToGuess)) {
 				vibrate("short");
 				setErrorWord(wordToGuess);
 				setError("вы ўжо спрабавалі гэтае слова");
@@ -160,15 +163,9 @@ export function useGame(): UseGameReturn {
 			setError(null);
 
 			try {
-				const guessParams = new URLSearchParams({
-					word: wordToGuess,
-					dayIndex: String(sessionDayIndex),
-				});
-				const res = await fetch(`/api/pobach/guess?${guessParams}`);
+				const { ok, data } = await fetchGuess(wordToGuess, sessionDayIndex);
 
-				const data = await res.json();
-
-				if (!res.ok) {
+				if (!ok) {
 					setError(data.error || "Памылка сервера");
 					setTimeout(() => setError(null), 3000);
 					return;
@@ -187,7 +184,9 @@ export function useGame(): UseGameReturn {
 				}
 
 				if (typeof data.rank === "number" && data.rank > 0) {
-					if (dayIndex !== null && data.dayIndex !== dayIndex) {
+					const dayRolledOver = didDayRollover(dayIndex, data.dayIndex);
+
+					if (dayRolledOver) {
 						setGuesses([]);
 						setWon(false);
 						setGameOver(false);
@@ -202,10 +201,9 @@ export function useGame(): UseGameReturn {
 
 					trackGuess(data.word, data.rank, data.similarity ?? 0);
 
-					const currentGuesses =
-						dayIndex !== null && data.dayIndex !== dayIndex ? [] : guesses;
+					const currentGuesses = dayRolledOver ? [] : guesses;
 
-					if (currentGuesses.some((g) => g.word === data.word)) {
+					if (isDuplicateGuess(currentGuesses, data.word)) {
 						vibrate("short");
 						setErrorWord(data.word);
 						setError("вы ўжо спрабавалі гэтае слова");
@@ -223,9 +221,7 @@ export function useGame(): UseGameReturn {
 						trackGameStart();
 					}
 
-					const newGuesses = [...currentGuesses, newGuess].sort(
-						(a, b) => a.rank - b.rank
-					);
+					const newGuesses = insertGuessSorted(currentGuesses, newGuess);
 					setGuesses(newGuesses);
 					if (newGuess.rank === 1) {
 						vibrate("long");
@@ -277,20 +273,14 @@ export function useGame(): UseGameReturn {
 		setError(null);
 
 		try {
-			const res = await fetch("/api/pobach/hint", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					bestRank,
-					usedRanks,
-					sessionId,
-					dayIndex: sessionDayIndex,
-				}),
+			const { ok, data } = await fetchHint({
+				bestRank,
+				usedRanks,
+				sessionId,
+				dayIndex: sessionDayIndex,
 			});
 
-			const data = await res.json();
-
-			if (!res.ok) {
+			if (!ok) {
 				setError(data.error || "Памылка сервера");
 				setTimeout(() => setError(null), 3000);
 				return;
@@ -302,7 +292,9 @@ export function useGame(): UseGameReturn {
 				return;
 			}
 
-			if (dayIndex !== null && data.dayIndex !== dayIndex) {
+			const dayRolledOver = didDayRollover(dayIndex, data.dayIndex);
+
+			if (dayRolledOver) {
 				setGuesses([]);
 				setWon(false);
 				setGameOver(false);
@@ -313,10 +305,9 @@ export function useGame(): UseGameReturn {
 				setDayIndex(data.dayIndex);
 			}
 
-			const currentGuesses =
-				dayIndex !== null && data.dayIndex !== dayIndex ? [] : guesses;
+			const currentGuesses = dayRolledOver ? [] : guesses;
 
-			if (currentGuesses.some((g) => g.word === data.word)) {
+			if (isDuplicateGuess(currentGuesses, data.word)) {
 				setError("Падказка ўжо ў спісе");
 				setTimeout(() => setError(null), 2000);
 				return;
@@ -331,9 +322,7 @@ export function useGame(): UseGameReturn {
 
 			trackHint(data.word, data.rank);
 
-			const newGuesses = [...currentGuesses, newGuess].sort(
-				(a, b) => a.rank - b.rank
-			);
+			const newGuesses = insertGuessSorted(currentGuesses, newGuess);
 			setGuesses(newGuesses);
 			if (newGuess.rank === 1) {
 				vibrate("long");
@@ -365,14 +354,9 @@ export function useGame(): UseGameReturn {
 		if (dayIndex === null) return;
 
 		try {
-			const response = await fetch("/api/pobach/target-word", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({ dayIndex: sessionDayIndex }),
-			});
+			const { ok, data } = await fetchTargetWord(sessionDayIndex);
 
-			if (response.ok) {
-				const data = await response.json();
+			if (ok) {
 				setTargetWord(data.targetWord);
 			}
 

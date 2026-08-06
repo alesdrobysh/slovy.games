@@ -6,9 +6,7 @@ import { CornflowerContour } from "@/shared/components/CornflowerContour";
 import { PobachContour } from "@/shared/components/PobachContour";
 import { SakretnaContour } from "@/shared/components/SakretnaContour";
 import { Typography } from "@/shared/components/ui/Typography";
-import type { GameInfo } from "@/shared/types";
-
-export type GameCardStatus = "not_started" | "in_progress" | "won" | "given_up";
+import type { GameCardStatus, GameInfo } from "@/shared/types";
 
 const CTA_LABEL: Record<GameCardStatus, string> = {
 	not_started: "Гуляць",

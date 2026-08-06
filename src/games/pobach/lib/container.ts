@@ -1,13 +1,6 @@
-import { GameService } from "../core/use-cases/GameService";
-import { FileGameRepository } from "../infrastructure/repositories/FileGameRepository";
+import { GameService } from "./game-service";
 
-/**
- * Dependency injection container for the Clean Architecture setup.
- * Acts as the composition root that wires together all dependencies.
- */
-
-const repository = new FileGameRepository(`${process.cwd()}/src/data`);
-const gameService = new GameService(repository);
+const gameService = new GameService();
 let isInitialized = false;
 
 const initializeGameService = async (): Promise<void> => {
@@ -23,5 +16,4 @@ const initializeGameService = async (): Promise<void> => {
 	}
 };
 
-// Export the service and initialization function
 export { gameService, initializeGameService };

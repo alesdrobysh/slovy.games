@@ -1,17 +1,14 @@
-import type { IGameRepository } from "../interfaces/IGameRepository";
-import { GameService } from "./GameService";
+import { GameService } from "./game-service";
 
 describe("GameService - Unified File Structure", () => {
-	let mockRepository: jest.Mocked<IGameRepository>;
+	let mockLoadData: jest.Mock;
 	let gameService: GameService;
 	const RealDate = global.Date;
 
 	beforeEach(() => {
-		mockRepository = {
-			loadGameData: jest.fn(),
-		} as jest.Mocked<IGameRepository>;
+		mockLoadData = jest.fn();
 
-		gameService = new GameService(mockRepository);
+		gameService = new GameService(mockLoadData);
 	});
 
 	afterEach(() => {
@@ -44,7 +41,7 @@ describe("GameService - Unified File Structure", () => {
 			const mockHistory = { "0": "словы1", "1": "словы2" };
 			const mockPool = ["словы3", "словы4", "словы5"];
 
-			mockRepository.loadGameData.mockResolvedValue({
+			mockLoadData.mockResolvedValue({
 				words: mockWords,
 				targets: mockTargets,
 				vectors: mockVectors,
@@ -66,7 +63,7 @@ describe("GameService - Unified File Structure", () => {
 			const mockTargets = ["слова1"];
 			const mockVectors = new Int8Array(1 * 128);
 
-			mockRepository.loadGameData.mockResolvedValue({
+			mockLoadData.mockResolvedValue({
 				words: mockWords,
 				targets: mockTargets,
 				vectors: mockVectors,
@@ -93,7 +90,7 @@ describe("GameService - Unified File Structure", () => {
 			const mockHistory = { "0": "слова1", "1": "словы2" };
 			const mockPool = ["словы2"];
 
-			mockRepository.loadGameData.mockResolvedValue({
+			mockLoadData.mockResolvedValue({
 				words: mockWords,
 				targets: mockTargets,
 				vectors: mockVectors,
@@ -119,7 +116,7 @@ describe("GameService - Unified File Structure", () => {
 			const mockHistory = { "0": "слова1" }; // Only day 0 in history
 			const mockPool = ["словы2", "словы3", "словы4", "словы5"]; // Days 1+ use pool
 
-			mockRepository.loadGameData.mockResolvedValue({
+			mockLoadData.mockResolvedValue({
 				words: mockWords,
 				targets: mockTargets,
 				vectors: mockVectors,
@@ -147,7 +144,7 @@ describe("GameService - Unified File Structure", () => {
 			const mockHistory = { "2": "словы3" }; // Day 2 is in history
 			const mockPool = ["слова1", "словы2"];
 
-			mockRepository.loadGameData.mockResolvedValue({
+			mockLoadData.mockResolvedValue({
 				words: mockWords,
 				targets: mockTargets,
 				vectors: mockVectors,

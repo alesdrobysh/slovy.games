@@ -2,7 +2,7 @@
 
 import { Flame, Sparkles } from "lucide-react";
 import Link from "next/link";
-import type { Guess } from "@/games/pobach/core/entities/game";
+import type { Guess } from "@/games/pobach/types";
 import { getCurrentDayIndex, getStats } from "@/games/pobach/lib/storage";
 import { pluralize } from "@/shared/lib/pluralize";
 import { useDictReady } from "@/shared/hooks/useDictReady";

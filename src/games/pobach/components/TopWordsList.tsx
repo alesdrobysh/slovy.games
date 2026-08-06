@@ -2,7 +2,7 @@
 
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
-import type { TopWord } from "@/games/pobach/core/entities/game";
+import type { TopWord } from "@/games/pobach/types";
 import DictionaryLink from "@/shared/components/DictionaryLink";
 import { ErrorMessage } from "@/shared/components/ui/ErrorMessage";
 import { Typography } from "@/shared/components/ui/Typography";

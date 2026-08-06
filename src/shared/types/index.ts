@@ -1,3 +1,16 @@
+export type GameCardStatus = "not_started" | "in_progress" | "won" | "given_up";
+
+/** Per-game status a game module reports to the hub. */
+export interface GameHubStatus {
+	gameId: string;
+	status: GameCardStatus;
+	/** Human-readable progress line, e.g. "12 слоў знойдзена" — empty if no progress */
+	progressText: string;
+	currentStreak: number;
+	longestStreak: number;
+	totalPlayed: number;
+}
+
 export interface GameInfo {
 	id: string;
 	name: string;
@@ -62,5 +75,4 @@ export const GAMES: GameInfo[] = [
 		icon: "📕",
 		enabled: true,
 	},
-
 ];

@@ -2,18 +2,15 @@
 "use client";
 
 import { Share2 } from "lucide-react";
-import { Nav } from "@/shared/components/Nav";
-import type {
-	GameStats,
-	HistoryRecord,
-} from "@/games/pobach/core/entities/game";
 import { formatRelativeDate } from "@/games/pobach/lib/stats";
-import { pluralize } from "@/shared/lib/pluralize";
-import { useDictReady } from "@/shared/hooks/useDictReady";
+import type { GameStats, HistoryRecord } from "@/games/pobach/types";
+import { Nav } from "@/shared/components/Nav";
 import { Button } from "@/shared/components/ui/Button";
 import { StatCard } from "@/shared/components/ui/StatCard";
 import { Typography } from "@/shared/components/ui/Typography";
+import { useDictReady } from "@/shared/hooks/useDictReady";
 import { useShare } from "@/shared/hooks/useShare";
+import { pluralize } from "@/shared/lib/pluralize";
 import { DistributionChart } from "./DistributionChart";
 
 function HistoryItem({ game }: { game: HistoryRecord }) {
@@ -28,7 +25,11 @@ function HistoryItem({ game }: { game: HistoryRecord }) {
 			<Typography variant="body" as="div" className="flex-1 text-ink">
 				<span className="font-display">#{game.dayIndex + 1}</span> Дзень
 			</Typography>
-			<Typography variant="caption" as="div" className="flex items-center gap-flow-md text-ink-muted">
+			<Typography
+				variant="caption"
+				as="div"
+				className="flex items-center gap-flow-md text-ink-muted"
+			>
 				{game.won ? (
 					<span>
 						<span className="font-display tabular-nums">{game.attempts}</span>{" "}
@@ -77,7 +78,10 @@ export function StatsPageContent({
 		.filter(Boolean)
 		.join("\n");
 
-	const { share, isSharing, showToast } = useShare(shareText, { game: "pobach", context: "stats" });
+	const { share, isSharing, showToast } = useShare(shareText, {
+		game: "pobach",
+		context: "stats",
+	});
 
 	return (
 		<>
@@ -91,13 +95,29 @@ export function StatsPageContent({
 					<StatCard label="Макс." value={stats.maxStreak} />
 				</div>
 
-				<Typography variant="heading" as="h2" className="mt-inset-xl mb-flow-lg text-ink">Размеркаванне спроб</Typography>
+				<Typography
+					variant="heading"
+					as="h2"
+					className="mt-inset-xl mb-flow-lg text-ink"
+				>
+					Размеркаванне спроб
+				</Typography>
 				<DistributionChart distribution={stats.distribution} />
 
-				<Typography variant="heading" as="h2" className="mt-inset-xl mb-flow-lg text-ink">Гісторыя гульняў</Typography>
+				<Typography
+					variant="heading"
+					as="h2"
+					className="mt-inset-xl mb-flow-lg text-ink"
+				>
+					Гісторыя гульняў
+				</Typography>
 				<div className="bg-card ring-1 ring-rule rounded-2xl px-flow-lg">
 					{history.length === 0 ? (
-						<Typography variant="body" as="div" className="py-inset-lg text-center text-ink-muted">
+						<Typography
+							variant="body"
+							as="div"
+							className="py-inset-lg text-center text-ink-muted"
+						>
 							Пакуль няма гісторыі гульняў
 						</Typography>
 					) : (

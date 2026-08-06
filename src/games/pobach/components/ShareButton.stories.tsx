@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import type { Guess } from "@/games/pobach/core/entities/game";
+import type { Guess } from "@/games/pobach/types";
 import ShareButton from "./ShareButton";
 
 const meta = {

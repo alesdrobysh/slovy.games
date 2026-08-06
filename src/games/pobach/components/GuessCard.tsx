@@ -1,5 +1,5 @@
-import type { Guess } from "@/games/pobach/core/entities/game";
 import { getBarPercentage, getRankColor } from "@/games/pobach/lib/rank-utils";
+import type { Guess } from "@/games/pobach/types";
 import DictionaryLink from "@/shared/components/DictionaryLink";
 import { Typography } from "@/shared/components/ui/Typography";
 
@@ -24,12 +24,20 @@ export default function GuessCard({
 		>
 			<div className="flex items-center justify-between gap-flow-md min-w-0">
 				<div className="flex items-center gap-flow-sm min-w-0">
-					<Typography variant="body" as="span" className="text-ink font-bold truncate">
+					<Typography
+						variant="body"
+						as="span"
+						className="text-ink font-bold truncate"
+					>
 						<DictionaryLink word={guess.word} source="pobach_guess_card" />
 					</Typography>
 
 					{guess.isHint && (
-						<Typography variant="caption" as="span" className="text-ink-soft shrink-0">
+						<Typography
+							variant="caption"
+							as="span"
+							className="text-ink-soft shrink-0"
+						>
 							(падказка)
 						</Typography>
 					)}

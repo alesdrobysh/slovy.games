@@ -1,8 +1,5 @@
-import type {
-	GameStats,
-	HistoryRecord,
-} from "@/games/pobach/core/entities/game";
 import { getCurrentDayIndex } from "@/games/pobach/lib/storage";
+import type { GameStats, HistoryRecord } from "@/games/pobach/types";
 import { pluralize } from "@/shared/lib/pluralize";
 
 export function calculateStats(history: HistoryRecord[]): GameStats {
