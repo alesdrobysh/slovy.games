@@ -52,7 +52,7 @@ export function GuessInput({
 				<button
 					type="submit"
 					disabled={disabled || value.trim().length === 0}
-					className="shrink-0 rounded-2xl border-2 border-sakretna bg-sakretna px-inset-md sm:px-inset-lg py-flow-md text-white font-bold uppercase tracking-widest text-xs sm:text-sm hover:bg-sakretna/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sakretna/50 focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+					className="hidden sm:block shrink-0 rounded-2xl border-2 border-sakretna bg-sakretna px-inset-md sm:px-inset-lg py-flow-md text-white font-bold uppercase tracking-widest text-xs sm:text-sm hover:bg-sakretna/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sakretna/50 focus-visible:ring-offset-2 focus-visible:ring-offset-card"
 				>
 					Увесці
 				</button>

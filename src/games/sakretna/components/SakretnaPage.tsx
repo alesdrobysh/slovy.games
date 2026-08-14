@@ -53,9 +53,9 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 	const finished = state.won || state.givenUp;
 
 	return (
-		<div className="mx-auto max-w-3xl sm:max-w-6xl px-4 sm:px-8 py-flow-lg sm:py-page-py">
-			<div className="flex flex-col gap-flow-lg sm:grid sm:grid-cols-[1fr_320px] sm:gap-inset-xl sm:items-start">
-				<div className="min-w-0 flex flex-col gap-flow-lg sm:gap-inset-xl pb-[140px] sm:pb-0">
+		<div className="mx-auto max-w-3xl lg:max-w-6xl px-4 md:px-8 py-flow-lg md:py-page-py">
+			<div className="flex flex-col gap-flow-lg lg:grid lg:grid-cols-[1fr_320px] lg:gap-inset-xl lg:items-start">
+				<div className="min-w-0 flex flex-col gap-flow-lg lg:gap-inset-xl pb-[140px] md:pb-0">
 					<header className="flex flex-col gap-flow-xs">
 						<Typography variant="overline" as="span" className="text-sakretna">
 							Сакрэтна · {date}
@@ -104,10 +104,10 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 
 				{!finished && (
 					<div
-						className="fixed bottom-0 left-0 right-0 z-30 bg-paper/95 backdrop-blur-sm border-t border-rule sm:sticky sm:top-24 sm:bottom-auto sm:left-auto sm:right-auto sm:z-auto sm:border-0 sm:bg-transparent sm:backdrop-blur-none"
+						className="fixed bottom-0 left-0 right-0 z-30 bg-paper/95 backdrop-blur-sm border-t border-rule md:static md:z-auto md:border-0 md:bg-transparent md:backdrop-blur-none lg:sticky lg:top-24"
 						style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
 					>
-						<div className="mx-auto max-w-3xl sm:max-w-none px-4 sm:px-0 py-flow-md sm:py-0 flex flex-col gap-flow-sm">
+						<div className="mx-auto max-w-3xl md:max-w-none px-4 md:px-0 py-flow-md md:py-0 flex flex-col gap-flow-sm">
 							<ArticleActions
 								onUseHint={useHint}
 								onGiveUp={giveUp}
