@@ -47,6 +47,7 @@ export interface GameState {
 	givenUp: boolean;
 	hintsUsed: number;
 	finishedAt: string | null;
+	highlighted: string | null;
 }
 
 export type ValidationError =
@@ -68,7 +69,8 @@ export type GameAction =
 	| { type: "GIVE_UP" }
 	| { type: "RESTORE"; progress: SavedProgress }
 	| { type: "CLEAR_ERROR" }
-	| { type: "SET_INPUT"; value: string };
+	| { type: "SET_INPUT"; value: string }
+	| { type: "SET_HIGHLIGHT"; lemma: string | null };
 
 export interface PickedArticle {
 	article: Article;

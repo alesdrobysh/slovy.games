@@ -26,6 +26,7 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 		submitGuess,
 		useHint,
 		giveUp,
+		setHighlight,
 	} = useSakretnaGame(picked);
 	const [toastKey, setToastKey] = useState(0);
 	const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -73,6 +74,7 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 						<RedactedText
 							tokens={tokens}
 							foundLemmas={foundSet}
+						highlighted={state.highlighted}
 							revealTitle={titleVisible}
 							title={article.title}
 						/>
@@ -81,7 +83,7 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 					{!finished ? (
 						state.guesses.length > 0 && (
 							<div className="sm:hidden">
-								<GuessList guesses={state.guesses} />
+								<GuessList guesses={state.guesses} highlighted={state.highlighted} onSelect={setHighlight} />
 							</div>
 						)
 					) : (
@@ -132,7 +134,7 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 							)}
 							{state.guesses.length > 0 && (
 								<div className="hidden sm:block">
-									<GuessList guesses={state.guesses} />
+									<GuessList guesses={state.guesses} highlighted={state.highlighted} onSelect={setHighlight} />
 								</div>
 							)}
 						</div>

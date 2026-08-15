@@ -12,16 +12,17 @@ export function createInitialState(): GameState {
 		givenUp: false,
 		hintsUsed: 0,
 		finishedAt: null,
+		highlighted: null,
 	};
 }
 
 export function gameReducer(state: GameState, action: GameAction): GameState {
 	switch (action.type) {
 		case "SET_INPUT":
-			return { ...state, currentInput: action.value, errorType: null };
+			return { ...state, currentInput: action.value, errorType: null, highlighted: null };
 
 		case "CLEAR_ERROR":
-			return { ...state, errorType: null };
+			return { ...state, errorType: null, highlighted: null };
 
 		case "SUBMIT_GUESS": {
 			if (state.won || state.givenUp) {
@@ -57,6 +58,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 				guesses: [...state.guesses, lemma],
 				won,
 				finishedAt: won ? new Date().toISOString() : state.finishedAt,
+				highlighted: lemma,
 			};
 		}
 
@@ -83,6 +85,9 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 		case "RESTORE":
 			return progressToState(action.progress);
 
+		case "SET_HIGHLIGHT":
+			return { ...state, highlighted: action.lemma };
+
 		default:
 			return state;
 	}
@@ -99,6 +104,7 @@ export function progressToState(p: SavedProgress): GameState {
 		givenUp: p.givenUp,
 		hintsUsed: p.hintsUsed,
 		finishedAt: p.finishedAt ?? null,
+		highlighted: null,
 	};
 }
 

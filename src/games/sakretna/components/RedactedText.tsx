@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { pluralize } from "@/shared/lib/pluralize";
 import type { ArticleToken } from "../types";
 
 interface RedactedTextProps {
 	tokens: ArticleToken[];
 	foundLemmas: ReadonlySet<string>;
+	highlighted?: string | null;
 	revealTitle?: boolean;
 	title?: string;
 }
@@ -14,10 +15,21 @@ interface RedactedTextProps {
 export function RedactedText({
 	tokens,
 	foundLemmas,
+	highlighted,
 	revealTitle,
 	title,
 }: RedactedTextProps) {
+	const containerRef = useRef<HTMLParagraphElement>(null);
 	const [peeked, setPeeked] = useState<ReadonlySet<number>>(new Set());
+
+	// When highlighted changes, scroll to the first matching highlighted span
+	useEffect(() => {
+		if (!highlighted || !containerRef.current) return;
+		const el = containerRef.current.querySelector(".bg-sakretna");
+		if (el) {
+			el.scrollIntoView({ behavior: "smooth", block: "center" });
+		}
+	}, [highlighted]);
 	const togglePeek = (index: number) => {
 		setPeeked((prev) => {
 			const next = new Set(prev);
@@ -37,15 +49,19 @@ export function RedactedText({
 					<strong className="text-sakretna">{title}</strong>
 				</p>
 			)}
-			<p className="break-words hyphens-auto">
+			<p ref={containerRef} className="break-words hyphens-auto">
 				{tokens.map((token, i) => {
 					const key = `${token.type}-${i}-${token.text}`;
 					if (token.type === "sep") {
 						return <span key={key}>{token.text}</span>;
 					}
 					if (token.isFree || foundLemmas.has(token.lemma ?? "")) {
+						const isHighlighted = token.lemma === highlighted;
 						return (
-							<span key={key} className="text-ink">
+							<span
+								key={key}
+								className={isHighlighted ? "bg-sakretna text-paper px-0.5 rounded-sm" : "text-ink"}
+							>
 								{token.text}
 							</span>
 						);

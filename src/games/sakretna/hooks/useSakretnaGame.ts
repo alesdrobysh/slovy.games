@@ -25,6 +25,7 @@ export interface UseSakretnaGameReturn {
 	submitGuess: () => void;
 	useHint: () => void;
 	giveUp: () => void;
+	setHighlight: (lemma: string | null) => void;
 }
 
 /** Pick a random still-hidden, non-free, non-title word to reveal as a hint. */
@@ -113,5 +114,6 @@ export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
 				lemma: pickHintLemma(tokens, new Set(state.foundLemmas), titleLemmaSet),
 			}),
 		giveUp: () => dispatch({ type: "GIVE_UP" }),
+		setHighlight: (lemma: string | null) => dispatch({ type: "SET_HIGHLIGHT", lemma }),
 	};
 }
