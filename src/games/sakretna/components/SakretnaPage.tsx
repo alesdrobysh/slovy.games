@@ -7,6 +7,7 @@ import type { PickedArticle, ValidationError } from "@/games/sakretna/types";
 import { Typography } from "@/shared/components/ui/Typography";
 import { ArticleActions } from "./ArticleActions";
 import { FinishCard } from "./FinishCard";
+import { GiveUpModal } from "./GiveUpModal";
 import { GuessInput } from "./GuessInput";
 import { GuessList } from "./GuessList";
 import { ProgressLine, RedactedText } from "./RedactedText";
@@ -30,6 +31,7 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 	} = useSakretnaGame(picked);
 	const [toastKey, setToastKey] = useState(0);
 	const [toastMessage, setToastMessage] = useState<string | null>(null);
+	const [showGiveUp, setShowGiveUp] = useState(false);
 
 	const foundSet = new Set(state.foundLemmas);
 	const totalLemmas = lemmaSet.size;
@@ -62,7 +64,7 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 							Сакрэтна · {date}
 						</Typography>
 						<Typography variant="title" as="h1">
-							Здагадайцеся артыкул Вікіпедыі
+							Здагадайцеся, пра які артыкул Вікіпедыі ідзе гаворка
 						</Typography>
 						<ProgressLine foundLemmas={foundCount} totalLemmas={totalLemmas} />
 					</header>
@@ -74,8 +76,8 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 						<RedactedText
 							tokens={tokens}
 							foundLemmas={foundSet}
-						highlighted={state.highlighted}
-							revealTitle={titleVisible}
+							highlighted={state.highlighted}
+							revealTitle={titleVisible || state.givenUp}
 							title={article.title}
 						/>
 					</section>
@@ -83,7 +85,11 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 					{!finished ? (
 						state.guesses.length > 0 && (
 							<div className="sm:hidden">
-								<GuessList guesses={state.guesses} highlighted={state.highlighted} onSelect={setHighlight} />
+								<GuessList
+									guesses={state.guesses}
+									highlighted={state.highlighted}
+									onSelect={setHighlight}
+								/>
 							</div>
 						)
 					) : (
@@ -112,7 +118,7 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 						<div className="mx-auto max-w-3xl md:max-w-none px-4 md:px-0 py-flow-md md:py-0 flex flex-col gap-flow-sm">
 							<ArticleActions
 								onUseHint={useHint}
-								onGiveUp={giveUp}
+								onGiveUp={() => setShowGiveUp(true)}
 								hintAvailable={state.hintsUsed === 0}
 								finished={finished}
 							/>
@@ -134,13 +140,25 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 							)}
 							{state.guesses.length > 0 && (
 								<div className="hidden sm:block">
-									<GuessList guesses={state.guesses} highlighted={state.highlighted} onSelect={setHighlight} />
+									<GuessList
+										guesses={state.guesses}
+										highlighted={state.highlighted}
+										onSelect={setHighlight}
+									/>
 								</div>
 							)}
 						</div>
 					</div>
 				)}
 			</div>
+			<GiveUpModal
+				isOpen={showGiveUp}
+				onConfirm={() => {
+					setShowGiveUp(false);
+					giveUp();
+				}}
+				onClose={() => setShowGiveUp(false)}
+			/>
 		</div>
 	);
 }

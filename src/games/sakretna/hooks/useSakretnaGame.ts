@@ -113,7 +113,12 @@ export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
 				type: "USE_HINT",
 				lemma: pickHintLemma(tokens, new Set(state.foundLemmas), titleLemmaSet),
 			}),
-		giveUp: () => dispatch({ type: "GIVE_UP" }),
-		setHighlight: (lemma: string | null) => dispatch({ type: "SET_HIGHLIGHT", lemma }),
+		giveUp: () =>
+			dispatch({
+				type: "GIVE_UP",
+				lemmas: [...lemmaSet],
+			}),
+		setHighlight: (lemma: string | null) =>
+			dispatch({ type: "SET_HIGHLIGHT", lemma }),
 	};
 }

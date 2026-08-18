@@ -29,6 +29,7 @@ export interface SavedProgress {
 
 export interface GameStats {
 	datesPlayed: string[];
+	datesWon: string[];
 	currentStreak: number;
 	longestStreak: number;
 	totalPlayed: number;
@@ -66,7 +67,7 @@ export type GameAction =
 			titleLemmas: Set<string>;
 	  }
 	| { type: "USE_HINT"; lemma: string | null }
-	| { type: "GIVE_UP" }
+	| { type: "GIVE_UP"; lemmas: string[] }
 	| { type: "RESTORE"; progress: SavedProgress }
 	| { type: "CLEAR_ERROR" }
 	| { type: "SET_INPUT"; value: string }

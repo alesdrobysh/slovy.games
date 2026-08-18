@@ -86,6 +86,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 			if (state.won || state.givenUp) return state;
 			return {
 				...state,
+				foundLemmas: [...new Set([...state.foundLemmas, ...action.lemmas])],
 				won: false,
 				givenUp: true,
 				finishedAt: new Date().toISOString(),

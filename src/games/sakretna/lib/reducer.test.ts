@@ -107,7 +107,7 @@ describe("SUBMIT_GUESS", () => {
 
 	it("blocks new guesses after game finished", () => {
 		const s = createInitialState();
-		const finished = gameReducer(s, { type: "GIVE_UP" });
+		const finished = gameReducer(s, { type: "GIVE_UP", lemmas: [] });
 		const next = gameReducer(finished, {
 			type: "SUBMIT_GUESS",
 			rawGuess: "сталіца",
@@ -169,9 +169,27 @@ describe("USE_HINT", () => {
 });
 
 describe("GIVE_UP", () => {
+	it("reveals the full article while preserving prior progress", () => {
+		const guessed = gameReducer(createInitialState(), {
+			type: "SUBMIT_GUESS",
+			rawGuess: "горад",
+			tokens,
+			titleLemmas: NO_TITLE,
+		});
+		const next = gameReducer(guessed, {
+			type: "GIVE_UP",
+			lemmas: ["горад", "сталіца", "беларусь"],
+		});
+
+		expect(next.givenUp).toBe(true);
+		expect(next.foundLemmas).toEqual(["горад", "сталіца", "беларусь"]);
+		expect(next.guesses).toEqual(["горад"]);
+		expect(next.finishedAt).not.toBeNull();
+	});
+
 	it("GIVE_UP marks givenUp and records finishedAt", () => {
 		const s = createInitialState();
-		const next = gameReducer(s, { type: "GIVE_UP" });
+		const next = gameReducer(s, { type: "GIVE_UP", lemmas: [] });
 		expect(next.givenUp).toBe(true);
 		expect(next.won).toBe(false);
 		expect(next.finishedAt).not.toBeNull();

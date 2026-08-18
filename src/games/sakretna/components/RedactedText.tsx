@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { pluralize } from "@/shared/lib/pluralize";
 import type { ArticleToken } from "../types";
 
 interface RedactedTextProps {
@@ -60,7 +59,11 @@ export function RedactedText({
 						return (
 							<span
 								key={key}
-								className={isHighlighted ? "bg-sakretna text-paper px-0.5 rounded-sm" : "text-ink"}
+								className={
+									isHighlighted
+										? "bg-sakretna text-paper px-0.5 rounded-sm"
+										: "text-ink"
+								}
 							>
 								{token.text}
 							</span>
@@ -103,8 +106,7 @@ export function ProgressLine({
 }) {
 	return (
 		<p className="text-ink-muted text-sm">
-			Расшыфравана {foundLemmas} з {totalLemmas}{" "}
-			{pluralize(totalLemmas, "слова")}
+			Расшыфравана {foundLemmas} з {totalLemmas} слоў
 		</p>
 	);
 }
