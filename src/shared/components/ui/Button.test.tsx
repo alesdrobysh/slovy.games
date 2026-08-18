@@ -20,7 +20,7 @@ describe("Button", () => {
 		render(
 			<Button onClick={onClick} disabled>
 				Click
-			</Button>,
+			</Button>
 		);
 		await userEvent.click(screen.getByRole("button"));
 		expect(onClick).not.toHaveBeenCalled();
@@ -34,7 +34,7 @@ describe("Button", () => {
 				const { unmount } = render(
 					<Button variant={variant} color={color} onClick={jest.fn()}>
 						{variant} {color}
-					</Button>,
+					</Button>
 				);
 				expect(screen.getByText(`${variant} ${color}`)).toBeInTheDocument();
 				unmount();
@@ -50,7 +50,7 @@ describe("Button", () => {
 				startIcon={<span data-testid="svg">S</span>}
 				aria-label="Share"
 				onClick={jest.fn()}
-			/>,
+			/>
 		);
 		expect(screen.getByTestId("svg")).toBeInTheDocument();
 		expect(screen.getByRole("button")).toHaveClass("btn-icon-only");
@@ -65,7 +65,7 @@ describe("Button", () => {
 				onClick={jest.fn()}
 			>
 				Label
-			</Button>,
+			</Button>
 		);
 		expect(screen.getByText("Label")).toBeInTheDocument();
 		expect(screen.getByTestId("svg")).toBeInTheDocument();
@@ -76,7 +76,7 @@ describe("Button", () => {
 		render(
 			<Button variant="outline" color="neutral" dashed onClick={jest.fn()}>
 				Give up
-			</Button>,
+			</Button>
 		);
 		expect(screen.getByRole("button")).toHaveClass("btn-dashed");
 	});
@@ -85,24 +85,40 @@ describe("Button", () => {
 		render(
 			<Button href="/stats" variant="solid" color="primary">
 				Stats
-			</Button>,
+			</Button>
 		);
 		const link = screen.getByRole("link");
 		expect(link).toHaveAttribute("href", "/stats");
 		expect(link).toHaveTextContent("Stats");
 	});
 
+	it("passes an accessible name to custom link elements", () => {
+		render(
+			<Button
+				as="a"
+				href="/stats"
+				aria-label="Статыстыка"
+				startIcon={<span />}
+				variant="ghost"
+				color="neutral"
+			/>
+		);
+		expect(
+			screen.getByRole("link", { name: "Статыстыка" })
+		).toBeInTheDocument();
+	});
 	it("renders as a custom element when as is provided", () => {
 		const CustomLink = ({
 			href,
 			...rest
-		}: { href: string; children: React.ReactNode }) => (
-			<a href={href} {...rest} />
-		);
+		}: {
+			href: string;
+			children: React.ReactNode;
+		}) => <a href={href} {...rest} />;
 		render(
 			<Button as={CustomLink} href="/about">
 				About
-			</Button>,
+			</Button>
 		);
 		expect(screen.getByRole("link")).toHaveAttribute("href", "/about");
 	});

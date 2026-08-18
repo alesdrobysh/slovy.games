@@ -1,4 +1,4 @@
-import { type ElementType, type ReactNode, forwardRef } from "react";
+import { type ElementType, forwardRef, type ReactNode } from "react";
 
 export type ButtonVariant = "solid" | "outline" | "ghost";
 export type ButtonColor = "primary" | "neutral" | "danger";
@@ -44,7 +44,7 @@ export const Button = forwardRef<
 		target,
 		rel,
 	},
-	ref,
+	ref
 ) {
 	const isIconOnly = !children && !!startIcon;
 
@@ -90,6 +90,7 @@ export const Button = forwardRef<
 			href={href}
 			target={target}
 			rel={rel}
+			aria-label={ariaLabel}
 		>
 			{content}
 		</Tag>
