@@ -1,5 +1,5 @@
 import type { GameAction, GameState, SavedProgress } from "../types";
-import { validateGuess } from "./validation";
+import { normalizeGuess, validateGuess } from "./validation";
 
 export function createInitialState(): GameState {
 	return {
@@ -19,7 +19,12 @@ export function createInitialState(): GameState {
 export function gameReducer(state: GameState, action: GameAction): GameState {
 	switch (action.type) {
 		case "SET_INPUT":
-			return { ...state, currentInput: action.value, errorType: null, highlighted: null };
+			return {
+				...state,
+				currentInput: action.value,
+				errorType: null,
+				highlighted: null,
+			};
 
 		case "CLEAR_ERROR":
 			return { ...state, errorType: null, highlighted: null };
@@ -40,6 +45,10 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 			if (result.error) {
 				return {
 					...state,
+					guesses:
+						result.error === "not_in_article"
+							? [...state.guesses, normalizeGuess(action.rawGuess)]
+							: state.guesses,
 					errorType: result.error,
 					errorKey: state.errorKey + 1,
 				};

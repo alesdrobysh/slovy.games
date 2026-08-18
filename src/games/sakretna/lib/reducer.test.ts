@@ -93,6 +93,18 @@ describe("SUBMIT_GUESS", () => {
 		expect(next.foundLemmas).toEqual([]);
 	});
 
+	it("counts a word missing from the article as an attempt", () => {
+		const s = createInitialState();
+		const next = gameReducer(s, {
+			type: "SUBMIT_GUESS",
+			rawGuess: "аўтамабіль",
+			tokens,
+			titleLemmas: NO_TITLE,
+		});
+		expect(next.errorType).toBe("not_in_article");
+		expect(next.guesses).toEqual(["аўтамабіль"]);
+	});
+
 	it("blocks new guesses after game finished", () => {
 		const s = createInitialState();
 		const finished = gameReducer(s, { type: "GIVE_UP" });
