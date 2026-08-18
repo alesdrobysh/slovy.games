@@ -9,6 +9,7 @@ export const STATS_KEY = "sakretna_stats";
 
 export const DEFAULT_STATS: GameStats = {
 	datesPlayed: [],
+	datesWon: [],
 	currentStreak: 0,
 	longestStreak: 0,
 	totalPlayed: 0,
@@ -44,7 +45,12 @@ export function loadStats(): GameStats {
 	try {
 		const raw = localStorage.getItem(STATS_KEY);
 		if (!raw) return { ...DEFAULT_STATS };
-		return { ...DEFAULT_STATS, ...(JSON.parse(raw) as GameStats) };
+		const parsed = JSON.parse(raw) as Partial<GameStats>;
+		return {
+			...DEFAULT_STATS,
+			...parsed,
+			datesWon: parsed.datesWon ?? [],
+		};
 	} catch {
 		return { ...DEFAULT_STATS };
 	}
@@ -59,37 +65,38 @@ export function saveStats(stats: GameStats): void {
 	}
 }
 
-/** Persist a day's progress and update aggregate stats. A "win" is recorded
- *  when the player claimed a win or gave up (give-up still counts as played
- *  for streak purposes). */
+/** Persist a day's progress and update aggregate stats. */
 export function recordResult(progress: SavedProgress): void {
 	if (typeof window === "undefined") return;
 	saveProgress(progress);
 	const stats = loadStats();
 	const isFirstForDate = !stats.datesPlayed.includes(progress.date);
+
 	if (isFirstForDate) {
 		stats.datesPlayed.push(progress.date);
 		stats.datesPlayed.sort();
-	}
-	if (progress.won) {
-		stats.totalWins += 1;
-		const attemptCount = progress.guesses.length;
-		while (stats.winsByAttempts.length < attemptCount) {
-			stats.winsByAttempts.push(0);
+		stats.hintsUsedCount += progress.hintsUsed;
+
+		if (progress.won) {
+			stats.totalWins += 1;
+			stats.datesWon.push(progress.date);
+			stats.datesWon.sort();
+			const attemptCount = progress.guesses.length;
+			while (stats.winsByAttempts.length < attemptCount) {
+				stats.winsByAttempts.push(0);
+			}
+			stats.winsByAttempts[attemptCount - 1] += 1;
 		}
-		stats.winsByAttempts[attemptCount - 1] += 1;
 	}
-	stats.hintsUsedCount += progress.hintsUsed;
 
 	stats.totalPlayed = stats.datesPlayed.length;
 
-	// Recompute streak
-	const sorted = [...stats.datesPlayed].sort();
+	const sortedWins = [...stats.datesWon].sort();
 	let longest = 0;
-	let run = 1;
-	for (let i = 1; i < sorted.length; i++) {
-		const prev = new Date(`${sorted[i - 1]}T00:00:00Z`).getTime();
-		const curr = new Date(`${sorted[i]}T00:00:00Z`).getTime();
+	let run = sortedWins.length > 0 ? 1 : 0;
+	for (let i = 1; i < sortedWins.length; i++) {
+		const prev = new Date(`${sortedWins[i - 1]}T00:00:00Z`).getTime();
+		const curr = new Date(`${sortedWins[i]}T00:00:00Z`).getTime();
 		const diff = (curr - prev) / 86400000;
 		if (diff === 1) {
 			run += 1;
@@ -102,8 +109,12 @@ export function recordResult(progress: SavedProgress): void {
 
 	const today = getMskDateString();
 	const yesterday = getMskYesterdayDateString();
-	const lastPlayed = sorted[sorted.length - 1];
-	const current = lastPlayed === today || lastPlayed === yesterday ? run : 0;
+	const lastPlayed = stats.datesPlayed[stats.datesPlayed.length - 1];
+	const latestWasWin = lastPlayed ? stats.datesWon.includes(lastPlayed) : false;
+	const current =
+		latestWasWin && (lastPlayed === today || lastPlayed === yesterday)
+			? run
+			: 0;
 
 	stats.currentStreak = current;
 	stats.longestStreak = Math.max(longest, stats.longestStreak);
