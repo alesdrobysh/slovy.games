@@ -163,16 +163,13 @@ export function GameCard({
 								/>
 							)}
 						</div>
-
-						<span
-							className={`flex items-center justify-center w-full px-inset-xl py-flow-lg rounded-2xl text-sm font-bold tracking-widest uppercase transition-all duration-300 border-2 ${
-								isCompleted
-									? "bg-secondary/50 border-rule text-ink hover:bg-rule"
-									: accentBorderClass
-							} hover:shadow-lg active:scale-95`}
-						>
-							{ctaLabel}
-						</span>
+						{!isCompleted && (
+							<span
+								className={`flex items-center justify-center w-full px-inset-xl py-flow-lg rounded-2xl text-sm font-bold tracking-widest uppercase transition-all duration-300 border-2 ${accentBorderClass} hover:shadow-lg active:scale-95`}
+							>
+								{ctaLabel}
+							</span>
+						)}
 					</div>
 				</div>
 			</div>
