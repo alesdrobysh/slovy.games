@@ -40,7 +40,8 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 			const result = validateGuess(
 				action.rawGuess,
 				action.tokens,
-				new Set(state.foundLemmas)
+				new Set(state.foundLemmas),
+				action.titleLemmas
 			);
 			if (result.error) {
 				return {

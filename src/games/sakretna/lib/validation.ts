@@ -20,7 +20,8 @@ export interface ValidationResult {
 export function validateGuess(
 	rawGuess: string,
 	tokens: ArticleToken[],
-	foundLemmas: ReadonlySet<string>
+	foundLemmas: ReadonlySet<string>,
+	titleLemmas: ReadonlySet<string> = new Set()
 ): ValidationResult {
 	const normalized = normalizeGuess(rawGuess);
 	if (normalized.length === 0) {
@@ -37,7 +38,7 @@ export function validateGuess(
 		return { error: "already_found", lemma, revealedCount: 0 };
 	}
 	const articleLemmas = collectLemmas(tokens);
-	if (!articleLemmas.has(lemma)) {
+	if (!articleLemmas.has(lemma) && !titleLemmas.has(lemma)) {
 		return { error: "not_in_article", lemma, revealedCount: 0 };
 	}
 	let revealedCount = 0;

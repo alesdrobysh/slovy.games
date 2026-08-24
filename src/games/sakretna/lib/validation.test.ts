@@ -67,4 +67,20 @@ describe("validateGuess", () => {
 		expect(result.error).toBeNull();
 		expect(result.lemma).toBe("горад");
 	});
+
+	it("accepts a required title lemma that is missing from the body", () => {
+		setLemma("ельскі", "ельскі");
+		const result = validateGuess(
+			"Ельскі",
+			tokens,
+			new Set(),
+			new Set(["ельскі"])
+		);
+
+		expect(result).toEqual({
+			error: null,
+			lemma: "ельскі",
+			revealedCount: 0,
+		});
+	});
 });

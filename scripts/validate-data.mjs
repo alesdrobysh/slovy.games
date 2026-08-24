@@ -7,10 +7,102 @@
 import { readFileSync, accessSync, statSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { MorphAnalyzer } from "belmorph";
+import { loadDict } from "belmorph/node";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = join(__dirname, "..", "src", "data");
 const GAMES_DIR = join(__dirname, "..", "src", "games");
+const BELMORPH_DICT_DIR = join(
+	__dirname,
+	"..",
+	"node_modules",
+	"belmorph",
+	"dict"
+);
+const analyzer = new MorphAnalyzer(loadDict(BELMORPH_DICT_DIR));
+const LETTER_RUN = /[\p{Letter}\p{M}]+/gu;
+const FREE_WORD_LEMMAS = new Set([
+	"у",
+	"ў",
+	"на",
+	"за",
+	"па",
+	"да",
+	"з",
+	"са",
+	"аб",
+	"пра",
+	"праз",
+	"пад",
+	"над",
+	"перад",
+	"пры",
+	"паміж",
+	"без",
+	"для",
+	"апроч",
+	"воддаль",
+	"і",
+	"а",
+	"але",
+	"ды",
+	"ці",
+	"што",
+	"каб",
+	"бо",
+	"то",
+	"нібы",
+	"хоць",
+	"калі",
+	"бы",
+	"быццам",
+	"не",
+	"ні",
+	"нават",
+	"толькі",
+	"амаль",
+	"ужо",
+	"яшчэ",
+	"хіба",
+	"я",
+	"ты",
+	"ён",
+	"яна",
+	"яно",
+	"мы",
+	"вы",
+	"яны",
+	"гэты",
+	"гэта",
+	"гэтыя",
+	"той",
+	"тая",
+	"тое",
+	"такі",
+	"такая",
+	"такое",
+	"такія",
+]);
+
+function lemmaOf(word) {
+	return analyzer.parse(word)?.[0]?.lemma ?? word.toLowerCase();
+}
+
+function requiredTitleLemmas(title) {
+	return new Set(
+		[...title.matchAll(LETTER_RUN)]
+			.map(([word]) => ({ word, lemma: lemmaOf(word) }))
+			.filter(
+				({ word, lemma }) => word.length >= 3 && !FREE_WORD_LEMMAS.has(lemma)
+			)
+			.map(({ lemma }) => lemma)
+	);
+}
+
+function bodyLemmas(body) {
+	return new Set([...body.matchAll(LETTER_RUN)].map(([word]) => lemmaOf(word)));
+}
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -129,8 +221,10 @@ checkFileExists("vectors.bin");
 		fail("sakretna/data/articles.json must be a non-empty array");
 	}
 
-		const seenIds = new Set();
+	const seenIds = new Set();
 	const seenTitles = new Set();
+	const unwinnable = [];
+	let titleOnlyArticleCount = 0;
 	for (const [i, a] of articles.entries()) {
 		const where = `articles[${i}]`;
 		if (!a || typeof a !== "object") fail(`${where} is not an object`);
@@ -155,9 +249,36 @@ checkFileExists("vectors.bin");
 		if (!a.source.startsWith("https://be.wikipedia.org/wiki/")) {
 			fail(`${where}.source must start with https://be.wikipedia.org/wiki/`);
 		}
+
+		const titleLemmas = requiredTitleLemmas(a.title);
+		const articleBodyLemmas = bodyLemmas(a.body);
+		if ([...titleLemmas].some((lemma) => !articleBodyLemmas.has(lemma))) {
+			titleOnlyArticleCount += 1;
+		}
+		// The game accepts required title lemmas even when they do not occur in body.
+		const acceptedGuessLemmas = new Set([...articleBodyLemmas, ...titleLemmas]);
+		const missing = [...titleLemmas].filter(
+			(lemma) => !acceptedGuessLemmas.has(lemma)
+		);
+		if (titleLemmas.size === 0 || missing.length > 0) {
+			unwinnable.push({ title: a.title, missing });
+		}
 	}
 
-	ok(`sakretna/articles.json — ${articles.length} articles`);
+	if (unwinnable.length > 0) {
+		const details = unwinnable
+			.slice(0, 10)
+			.map(
+				({ title, missing }) =>
+					`${title}: ${missing.join(", ") || "no required title lemmas"}`
+			)
+			.join("; ");
+		fail(`sakretna has ${unwinnable.length} unwinnable article(s): ${details}`);
+	}
+
+	ok(
+		`sakretna/articles.json — ${articles.length} articles, all winnable (${titleOnlyArticleCount} require title-only guesses)`
+	);
 }
 
 console.log("\n✅ All data checks passed.\n");
