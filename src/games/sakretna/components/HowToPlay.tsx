@@ -1,35 +1,81 @@
 "use client";
 
+import { Button } from "@/shared/components/ui/Button";
 import { Modal } from "@/shared/components/ui/Modal";
 import { Typography } from "@/shared/components/ui/Typography";
 
 interface HowToPlayProps {
 	isOpen: boolean;
 	onClose: () => void;
+	isFirstRun?: boolean;
 }
 
-export function HowToPlay({ isOpen, onClose }: HowToPlayProps) {
+export function HowToPlay({
+	isOpen,
+	onClose,
+	isFirstRun = false,
+}: HowToPlayProps) {
 	return (
-		<Modal isOpen={isOpen} onClose={onClose} title="Як гуляць?">
-			<div className="text-ink flex flex-col gap-y-flow-md">
+		<Modal
+			isOpen={isOpen}
+			onClose={onClose}
+			title={isFirstRun ? "Расшыфруйце артыкул" : "Як гуляць?"}
+		>
+			<div className="text-ink flex flex-col gap-y-flow-sm">
 				<Typography variant="body">
-					Вам паказаны ўступ да артыкула з беларускай Вікіпедыі з{" "}
-					<strong className="text-sakretna">зашыфраванымі словамі</strong>.
-					Увядзіце слова — і ўсе яго формы ў тэксце расшыфруюцца.
+					Здагадайцеся, пра які артыкул беларускай Вікіпедыі ідзе гаворка.
 				</Typography>
-				<Typography variant="body">
-					<strong className="text-sakretna">Мэта</strong> — здагадацца, пра які
-					артыкул ідзе гаворка. Як толькі вы ўведзяце ўсе словы назвы — перамога
-					залічваецца аўтаматычна.
-				</Typography>
-				<Typography variant="body">
-					<strong className="text-sakretna">Хто выйграў:</strong> чым менш спроб
-					— тым лепш. Даступная адна бясплатная падказка.
-				</Typography>
-				<Typography variant="body" className="text-ink-muted text-sm">
-					Падказка расшыфруе адно выпадковае слова ў артыкуле (не назву).
-					Выкарыстоўвайце яе ў крайнім выпадку — гэта залічваецца ў статыстыцы.
-				</Typography>
+				<ol
+					className="grid gap-flow-sm text-sm sm:text-base"
+					aria-label="Правілы гульні"
+				>
+					<li className="flex gap-inset-sm">
+						<strong className="text-sakretna" aria-hidden="true">
+							1.
+						</strong>
+						<span>
+							<strong>Уводзьце словы.</strong> Мы знойдзем і адкрыем усе іх
+							формы.
+						</span>
+					</li>
+					<li className="flex gap-inset-sm">
+						<strong className="text-sakretna" aria-hidden="true">
+							2.
+						</strong>
+						<span>
+							<strong>Лічба каля палоскі</strong> паказвае колькасць схаваных
+							літар.
+						</span>
+					</li>
+					<li className="flex gap-inset-sm">
+						<strong className="text-sakretna" aria-hidden="true">
+							3.
+						</strong>
+						<span>
+							<strong>Адна бясплатная падказка</strong> адкрые слова пасля
+							пацвярджэння.
+						</span>
+					</li>
+					<li className="flex gap-inset-sm">
+						<strong className="text-sakretna" aria-hidden="true">
+							4.
+						</strong>
+						<span>
+							<strong>Адкрыйце ўсе словы назвы</strong> — і перамога залічыцца
+							аўтаматычна.
+						</span>
+					</li>
+				</ol>
+				<div className="mt-flow-sm flex flex-col-reverse sm:flex-row sm:justify-end gap-flow-xs">
+					{isFirstRun && (
+						<Button variant="ghost" onClick={onClose}>
+							Прапусціць
+						</Button>
+					)}
+					<Button variant="solid" color="primary" onClick={onClose}>
+						{isFirstRun ? "Пачаць: увесці слова" : "Зразумела"}
+					</Button>
+				</div>
 			</div>
 		</Modal>
 	);
