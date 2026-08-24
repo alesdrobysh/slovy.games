@@ -1,0 +1,27 @@
+name: Storybook regression
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  mobile-stories:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test-storybook
+      - run: npm run build-storybook
+      - name: Visual screenshot regression
+        if: env.CHROMATIC_PROJECT_TOKEN != ''
+        run: npm run test-storybook:visual
+        env:
+          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}

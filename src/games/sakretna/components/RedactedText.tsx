@@ -85,7 +85,7 @@ export function RedactedText({
 				<header
 					className={`${stickyTitle ? "sticky top-16 z-20" : ""} -mx-inset-md sm:-mx-inset-lg -mt-inset-md sm:-mt-inset-lg mb-flow-lg px-inset-md sm:px-inset-lg py-flow-md bg-card/95 backdrop-blur-sm border-b border-rule`}
 				>
-					<p className="text-ink-soft text-xs uppercase tracking-widest mb-flow-xs">
+					<p className="text-ink-muted text-xs uppercase tracking-widest mb-flow-xs">
 						Зашыфраваны артыкул
 					</p>
 					<h1 className="text-2xl sm:text-3xl font-bold leading-tight flex flex-wrap items-baseline gap-x-2 gap-y-1">

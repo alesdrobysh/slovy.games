@@ -12,7 +12,9 @@
 		"test": "jest",
 		"clean": "rm -rf .next node_modules",
 		"storybook": "storybook dev -p 6006",
-		"build-storybook": "storybook build"
+		"build-storybook": "storybook build",
+		"test-storybook": "vitest --project storybook --run src/games/sakretna/components/SakretnaPage.stories.tsx",
+		"test-storybook:visual": "chromatic --exit-zero-on-changes --only-changed"
 	},
 	"dependencies": {
 		"@tailwindcss/postcss": "^4.1.18",

@@ -79,7 +79,7 @@ export function FinishCard({
 				</div>
 			</div>
 			<div>
-				<div className="text-ink-soft mb-flow-xs">
+				<div className="text-ink-muted mb-flow-xs">
 					<Typography variant="overline" as="p">
 						Артыкул
 					</Typography>

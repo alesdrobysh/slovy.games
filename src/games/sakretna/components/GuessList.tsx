@@ -1,8 +1,8 @@
 "use client";
 
-import type { ArticleToken } from "../types";
-import { lemmaOf } from "../lib/lemmatize";
 import { pluralize } from "@/shared/lib/pluralize";
+import { lemmaOf } from "../lib/lemmatize";
+import type { ArticleToken } from "../types";
 
 interface GuessListProps {
 	guesses: string[];
@@ -38,9 +38,9 @@ function GuessRow({
 				className={
 					record.hits > 0
 						? "shrink-0 font-semibold text-sakretna"
-						: "shrink-0 font-semibold text-ink-soft"
+						: "shrink-0 font-semibold text-ink-muted"
 				}
-				aria-hidden="true"
+				aria-hidden={record.hits > 0 ? true : undefined}
 			>
 				{result}
 			</span>
@@ -49,10 +49,7 @@ function GuessRow({
 
 	if (record.hits === 0) {
 		return (
-			<span
-				className="flex min-w-0 min-h-(--control-min-height) items-center justify-between gap-flow-sm rounded-lg bg-secondary px-inset-sm py-flow-xs text-xs text-ink-muted"
-				aria-label={label}
-			>
+			<span className="flex min-w-0 min-h-(--control-min-height) items-center justify-between gap-flow-sm rounded-lg bg-secondary px-inset-sm py-flow-xs text-xs text-ink-muted">
 				{content}
 			</span>
 		);
@@ -97,13 +94,13 @@ export function GuessList({
 
 	return (
 		<div className="w-full">
-			<p className="text-ink-soft uppercase tracking-widest text-[10px] font-medium mb-flow-xs">
+			<p className="text-ink-muted uppercase tracking-widest text-[10px] font-medium mb-flow-xs">
 				Спроб ({guesses.length} {pluralize(guesses.length, "спроба")})
 			</p>
 			<div className="grid grid-cols-1 sm:grid-cols-2 gap-flow-xs">
-				{recent.map((record, index) => (
+				{recent.map((record) => (
 					<GuessRow
-						key={`${record.input}-${guesses.length - index}`}
+						key={record.input}
 						record={record}
 						highlighted={highlighted}
 						onSelect={onSelect}
@@ -116,8 +113,8 @@ export function GuessList({
 						Уся гісторыя ({records.length})
 					</summary>
 					<ol className="mt-flow-xs max-h-[40vh] overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-flow-xs">
-						{all.map((record, index) => (
-							<li key={`${record.input}-${all.length - index}`}>
+						{all.map((record) => (
+							<li key={record.input}>
 								<GuessRow
 									record={record}
 									highlighted={highlighted}

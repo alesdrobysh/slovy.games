@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
 import { ArrowRight, Lightbulb } from "lucide-react";
+import { useEffect, useRef } from "react";
 import { Button } from "@/shared/components/ui/Button";
 import { ErrorMessage } from "@/shared/components/ui/ErrorMessage";
 
@@ -87,7 +87,7 @@ export default function GuessInput({
 						inputMode="text"
 						enterKeyHint="send"
 						suppressContentEditableWarning
-						className="text-lg text-ink outline-none min-h-inset-lg w-full empty:before:content-['Увядзіце\00a0слова...'] empty:before:text-ink-muted text-left"
+						className="text-lg text-ink outline-none min-h-inset-lg w-full empty:before:content-['Увядзіце_слова…'] empty:before:text-ink-muted text-left"
 					/>
 				</label>
 
@@ -96,7 +96,9 @@ export default function GuessInput({
 						<Button
 							variant="solid"
 							color="primary"
-							onClick={() => onSubmit({ preventDefault: () => {} } as React.FormEvent)}
+							onClick={() =>
+								onSubmit({ preventDefault: () => {} } as React.FormEvent)
+							}
 							disabled={loading}
 							aria-label="Адправіць здагадку"
 							size="xl"
