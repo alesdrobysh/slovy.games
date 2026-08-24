@@ -1,11 +1,12 @@
 "use client";
 
-import { Eye, Flag } from "lucide-react";
+import { Eye, Flag, Settings } from "lucide-react";
 import { Button } from "@/shared/components/ui/Button";
 
 interface ArticleActionsProps {
 	onUseHint: () => void;
 	onGiveUp: () => void;
+	onSettings: () => void;
 	hintAvailable: boolean;
 	finished: boolean;
 }
@@ -13,6 +14,7 @@ interface ArticleActionsProps {
 export function ArticleActions({
 	onUseHint,
 	onGiveUp,
+	onSettings,
 	hintAvailable,
 	finished,
 }: ArticleActionsProps) {
@@ -40,6 +42,14 @@ export function ArticleActions({
 			>
 				Здацца
 			</Button>
+			<Button
+				variant="ghost"
+				color="neutral"
+				size="sm"
+				startIcon={<Settings size={16} />}
+				onClick={onSettings}
+				aria-label="Налады гульні"
+			/>
 		</div>
 	);
 }

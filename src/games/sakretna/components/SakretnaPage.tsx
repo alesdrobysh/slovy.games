@@ -1,7 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSakretnaGame } from "@/games/sakretna/hooks/useSakretnaGame";
+import {
+	DEFAULT_GAMEPLAY_SETTINGS,
+	loadGameplaySettings,
+	saveGameplaySettings,
+} from "@/games/sakretna/lib/gameplaySettings";
 import { ERROR_MESSAGES } from "@/games/sakretna/lib/validation";
 import type { PickedArticle } from "@/games/sakretna/types";
 import { Typography } from "@/shared/components/ui/Typography";
@@ -10,6 +15,7 @@ import { ArticleNavigator } from "./ArticleNavigator";
 import { CompletionOverlay } from "./CompletionOverlay";
 import { FinishCard } from "./FinishCard";
 import { GameMetrics } from "./GameMetrics";
+import { GameplaySettingsModal } from "./GameplaySettingsModal";
 import { GiveUpModal } from "./GiveUpModal";
 import { GuessInput } from "./GuessInput";
 import { GuessList } from "./GuessList";
@@ -40,6 +46,9 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 		revealedCount: number;
 	} | null>(null);
 	const [showHint, setShowHint] = useState(false);
+	const [showSettings, setShowSettings] = useState(false);
+	const [settings, setSettings] = useState(DEFAULT_GAMEPLAY_SETTINGS);
+	useEffect(() => setSettings(loadGameplaySettings()), []);
 
 	const foundSet = new Set(state.foundLemmas);
 	const totalLemmas = lemmaSet.size;
@@ -104,6 +113,9 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 							titleTokens={titleTokens}
 							foundLemmas={foundSet}
 							highlighted={state.highlighted}
+							stickyTitle={settings.stickyTitle}
+							autoScroll={settings.autoScroll}
+							showLetterCounts={settings.letterCounts}
 						/>
 					</section>
 
@@ -145,13 +157,14 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 						}}
 					>
 						<div className="mx-auto max-w-3xl md:max-w-none px-4 md:px-0 py-flow-md md:py-0 flex flex-col gap-flow-sm">
-							<div className="flex items-center justify-between gap-flow-sm">
+							<div className="flex flex-wrap items-center justify-between gap-flow-sm">
 								<ArticleActions
 									onUseHint={() => {
 										setHintPreview(previewHint());
 										setShowHint(true);
 									}}
 									onGiveUp={() => setShowGiveUp(true)}
+									onSettings={() => setShowSettings(true)}
 									hintAvailable={state.hintsUsed === 0}
 									finished={finished}
 								/>
@@ -212,6 +225,15 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 					setShowHint(false);
 				}}
 				onClose={() => setShowHint(false)}
+			/>
+			<GameplaySettingsModal
+				isOpen={showSettings}
+				settings={settings}
+				onChange={(next) => {
+					setSettings(next);
+					saveGameplaySettings(next);
+				}}
+				onClose={() => setShowSettings(false)}
 			/>
 		</div>
 	);

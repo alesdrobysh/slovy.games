@@ -9,6 +9,9 @@ interface RedactedTextProps {
 	titleTokens: ArticleToken[];
 	foundLemmas: ReadonlySet<string>;
 	highlighted?: string | null;
+	stickyTitle?: boolean;
+	autoScroll?: boolean;
+	showLetterCounts?: boolean;
 }
 
 export function RedactedText({
@@ -16,17 +19,20 @@ export function RedactedText({
 	titleTokens,
 	foundLemmas,
 	highlighted,
+	stickyTitle = true,
+	autoScroll = true,
+	showLetterCounts = true,
 }: RedactedTextProps) {
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	// When highlighted changes, scroll to the first matching highlighted span
 	useEffect(() => {
-		if (!highlighted || !containerRef.current) return;
+		if (!autoScroll || !highlighted || !containerRef.current) return;
 		const el = containerRef.current.querySelector(".bg-sakretna");
 		if (el) {
 			el.scrollIntoView({ behavior: "smooth", block: "center" });
 		}
-	}, [highlighted]);
+	}, [autoScroll, highlighted]);
 
 	const isVisible = (token: ArticleToken) =>
 		token.isFree || foundLemmas.has(token.lemma ?? "");
@@ -54,14 +60,18 @@ export function RedactedText({
 				<span
 					key={key}
 					aria-hidden="true"
-					className="inline-flex align-baseline bg-ink/85 rounded-sm"
-					style={{
-						width: `${token.text.length * 0.6}em`,
-						height: "0.9em",
-						marginLeft: "0.1em",
-						marginRight: "0.1em",
-					}}
-				/>
+					className="inline-flex items-baseline gap-0.5 mx-[0.1em]"
+				>
+					<span
+						className="inline-block bg-ink/85 rounded-sm h-[0.9em]"
+						style={{ width: `${token.text.length * 0.6}em` }}
+					/>
+					{showLetterCounts && (
+						<span className="text-[0.65em] text-ink-muted">
+							{token.text.length}
+						</span>
+					)}
+				</span>
 			);
 		});
 	const blocks = buildArticleBlocks(tokens);
@@ -72,7 +82,9 @@ export function RedactedText({
 			className="font-display text-ink leading-relaxed text-base sm:text-lg scroll-mt-20"
 		>
 			{titleTokens.length > 0 && (
-				<header className="sticky top-16 z-20 -mx-inset-md sm:-mx-inset-lg -mt-inset-md sm:-mt-inset-lg mb-flow-lg px-inset-md sm:px-inset-lg py-flow-md bg-card/95 backdrop-blur-sm border-b border-rule">
+				<header
+					className={`${stickyTitle ? "sticky top-16 z-20" : ""} -mx-inset-md sm:-mx-inset-lg -mt-inset-md sm:-mt-inset-lg mb-flow-lg px-inset-md sm:px-inset-lg py-flow-md bg-card/95 backdrop-blur-sm border-b border-rule`}
+				>
 					<p className="text-ink-soft text-xs uppercase tracking-widest mb-flow-xs">
 						Зашыфраваны артыкул
 					</p>
@@ -93,12 +105,14 @@ export function RedactedText({
 										className="inline-block align-baseline bg-ink/85 rounded-sm h-[0.8em]"
 										style={{ width: `${token.text.length * 0.6}em` }}
 									/>
-									<span
-										aria-hidden="true"
-										className="text-xs font-normal text-ink-muted"
-									>
-										{token.text.length}
-									</span>
+									{showLetterCounts && (
+										<span
+											aria-hidden="true"
+											className="text-xs font-normal text-ink-muted"
+										>
+											{token.text.length}
+										</span>
+									)}
 								</span>
 							);
 						})}
