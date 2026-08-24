@@ -6,6 +6,7 @@ import { ERROR_MESSAGES } from "@/games/sakretna/lib/validation";
 import type { PickedArticle } from "@/games/sakretna/types";
 import { Typography } from "@/shared/components/ui/Typography";
 import { ArticleActions } from "./ArticleActions";
+import { CompletionOverlay } from "./CompletionOverlay";
 import { FinishCard } from "./FinishCard";
 import { GiveUpModal } from "./GiveUpModal";
 import { GuessInput } from "./GuessInput";
@@ -30,6 +31,7 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 		setHighlight,
 	} = useSakretnaGame(picked);
 	const [showGiveUp, setShowGiveUp] = useState(false);
+	const [showResult, setShowResult] = useState(true);
 
 	const foundSet = new Set(state.foundLemmas);
 	const totalLemmas = lemmaSet.size;
@@ -51,7 +53,27 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 
 	return (
 		<div className="mx-auto max-w-3xl lg:max-w-6xl px-4 md:px-8 py-flow-lg md:py-page-py">
-			<div className="flex flex-col gap-flow-lg lg:grid lg:grid-cols-[1fr_320px] lg:gap-inset-xl lg:items-start">
+			<CompletionOverlay
+				open={finished && showResult}
+				mode={state.won ? "win" : "lose"}
+				article={article}
+				progress={{
+					date,
+					articleId: article.id,
+					foundLemmas: state.foundLemmas,
+					guesses: state.guesses,
+					won: state.won,
+					givenUp: state.givenUp,
+					hintsUsed: state.hintsUsed,
+					finishedAt: state.finishedAt ?? undefined,
+				}}
+				onReadArticle={() => setShowResult(false)}
+			/>
+			<div
+				className="flex flex-col gap-flow-lg lg:grid lg:grid-cols-[1fr_320px] lg:gap-inset-xl lg:items-start"
+				aria-hidden={finished && showResult}
+				inert={finished && showResult ? true : undefined}
+			>
 				<div className="min-w-0 flex flex-col gap-flow-lg lg:gap-inset-xl pb-[140px] md:pb-0">
 					<header className="flex flex-col gap-flow-xs">
 						<Typography variant="overline" as="span" className="text-sakretna">
