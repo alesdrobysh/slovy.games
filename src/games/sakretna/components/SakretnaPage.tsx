@@ -28,7 +28,7 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 		setInput,
 		submitGuess,
 		previewHint,
-		useHint,
+		useHint: revealHint,
 		giveUp,
 		setHighlight,
 	} = useSakretnaGame(picked);
@@ -183,6 +183,13 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 			</div>
 			<GiveUpModal
 				isOpen={showGiveUp}
+				hintAvailable={state.hintsUsed === 0}
+				guessCount={state.guesses.length}
+				onUseHint={() => {
+					setShowGiveUp(false);
+					setHintPreview(previewHint());
+					setShowHint(true);
+				}}
 				onConfirm={() => {
 					setShowGiveUp(false);
 					giveUp();
@@ -194,7 +201,7 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 				preview={hintPreview}
 				onConfirm={() => {
 					if (hintPreview) {
-						useHint(hintPreview.lemma, hintPreview.revealedCount);
+						revealHint(hintPreview.lemma, hintPreview.revealedCount);
 					}
 					setShowHint(false);
 				}}

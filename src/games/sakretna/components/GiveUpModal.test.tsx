@@ -8,7 +8,17 @@ describe("Sakretna GiveUpModal", () => {
 		const onClose = jest.fn();
 		const user = userEvent.setup();
 
-		render(<GiveUpModal isOpen onConfirm={onConfirm} onClose={onClose} />);
+		const onUseHint = jest.fn();
+		render(
+			<GiveUpModal
+				isOpen
+				onConfirm={onConfirm}
+				onClose={onClose}
+				onUseHint={onUseHint}
+				hintAvailable
+				guessCount={2}
+			/>
+		);
 
 		expect(screen.getByRole("dialog")).toBeInTheDocument();
 		expect(onConfirm).not.toHaveBeenCalled();
@@ -17,7 +27,13 @@ describe("Sakretna GiveUpModal", () => {
 		expect(onClose).toHaveBeenCalledTimes(1);
 		expect(onConfirm).not.toHaveBeenCalled();
 
-		await user.click(screen.getByRole("button", { name: "Здацца" }));
+		expect(screen.getByText(/1 з 1 бясплатнай падказкі/)).toBeInTheDocument();
+		await user.click(
+			screen.getByRole("button", { name: "Паглядзець падказку" })
+		);
+		expect(onUseHint).toHaveBeenCalledTimes(1);
+
+		await user.click(screen.getByRole("button", { name: "Усё роўна здацца" }));
 		expect(onConfirm).toHaveBeenCalledTimes(1);
 	});
 });
