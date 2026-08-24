@@ -8,6 +8,7 @@ import { Typography } from "@/shared/components/ui/Typography";
 import { ArticleActions } from "./ArticleActions";
 import { CompletionOverlay } from "./CompletionOverlay";
 import { FinishCard } from "./FinishCard";
+import { GameMetrics } from "./GameMetrics";
 import { GiveUpModal } from "./GiveUpModal";
 import { GuessInput } from "./GuessInput";
 import { GuessList } from "./GuessList";
@@ -89,7 +90,19 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 						<Typography variant="title" as="h1">
 							Здагадайцеся, пра які артыкул Вікіпедыі ідзе гаворка
 						</Typography>
-						<ProgressLine foundLemmas={foundCount} totalLemmas={totalLemmas} />
+						<GameMetrics
+							guesses={state.guesses.length}
+							foundLemmas={foundSet}
+							tokens={tokens}
+							title={article.title}
+							hintsUsed={state.hintsUsed}
+						/>
+						<div className="hidden" aria-hidden="true">
+							<ProgressLine
+								foundLemmas={foundCount}
+								totalLemmas={totalLemmas}
+							/>
+						</div>
 					</header>
 
 					<section
