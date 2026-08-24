@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import type { ArticleToken } from "../types";
 
 interface RedactedTextProps {
@@ -19,7 +19,6 @@ export function RedactedText({
 	title,
 }: RedactedTextProps) {
 	const containerRef = useRef<HTMLParagraphElement>(null);
-	const [peeked, setPeeked] = useState<ReadonlySet<number>>(new Set());
 
 	// When highlighted changes, scroll to the first matching highlighted span
 	useEffect(() => {
@@ -29,14 +28,9 @@ export function RedactedText({
 			el.scrollIntoView({ behavior: "smooth", block: "center" });
 		}
 	}, [highlighted]);
-	const togglePeek = (index: number) => {
-		setPeeked((prev) => {
-			const next = new Set(prev);
-			if (next.has(index)) next.delete(index);
-			else next.add(index);
-			return next;
-		});
-	};
+
+	const isVisible = (token: ArticleToken) =>
+		token.isFree || foundLemmas.has(token.lemma ?? "");
 
 	return (
 		<div className="font-display text-ink leading-relaxed text-base sm:text-lg">
@@ -54,7 +48,7 @@ export function RedactedText({
 					if (token.type === "sep") {
 						return <span key={key}>{token.text}</span>;
 					}
-					if (token.isFree || foundLemmas.has(token.lemma ?? "")) {
+					if (isVisible(token)) {
 						const isHighlighted = token.lemma === highlighted;
 						return (
 							<span
@@ -69,27 +63,18 @@ export function RedactedText({
 							</span>
 						);
 					}
-					const isPeeked = peeked.has(i);
 					return (
-						<button
+						<span
 							key={key}
-							type="button"
-							aria-label={
-								isPeeked
-									? `Схавана, ${token.text.length} літар`
-									: `${token.text.length} схаваных літар, паказаць колькасць`
-							}
-							onClick={() => togglePeek(i)}
-							className="relative appearance-none border-0 p-0 inline-flex items-center justify-center align-baseline bg-ink/85 rounded-sm cursor-pointer text-paper text-[0.6em] leading-none font-sans after:absolute after:size-(--control-min-height) after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2"
+							aria-hidden="true"
+							className="inline-flex align-baseline bg-ink/85 rounded-sm"
 							style={{
 								width: `${token.text.length * 0.6}em`,
 								height: "0.9em",
 								marginLeft: "0.1em",
 								marginRight: "0.1em",
 							}}
-						>
-							{isPeeked ? token.text.length : ""}
-						</button>
+						/>
 					);
 				})}
 			</p>
