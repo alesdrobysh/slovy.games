@@ -8,6 +8,7 @@ export function createInitialState(): GameState {
 		guesses: [],
 		errorType: null,
 		errorKey: 0,
+		statusMessage: null,
 		won: false,
 		givenUp: false,
 		hintsUsed: 0,
@@ -23,11 +24,17 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 				...state,
 				currentInput: action.value,
 				errorType: null,
+				statusMessage: null,
 				highlighted: null,
 			};
 
 		case "CLEAR_ERROR":
-			return { ...state, errorType: null, highlighted: null };
+			return {
+				...state,
+				errorType: null,
+				statusMessage: null,
+				highlighted: null,
+			};
 
 		case "SUBMIT_GUESS": {
 			if (state.won || state.givenUp) {
@@ -35,6 +42,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 					...state,
 					errorType: "no_guesses_after_finish",
 					errorKey: state.errorKey + 1,
+					statusMessage: null,
 				};
 			}
 			const result = validateGuess(
@@ -52,6 +60,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 							: state.guesses,
 					errorType: result.error,
 					errorKey: state.errorKey + 1,
+					statusMessage: null,
 				};
 			}
 			if (!result.lemma) return state;
@@ -64,6 +73,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 				...state,
 				currentInput: "",
 				errorType: null,
+				statusMessage: `Расшыфравана: ${lemma}`,
 				foundLemmas,
 				guesses: [...state.guesses, lemma],
 				won,
@@ -78,6 +88,10 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 			return {
 				...state,
 				hintsUsed: state.hintsUsed + 1,
+				errorType: null,
+				statusMessage: action.lemma
+					? `Падказка: расшыфравана «${action.lemma}»`
+					: "Падказка недаступная",
 				foundLemmas: action.lemma
 					? [...state.foundLemmas, action.lemma]
 					: state.foundLemmas,
@@ -90,6 +104,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 				foundLemmas: [...new Set([...state.foundLemmas, ...action.lemmas])],
 				won: false,
 				givenUp: true,
+				statusMessage: null,
 				finishedAt: new Date().toISOString(),
 			};
 
@@ -111,6 +126,7 @@ export function progressToState(p: SavedProgress): GameState {
 		guesses: [...p.guesses],
 		errorType: null,
 		errorKey: 0,
+		statusMessage: null,
 		won: p.won,
 		givenUp: p.givenUp,
 		hintsUsed: p.hintsUsed,

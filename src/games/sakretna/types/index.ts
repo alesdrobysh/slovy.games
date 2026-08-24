@@ -44,6 +44,7 @@ export interface GameState {
 	guesses: string[];
 	errorType: ValidationError | null;
 	errorKey: number;
+	statusMessage: string | null;
 	won: boolean;
 	givenUp: boolean;
 	hintsUsed: number;

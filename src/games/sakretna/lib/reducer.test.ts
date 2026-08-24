@@ -143,6 +143,48 @@ describe("SUBMIT_GUESS", () => {
 		expect(next.won).toBe(false);
 		expect(next.finishedAt).toBeNull();
 	});
+
+	it("replaces a miss with success feedback", () => {
+		const miss = gameReducer(createInitialState(), {
+			type: "SUBMIT_GUESS",
+			rawGuess: "аўтамабіль",
+			tokens,
+			titleLemmas: NO_TITLE,
+		});
+		const hit = gameReducer(miss, {
+			type: "SUBMIT_GUESS",
+			rawGuess: "горад",
+			tokens,
+			titleLemmas: NO_TITLE,
+		});
+
+		expect(hit.errorType).toBeNull();
+		expect(hit.statusMessage).toBe("Расшыфравана: горад");
+	});
+
+	it("replaces duplicate feedback with the next successful guess", () => {
+		const first = gameReducer(createInitialState(), {
+			type: "SUBMIT_GUESS",
+			rawGuess: "горад",
+			tokens,
+			titleLemmas: NO_TITLE,
+		});
+		const duplicate = gameReducer(first, {
+			type: "SUBMIT_GUESS",
+			rawGuess: "горада",
+			tokens,
+			titleLemmas: NO_TITLE,
+		});
+		const hit = gameReducer(duplicate, {
+			type: "SUBMIT_GUESS",
+			rawGuess: "сталіца",
+			tokens,
+			titleLemmas: NO_TITLE,
+		});
+
+		expect(hit.errorType).toBeNull();
+		expect(hit.statusMessage).toBe("Расшыфравана: сталіца");
+	});
 });
 
 describe("USE_HINT", () => {
@@ -165,6 +207,19 @@ describe("USE_HINT", () => {
 		const next = gameReducer(s, { type: "USE_HINT", lemma: null });
 		expect(next.hintsUsed).toBe(1);
 		expect(next.foundLemmas).toEqual([]);
+	});
+
+	it("replaces an error with hint status", () => {
+		const miss = gameReducer(createInitialState(), {
+			type: "SUBMIT_GUESS",
+			rawGuess: "аўтамабіль",
+			tokens,
+			titleLemmas: NO_TITLE,
+		});
+		const hinted = gameReducer(miss, { type: "USE_HINT", lemma: "горад" });
+
+		expect(hinted.errorType).toBeNull();
+		expect(hinted.statusMessage).toBe("Падказка: расшыфравана «горад»");
 	});
 });
 

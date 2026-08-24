@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSakretnaGame } from "@/games/sakretna/hooks/useSakretnaGame";
 import { ERROR_MESSAGES } from "@/games/sakretna/lib/validation";
-import type { PickedArticle, ValidationError } from "@/games/sakretna/types";
+import type { PickedArticle } from "@/games/sakretna/types";
 import { Typography } from "@/shared/components/ui/Typography";
 import { ArticleActions } from "./ArticleActions";
 import { FinishCard } from "./FinishCard";
@@ -29,21 +29,15 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 		giveUp,
 		setHighlight,
 	} = useSakretnaGame(picked);
-	const [toastKey, setToastKey] = useState(0);
-	const [toastMessage, setToastMessage] = useState<string | null>(null);
 	const [showGiveUp, setShowGiveUp] = useState(false);
 
 	const foundSet = new Set(state.foundLemmas);
 	const totalLemmas = lemmaSet.size;
 	const foundCount = state.foundLemmas.length;
 
-	useEffect(() => {
-		if (state.errorType) {
-			const err: ValidationError = state.errorType;
-			setToastMessage(ERROR_MESSAGES[err]);
-			setToastKey((k) => k + 1);
-		}
-	}, [state.errorType]);
+	const feedbackMessage = state.errorType
+		? ERROR_MESSAGES[state.errorType]
+		: state.statusMessage;
 
 	let titleVisible = false;
 	for (const lemma of titleLemmaSet) {
@@ -129,13 +123,13 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 								disabled={!ready}
 								placeholder={ready ? "Увядзіце слова…" : "Слоўнік загружаецца…"}
 							/>
-							{toastMessage && (
+							{feedbackMessage && (
 								<p
-									key={toastKey}
+									key={state.errorKey}
 									className="text-sakretna text-sm font-medium animate-fade-in"
 									role="status"
 								>
-									{toastMessage}
+									{feedbackMessage}
 								</p>
 							)}
 							{state.guesses.length > 0 && (
