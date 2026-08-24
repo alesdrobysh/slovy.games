@@ -3,7 +3,9 @@
 import { CheckCircle2, Frown, Share2 } from "lucide-react";
 import { Button } from "@/shared/components/ui/Button";
 import { Typography } from "@/shared/components/ui/Typography";
+import { SAKRETNA_EPOCH_DATE } from "@/shared/config";
 import { useShare } from "@/shared/hooks/useShare";
+import { dayIndexForDate } from "@/shared/lib/timezone";
 import type { Article, SavedProgress } from "../types";
 
 interface FinishCardProps {
@@ -13,15 +15,41 @@ interface FinishCardProps {
 	onPlayAnother?: () => void;
 }
 
-function buildShareText(
+function shareDuration(progress: SavedProgress): string {
+	if (!progress.startedAt || !progress.finishedAt) return "—";
+	const seconds = Math.max(
+		0,
+		Math.round(
+			(new Date(progress.finishedAt).getTime() -
+				new Date(progress.startedAt).getTime()) /
+				1000
+		)
+	);
+	return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
+}
+
+export function buildShareText(
 	mode: "win" | "lose",
 	_article: Article,
 	progress: SavedProgress
 ): string {
-	const head = mode === "win" ? "Сакрэтна: здагадаўся!" : "Сакрэтна: здаўся";
 	const guesses = progress.guesses.length;
-	const hintFlag = progress.hintsUsed > 0 ? " (з падказкай)" : "";
-	return `${head}${hintFlag} — ${guesses} спроб, ${progress.foundLemmas.length} расшыфраваных слоў. slovy.games/sakretna`;
+	const daily = /^\d{4}-\d{2}-\d{2}$/.test(progress.date);
+	const number = daily
+		? dayIndexForDate(SAKRETNA_EPOCH_DATE, progress.date) + 1
+		: null;
+	const patternCount = Math.min(guesses, 12);
+	const overflow = guesses > patternCount ? `+${guesses - patternCount}` : "";
+	const pattern = `${"🟧".repeat(patternCount)}${overflow}${mode === "win" ? "🟩" : "⬜"}`;
+	const link = daily
+		? `https://slovy.games/sakretna/day/${progress.date}`
+		: "https://slovy.games/sakretna";
+	return [
+		`Сакрэтна ${number ? `#${number}` : "· вольная гульня"} · ${progress.date}`,
+		pattern,
+		`${mode === "win" ? "Здагадана" : "Здача"} · ${guesses} спроб · падказка: ${progress.hintsUsed > 0 ? "так" : "не"} · ${shareDuration(progress)}`,
+		link,
+	].join("\n");
 }
 
 export function FinishCard({
@@ -31,7 +59,7 @@ export function FinishCard({
 	onPlayAnother,
 }: FinishCardProps) {
 	const shareText = buildShareText(mode, article, progress);
-	const { share, showToast } = useShare(shareText, {
+	const { share, isSharing, shareFeedback } = useShare(shareText, {
 		game: "sakretna",
 		context: "finish",
 	});
@@ -44,21 +72,23 @@ export function FinishCard({
 		<section className="bg-card ring-1 ring-rule rounded-2xl p-inset-lg flex flex-col gap-flow-md">
 			<div className="flex items-center gap-flow-sm">
 				<Icon className={accent} size={28} aria-hidden="true" />
-				<Typography variant="heading" as="h2" className={accent}>
-					{title}
-				</Typography>
+				<div className={accent}>
+					<Typography variant="heading" as="h2">
+						{title}
+					</Typography>
+				</div>
 			</div>
 			<div>
-				<Typography
-					variant="overline"
-					as="p"
-					className="text-ink-soft mb-flow-xs"
-				>
-					Артыкул
-				</Typography>
-				<Typography variant="subheading" as="p" className="text-sakretna">
-					{article.title}
-				</Typography>
+				<div className="text-ink-soft mb-flow-xs">
+					<Typography variant="overline" as="p">
+						Артыкул
+					</Typography>
+				</div>
+				<div className="text-sakretna">
+					<Typography variant="subheading" as="p">
+						{article.title}
+					</Typography>
+				</div>
 			</div>
 			<div className="text-ink-muted text-sm">
 				<a
@@ -82,6 +112,7 @@ export function FinishCard({
 					size="md"
 					startIcon={<Share2 size={16} />}
 					onClick={() => share()}
+					disabled={isSharing}
 				>
 					Падзяліцца
 				</Button>
@@ -96,9 +127,20 @@ export function FinishCard({
 					</Button>
 				)}
 			</div>
-			{showToast && (
-				<p className="text-sakretna text-sm" role="status">
-					Скапіявана ў буфер абмену
+			{shareFeedback && (
+				<p
+					className={
+						shareFeedback === "failed"
+							? "text-(--color-destructive) text-sm"
+							: "text-sakretna text-sm"
+					}
+					role="status"
+				>
+					{shareFeedback === "shared"
+						? "Адпраўлена"
+						: shareFeedback === "copied"
+							? "Скапіявана ў буфер абмену"
+							: "Не атрымалася падзяліцца. Паспрабуйце яшчэ раз."}
 				</p>
 			)}
 		</section>

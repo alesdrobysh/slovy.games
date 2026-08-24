@@ -29,12 +29,22 @@ export interface UseShareOptions {
 export function useShare(text: string, options: UseShareOptions) {
 	const [isSharing, setIsSharing] = useState(false);
 	const [showToast, setShowToast] = useState(false);
+	const [shareFeedback, setShareFeedback] = useState<
+		"shared" | "copied" | "failed" | null
+	>(null);
 
 	const doShare = useCallback(async () => {
 		if (isSharing) return;
 		setIsSharing(true);
 
 		const result = await shareText(text);
+		setShareFeedback(
+			result === "share"
+				? "shared"
+				: result === "clipboard"
+					? "copied"
+					: "failed"
+		);
 
 		posthog.capture("share_clicked", {
 			game: options.game,
@@ -49,11 +59,14 @@ export function useShare(text: string, options: UseShareOptions) {
 
 		if (result) {
 			setShowToast(true);
-			setTimeout(() => setShowToast(false), 2000);
 		}
+		setTimeout(() => {
+			setShowToast(false);
+			setShareFeedback(null);
+		}, 2500);
 
 		setIsSharing(false);
 	}, [text, isSharing, options.game, options.context]);
 
-	return { share: doShare, isSharing, showToast };
+	return { share: doShare, isSharing, showToast, shareFeedback };
 }

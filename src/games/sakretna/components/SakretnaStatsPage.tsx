@@ -168,7 +168,11 @@ export function SakretnaStatsPage() {
 						games.slice(0, 10).map((game) => (
 							<Link
 								key={game.date}
-								href={`/sakretna/play/${game.articleId}`}
+								href={
+									/^\d{4}-\d{2}-\d{2}$/.test(game.date)
+										? `/sakretna/day/${game.date}`
+										: `/sakretna/play/${game.articleId}`
+								}
 								className="min-h-16 p-inset-md flex items-center justify-between gap-flow-md hover:bg-paper focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--accent)"
 							>
 								<div>
