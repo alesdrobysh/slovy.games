@@ -136,7 +136,10 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 				{!finished && (
 					<div
 						className="fixed bottom-0 left-0 right-0 z-30 bg-paper/95 backdrop-blur-sm border-t border-rule md:static md:z-auto md:border-0 md:bg-transparent md:backdrop-blur-none lg:sticky lg:top-24"
-						style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+						style={{
+							bottom: "var(--bottom-banner-height, 0px)",
+							paddingBottom: "env(safe-area-inset-bottom, 0px)",
+						}}
 					>
 						<div className="mx-auto max-w-3xl md:max-w-none px-4 md:px-0 py-flow-md md:py-0 flex flex-col gap-flow-sm">
 							<ArticleActions

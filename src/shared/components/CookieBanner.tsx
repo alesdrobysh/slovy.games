@@ -15,7 +15,9 @@ export default function CookieBanner() {
 		? "theme-pobach"
 		: pathname?.startsWith("/valoshka")
 			? "theme-valoshka"
-			: "";
+			: pathname?.startsWith("/sakretna")
+				? "theme-sakretna"
+				: "";
 
 	useEffect(() => {
 		if (hasConsented === false) show();

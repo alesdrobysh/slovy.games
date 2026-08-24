@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { Button } from "@/shared/components/ui/Button";
 
 interface BottomBannerProps {
@@ -19,10 +20,28 @@ export function BottomBanner({
 	isVisible,
 	themeClass = "",
 }: BottomBannerProps) {
+	const bannerRef = useRef<HTMLElement>(null);
+
+	useEffect(() => {
+		if (!isVisible || !bannerRef.current) return;
+		const root = document.documentElement;
+		const updateReservedHeight = () => {
+			const height = bannerRef.current?.getBoundingClientRect().height ?? 0;
+			root.style.setProperty("--bottom-banner-height", `${height}px`);
+		};
+		updateReservedHeight();
+		window.addEventListener("resize", updateReservedHeight);
+		return () => {
+			window.removeEventListener("resize", updateReservedHeight);
+			root.style.removeProperty("--bottom-banner-height");
+		};
+	}, [isVisible]);
+
 	if (!isVisible) return null;
 
 	return (
 		<section
+			ref={bannerRef}
 			role="status"
 			aria-label={ariaLabel}
 			className={`${themeClass} fixed bottom-0 left-0 right-0 z-40`}
