@@ -7,6 +7,7 @@ const article = listArticles()[0];
 const picked = {
 	article,
 	tokens: tokenize(article.body),
+	titleTokens: tokenize(article.title),
 	date: "2026-07-11",
 };
 

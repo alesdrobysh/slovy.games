@@ -20,11 +20,10 @@ interface SakretnaPageProps {
 }
 
 export function SakretnaPage({ picked }: SakretnaPageProps) {
-	const { article, tokens, date } = picked;
+	const { article, tokens, titleTokens, date } = picked;
 	const {
 		state,
 		lemmaSet,
-		titleLemmaSet,
 		ready,
 		setInput,
 		submitGuess,
@@ -48,14 +47,6 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 	const feedbackMessage = state.errorType
 		? ERROR_MESSAGES[state.errorType]
 		: state.statusMessage;
-
-	let titleVisible = false;
-	for (const lemma of titleLemmaSet) {
-		if (foundSet.has(lemma)) {
-			titleVisible = true;
-			break;
-		}
-	}
 
 	const finished = state.won || state.givenUp;
 
@@ -87,9 +78,6 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 						<Typography variant="overline" as="span" className="text-sakretna">
 							Сакрэтна · {date}
 						</Typography>
-						<Typography variant="title" as="h1">
-							Здагадайцеся, пра які артыкул Вікіпедыі ідзе гаворка
-						</Typography>
 						<GameMetrics
 							guesses={state.guesses.length}
 							foundLemmas={foundSet}
@@ -111,10 +99,9 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 					>
 						<RedactedText
 							tokens={tokens}
+							titleTokens={titleTokens}
 							foundLemmas={foundSet}
 							highlighted={state.highlighted}
-							revealTitle={titleVisible || state.givenUp}
-							title={article.title}
 						/>
 					</section>
 

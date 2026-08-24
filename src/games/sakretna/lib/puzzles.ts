@@ -31,6 +31,7 @@ export function pickForDate(date: string): PickedArticle {
 	return {
 		article,
 		tokens: tokenize(article.body, serverLemmaOf),
+		titleTokens: tokenize(article.title, serverLemmaOf),
 		date,
 	};
 }

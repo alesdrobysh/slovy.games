@@ -5,6 +5,7 @@ import { RedactedText } from "./RedactedText";
 const EXCERPT =
 	"Горад Мінск — сталіца Беларусі і адзін з найстарэйшых гарадоў Еўропы. Першыя згадкі пра паселішча на месцы сучаснай сталіцы адносяцца да 1067 года.";
 const tokens = tokenize(EXCERPT);
+const titleTokens = tokenize("Мінск");
 
 const meta = {
 	title: "Sakretna/RedactedText",
@@ -18,6 +19,7 @@ type Story = StoryObj<typeof RedactedText>;
 export const AllRedacted: Story = {
 	args: {
 		tokens,
+		titleTokens,
 		foundLemmas: new Set(),
 	},
 };
@@ -25,6 +27,7 @@ export const AllRedacted: Story = {
 export const PartiallyRevealed: Story = {
 	args: {
 		tokens,
+		titleTokens,
 		foundLemmas: new Set(["горад", "сталіца", "беларусь"]),
 	},
 	render: (args) => (

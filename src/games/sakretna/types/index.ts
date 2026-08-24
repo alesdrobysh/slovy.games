@@ -79,5 +79,6 @@ export type GameAction =
 export interface PickedArticle {
 	article: Article;
 	tokens: ArticleToken[];
+	titleTokens: ArticleToken[];
 	date: string;
 }
