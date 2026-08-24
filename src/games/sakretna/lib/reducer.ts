@@ -51,14 +51,18 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 				new Set(state.foundLemmas),
 				action.titleLemmas
 			);
+			const normalizedGuess = normalizeGuess(action.rawGuess);
+			const isRepeatedMiss =
+				result.error === "not_in_article" &&
+				state.guesses.includes(normalizedGuess);
 			if (result.error) {
 				return {
 					...state,
 					guesses:
-						result.error === "not_in_article"
-							? [...state.guesses, normalizeGuess(action.rawGuess)]
+						result.error === "not_in_article" && !isRepeatedMiss
+							? [...state.guesses, normalizedGuess]
 							: state.guesses,
-					errorType: result.error,
+					errorType: isRepeatedMiss ? "already_tried" : result.error,
 					errorKey: state.errorKey + 1,
 					statusMessage: null,
 				};
@@ -75,7 +79,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 				errorType: null,
 				statusMessage: `Расшыфравана: ${lemma}`,
 				foundLemmas,
-				guesses: [...state.guesses, normalizeGuess(action.rawGuess)],
+				guesses: [...state.guesses, normalizedGuess],
 				won,
 				finishedAt: won ? new Date().toISOString() : state.finishedAt,
 				highlighted: lemma,

@@ -56,6 +56,8 @@ export type ValidationError =
 	| "empty"
 	| "too_short"
 	| "no_letters"
+	| "invalid_characters"
+	| "already_tried"
 	| "already_found"
 	| "not_in_article"
 	| "no_guesses_after_finish";

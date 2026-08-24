@@ -106,6 +106,36 @@ describe("SUBMIT_GUESS", () => {
 		expect(next.guesses).toEqual(["аўтамабіль"]);
 	});
 
+	it("counts only unique valid guesses", () => {
+		const miss = gameReducer(createInitialState(), {
+			type: "SUBMIT_GUESS",
+			rawGuess: "аўтамабіль",
+			tokens,
+			titleLemmas: NO_TITLE,
+		});
+		const repeated = gameReducer(miss, {
+			type: "SUBMIT_GUESS",
+			rawGuess: " аўтамабіль ",
+			tokens,
+			titleLemmas: NO_TITLE,
+		});
+
+		expect(repeated.errorType).toBe("already_tried");
+		expect(repeated.guesses).toEqual(["аўтамабіль"]);
+	});
+
+	it("does not count a wrong keyboard layout as an attempt", () => {
+		const next = gameReducer(createInitialState(), {
+			type: "SUBMIT_GUESS",
+			rawGuess: "xyz",
+			tokens,
+			titleLemmas: NO_TITLE,
+		});
+
+		expect(next.errorType).toBe("invalid_characters");
+		expect(next.guesses).toEqual([]);
+	});
+
 	it("blocks new guesses after game finished", () => {
 		const s = createInitialState();
 		const finished = gameReducer(s, { type: "GIVE_UP", lemmas: [] });

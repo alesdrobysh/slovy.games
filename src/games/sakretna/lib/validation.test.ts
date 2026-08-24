@@ -45,6 +45,15 @@ describe("validateGuess", () => {
 		expect(validateGuess("а", tokens, new Set()).error).toBe("too_short");
 	});
 
+	it("rejects latin or mixed-layout input", () => {
+		expect(validateGuess("xyz", tokens, new Set()).error).toBe(
+			"invalid_characters"
+		);
+		expect(validateGuess("мінск123", tokens, new Set()).error).toBe(
+			"invalid_characters"
+		);
+	});
+
 	it("rejects guesses not present in the article", () => {
 		const result = validateGuess("аўтамабіль", tokens, new Set());
 		expect(result.error).toBe("not_in_article");

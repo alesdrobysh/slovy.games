@@ -30,6 +30,9 @@ export function validateGuess(
 	if (normalized.length < 2) {
 		return { error: "too_short", lemma: null, revealedCount: 0 };
 	}
+	if (!/^[а-яёіў'’\-]+$/iu.test(normalized)) {
+		return { error: "invalid_characters", lemma: null, revealedCount: 0 };
+	}
 	if (!/[\p{L}\p{N}]/u.test(normalized)) {
 		return { error: "no_letters", lemma: null, revealedCount: 0 };
 	}
@@ -52,6 +55,8 @@ export const ERROR_MESSAGES: Record<ValidationError, string> = {
 	empty: "Увядзіце слова",
 	too_short: "Мінімум 2 літары",
 	no_letters: "Патрэбныя літары",
+	invalid_characters: "Толькі беларускія літары",
+	already_tried: "Ужо спрабавалі",
 	already_found: "Ужо расшыфравана",
 	not_in_article: "Няма ў артыкуле",
 	no_guesses_after_finish: "Гульня скончана",
