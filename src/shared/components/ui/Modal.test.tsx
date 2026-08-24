@@ -57,4 +57,46 @@ describe("Modal", () => {
 		await userEvent.click(screen.getByText("Body"));
 		expect(onClose).not.toHaveBeenCalled();
 	});
+
+	it("focuses the first meaningful control and traps Tab navigation", async () => {
+		const trigger = document.createElement("button");
+		trigger.textContent = "Open";
+		document.body.append(trigger);
+		trigger.focus();
+		const { unmount } = render(
+			<Modal isOpen onClose={jest.fn()} title="Focus test">
+				<button type="button">First action</button>
+				<button type="button">Last action</button>
+			</Modal>
+		);
+		await Promise.resolve();
+
+		const first = screen.getByRole("button", { name: "First action" });
+		const last = screen.getByRole("button", { name: "Last action" });
+		expect(first).toHaveFocus();
+		last.focus();
+		await userEvent.keyboard("{Tab}");
+		expect(screen.getByRole("button", { name: "Закрыць" })).toHaveFocus();
+		await userEvent.keyboard("{Shift>}{Tab}{/Shift}");
+		expect(last).toHaveFocus();
+
+		unmount();
+		expect(trigger).toHaveFocus();
+		trigger.remove();
+	});
+
+	it("makes page background inert while open", () => {
+		const background = document.createElement("main");
+		document.body.append(background);
+		const { unmount } = render(
+			<Modal isOpen onClose={jest.fn()} title="Inert test">
+				<button type="button">Action</button>
+			</Modal>
+		);
+		expect(background).toHaveAttribute("inert");
+		expect(background).toHaveAttribute("aria-hidden", "true");
+		unmount();
+		expect(background).not.toHaveAttribute("inert");
+		background.remove();
+	});
 });

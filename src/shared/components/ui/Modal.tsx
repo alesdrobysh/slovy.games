@@ -2,7 +2,8 @@
 
 import { X } from "lucide-react";
 import type { ReactNode } from "react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 export interface ModalProps {
 	isOpen: boolean;
@@ -12,6 +13,15 @@ export interface ModalProps {
 	maxWidth?: string;
 }
 
+const FOCUSABLE_SELECTOR = [
+	"button:not([disabled])",
+	"[href]",
+	"input:not([disabled])",
+	"select:not([disabled])",
+	"textarea:not([disabled])",
+	'[tabindex]:not([tabindex="-1"])',
+].join(",");
+
 export function Modal({
 	isOpen,
 	onClose,
@@ -20,36 +30,94 @@ export function Modal({
 	maxWidth = "480px",
 }: ModalProps) {
 	const dialogRef = useRef<HTMLDivElement>(null);
+	const backdropRef = useRef<HTMLDivElement>(null);
 	const prevFocusRef = useRef<HTMLElement | null>(null);
+	const [mounted, setMounted] = useState(false);
+
+	useEffect(() => setMounted(true), []);
 
 	useEffect(() => {
-		if (!isOpen) return;
+		if (!isOpen || !mounted) return;
 		prevFocusRef.current = document.activeElement as HTMLElement;
-		// Focus the dialog itself for screen readers
-		queueMicrotask(() => dialogRef.current?.focus());
+		queueMicrotask(() => {
+			const dialog = dialogRef.current;
+			if (!dialog) return;
+			const meaningful = Array.from(
+				dialog.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)
+			).find((element) => element.getAttribute("aria-label") !== "Закрыць");
+			(meaningful ?? dialog).focus();
+		});
 
-		const handleEscape = (e: KeyboardEvent) => {
-			if (e.key === "Escape") onClose();
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (event.key === "Escape") {
+				onClose();
+				return;
+			}
+			if (event.key !== "Tab" || !dialogRef.current) return;
+			const controls = Array.from(
+				dialogRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)
+			).filter((element) => !element.hidden && element.tabIndex !== -1);
+			if (controls.length === 0) {
+				event.preventDefault();
+				dialogRef.current.focus();
+				return;
+			}
+			const first = controls[0];
+			const last = controls[controls.length - 1];
+			if (event.shiftKey && document.activeElement === first) {
+				event.preventDefault();
+				last.focus();
+			} else if (!event.shiftKey && document.activeElement === last) {
+				event.preventDefault();
+				first.focus();
+			} else if (!dialogRef.current.contains(document.activeElement)) {
+				event.preventDefault();
+				first.focus();
+			}
 		};
-		document.addEventListener("keydown", handleEscape);
-		return () => document.removeEventListener("keydown", handleEscape);
-	}, [isOpen, onClose]);
+		document.addEventListener("keydown", handleKeyDown);
+		return () => document.removeEventListener("keydown", handleKeyDown);
+	}, [isOpen, mounted, onClose]);
 
 	useEffect(() => {
-		if (!isOpen) return;
+		if (!isOpen || !mounted) return;
 		const prev = document.body.style.overflow;
 		document.body.style.overflow = "hidden";
+		const backdrop = backdropRef.current;
+		const background = Array.from(document.body.children).filter(
+			(element): element is HTMLElement =>
+				element instanceof HTMLElement && element !== backdrop
+		);
+		const previous = background.map((element) => ({
+			element,
+			inert: element.inert,
+			hadInertAttribute: element.hasAttribute("inert"),
+			ariaHidden: element.getAttribute("aria-hidden"),
+		}));
+		for (const element of background) {
+			element.inert = true;
+			element.setAttribute("inert", "");
+			element.setAttribute("aria-hidden", "true");
+		}
 		return () => {
 			document.body.style.overflow = prev;
+			for (const item of previous) {
+				item.element.inert = item.inert;
+				if (!item.hadInertAttribute) item.element.removeAttribute("inert");
+				if (item.ariaHidden === null)
+					item.element.removeAttribute("aria-hidden");
+				else item.element.setAttribute("aria-hidden", item.ariaHidden);
+			}
 			prevFocusRef.current?.focus();
 		};
-	}, [isOpen]);
+	}, [isOpen, mounted]);
 
-	if (!isOpen) return null;
+	if (!isOpen || !mounted) return null;
 
-	return (
+	return createPortal(
 		// biome-ignore lint/a11y/noStaticElementInteractions: presentation backdrop
 		<div
+			ref={backdropRef}
 			onClick={onClose}
 			role="presentation"
 			className="fixed inset-0 z-50 flex items-center justify-center bg-paper/70 backdrop-blur-sm p-4"
@@ -77,7 +145,7 @@ export function Modal({
 							onClick={onClose}
 							aria-label="Закрыць"
 							type="button"
-							className="size-(--control-min-height) flex items-center justify-center rounded-full text-ink-muted hover:bg-rule transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+							className="size-(--control-min-height) flex items-center justify-center rounded-full text-ink-muted hover:bg-rule transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--accent) focus-visible:ring-offset-2 focus-visible:ring-offset-card"
 						>
 							<X size={18} aria-hidden="true" />
 						</button>
@@ -85,6 +153,7 @@ export function Modal({
 				)}
 				<div className="px-inset-lg py-4">{children}</div>
 			</div>
-		</div>
+		</div>,
+		document.body
 	);
 }
