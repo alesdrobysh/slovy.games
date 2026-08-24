@@ -17,6 +17,7 @@
 	--space-flow-sm:  0.5rem;     /*  8px — tight sibling gap        */
 	--space-flow-md:  0.75rem;    /* 12px — standard content gap     */
 	--space-flow-lg:  1rem;       /* 16px — loose group gap          */
+	--control-min-height: 2.75rem; /* 44px — minimum touch target    */
 }
 
 :root {

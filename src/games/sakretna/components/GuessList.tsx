@@ -50,7 +50,7 @@ function GuessRow({
 	if (record.hits === 0) {
 		return (
 			<span
-				className="flex min-w-0 items-center justify-between gap-flow-sm rounded-lg bg-secondary px-inset-sm py-flow-xs text-xs text-ink-muted"
+				className="flex min-w-0 min-h-(--control-min-height) items-center justify-between gap-flow-sm rounded-lg bg-secondary px-inset-sm py-flow-xs text-xs text-ink-muted"
 				aria-label={label}
 			>
 				{content}
@@ -66,8 +66,8 @@ function GuessRow({
 			aria-pressed={record.lemma === highlighted}
 			className={
 				record.lemma === highlighted
-					? "flex min-w-0 items-center justify-between gap-flow-sm rounded-lg bg-sakretna text-paper px-inset-sm py-flow-xs text-xs font-sans cursor-pointer"
-					: "flex min-w-0 items-center justify-between gap-flow-sm rounded-lg bg-secondary text-ink-muted px-inset-sm py-flow-xs text-xs font-sans cursor-pointer hover:bg-secondary/80"
+					? "flex min-w-0 min-h-(--control-min-height) items-center justify-between gap-flow-sm rounded-lg bg-sakretna text-paper px-inset-sm py-flow-xs text-xs font-sans cursor-pointer"
+					: "flex min-w-0 min-h-(--control-min-height) items-center justify-between gap-flow-sm rounded-lg bg-secondary text-ink-muted px-inset-sm py-flow-xs text-xs font-sans cursor-pointer hover:bg-secondary/80"
 			}
 		>
 			{content}
@@ -112,7 +112,7 @@ export function GuessList({
 			</div>
 			{records.length > recent.length && (
 				<details className="mt-flow-xs">
-					<summary className="cursor-pointer text-xs font-medium text-ink-muted">
+					<summary className="min-h-(--control-min-height) flex items-center cursor-pointer text-xs font-medium text-ink-muted">
 						Уся гісторыя ({records.length})
 					</summary>
 					<ol className="mt-flow-xs max-h-[40vh] overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-flow-xs">

@@ -80,7 +80,7 @@ export function RedactedText({
 									: `${token.text.length} схаваных літар, паказаць колькасць`
 							}
 							onClick={() => togglePeek(i)}
-							className="appearance-none border-0 p-0 inline-flex items-center justify-center align-baseline bg-ink/85 rounded-sm cursor-pointer text-paper text-[0.6em] leading-none font-sans"
+							className="relative appearance-none border-0 p-0 inline-flex items-center justify-center align-baseline bg-ink/85 rounded-sm cursor-pointer text-paper text-[0.6em] leading-none font-sans after:absolute after:size-(--control-min-height) after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2"
 							style={{
 								width: `${token.text.length * 0.6}em`,
 								height: "0.9em",

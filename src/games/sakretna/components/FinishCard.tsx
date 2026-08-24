@@ -65,7 +65,7 @@ export function FinishCard({
 					href={article.source}
 					target="_blank"
 					rel="noopener noreferrer"
-					className="text-sakretna underline hover:opacity-80"
+					className="inline-flex min-h-(--control-min-height) items-center text-sakretna underline hover:opacity-80"
 				>
 					Адкрыць у Вікіпедыі
 				</a>

@@ -77,7 +77,7 @@ export function Modal({
 							onClick={onClose}
 							aria-label="Закрыць"
 							type="button"
-							className="w-8 h-8 flex items-center justify-center rounded-full text-ink-muted hover:bg-rule transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+							className="size-(--control-min-height) flex items-center justify-center rounded-full text-ink-muted hover:bg-rule transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-valoshka/50 focus-visible:ring-offset-2 focus-visible:ring-offset-card"
 						>
 							<X size={18} aria-hidden="true" />
 						</button>
