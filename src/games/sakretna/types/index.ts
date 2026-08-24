@@ -24,6 +24,7 @@ export interface SavedProgress {
 	won: boolean;
 	givenUp: boolean;
 	hintsUsed: number;
+	startedAt?: string;
 	finishedAt?: string;
 }
 
@@ -48,6 +49,7 @@ export interface GameState {
 	won: boolean;
 	givenUp: boolean;
 	hintsUsed: number;
+	startedAt: string;
 	finishedAt: string | null;
 	highlighted: string | null;
 }

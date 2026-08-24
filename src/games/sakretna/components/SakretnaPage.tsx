@@ -65,6 +65,7 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 					won: state.won,
 					givenUp: state.givenUp,
 					hintsUsed: state.hintsUsed,
+					startedAt: state.startedAt,
 					finishedAt: state.finishedAt ?? undefined,
 				}}
 				onReadArticle={() => setShowResult(false)}
@@ -128,6 +129,7 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 								won: state.won,
 								givenUp: state.givenUp,
 								hintsUsed: state.hintsUsed,
+								startedAt: state.startedAt,
 								finishedAt: state.finishedAt ?? undefined,
 							}}
 						/>

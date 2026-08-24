@@ -12,6 +12,7 @@ export function createInitialState(): GameState {
 		won: false,
 		givenUp: false,
 		hintsUsed: 0,
+		startedAt: new Date().toISOString(),
 		finishedAt: null,
 		highlighted: null,
 	};
@@ -135,6 +136,7 @@ export function progressToState(p: SavedProgress): GameState {
 		won: p.won,
 		givenUp: p.givenUp,
 		hintsUsed: p.hintsUsed,
+		startedAt: p.startedAt ?? p.finishedAt ?? new Date().toISOString(),
 		finishedAt: p.finishedAt ?? null,
 		highlighted: null,
 	};
@@ -153,6 +155,7 @@ export function stateToProgress(
 		won: state.won,
 		givenUp: state.givenUp,
 		hintsUsed: state.hintsUsed,
+		startedAt: state.startedAt,
 		finishedAt: state.finishedAt ?? undefined,
 	};
 }
