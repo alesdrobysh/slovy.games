@@ -39,6 +39,7 @@ export function RedactedText({
 				return (
 					<span
 						key={key}
+						data-sakretna-lemma={token.lemma || undefined}
 						className={
 							isHighlighted
 								? "bg-sakretna text-paper px-0.5 rounded-sm"
@@ -66,12 +67,12 @@ export function RedactedText({
 	const blocks = buildArticleBlocks(tokens);
 
 	return (
-		<div className="font-display text-ink leading-relaxed text-base sm:text-lg">
+		<div
+			id="sakretna-article-top"
+			className="font-display text-ink leading-relaxed text-base sm:text-lg scroll-mt-20"
+		>
 			{titleTokens.length > 0 && (
-				<header
-					className="sticky top-16 z-20 -mx-inset-md sm:-mx-inset-lg -mt-inset-md sm:-mt-inset-lg mb-flow-lg px-inset-md sm:px-inset-lg py-flow-md bg-card/95 backdrop-blur-sm border-b border-rule"
-					aria-label="Зашыфраваная назва артыкула"
-				>
+				<header className="sticky top-16 z-20 -mx-inset-md sm:-mx-inset-lg -mt-inset-md sm:-mt-inset-lg mb-flow-lg px-inset-md sm:px-inset-lg py-flow-md bg-card/95 backdrop-blur-sm border-b border-rule">
 					<p className="text-ink-soft text-xs uppercase tracking-widest mb-flow-xs">
 						Зашыфраваны артыкул
 					</p>
@@ -92,7 +93,10 @@ export function RedactedText({
 										className="inline-block align-baseline bg-ink/85 rounded-sm h-[0.8em]"
 										style={{ width: `${token.text.length * 0.6}em` }}
 									/>
-									<span aria-hidden="true" className="text-xs font-normal text-ink-muted">
+									<span
+										aria-hidden="true"
+										className="text-xs font-normal text-ink-muted"
+									>
 										{token.text.length}
 									</span>
 								</span>
@@ -105,12 +109,19 @@ export function RedactedText({
 				ref={containerRef}
 				className="break-words hyphens-auto space-y-flow-md"
 			>
-				{blocks.map((block, index) => {
+				{blocks.map((block) => {
+					const blockKey =
+						block.kind === "list"
+							? block.items
+									.flat()
+									.map((token) => token.text)
+									.join("")
+							: block.tokens.map((token) => token.text).join("");
 					if (block.kind === "heading") {
 						const Heading = block.level === 2 ? "h2" : "h3";
 						return (
 							<Heading
-								key={`heading-${index}`}
+								key={`heading-${blockKey}`}
 								className="font-semibold text-ink mt-flow-lg"
 							>
 								{renderTokens(block.tokens, true)}
@@ -120,16 +131,20 @@ export function RedactedText({
 					if (block.kind === "list") {
 						return (
 							<ul
-								key={`list-${index}`}
+								key={`list-${blockKey}`}
 								className="list-disc pl-inset-lg space-y-flow-xs"
 							>
-								{block.items.map((item, itemIndex) => (
-									<li key={`item-${itemIndex}`}>{renderTokens(item)}</li>
+								{block.items.map((item) => (
+									<li key={item.map((token) => token.text).join("")}>
+										{renderTokens(item)}
+									</li>
 								))}
 							</ul>
 						);
 					}
-					return <p key={`paragraph-${index}`}>{renderTokens(block.tokens)}</p>;
+					return (
+						<p key={`paragraph-${blockKey}`}>{renderTokens(block.tokens)}</p>
+					);
 				})}
 			</div>
 		</div>

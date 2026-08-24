@@ -6,6 +6,7 @@ import { ERROR_MESSAGES } from "@/games/sakretna/lib/validation";
 import type { PickedArticle } from "@/games/sakretna/types";
 import { Typography } from "@/shared/components/ui/Typography";
 import { ArticleActions } from "./ArticleActions";
+import { ArticleNavigator } from "./ArticleNavigator";
 import { CompletionOverlay } from "./CompletionOverlay";
 import { FinishCard } from "./FinishCard";
 import { GameMetrics } from "./GameMetrics";
@@ -142,15 +143,18 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 						}}
 					>
 						<div className="mx-auto max-w-3xl md:max-w-none px-4 md:px-0 py-flow-md md:py-0 flex flex-col gap-flow-sm">
-							<ArticleActions
-								onUseHint={() => {
-									setHintPreview(previewHint());
-									setShowHint(true);
-								}}
-								onGiveUp={() => setShowGiveUp(true)}
-								hintAvailable={state.hintsUsed === 0}
-								finished={finished}
-							/>
+							<div className="flex items-center justify-between gap-flow-sm">
+								<ArticleActions
+									onUseHint={() => {
+										setHintPreview(previewHint());
+										setShowHint(true);
+									}}
+									onGiveUp={() => setShowGiveUp(true)}
+									hintAvailable={state.hintsUsed === 0}
+									finished={finished}
+								/>
+								<ArticleNavigator highlighted={state.highlighted} />
+							</div>
 							<GuessInput
 								value={state.currentInput}
 								onChange={setInput}
