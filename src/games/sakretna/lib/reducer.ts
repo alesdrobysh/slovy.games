@@ -94,11 +94,12 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 				hintsUsed: state.hintsUsed + 1,
 				errorType: null,
 				statusMessage: action.lemma
-					? `Падказка: расшыфравана «${action.lemma}»`
+					? `Падказка: «${action.lemma}» — раскрыта ${action.revealedCount}`
 					: "Падказка недаступная",
 				foundLemmas: action.lemma
 					? [...state.foundLemmas, action.lemma]
 					: state.foundLemmas,
+				highlighted: action.lemma,
 			};
 
 		case "GIVE_UP":

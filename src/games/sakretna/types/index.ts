@@ -69,7 +69,7 @@ export type GameAction =
 			tokens: ArticleToken[];
 			titleLemmas: Set<string>;
 	  }
-	| { type: "USE_HINT"; lemma: string | null }
+	| { type: "USE_HINT"; lemma: string | null; revealedCount: number }
 	| { type: "GIVE_UP"; lemmas: string[] }
 	| { type: "RESTORE"; progress: SavedProgress }
 	| { type: "CLEAR_ERROR" }

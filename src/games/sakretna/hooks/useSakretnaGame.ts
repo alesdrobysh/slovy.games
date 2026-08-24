@@ -23,25 +23,44 @@ export interface UseSakretnaGameReturn {
 	ready: boolean;
 	setInput: (value: string) => void;
 	submitGuess: () => void;
-	useHint: () => void;
+	previewHint: () => { lemma: string; revealedCount: number } | null;
+	useHint: (lemma: string, revealedCount: number) => void;
 	giveUp: () => void;
 	setHighlight: (lemma: string | null) => void;
 }
 
-/** Pick a random still-hidden, non-free, non-title word to reveal as a hint. */
-function pickHintLemma(
+const REFERENCE_SECTION_LEMMAS = new Set([
+	"літаратура",
+	"спасылка",
+	"крыніца",
+	"зноска",
+	"бібліяграфія",
+]);
+
+/** Pick a random hidden Belarusian word from the article's main content. */
+export function pickHintLemma(
 	tokens: ArticleToken[],
 	foundLemmas: ReadonlySet<string>,
 	titleLemmaSet: ReadonlySet<string>
 ): string | null {
 	const candidates = new Set<string>();
+	let atLineStart = true;
 	for (const t of tokens) {
+		if (t.type === "sep") {
+			if (t.text === "\n") atLineStart = true;
+			continue;
+		}
+		if (atLineStart && t.lemma && REFERENCE_SECTION_LEMMAS.has(t.lemma)) {
+			break;
+		}
+		atLineStart = false;
 		if (
-			t.type === "word" &&
 			t.lemma &&
 			!t.isFree &&
 			!foundLemmas.has(t.lemma) &&
-			!titleLemmaSet.has(t.lemma)
+			!titleLemmaSet.has(t.lemma) &&
+			t.text.length >= 4 &&
+			/^[а-яёіў'’\-]+$/iu.test(t.text)
 		) {
 			candidates.add(t.lemma);
 		}
@@ -93,6 +112,18 @@ export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
 
 	const lemmaSet = collectLemmas(tokens);
 	const titleLemmaSet = titleLemmas(article.title);
+	const previewHint = () => {
+		const lemma = pickHintLemma(
+			tokens,
+			new Set(state.foundLemmas),
+			titleLemmaSet
+		);
+		if (!lemma) return null;
+		const revealedCount = tokens.filter(
+			(token) => token.type === "word" && token.lemma === lemma
+		).length;
+		return { lemma, revealedCount };
+	};
 
 	return {
 		state,
@@ -108,10 +139,12 @@ export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
 				tokens,
 				titleLemmas: titleLemmaSet,
 			}),
-		useHint: () =>
+		previewHint,
+		useHint: (lemma, revealedCount) =>
 			dispatch({
 				type: "USE_HINT",
-				lemma: pickHintLemma(tokens, new Set(state.foundLemmas), titleLemmaSet),
+				lemma,
+				revealedCount,
 			}),
 		giveUp: () =>
 			dispatch({

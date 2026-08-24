@@ -11,6 +11,7 @@ import { FinishCard } from "./FinishCard";
 import { GiveUpModal } from "./GiveUpModal";
 import { GuessInput } from "./GuessInput";
 import { GuessList } from "./GuessList";
+import { HintModal } from "./HintModal";
 import { ProgressLine, RedactedText } from "./RedactedText";
 
 interface SakretnaPageProps {
@@ -26,12 +27,18 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 		ready,
 		setInput,
 		submitGuess,
+		previewHint,
 		useHint,
 		giveUp,
 		setHighlight,
 	} = useSakretnaGame(picked);
 	const [showGiveUp, setShowGiveUp] = useState(false);
 	const [showResult, setShowResult] = useState(true);
+	const [hintPreview, setHintPreview] = useState<{
+		lemma: string;
+		revealedCount: number;
+	} | null>(null);
+	const [showHint, setShowHint] = useState(false);
 
 	const foundSet = new Set(state.foundLemmas);
 	const totalLemmas = lemmaSet.size;
@@ -133,7 +140,10 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 					>
 						<div className="mx-auto max-w-3xl md:max-w-none px-4 md:px-0 py-flow-md md:py-0 flex flex-col gap-flow-sm">
 							<ArticleActions
-								onUseHint={useHint}
+								onUseHint={() => {
+									setHintPreview(previewHint());
+									setShowHint(true);
+								}}
 								onGiveUp={() => setShowGiveUp(true)}
 								hintAvailable={state.hintsUsed === 0}
 								finished={finished}
@@ -175,6 +185,17 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 					giveUp();
 				}}
 				onClose={() => setShowGiveUp(false)}
+			/>
+			<HintModal
+				isOpen={showHint}
+				preview={hintPreview}
+				onConfirm={() => {
+					if (hintPreview) {
+						useHint(hintPreview.lemma, hintPreview.revealedCount);
+					}
+					setShowHint(false);
+				}}
+				onClose={() => setShowHint(false)}
 			/>
 		</div>
 	);

@@ -221,21 +221,39 @@ describe("SUBMIT_GUESS", () => {
 describe("USE_HINT", () => {
 	it("increments hintsUsed up to 1", () => {
 		const s = createInitialState();
-		const a = gameReducer(s, { type: "USE_HINT", lemma: "горад" });
+		const a = gameReducer(s, {
+			type: "USE_HINT",
+			lemma: "горад",
+			revealedCount: 1,
+		});
 		expect(a.hintsUsed).toBe(1);
-		const b = gameReducer(a, { type: "USE_HINT", lemma: "мінск" });
+		const b = gameReducer(a, {
+			type: "USE_HINT",
+			lemma: "мінск",
+			revealedCount: 1,
+		});
 		expect(b.hintsUsed).toBe(1);
 	});
 
 	it("reveals the given lemma as if it were found", () => {
 		const s = createInitialState();
-		const next = gameReducer(s, { type: "USE_HINT", lemma: "горад" });
+		const next = gameReducer(s, {
+			type: "USE_HINT",
+			lemma: "горад",
+			revealedCount: 1,
+		});
 		expect(next.foundLemmas).toContain("горад");
+		expect(next.highlighted).toBe("горад");
+		expect(next.statusMessage).toBe("Падказка: «горад» — раскрыта 1");
 	});
 
 	it("reveals nothing when there's no eligible word", () => {
 		const s = createInitialState();
-		const next = gameReducer(s, { type: "USE_HINT", lemma: null });
+		const next = gameReducer(s, {
+			type: "USE_HINT",
+			lemma: null,
+			revealedCount: 0,
+		});
 		expect(next.hintsUsed).toBe(1);
 		expect(next.foundLemmas).toEqual([]);
 	});
@@ -247,10 +265,14 @@ describe("USE_HINT", () => {
 			tokens,
 			titleLemmas: NO_TITLE,
 		});
-		const hinted = gameReducer(miss, { type: "USE_HINT", lemma: "горад" });
+		const hinted = gameReducer(miss, {
+			type: "USE_HINT",
+			lemma: "горад",
+			revealedCount: 1,
+		});
 
 		expect(hinted.errorType).toBeNull();
-		expect(hinted.statusMessage).toBe("Падказка: расшыфравана «горад»");
+		expect(hinted.statusMessage).toBe("Падказка: «горад» — раскрыта 1");
 	});
 });
 
