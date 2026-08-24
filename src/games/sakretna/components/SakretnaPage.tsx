@@ -155,9 +155,10 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 								</p>
 							)}
 							{state.guesses.length > 0 && (
-								<div className="hidden sm:block">
+								<div>
 									<GuessList
 										guesses={state.guesses}
+										tokens={tokens}
 										highlighted={state.highlighted}
 										onSelect={setHighlight}
 									/>

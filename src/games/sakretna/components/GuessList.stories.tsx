@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { tokenize } from "../lib/tokenize";
 import { GuessList } from "./GuessList";
 
 const meta = {
@@ -13,6 +14,7 @@ type Story = StoryObj<typeof GuessList>;
 export const Populated: Story = {
 	args: {
 		guesses: ["горад", "сталіца", "архітэктура", "аўтамабіль", "гісторыя"],
+		tokens: tokenize("Горад — сталіца. Гісторыя горада і архітэктура."),
 	},
 };
 

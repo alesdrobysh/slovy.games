@@ -75,7 +75,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 				errorType: null,
 				statusMessage: `Расшыфравана: ${lemma}`,
 				foundLemmas,
-				guesses: [...state.guesses, lemma],
+				guesses: [...state.guesses, normalizeGuess(action.rawGuess)],
 				won,
 				finishedAt: won ? new Date().toISOString() : state.finishedAt,
 				highlighted: lemma,

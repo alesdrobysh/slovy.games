@@ -61,6 +61,7 @@ describe("SUBMIT_GUESS", () => {
 		});
 		expect(next.errorType).toBeNull();
 		expect(next.foundLemmas).toContain("горад");
+		expect(next.guesses).toContain("горада");
 	});
 
 	it("rejects duplicates", () => {
