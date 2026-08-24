@@ -57,11 +57,11 @@ export function useShare(text: string, options: UseShareOptions) {
 						: "failed",
 		});
 
-		if (result) {
+		if (result === "clipboard") {
 			setShowToast(true);
+			setTimeout(() => setShowToast(false), 2000);
 		}
 		setTimeout(() => {
-			setShowToast(false);
 			setShareFeedback(null);
 		}, 2500);
 

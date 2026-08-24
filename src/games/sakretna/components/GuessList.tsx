@@ -49,9 +49,12 @@ function GuessRow({
 
 	if (record.hits === 0) {
 		return (
-			<span className="flex min-w-0 min-h-(--control-min-height) items-center justify-between gap-flow-sm rounded-lg bg-secondary px-inset-sm py-flow-xs text-xs text-ink-muted">
+			<output
+				className="flex min-w-0 min-h-(--control-min-height) items-center justify-between gap-flow-sm rounded-lg bg-secondary px-inset-sm py-flow-xs text-xs text-ink-muted"
+				aria-label={label}
+			>
 				{content}
-			</span>
+			</output>
 		);
 	}
 

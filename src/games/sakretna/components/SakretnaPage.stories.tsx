@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { useState } from "react";
 import type {
 	Article,
 	ArticleToken,
@@ -59,6 +60,7 @@ function Fixture({
 	progress?: SavedProgress;
 	firstRun?: boolean;
 }) {
+	const [onboardingOpen, setOnboardingOpen] = useState(firstRun);
 	if (typeof window !== "undefined") {
 		window.localStorage.removeItem(`sakretna_${PICKED.date}`);
 		if (progress) {
@@ -73,7 +75,13 @@ function Fixture({
 	return (
 		<>
 			<SakretnaPage picked={PICKED} />
-			{firstRun && <HowToPlay isOpen isFirstRun onClose={() => {}} />}
+			{firstRun && (
+				<HowToPlay
+					isOpen={onboardingOpen}
+					isFirstRun
+					onClose={() => setOnboardingOpen(false)}
+				/>
+			)}
 		</>
 	);
 }

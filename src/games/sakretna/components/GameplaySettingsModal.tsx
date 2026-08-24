@@ -16,7 +16,7 @@ const OPTIONS: Array<{
 	{
 		key: "stickyTitle",
 		label: "Замацаваць назву",
-		description: "Трымаць зашыфраваны title зверху падчас чытання.",
+		description: "Трымаць зашыфраваную назву артыкула зверху падчас чытання.",
 	},
 	{
 		key: "autoScroll",
