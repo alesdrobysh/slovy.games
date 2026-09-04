@@ -7,8 +7,7 @@
 	border-radius: 8px;
 	border: none;
 	padding: var(--space-inset-xs) var(--space-inset-sm);
-	height: var(--control-min-height);
-	min-width: var(--control-min-height);
+	height: var(--control-default-height);
 	font-family: var(--font-b);
 	font-size: 12px;
 	font-weight: 700;
@@ -170,21 +169,20 @@
 .btn-icon-only {
 	aspect-ratio: 1;
 	padding: 0;
-	width: var(--control-min-height);
 }
 
 /* === Size modifiers === */
 
 .btn-sm {
 	--btn-icon-size: 12px;
-	height: var(--control-min-height);
+	height: var(--control-compact-height);
 	padding: var(--space-flow-xs) var(--space-inset-xs);
 	font-size: 10px;
 	border-radius: 6px;
 }
 .btn-lg {
 	--btn-icon-size: 16px;
-	height: var(--control-min-height);
+	height: var(--control-large-height);
 	padding: var(--space-flow-sm) var(--space-flow-lg);
 	font-size: 14px;
 	border-radius: 10px;

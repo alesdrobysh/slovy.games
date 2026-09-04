@@ -84,7 +84,7 @@ export function Nav({
 							startIcon={<ChevronLeft strokeWidth={2.5} />}
 						/>
 
-						<div className="flex-1 text-center">
+						<div className="flex-1 min-w-0 text-center">
 							<Typography
 								variant="heading"
 								as="span"
