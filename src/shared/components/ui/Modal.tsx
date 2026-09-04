@@ -130,7 +130,7 @@ export function Modal({
 				role="dialog"
 				aria-modal="true"
 				aria-labelledby={title ? "modal-title" : undefined}
-				className="bg-card ring-1 ring-rule rounded-2xl shadow-2xl w-full overflow-y-auto focus-visible:outline-none"
+				className="bg-card ring-1 ring-rule rounded-2xl shadow-2xl w-full overflow-y-auto overflow-x-hidden focus-visible:outline-none"
 				style={{ maxWidth, maxHeight: "90vh" }}
 			>
 				{title && (
