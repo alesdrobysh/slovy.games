@@ -27,9 +27,7 @@ describe("GiveUpModal Component", () => {
 
 		expect(screen.getByText("Ўпэўнены?")).toBeInTheDocument();
 		expect(
-			screen.getByText(
-				"Калі вы здасцеся, серыя перамог пачнецца спачатку. Працягваем?"
-			)
+			screen.getByText("Калі вы здасцеся, серыя перамог пачнецца спачатку")
 		).toBeInTheDocument();
 	});
 

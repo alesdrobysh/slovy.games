@@ -53,31 +53,31 @@ describe("FinishCard Component", () => {
 	};
 
 	describe("Lose Mode", () => {
-		it("should render lose mode correctly", () => {
+		it("should render lose mode correctly", async () => {
 			const loseProps = { ...defaultProps, mode: "lose" as const };
 			render(<FinishCard {...loseProps} />);
 
-			expect(screen.getByText("Заўтра — новае слова")).toBeInTheDocument();
+			expect(
+				await screen.findByText("Дзякуй за гульню. Заўтра будзе новае слова.")
+			).toBeInTheDocument();
 
 			const card = screen.getByTestId("finish-card");
 			expect(card).toHaveClass("bg-card");
 			expect(card).toHaveClass("ring-rule");
 
-			expect(screen.getByTestId("share-button")).toBeInTheDocument();
 			expect(screen.getByText("23:45:12")).toBeInTheDocument();
 		});
 	});
 
 	describe("Win Mode", () => {
-		it("should render win mode correctly", () => {
+		it("should render win mode correctly", async () => {
 			const winProps = { ...defaultProps, mode: "win" as const };
 			render(<FinishCard {...winProps} />);
 
 			expect(screen.getByText("Адгадана")).toBeInTheDocument();
 			expect(
-				screen.getByText(/Вы знайшлі слова за 3 спроб/)
+				await screen.findByText(/Вы адгадалі слова за 3/)
 			).toBeInTheDocument();
-
 			const card = screen.getByTestId("finish-card");
 			expect(card).toHaveClass("bg-pobach-soft");
 

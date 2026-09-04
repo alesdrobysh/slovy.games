@@ -13,16 +13,21 @@ describe("StatCard", () => {
 		expect(screen.getByText("85%")).toBeInTheDocument();
 	});
 
-	it("uses accent color when accent=true", () => {
+	it("uses the heading typography for the value", () => {
 		render(<StatCard label="Тэст" value={1} />);
 		const value = screen.getByText("1");
-		expect(value).toHaveClass("text-pobach");
+		expect(value).toHaveStyle({
+			fontSize: "24px",
+			fontWeight: "500",
+		});
 	});
 
-	it("has uppercase tracking on label", () => {
+	it("uses the overline typography for the label", () => {
 		render(<StatCard label="Тэст" value={1} />);
 		const label = screen.getByText("Тэст");
-		expect(label.className).toContain("uppercase");
-		expect(label.className).toContain("tracking-");
+		expect(label).toHaveStyle({
+			textTransform: "uppercase",
+			letterSpacing: "0.2em",
+		});
 	});
 });
