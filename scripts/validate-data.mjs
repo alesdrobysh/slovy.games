@@ -4,8 +4,8 @@
  * Called from the `build` script in package.json.
  */
 
-import { readFileSync, accessSync, statSync } from "node:fs";
-import { join, dirname } from "node:path";
+import { accessSync, readFileSync, statSync } from "node:fs";
+import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { MorphAnalyzer } from "belmorph";
 import { loadDict } from "belmorph/node";
@@ -134,7 +134,9 @@ checkFileExists("vectors.bin");
 
 // 2. Validate words.json
 {
-	const wordsRaw = JSON.parse(readFileSync(join(DATA_DIR, "words.json"), "utf-8"));
+	const wordsRaw = JSON.parse(
+		readFileSync(join(DATA_DIR, "words.json"), "utf-8")
+	);
 	const words = Array.isArray(wordsRaw) ? wordsRaw : wordsRaw?.words;
 
 	if (!Array.isArray(words) || words.length === 0) {
@@ -156,7 +158,7 @@ checkFileExists("vectors.bin");
 	if (Array.isArray(targetsData)) {
 		fail(
 			"targets.json — invalid format: got an array, expected {history: {...}, pool: [...]}. " +
-			"Restore it: git checkout HEAD -- src/data/targets.json"
+				"Restore it: git checkout HEAD -- src/data/targets.json"
 		);
 	}
 
@@ -164,7 +166,9 @@ checkFileExists("vectors.bin");
 	const pool = targetsData?.pool;
 
 	if (!history || typeof history !== "object" || Array.isArray(history)) {
-		fail("targets.json is missing the 'history' field (expected an object with day→word entries)");
+		fail(
+			"targets.json is missing the 'history' field (expected an object with day→word entries)"
+		);
 	}
 	if (!Array.isArray(pool) || pool.length === 0) {
 		fail("targets.json is missing the 'pool' field or pool is empty");
@@ -180,12 +184,16 @@ checkFileExists("vectors.bin");
 		);
 	}
 
-	ok(`targets.json — ${Object.keys(history).length} in history, ${pool.length} in pool`);
+	ok(
+		`targets.json — ${Object.keys(history).length} in history, ${pool.length} in pool`
+	);
 }
 
 // 4. Validate vectors.bin size matches word_count × vec_dim
 {
-	const wordsRaw = JSON.parse(readFileSync(join(DATA_DIR, "words.json"), "utf-8"));
+	const wordsRaw = JSON.parse(
+		readFileSync(join(DATA_DIR, "words.json"), "utf-8")
+	);
 	const words = Array.isArray(wordsRaw) ? wordsRaw : wordsRaw?.words;
 	const vecSize = 384; // embedding dimension
 	const expectedBytes = words.length * vecSize;
@@ -194,7 +202,7 @@ checkFileExists("vectors.bin");
 	if (actualBytes !== expectedBytes) {
 		fail(
 			`vectors.bin size mismatch: ${actualBytes.toLocaleString()} bytes, ` +
-			`expected ${expectedBytes.toLocaleString()} (${words.length} words × ${vecSize} dims)`
+				`expected ${expectedBytes.toLocaleString()} (${words.length} words × ${vecSize} dims)`
 		);
 	}
 	ok(`vectors.bin — size matches ${words.length} × ${vecSize}`);

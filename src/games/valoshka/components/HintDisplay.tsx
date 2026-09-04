@@ -2,8 +2,8 @@
 
 import type { HintState } from "@/games/valoshka/types";
 import { Typography } from "@/shared/components/ui/Typography";
-import { pluralize } from "@/shared/lib/pluralize";
 import { useDictReady } from "@/shared/hooks/useDictReady";
+import { pluralize } from "@/shared/lib/pluralize";
 
 interface HintDisplayProps {
 	hint: HintState;

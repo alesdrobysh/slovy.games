@@ -2,14 +2,14 @@
 
 import { Flame, Sparkles } from "lucide-react";
 import Link from "next/link";
-import type { Guess } from "@/games/pobach/types";
 import { getCurrentDayIndex, getStats } from "@/games/pobach/lib/storage";
-import { pluralize } from "@/shared/lib/pluralize";
-import { useDictReady } from "@/shared/hooks/useDictReady";
+import type { Guess } from "@/games/pobach/types";
 import { NextGameCountdown } from "@/shared/components/NextGameCountdown";
 import { TryOtherGamesLink } from "@/shared/components/TryOtherGamesLink";
 import { Button } from "@/shared/components/ui/Button";
 import { Typography } from "@/shared/components/ui/Typography";
+import { useDictReady } from "@/shared/hooks/useDictReady";
+import { pluralize } from "@/shared/lib/pluralize";
 import ShareButton from "./ShareButton";
 import TopWordsList from "./TopWordsList";
 
@@ -59,17 +59,18 @@ export default function FinishCard({
 					Адгадана <Sparkles size={28} style={{ color: "var(--pobach)" }} />
 				</Typography>
 			) : (
-				<>
-					{targetWord && (
-						<Typography
-							variant="title"
-							as="h2"
-							style={{ color: "var(--pobach)", marginBottom: "var(--space-flow-lg)" }}
-						>
-							{targetWord}
-						</Typography>
-					)}
-				</>
+				targetWord && (
+					<Typography
+						variant="title"
+						as="h2"
+						style={{
+							color: "var(--pobach)",
+							marginBottom: "var(--space-flow-lg)",
+						}}
+					>
+						{targetWord}
+					</Typography>
+				)
 			)}
 
 			<Typography
@@ -78,8 +79,7 @@ export default function FinishCard({
 			>
 				{isWin
 					? `Вы адгадалі слова за ${attempts} ${pluralize(attempts, "спроба", "accusative")}${hintsCount > 0 ? ` з ${hintsCount} ${pluralize(hintsCount, "падказка", "instrumental")}` : ""}. Заўтра будзе новае слова.`
-					: `Дзякуй за гульню.${hintsCount > 0 ? ` Выкарыстана ${hintsCount} ${pluralize(hintsCount, "падказка")}.` : ""} Заўтра будзе новае слова.`
-				}
+					: `Дзякуй за гульню.${hintsCount > 0 ? ` Выкарыстана ${hintsCount} ${pluralize(hintsCount, "падказка")}.` : ""} Заўтра будзе новае слова.`}
 			</Typography>
 
 			{isWin && (
@@ -104,7 +104,13 @@ export default function FinishCard({
 				<TryOtherGamesLink className="text-pobach" fromGame="pobach" />
 			</div>
 
-			<div style={{ marginTop: "var(--space-inset-md)", marginLeft: "calc(var(--space-inset-md) * -1)", marginRight: "calc(var(--space-inset-md) * -1)" }}>
+			<div
+				style={{
+					marginTop: "var(--space-inset-md)",
+					marginLeft: "calc(var(--space-inset-md) * -1)",
+					marginRight: "calc(var(--space-inset-md) * -1)",
+				}}
+			>
 				<TopWordsList dayIndex={dayIndex} />
 			</div>
 		</div>

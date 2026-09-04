@@ -2,8 +2,16 @@ import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { GameCard } from "@/shared/components/GameCard";
 import { GAMES } from "@/shared/types";
 
-const valoshka = GAMES.find((g) => g.id === "valoshka")!;
-const pobach = GAMES.find((g) => g.id === "pobach")!;
+const getGame = (id: string) => {
+	const game = GAMES.find((entry) => entry.id === id);
+	if (!game) {
+		throw new Error(`Missing game configuration: ${id}`);
+	}
+	return game;
+};
+
+const valoshka = getGame("valoshka");
+const pobach = getGame("pobach");
 
 const meta = {
 	title: "Shared/GameCard",

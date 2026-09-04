@@ -6,11 +6,7 @@ export interface ErrorMessageProps {
 
 export function ErrorMessage({ message, word, id }: ErrorMessageProps) {
 	return (
-		<div
-			id={id}
-			role="alert"
-			className="mt-flow-sm text-sm text-destructive"
-		>
+		<div id={id} role="alert" className="mt-flow-sm text-sm text-destructive">
 			{word && (
 				<>
 					<strong>&laquo;{word}&raquo;</strong> —{" "}

@@ -30,7 +30,12 @@ export function trackValoshkaGameStarted(date: string) {
 	capture("valoshka_game_started", { date });
 }
 
-export function trackValoshkaWordFound(word: string, isPangram: boolean, score: number, date: string) {
+export function trackValoshkaWordFound(
+	word: string,
+	isPangram: boolean,
+	score: number,
+	date: string
+) {
 	capture("valoshka_word_found", { word, isPangram, score, date });
 }
 
@@ -38,7 +43,11 @@ export function trackValoshkaHintUsed(date: string) {
 	capture("valoshka_hint_used", { date });
 }
 
-export function trackValoshkaVasiliokReached(totalWords: number, score: number, date: string) {
+export function trackValoshkaVasiliokReached(
+	totalWords: number,
+	score: number,
+	date: string
+) {
 	capture("valoshka_vasiliok_reached", { totalWords, score, date });
 }
 

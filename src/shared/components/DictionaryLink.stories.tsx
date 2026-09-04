@@ -75,8 +75,8 @@ function InContextSpecimen() {
 					maxWidth: 480,
 				}}
 			>
-				Links appear inline with body text — underline and accent color reveal on
-				hover, focus ring on keyboard navigation.
+				Links appear inline with body text — underline and accent color reveal
+				on hover, focus ring on keyboard navigation.
 			</p>
 			<div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
 				{SENTENCES.map(({ text, word }) => (
@@ -89,8 +89,7 @@ function InContextSpecimen() {
 							fontFamily: "var(--font-b)",
 						}}
 					>
-						{text}{" "}
-						<DictionaryLink word={word} source="storybook" />
+						{text} <DictionaryLink word={word} source="storybook" />
 					</p>
 				))}
 			</div>

@@ -7,7 +7,10 @@ const meta = {
 	parameters: { layout: "padded" },
 	decorators: [
 		(Story) => (
-			<div className="theme-pobach" style={{ maxWidth: 420, background: "var(--bg)", padding: 16 }}>
+			<div
+				className="theme-pobach"
+				style={{ maxWidth: 420, background: "var(--bg)", padding: 16 }}
+			>
 				<Story />
 			</div>
 		),

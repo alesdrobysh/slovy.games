@@ -1,4 +1,4 @@
-import { MorphAnalyzer, loadDictAsync, type CaseName } from "belmorph";
+import { type CaseName, loadDictAsync, MorphAnalyzer } from "belmorph";
 
 let _analyzer: MorphAnalyzer | null = null;
 

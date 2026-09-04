@@ -1,7 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { Share2, Lightbulb, Shuffle } from "lucide-react";
+import { Lightbulb, Share2, Shuffle } from "lucide-react";
+import type {
+	ButtonColor,
+	ButtonSize,
+	ButtonVariant,
+} from "@/shared/components/ui/Button";
 import { Button } from "@/shared/components/ui/Button";
-import type { ButtonColor, ButtonSize, ButtonVariant } from "@/shared/components/ui/Button";
 
 const meta = {
 	title: "Design/Buttons",
@@ -47,7 +51,7 @@ const PLAY_LABEL = "Гуляць";
 const ACTION_LABEL = "Падказка";
 const GIVE_UP_LABEL = "Здацца";
 
-const lab = (s: string) => ({
+const lab = (_s: string) => ({
 	fontSize: 10,
 	fontWeight: 700,
 	textTransform: "uppercase" as const,
@@ -136,10 +140,10 @@ function HierarchySpecimen() {
 					maxWidth: 560,
 				}}
 			>
-				Composable from two axes: <strong>variant</strong> (solid | outline | ghost)
-				and <strong>color</strong> (primary | neutral). Primary color resolves to the
-				game&rsquo;s accent ink (terracotta for Побач, cornflower for
-				Валошка). Icon-only buttons auto-size to 28×28px.
+				Composable from two axes: <strong>variant</strong> (solid | outline |
+				ghost) and <strong>color</strong> (primary | neutral). Primary color
+				resolves to the game&rsquo;s accent ink (terracotta for Побач,
+				cornflower for Валошка). Icon-only buttons auto-size to 28×28px.
 			</p>
 
 			{MATRIX.map(({ variant, color, label, spec, isIcon }) => (
@@ -195,12 +199,7 @@ function HierarchySpecimen() {
 								/>
 							</div>
 						) : label.includes("dashed") ? (
-							<Button
-								variant={variant}
-								color={color}
-								dashed
-								onClick={() => {}}
-							>
+							<Button variant={variant} color={color} dashed onClick={() => {}}>
 								{GIVE_UP_LABEL}
 							</Button>
 						) : (
@@ -376,8 +375,8 @@ function SizesSpecimen() {
 					maxWidth: 520,
 				}}
 			>
-				Four size steps — sm (compact), md (default), lg (prominent), xl (hero). Icon-only
-				buttons stay square at the size's height.
+				Four size steps — sm (compact), md (default), lg (prominent), xl (hero).
+				Icon-only buttons stay square at the size's height.
 			</p>
 
 			<div
@@ -658,8 +657,8 @@ function IconLabelSpecimen() {
 				}}
 			>
 				Pass a lucide icon component as <code>startIcon</code>. Without children
-				the button auto-sizes to 28×28px icon-only. With children it renders as a
-				labeled button.
+				the button auto-sizes to 28×28px icon-only. With children it renders as
+				a labeled button.
 			</p>
 
 			{ICON_COMBOS.map(({ variant, color, label }) => (

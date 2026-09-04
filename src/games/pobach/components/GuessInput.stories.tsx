@@ -72,8 +72,6 @@ export const ManyGuesses: Story = {
 	render: (args) => wrap(<GuessInput {...args} />),
 };
 
-
-
 export const Won: Story = {
 	args: { won: true },
 	render: (args) => wrap(<GuessInput {...args} />),

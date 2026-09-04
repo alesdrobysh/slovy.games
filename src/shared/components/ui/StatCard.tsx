@@ -8,9 +8,7 @@ export interface StatCardProps {
 export function StatCard({ label, value }: StatCardProps) {
 	return (
 		<div className="flex flex-col gap-flow-xs rounded-2xl p-inset-md bg-card ring-1 ring-rule">
-			<Typography variant="overline">
-				{label}
-			</Typography>
+			<Typography variant="overline">{label}</Typography>
 			<Typography variant="heading" className="text-ink">
 				{value}
 			</Typography>

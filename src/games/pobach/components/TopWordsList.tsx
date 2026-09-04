@@ -29,7 +29,9 @@ export default function TopWordsList({ dayIndex }: TopWordsListProps) {
 		setError(null);
 
 		try {
-			const response = await fetch(`/api/pobach/top-words?dayIndex=${dayIndex}`);
+			const response = await fetch(
+				`/api/pobach/top-words?dayIndex=${dayIndex}`
+			);
 			if (!response.ok) {
 				throw new Error("Failed to load top words");
 			}
@@ -65,9 +67,14 @@ export default function TopWordsList({ dayIndex }: TopWordsListProps) {
 				<div id="top-words-list" className="px-inset-lg pb-inset-md">
 					{isLoading && (
 						<div className="space-y-flow-sm">
-							{Array.from({ length: 10 }, (_, i) => (
-								// biome-ignore lint/suspicious/noArrayIndexKey: static skeleton list
-								<div key={`skeleton-${i}`} className="flex gap-flow-md animate-pulse">
+							{Array.from(
+								{ length: 10 },
+								(_, index) => `skeleton-${index}`
+							).map((skeletonId) => (
+								<div
+									key={skeletonId}
+									className="flex gap-flow-md animate-pulse"
+								>
 									<div className="h-4 w-8 bg-rule rounded" />
 									<div className="h-4 w-24 bg-rule rounded" />
 								</div>
@@ -93,12 +100,20 @@ export default function TopWordsList({ dayIndex }: TopWordsListProps) {
 							<thead>
 								<tr className="text-left border-b border-rule">
 									<th className="pb-flow-sm font-normal w-24">
-										<Typography variant="overline" as="span" style={{ color: "var(--fg-2)" }}>
+										<Typography
+											variant="overline"
+											as="span"
+											style={{ color: "var(--fg-2)" }}
+										>
 											Месца
 										</Typography>
 									</th>
 									<th className="pb-flow-sm font-normal">
-										<Typography variant="overline" as="span" style={{ color: "var(--fg-2)" }}>
+										<Typography
+											variant="overline"
+											as="span"
+											style={{ color: "var(--fg-2)" }}
+										>
 											Слова
 										</Typography>
 									</th>
@@ -109,19 +124,27 @@ export default function TopWordsList({ dayIndex }: TopWordsListProps) {
 									<tr
 										key={word.rank}
 										className={`border-b border-rule/50 last:border-0 ${word.rank === 1 ? "font-semibold" : ""}`}
-										style={{ color: word.rank === 1 ? "var(--rank-1)" : "var(--fg)" }}
+										style={{
+											color: word.rank === 1 ? "var(--rank-1)" : "var(--fg)",
+										}}
 									>
 										<td className="py-flow-sm">
 											<Typography
 												variant="overline"
 												as="span"
-												style={{ color: "var(--fg-2)", fontVariantNumeric: "tabular-nums" }}
+												style={{
+													color: "var(--fg-2)",
+													fontVariantNumeric: "tabular-nums",
+												}}
 											>
 												#{word.rank}
 											</Typography>
 										</td>
 										<td className="py-flow-sm">
-											<DictionaryLink word={word.word} source="pobach_top_words" />
+											<DictionaryLink
+												word={word.word}
+												source="pobach_top_words"
+											/>
 										</td>
 									</tr>
 								))}

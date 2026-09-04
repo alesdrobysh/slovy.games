@@ -46,7 +46,10 @@ export function DistributionChart({
 						: 0;
 
 				return (
-					<div key={range.label} className="flex items-center gap-flow-md text-sm">
+					<div
+						key={range.label}
+						className="flex items-center gap-flow-md text-sm"
+					>
 						<div className="w-14 text-right text-ink-muted shrink-0 whitespace-nowrap font-display tabular-nums">
 							{range.label}
 						</div>

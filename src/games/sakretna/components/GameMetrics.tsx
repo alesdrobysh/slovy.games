@@ -1,5 +1,5 @@
-import type { ArticleToken } from "../types";
 import { titleLemmas } from "../lib/tokenize";
+import type { ArticleToken } from "../types";
 
 interface GameMetricsProps {
 	guesses: number;

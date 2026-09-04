@@ -15,7 +15,10 @@ export default meta;
 type Story = StoryObj<typeof GamePageContent>;
 
 const wrap = (children: React.ReactNode) => (
-	<div className="theme-pobach" style={{ background: "var(--bg)", minHeight: "100vh" }}>
+	<div
+		className="theme-pobach"
+		style={{ background: "var(--bg)", minHeight: "100vh" }}
+	>
 		{children}
 	</div>
 );

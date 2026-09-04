@@ -39,7 +39,14 @@ export function PobachContour({ className }: PobachContourProps) {
 				/>
 			))}
 			<circle cx={CX} cy={CY} r="22" stroke="currentColor" strokeWidth="1.5" />
-			<circle cx={CX} cy={CY} r="163" stroke="currentColor" strokeWidth="0.75" strokeDasharray="5 11" />
+			<circle
+				cx={CX}
+				cy={CY}
+				r="163"
+				stroke="currentColor"
+				strokeWidth="0.75"
+				strokeDasharray="5 11"
+			/>
 		</svg>
 	);
 }

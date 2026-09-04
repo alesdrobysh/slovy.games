@@ -5,7 +5,12 @@ const RANK_ITEMS = [
 	{ color: "var(--rank-10)", word: "Дрэва", label: "вельмі блізка", rank: 4 },
 	{ color: "var(--rank-100)", word: "Птушка", label: "блізка", rank: 45 },
 	{ color: "var(--rank-1000)", word: "Грыб", label: "трохі далей", rank: 215 },
-	{ color: "var(--rank-default)", word: "Аўтамабіль", label: "вельмі далёка", rank: 15078 },
+	{
+		color: "var(--rank-default)",
+		word: "Аўтамабіль",
+		label: "вельмі далёка",
+		rank: 15078,
+	},
 ];
 
 function RulesContent() {
@@ -16,7 +21,10 @@ function RulesContent() {
 				напісанні.
 			</Typography>
 			<div>
-				<Typography variant="body" style={{ marginBottom: "var(--space-flow-sm)" }}>
+				<Typography
+					variant="body"
+					style={{ marginBottom: "var(--space-flow-sm)" }}
+				>
 					Напрыклад, загадана слова:{" "}
 					<strong className="text-pobach">ЛЕС</strong>
 				</Typography>
@@ -28,7 +36,11 @@ function RulesContent() {
 								aria-hidden="true"
 								style={{ backgroundColor: item.color }}
 							/>
-							<Typography variant="body" as="span" style={{ textAlign: "left", hyphens: "none" }}>
+							<Typography
+								variant="body"
+								as="span"
+								style={{ textAlign: "left", hyphens: "none" }}
+							>
 								{item.word} — <strong>{item.label}</strong> (&#8470;{item.rank})
 							</Typography>
 						</li>

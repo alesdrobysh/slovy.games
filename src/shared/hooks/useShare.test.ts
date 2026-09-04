@@ -19,7 +19,9 @@ describe("useShare", () => {
 	});
 
 	it("starts with isSharing=false and showToast=false", () => {
-		const { result } = renderHook(() => useShare("hello", { game: "pobach", context: "finish" }));
+		const { result } = renderHook(() =>
+			useShare("hello", { game: "pobach", context: "finish" })
+		);
 		expect(result.current.isSharing).toBe(false);
 		expect(result.current.showToast).toBe(false);
 	});
@@ -33,7 +35,9 @@ describe("useShare", () => {
 			writable: true,
 		});
 
-		const { result } = renderHook(() => useShare("test text", { game: "pobach", context: "finish" }));
+		const { result } = renderHook(() =>
+			useShare("test text", { game: "pobach", context: "finish" })
+		);
 
 		await act(async () => {
 			await result.current.share();
@@ -50,7 +54,9 @@ describe("useShare", () => {
 		const share = jest.fn().mockResolvedValue(undefined);
 		Object.defineProperty(navigator, "share", { value: share, writable: true });
 
-		const { result } = renderHook(() => useShare("test text", { game: "pobach", context: "finish" }));
+		const { result } = renderHook(() =>
+			useShare("test text", { game: "pobach", context: "finish" })
+		);
 
 		await act(async () => {
 			await result.current.share();
@@ -70,7 +76,9 @@ describe("useShare", () => {
 		const writeText = jest.fn().mockResolvedValue(undefined);
 		Object.assign(navigator, { clipboard: { writeText } });
 
-		const { result } = renderHook(() => useShare("test text", { game: "pobach", context: "finish" }));
+		const { result } = renderHook(() =>
+			useShare("test text", { game: "pobach", context: "finish" })
+		);
 
 		await act(async () => {
 			await result.current.share();
@@ -88,7 +96,9 @@ describe("useShare", () => {
 		const writeText = jest.fn().mockRejectedValue(new Error("denied"));
 		Object.assign(navigator, { clipboard: { writeText } });
 
-		const { result } = renderHook(() => useShare("test text", { game: "pobach", context: "finish" }));
+		const { result } = renderHook(() =>
+			useShare("test text", { game: "pobach", context: "finish" })
+		);
 
 		await act(async () => {
 			await result.current.share();

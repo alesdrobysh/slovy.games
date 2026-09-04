@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { useState } from "react";
-import { Modal } from "@/shared/components/ui/Modal";
 import { Button } from "@/shared/components/ui/Button";
+import { Modal } from "@/shared/components/ui/Modal";
 
 const meta = {
 	title: "Design/Modal",
@@ -48,8 +48,8 @@ const bodyText = (
 		}}
 	>
 		Адгадайце слова за шэсць спроб. Кожная спроба павінна быць сапраўдным
-		беларускім словам. Колер клеткі паказвае, наколькі блізка вы да
-		правільнага адказу.
+		беларускім словам. Колер клеткі паказвае, наколькі блізка вы да правільнага
+		адказу.
 	</p>
 );
 
@@ -71,9 +71,12 @@ export const ScrollableContent: Story = {
 					lineHeight: 1.7,
 				}}
 			>
-				{Array.from({ length: 12 }, (_, i) => (
-					<p key={i} style={{ margin: 0 }}>
-						Правіла {i + 1}: Адгадайце слова за шэсць спроб. Кожная спроба
+				{Array.from({ length: 12 }, (_, index) => ({
+					id: `rule-${index + 1}`,
+					number: index + 1,
+				})).map((rule) => (
+					<p key={rule.id} style={{ margin: 0 }}>
+						Правіла {rule.number}: Адгадайце слова за шэсць спроб. Кожная спроба
 						павінна быць сапраўдным беларускім словам. Колер клеткі паказвае,
 						наколькі блізка вы да правільнага адказу.
 					</p>

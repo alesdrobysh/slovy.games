@@ -80,7 +80,14 @@ export function GamePageContent({ state, actions }: GamePageContentProps) {
 			) : (
 				lastGuess && (
 					<output aria-live="polite" className="block mb-inset-lg">
-						<Typography variant="overline" as="p" className="text-ink-soft" style={{ marginBottom: "var(--space-flow-md)" }}>Апошняе слова:</Typography>
+						<Typography
+							variant="overline"
+							as="p"
+							className="text-ink-soft"
+							style={{ marginBottom: "var(--space-flow-md)" }}
+						>
+							Апошняе слова:
+						</Typography>
 						<GuessCard guess={lastGuess} highlight />
 					</output>
 				)

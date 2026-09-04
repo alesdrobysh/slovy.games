@@ -85,8 +85,8 @@ function VariantsSpecimen() {
 			>
 				Three semantic variants: <strong>accent</strong> (game color),{" "}
 				<strong>success</strong> (positive outcome), <strong>neutral</strong>{" "}
-				(secondary metadata). All share the same typographic treatment —
-				10px uppercase with wide tracking.
+				(secondary metadata). All share the same typographic treatment — 10px
+				uppercase with wide tracking.
 			</p>
 
 			{VARIANTS.map(({ variant, label, spec, sample }) => (

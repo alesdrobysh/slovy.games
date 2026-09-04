@@ -6,96 +6,96 @@
 /* Insets: padding inside UI components                           */
 /* Flow:   gap between sibling elements                           */
 :root {
-	--space-inset-xs:  0.5rem;     /*  8px — tight badge / chip       */
-	--space-inset-sm:  0.75rem;    /* 12px — small control padding    */
-	--space-inset-md:  1.25rem;    /* 20px — card surface (≈ p-5)     */
-	--space-inset-lg:  1.5rem;     /* 24px — panel / modal (≈ px-6)   */
-	--space-inset-xl:  2rem;       /* 32px — card content padding      */
-	--space-inset-2xl: 3rem;       /* 48px — card content padding (sm) */
+	--space-inset-xs: 0.5rem; /*  8px — tight badge / chip       */
+	--space-inset-sm: 0.75rem; /* 12px — small control padding    */
+	--space-inset-md: 1.25rem; /* 20px — card surface (≈ p-5)     */
+	--space-inset-lg: 1.5rem; /* 24px — panel / modal (≈ px-6)   */
+	--space-inset-xl: 2rem; /* 32px — card content padding      */
+	--space-inset-2xl: 3rem; /* 48px — card content padding (sm) */
 
-	--space-flow-xs:  0.25rem;    /*  4px — icon + label             */
-	--space-flow-sm:  0.5rem;     /*  8px — tight sibling gap        */
-	--space-flow-md:  0.75rem;    /* 12px — standard content gap     */
-	--space-flow-lg:  1rem;       /* 16px — loose group gap          */
+	--space-flow-xs: 0.25rem; /*  4px — icon + label             */
+	--space-flow-sm: 0.5rem; /*  8px — tight sibling gap        */
+	--space-flow-md: 0.75rem; /* 12px — standard content gap     */
+	--space-flow-lg: 1rem; /* 16px — loose group gap          */
 	--control-min-height: 2.75rem; /* 44px — minimum touch target    */
 }
 
 :root {
-	--bg:            #F6F3EC;
-	--surface:       #FFFDF8;
-	--surface-warm:  #F0EDE4;
-	--fg:            #1C1915;
-	--fg-2:          #524E47;
-	--muted:         #8A857C;
-	--border:        #D8D3C8;
-	--border-strong: #AAA49B;
-	--pobach:        #C2621C;
-	--pobach-dim:    #FDF4EB;
-	--valoshka:      #3555BF;
-	--valoshka-dim:  #EBF0FA;
-	--sakretna:      #2E6B4F;
-	--sakretna-dim:  #E8F1EC;
-	--ornament:      #B5AFA5;
-	--font-d:        'Literata', Georgia, serif;
-	--font-b:        'Wix Madefor Text', system-ui, sans-serif;
-	--ease:          150ms ease;
+	--bg: #f6f3ec;
+	--surface: #fffdf8;
+	--surface-warm: #f0ede4;
+	--fg: #1c1915;
+	--fg-2: #524e47;
+	--muted: #8a857c;
+	--border: #d8d3c8;
+	--border-strong: #aaa49b;
+	--pobach: #c2621c;
+	--pobach-dim: #fdf4eb;
+	--valoshka: #3555bf;
+	--valoshka-dim: #ebf0fa;
+	--sakretna: #2e6b4f;
+	--sakretna-dim: #e8f1ec;
+	--ornament: #b5afa5;
+	--font-d: "Literata", Georgia, serif;
+	--font-b: "Wix Madefor Text", system-ui, sans-serif;
+	--ease: 150ms ease;
 
 	/* Layout */
-	--page-py:     clamp(2.5rem, 5vw, 5rem);
+	--page-py: clamp(2.5rem, 5vw, 5rem);
 	--section-gap: clamp(3rem, 5vw, 5rem);
 
 	/* Theme accent — valoshka default; overridden by .theme-pobach */
-	--accent:        var(--valoshka);
-	--accent-dim:    var(--valoshka-dim);
-	--accent-light:  color-mix(in oklab, var(--valoshka) 80%, white 20%);
-	--accent-dark:   color-mix(in oklab, var(--valoshka) 80%, black 20%);
+	--accent: var(--valoshka);
+	--accent-dim: var(--valoshka-dim);
+	--accent-light: color-mix(in oklab, var(--valoshka) 80%, white 20%);
+	--accent-dark: color-mix(in oklab, var(--valoshka) 80%, black 20%);
 	--accent-border: color-mix(in oklab, var(--valoshka) 22%, transparent);
 
 	/* Valoshka cell fill colors */
-	--cell-center:        #252850;
-	--cell-outer:         #7b9cf0;
-	--cell-center-hover:  #2a3670;
-	--cell-outer-hover:   #6a88e0;
+	--cell-center: #252850;
+	--cell-outer: #7b9cf0;
+	--cell-center-hover: #2a3670;
+	--cell-outer-hover: #6a88e0;
 	--cell-letter-center: #fff;
-	--cell-letter-outer:  #fff;
+	--cell-letter-outer: #fff;
 
 	/* Pobach rank colors */
-	--rank-1:       #16a34a;
-	--rank-10:      #16a34a;
-	--rank-100:     #84cc16;
-	--rank-1000:    var(--pobach);
+	--rank-1: #16a34a;
+	--rank-10: #16a34a;
+	--rank-100: #84cc16;
+	--rank-1000: var(--pobach);
 	--rank-default: #4b83c8;
 
 	/* Pobach attempt gradient */
-	--attempts-1:    color-mix(in oklab, var(--pobach) 100%, black 0%);
-	--attempts-10:   color-mix(in oklab, var(--pobach) 85%,  black 15%);
-	--attempts-50:   color-mix(in oklab, var(--pobach) 70%,  black 30%);
-	--attempts-100:  color-mix(in oklab, var(--pobach) 55%,  black 45%);
-	--attempts-many: color-mix(in oklab, var(--pobach) 40%,  black 60%);
+	--attempts-1: color-mix(in oklab, var(--pobach) 100%, black 0%);
+	--attempts-10: color-mix(in oklab, var(--pobach) 85%, black 15%);
+	--attempts-50: color-mix(in oklab, var(--pobach) 70%, black 30%);
+	--attempts-100: color-mix(in oklab, var(--pobach) 55%, black 45%);
+	--attempts-many: color-mix(in oklab, var(--pobach) 40%, black 60%);
 }
 
 [data-theme="dark"] {
-	--bg:            #141210;
-	--surface:       #1E1B16;
-	--surface-warm:  #252118;
-	--fg:            #E5E2D6;
-	--fg-2:          #ABA69C;
-	--muted:         #6B655C;
-	--border:        #302C25;
-	--border-strong: #46403A;
-	--pobach:        #E07B35;
-	--pobach-dim:    #281808;
-	--valoshka:      #5E7ADB;
-	--valoshka-dim:  #0C1424;
-	--sakretna:      #5C9C7E;
-	--sakretna-dim:  #102820;
-	--ornament:      #565140;
+	--bg: #141210;
+	--surface: #1e1b16;
+	--surface-warm: #252118;
+	--fg: #e5e2d6;
+	--fg-2: #aba69c;
+	--muted: #6b655c;
+	--border: #302c25;
+	--border-strong: #46403a;
+	--pobach: #e07b35;
+	--pobach-dim: #281808;
+	--valoshka: #5e7adb;
+	--valoshka-dim: #0c1424;
+	--sakretna: #5c9c7e;
+	--sakretna-dim: #102820;
+	--ornament: #565140;
 
 	/* Dark-mode cell overrides */
-	--cell-center:       #141e50;
-	--cell-outer:        #4a62a8;
+	--cell-center: #141e50;
+	--cell-outer: #4a62a8;
 	--cell-center-hover: #1c2a68;
-	--cell-outer-hover:  #5a72b8;
+	--cell-outer-hover: #5a72b8;
 }
 
 /* ================================================================
@@ -103,40 +103,40 @@
    ================================================================ */
 
 @theme inline {
-	--color-paper:          var(--bg);
-	--color-card:           var(--surface);
-	--color-secondary:      var(--surface-warm);
-	--color-ink:            var(--fg);
-	--color-ink-muted:      var(--fg-2);
-	--color-ink-soft:       color-mix(in oklab, var(--fg-2) 55%, transparent);
-	--color-rule:           var(--border);
-	--color-rule-strong:    var(--border-strong);
-	--color-valoshka:       var(--valoshka);
-	--color-valoshka-soft:  color-mix(in oklab, var(--valoshka) 10%, transparent);
-	--color-pobach:         var(--pobach);
-	--color-pobach-soft:    color-mix(in oklab, var(--pobach) 10%, transparent);
-	--color-sakretna:       var(--sakretna);
-	--color-sakretna-soft:  color-mix(in oklab, var(--sakretna) 10%, transparent);
-	--color-success:        #16a34a;
-	--color-warning:        var(--pobach);
-	--color-destructive:    #ef4444;
-	--color-ornament:       var(--ornament);
-	--font-family-display:  var(--font-d);
-	--font-family-sans:     var(--font-b);
+	--color-paper: var(--bg);
+	--color-card: var(--surface);
+	--color-secondary: var(--surface-warm);
+	--color-ink: var(--fg);
+	--color-ink-muted: var(--fg-2);
+	--color-ink-soft: color-mix(in oklab, var(--fg-2) 55%, transparent);
+	--color-rule: var(--border);
+	--color-rule-strong: var(--border-strong);
+	--color-valoshka: var(--valoshka);
+	--color-valoshka-soft: color-mix(in oklab, var(--valoshka) 10%, transparent);
+	--color-pobach: var(--pobach);
+	--color-pobach-soft: color-mix(in oklab, var(--pobach) 10%, transparent);
+	--color-sakretna: var(--sakretna);
+	--color-sakretna-soft: color-mix(in oklab, var(--sakretna) 10%, transparent);
+	--color-success: #16a34a;
+	--color-warning: var(--pobach);
+	--color-destructive: #ef4444;
+	--color-ornament: var(--ornament);
+	--font-family-display: var(--font-d);
+	--font-family-sans: var(--font-b);
 
 	/* Spacing — generates p-inset-md, gap-flow-sm, px-inset-lg, etc. */
-	--spacing-inset-xs:     var(--space-inset-xs);
-	--spacing-inset-sm:     var(--space-inset-sm);
-	--spacing-inset-md:     var(--space-inset-md);
-	--spacing-inset-lg:     var(--space-inset-lg);
-	--spacing-inset-xl:     var(--space-inset-xl);
-	--spacing-inset-2xl:    var(--space-inset-2xl);
-	--spacing-flow-xs:      var(--space-flow-xs);
-	--spacing-flow-sm:      var(--space-flow-sm);
-	--spacing-flow-md:      var(--space-flow-md);
-	--spacing-flow-lg:      var(--space-flow-lg);
-	--spacing-page-py:      var(--page-py);
-	--spacing-section-gap:  var(--section-gap);
+	--spacing-inset-xs: var(--space-inset-xs);
+	--spacing-inset-sm: var(--space-inset-sm);
+	--spacing-inset-md: var(--space-inset-md);
+	--spacing-inset-lg: var(--space-inset-lg);
+	--spacing-inset-xl: var(--space-inset-xl);
+	--spacing-inset-2xl: var(--space-inset-2xl);
+	--spacing-flow-xs: var(--space-flow-xs);
+	--spacing-flow-sm: var(--space-flow-sm);
+	--spacing-flow-md: var(--space-flow-md);
+	--spacing-flow-lg: var(--space-flow-lg);
+	--spacing-page-py: var(--page-py);
+	--spacing-section-gap: var(--section-gap);
 }
 
 /* ================================================================
@@ -176,17 +176,17 @@
    ================================================================ */
 
 .theme-pobach {
-	--accent:        var(--pobach);
-	--accent-dim:    var(--pobach-dim);
-	--accent-light:  color-mix(in oklab, var(--pobach) 80%, white 20%);
-	--accent-dark:   color-mix(in oklab, var(--pobach) 80%, black 20%);
+	--accent: var(--pobach);
+	--accent-dim: var(--pobach-dim);
+	--accent-light: color-mix(in oklab, var(--pobach) 80%, white 20%);
+	--accent-dark: color-mix(in oklab, var(--pobach) 80%, black 20%);
 	--accent-border: color-mix(in oklab, var(--pobach) 22%, transparent);
 }
 
 .theme-sakretna {
-	--accent:        var(--sakretna);
-	--accent-dim:    var(--sakretna-dim);
-	--accent-light:  color-mix(in oklab, var(--sakretna) 80%, white 20%);
-	--accent-dark:   color-mix(in oklab, var(--sakretna) 80%, black 20%);
+	--accent: var(--sakretna);
+	--accent-dim: var(--sakretna-dim);
+	--accent-light: color-mix(in oklab, var(--sakretna) 80%, white 20%);
+	--accent-dark: color-mix(in oklab, var(--sakretna) 80%, black 20%);
 	--accent-border: color-mix(in oklab, var(--sakretna) 22%, transparent);
 }

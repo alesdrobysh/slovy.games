@@ -6,8 +6,8 @@ import { HowToPlay } from "@/games/valoshka/components/HowToPlay";
 import { StorageInspector } from "@/games/valoshka/components/StorageInspector";
 import { YesterdayModal } from "@/games/valoshka/components/YesterdayModal";
 import type { Puzzle } from "@/games/valoshka/types";
-import { Button } from "@/shared/components/ui/Button";
 import { Nav } from "@/shared/components/Nav";
+import { Button } from "@/shared/components/ui/Button";
 
 interface Props {
 	puzzle: Puzzle;

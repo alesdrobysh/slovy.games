@@ -1,9 +1,14 @@
-export type { ErrorMessageProps } from "./ErrorMessage";
-export { ErrorMessage } from "./ErrorMessage";
 export type { BadgeProps } from "./Badge";
 export { Badge } from "./Badge";
-export type { ButtonProps, ButtonVariant, ButtonColor, ButtonSize } from "./Button";
+export type {
+	ButtonColor,
+	ButtonProps,
+	ButtonSize,
+	ButtonVariant,
+} from "./Button";
 export { Button } from "./Button";
+export type { ErrorMessageProps } from "./ErrorMessage";
+export { ErrorMessage } from "./ErrorMessage";
 export type { ModalProps } from "./Modal";
 export { Modal } from "./Modal";
 export type { StatCardProps } from "./StatCard";

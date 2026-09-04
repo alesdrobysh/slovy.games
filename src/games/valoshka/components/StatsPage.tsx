@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
 import { Share2 } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import { RankDistributionChart } from "@/games/valoshka/components/RankDistributionChart";
 import { RANKS } from "@/games/valoshka/lib/scoring";
 import { DEFAULT_STATS, loadStats } from "@/games/valoshka/lib/storage";
@@ -9,13 +9,13 @@ import type { GameStats } from "@/games/valoshka/types";
 import { Button } from "@/shared/components/ui/Button";
 import { StatCard } from "@/shared/components/ui/StatCard";
 import { Typography } from "@/shared/components/ui/Typography";
+import { useDictReady } from "@/shared/hooks/useDictReady";
 import { useShare } from "@/shared/hooks/useShare";
+import { pluralize } from "@/shared/lib/pluralize";
 import {
 	getMskDateString,
 	getMskYesterdayDateString,
 } from "@/shared/lib/timezone";
-import { pluralize } from "@/shared/lib/pluralize";
-import { useDictReady } from "@/shared/hooks/useDictReady";
 
 interface HistoryEntry {
 	date: string;
@@ -33,9 +33,7 @@ function formatDateLabel(date: string): string {
 	// "N дзён таму" or show the date
 	const d = new Date(`${date}T00:00:00+03:00`);
 	const now = new Date();
-	const diffDays = Math.floor(
-		(now.getTime() - d.getTime()) / 86400000
-	);
+	const diffDays = Math.floor((now.getTime() - d.getTime()) / 86400000);
 	if (diffDays <= 30) return `${diffDays} дзён таму`;
 
 	return date.split("-").reverse().join(".");
@@ -88,7 +86,10 @@ export function StatsPage() {
 		return lines.join("\n");
 	}, [stats]);
 
-	const { share, isSharing, showToast } = useShare(shareText, { game: "valoshka", context: "stats" });
+	const { share, isSharing, showToast } = useShare(shareText, {
+		game: "valoshka",
+		context: "stats",
+	});
 
 	const hasVasiliok = stats.topRankCount > 0;
 
@@ -99,9 +100,7 @@ export function StatsPage() {
 				<StatCard label="Слоў" value={words} />
 				<StatCard label="Серыя" value={streak} />
 				<StatCard label="Макс." value={longest} />
-				{hasVasiliok && (
-					<StatCard label="Васількоў" value={cornflowers} />
-				)}
+				{hasVasiliok && <StatCard label="Васількоў" value={cornflowers} />}
 			</div>
 
 			{hasDistribution && (
@@ -141,16 +140,10 @@ export function StatsPage() {
 						>
 							<span
 								className={`w-2.5 h-2.5 rounded-full shrink-0 ${
-									entry.rankIdx === 8
-										? "bg-success"
-										: "bg-[var(--valoshka)]"
+									entry.rankIdx === 8 ? "bg-success" : "bg-[var(--valoshka)]"
 								}`}
 							/>
-							<Typography
-								variant="body"
-								as="div"
-								className="flex-1 text-ink"
-							>
+							<Typography variant="body" as="div" className="flex-1 text-ink">
 								<span className="font-display">
 									{RANKS[entry.rankIdx]?.name ?? "—"}
 								</span>

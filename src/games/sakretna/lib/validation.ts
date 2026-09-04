@@ -30,7 +30,7 @@ export function validateGuess(
 	if (normalized.length < 2) {
 		return { error: "too_short", lemma: null, revealedCount: 0 };
 	}
-	if (!/^[а-яёіў'’\-]+$/iu.test(normalized)) {
+	if (!/^[а-яёіў'’-]+$/iu.test(normalized)) {
 		return { error: "invalid_characters", lemma: null, revealedCount: 0 };
 	}
 	if (!/[\p{L}\p{N}]/u.test(normalized)) {

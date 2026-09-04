@@ -2,8 +2,8 @@
 
 import { Share2 } from "lucide-react";
 import { useMemo } from "react";
-import type { Guess } from "@/games/pobach/types";
 import { generateShareText } from "@/games/pobach/lib/share-text";
+import type { Guess } from "@/games/pobach/types";
 import { Button } from "@/shared/components/ui/Button";
 import { useDictReady } from "@/shared/hooks/useDictReady";
 import { useShare } from "@/shared/hooks/useShare";
@@ -19,12 +19,15 @@ export default function ShareButton({
 	guesses,
 	won,
 }: ShareButtonProps) {
-	const dictIsReady = useDictReady();
+	useDictReady();
 	const text = useMemo(
 		() => generateShareText({ dayIndex, guesses, won }),
-		[dayIndex, guesses, won, dictIsReady]
+		[dayIndex, guesses, won]
 	);
-	const { share, isSharing } = useShare(text, { game: "pobach", context: "finish" });
+	const { share, isSharing } = useShare(text, {
+		game: "pobach",
+		context: "finish",
+	});
 
 	return (
 		<Button

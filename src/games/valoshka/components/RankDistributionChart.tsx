@@ -14,9 +14,7 @@ export function RankDistributionChart({
 			{RANKS.map((rank, idx) => {
 				const count = distribution[idx] ?? 0;
 				const pct =
-					count > 0
-						? Math.max(Math.round((count / maxCount) * 100), 8)
-						: 0;
+					count > 0 ? Math.max(Math.round((count / maxCount) * 100), 8) : 0;
 
 				return (
 					<div

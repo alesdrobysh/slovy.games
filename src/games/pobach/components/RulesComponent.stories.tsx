@@ -55,7 +55,9 @@ export const Inline: Story = {
 
 export const BothVariants: Story = {
 	render: () => (
-		<div style={{ display: "flex", gap: 40, padding: 40, background: "var(--bg)" }}>
+		<div
+			style={{ display: "flex", gap: 40, padding: 40, background: "var(--bg)" }}
+		>
 			<div style={{ maxWidth: 400, flex: 1 }}>
 				<p style={lab()}>Default (modal / sidebar)</p>
 				<RulesComponent />

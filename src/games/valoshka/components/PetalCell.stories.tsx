@@ -116,6 +116,7 @@ function CellTypesSpecimen() {
 						viewBox={viewBox}
 						style={{ width: 120, height: "auto", overflow: "visible" }}
 					>
+						<title>{spec}</title>
 						<PetalCell
 							cx={cx}
 							cy={cy}
@@ -188,6 +189,7 @@ function RotationsSpecimen() {
 								viewBox="0 0 320 320"
 								style={{ width: 140, height: 140, overflow: "visible" }}
 							>
+								<title>Вонкавы пялёстак</title>
 								<PetalCell
 									cx={cx}
 									cy={cy}
@@ -267,6 +269,7 @@ function FlowerSpecimen() {
 					display: "block",
 				}}
 			>
+				<title>Поўная дошка Валошкі</title>
 				{outerCenters.map((pos, i) => (
 					<PetalCell
 						key={outerLetters[i]}
@@ -313,6 +316,7 @@ export const Playground: Story = {
 				viewBox="0 0 200 240"
 				style={{ width: 200, height: 240, overflow: "visible" }}
 			>
+				<title>Пялёстак Валошкі</title>
 				<PetalCell {...args} cx={100} cy={args.isCenter ? 100 : 150} />
 			</svg>
 		</div>

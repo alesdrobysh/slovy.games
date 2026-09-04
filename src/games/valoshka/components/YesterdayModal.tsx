@@ -15,7 +15,6 @@ import {
 import type { Puzzle, SavedProgress } from "@/games/valoshka/types";
 import { DictionaryHint } from "@/shared/components/DictionaryHint";
 import DictionaryLink from "@/shared/components/DictionaryLink";
-import { Badge } from "@/shared/components/ui/Badge";
 import { Button } from "@/shared/components/ui/Button";
 import { Modal } from "@/shared/components/ui/Modal";
 import { Typography } from "@/shared/components/ui/Typography";

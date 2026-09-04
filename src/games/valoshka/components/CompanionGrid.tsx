@@ -3,7 +3,6 @@
 import { buildHintGrid } from "@/games/valoshka/lib/hint-grid";
 import { Modal } from "@/shared/components/ui/Modal";
 import { Typography } from "@/shared/components/ui/Typography";
-import { pluralize } from "@/shared/lib/pluralize";
 import { useDictReady } from "@/shared/hooks/useDictReady";
 
 interface CompanionGridProps {

@@ -77,6 +77,7 @@ function ToggleDemo({
 			}}
 		>
 			<button
+				type="button"
 				onClick={() => setVisible((v) => !v)}
 				style={{
 					padding: "8px 16px",

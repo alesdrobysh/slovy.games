@@ -1,7 +1,13 @@
 "use client";
 
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
-import { trackValoshkaGameStarted, trackValoshkaHintUsed, trackValoshkaRankUp, trackValoshkaVasiliokReached, trackValoshkaWordFound } from "@/games/valoshka/lib/analytics";
+import {
+	trackValoshkaGameStarted,
+	trackValoshkaHintUsed,
+	trackValoshkaRankUp,
+	trackValoshkaVasiliokReached,
+	trackValoshkaWordFound,
+} from "@/games/valoshka/lib/analytics";
 import { triggerConfetti } from "@/games/valoshka/lib/confetti";
 import { vibrate } from "@/games/valoshka/lib/haptics";
 import { createInitialState, gameReducer } from "@/games/valoshka/lib/reducer";
@@ -53,8 +59,7 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 		const saved = loadProgress(puzzle.date);
 		if (saved) {
 			const alreadyVasiliok =
-				saved.vasiliokReached ||
-				saved.score >= puzzle.max_score;
+				saved.vasiliokReached || saved.score >= puzzle.max_score;
 			dispatch({
 				type: "RESTORE_STATE",
 				foundWords: saved.foundWords,
@@ -135,7 +140,12 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 			);
 		}
 		triggerConfetti();
-	}, [gameState.vasiliokReached, puzzle.date]);
+	}, [
+		gameState.vasiliokReached,
+		gameState.foundWords.length,
+		gameState.score,
+		puzzle.date,
+	]);
 
 	// Track new words found and rank crossings
 	const prevWordCount = useRef(0);
@@ -151,7 +161,12 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 			}
 			const latestWord = gameState.foundWords[count - 1];
 			const isPangram = puzzle.pangrams.includes(latestWord);
-			trackValoshkaWordFound(latestWord, isPangram, gameState.score, puzzle.date);
+			trackValoshkaWordFound(
+				latestWord,
+				isPangram,
+				gameState.score,
+				puzzle.date
+			);
 		}
 		prevWordCount.current = count;
 
@@ -170,8 +185,13 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 				);
 			}
 		}
-		prevRankIdx.current = newRankIdx;
-	}, [gameState.foundWords, gameState.score, puzzle.pangrams, puzzle.answers.length, puzzle.max_score, puzzle.date]);
+	}, [
+		gameState.foundWords,
+		gameState.score,
+		puzzle.pangrams,
+		puzzle.max_score,
+		puzzle.date,
+	]);
 
 	// Keyboard input
 	const handleKey = useCallback(

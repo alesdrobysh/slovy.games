@@ -10,7 +10,11 @@ const START_ANGLE = -90;
 const outerCenters = Array.from({ length: 6 }, (_, i) => {
 	const deg = START_ANGLE + i * 60;
 	const rad = (Math.PI / 180) * deg;
-	return { x: CX + PETAL_DISTANCE * Math.cos(rad), y: CY + PETAL_DISTANCE * Math.sin(rad), rotation: deg + 90 };
+	return {
+		x: CX + PETAL_DISTANCE * Math.cos(rad),
+		y: CY + PETAL_DISTANCE * Math.sin(rad),
+		rotation: deg + 90,
+	};
 });
 
 interface CornflowerContourProps {

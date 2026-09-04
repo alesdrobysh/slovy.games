@@ -2,7 +2,6 @@
 
 import { DictionaryHint } from "@/shared/components/DictionaryHint";
 import DictionaryLink from "@/shared/components/DictionaryLink";
-import { Badge } from "@/shared/components/ui/Badge";
 import { Typography } from "@/shared/components/ui/Typography";
 import { useDictReady } from "@/shared/hooks/useDictReady";
 import { pluralize } from "@/shared/lib/pluralize";

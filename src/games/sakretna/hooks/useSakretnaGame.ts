@@ -60,7 +60,7 @@ export function pickHintLemma(
 			!foundLemmas.has(t.lemma) &&
 			!titleLemmaSet.has(t.lemma) &&
 			t.text.length >= 4 &&
-			/^[а-яёіў'’\-]+$/iu.test(t.text)
+			/^[а-яёіў'’-]+$/iu.test(t.text)
 		) {
 			candidates.add(t.lemma);
 		}
