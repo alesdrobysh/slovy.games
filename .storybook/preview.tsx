@@ -45,6 +45,10 @@ const preview: Preview = {
 					name: "Mobile 390 × 844",
 					styles: { width: "390px", height: "844px" },
 				},
+				mobile360short: {
+					name: "Mobile 360 × 300 (keyboard / landscape)",
+					styles: { width: "360px", height: "300px" },
+				},
 			},
 		},
 		a11y: { test: "todo" },

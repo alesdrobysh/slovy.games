@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSakretnaGame } from "@/games/sakretna/hooks/useSakretnaGame";
 import {
 	DEFAULT_GAMEPLAY_SETTINGS,
@@ -10,6 +10,7 @@ import {
 import { ERROR_MESSAGES } from "@/games/sakretna/lib/validation";
 import type { PickedArticle } from "@/games/sakretna/types";
 import { Typography } from "@/shared/components/ui/Typography";
+import { useVirtualKeyboard } from "@/shared/hooks/useVirtualKeyboard";
 import { ArticleActions } from "./ArticleActions";
 import { ArticleNavigator } from "./ArticleNavigator";
 import { CompletionOverlay } from "./CompletionOverlay";
@@ -49,6 +50,19 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 	const [showSettings, setShowSettings] = useState(false);
 	const [settings, setSettings] = useState(DEFAULT_GAMEPLAY_SETTINGS);
 	useEffect(() => setSettings(loadGameplaySettings()), []);
+	useVirtualKeyboard();
+
+	// The mobile dock is fixed, so the article column reserves its measured
+	// height (plus whatever the keyboard hides) instead of a guessed constant.
+	const [dockHeight, setDockHeight] = useState(0);
+	const observeDock = useCallback((dock: HTMLDivElement | null) => {
+		if (!dock || typeof ResizeObserver === "undefined") return;
+		const observer = new ResizeObserver(() =>
+			setDockHeight(Math.ceil(dock.getBoundingClientRect().height))
+		);
+		observer.observe(dock);
+		return () => observer.disconnect();
+	}, []);
 
 	const foundSet = new Set(state.foundLemmas);
 	const totalLemmas = lemmaSet.size;
@@ -61,7 +75,14 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 	const finished = state.won || state.givenUp;
 
 	return (
-		<div className="mx-auto max-w-3xl lg:max-w-6xl px-4 md:px-8 py-flow-lg md:py-page-py">
+		<div
+			className="mx-auto max-w-3xl lg:max-w-6xl px-4 md:px-8 py-flow-lg md:py-page-py"
+			style={
+				{
+					"--sakretna-dock-space": `calc(${dockHeight}px + var(--keyboard-inset, 0px) + var(--bottom-banner-height, 0px))`,
+				} as React.CSSProperties
+			}
+		>
 			<CompletionOverlay
 				open={finished && showResult}
 				mode={state.won ? "win" : "lose"}
@@ -84,7 +105,7 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 				aria-hidden={finished && showResult}
 				inert={finished && showResult ? true : undefined}
 			>
-				<div className="min-w-0 flex flex-col gap-flow-lg lg:gap-inset-xl pb-[140px] md:pb-0">
+				<div className="min-w-0 flex flex-col gap-flow-lg lg:gap-inset-xl pb-(--sakretna-dock-space) md:pb-0">
 					<header className="flex flex-col gap-flow-xs">
 						<Typography variant="overline" as="span" className="text-sakretna">
 							Сакрэтна · {date}
@@ -121,9 +142,10 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 
 					{!finished ? (
 						state.guesses.length > 0 && (
-							<div className="sm:hidden">
+							<div className="md:hidden">
 								<GuessList
 									guesses={state.guesses}
+									tokens={tokens}
 									highlighted={state.highlighted}
 									onSelect={setHighlight}
 								/>
@@ -150,14 +172,16 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 
 				{!finished && (
 					<div
-						className="fixed bottom-0 left-0 right-0 z-30 bg-paper/95 backdrop-blur-sm border-t border-rule md:static md:z-auto md:border-0 md:bg-transparent md:backdrop-blur-none lg:sticky lg:top-24"
+						ref={observeDock}
+						className="fixed left-0 right-0 z-30 bg-paper/95 backdrop-blur-sm border-t border-rule md:static md:z-auto md:border-0 md:bg-transparent md:backdrop-blur-none lg:sticky lg:top-24"
 						style={{
-							bottom: "var(--bottom-banner-height, 0px)",
+							bottom:
+								"calc(var(--bottom-banner-height, 0px) + var(--keyboard-inset, 0px))",
 							paddingBottom: "env(safe-area-inset-bottom, 0px)",
 						}}
 					>
-						<div className="mx-auto max-w-3xl md:max-w-none px-4 md:px-0 py-flow-md md:py-0 flex flex-col gap-flow-sm">
-							<div className="flex flex-wrap items-center justify-between gap-flow-sm">
+						<div className="mx-auto max-w-3xl md:max-w-none px-4 md:px-0 py-flow-md max-md:short:py-flow-sm md:py-0 flex flex-col gap-flow-sm">
+							<div className="flex flex-wrap items-center justify-between gap-flow-sm max-md:keyboard:hidden">
 								<ArticleActions
 									onUseHint={() => {
 										setHintPreview(previewHint());
@@ -187,7 +211,7 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 								</p>
 							)}
 							{state.guesses.length > 0 && (
-								<div>
+								<div className="max-md:short:hidden">
 									<GuessList
 										guesses={state.guesses}
 										tokens={tokens}

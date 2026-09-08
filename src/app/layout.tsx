@@ -1,5 +1,5 @@
 import { Analytics } from "@vercel/analytics/react";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Literata, Wix_Madefor_Text } from "next/font/google";
 import { Footer } from "@/app/Footer";
 import { BannerProvider } from "@/shared/components/BannerContext";
@@ -35,6 +35,12 @@ export const metadata: Metadata = {
 		description: "Валошка і Побач — штодзённыя беларускія слоўныя гульні.",
 		type: "website",
 	},
+};
+
+// Let Android shrink the layout viewport under the on-screen keyboard so
+// fixed controls rise above it. iOS ignores this; see useVirtualKeyboard.
+export const viewport: Viewport = {
+	interactiveWidget: "resizes-content",
 };
 
 const THEME_SCRIPT = `(function(){try{var t=localStorage.getItem('theme');var dark=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(dark)document.documentElement.dataset.theme='dark';}catch(e){}})();`;

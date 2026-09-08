@@ -3,6 +3,7 @@
 import { ArrowDown, ArrowUp, ChevronsUp } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "@/shared/components/ui/Button";
+import { scrollIntoVisualViewport } from "@/shared/lib/scrollIntoVisualViewport";
 
 interface ArticleNavigatorProps {
 	highlighted?: string | null;
@@ -31,7 +32,8 @@ export function ArticleNavigator({ highlighted }: ArticleNavigatorProps) {
 		const next =
 			((Math.max(current, 1) - 1 + direction + hits.length) % hits.length) + 1;
 		setCurrent(next);
-		hits[next - 1]?.scrollIntoView({ behavior: "smooth", block: "center" });
+		const hit = hits[next - 1];
+		if (hit) scrollIntoVisualViewport(hit);
 	};
 
 	return (

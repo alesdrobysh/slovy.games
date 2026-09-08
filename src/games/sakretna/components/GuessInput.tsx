@@ -20,6 +20,9 @@ export function GuessInput({
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
+		// On touch devices focusing on mount pops the keyboard over the
+		// article before the player has read a word of it.
+		if (window.matchMedia?.("(pointer: coarse)").matches) return;
 		inputRef.current?.focus();
 	}, []);
 

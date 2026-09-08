@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { useState } from "react";
+import { expect } from "storybook/test";
 import type {
 	Article,
 	ArticleToken,
@@ -128,6 +129,68 @@ export const Hit: Story = {
 	render: () => (
 		<Fixture progress={saved({ guesses: ["мінск"], foundLemmas: ["мінск"] })} />
 	),
+};
+/**
+ * Simulates a phone with the on-screen keyboard up: a coarse pointer plus a
+ * focused guess field. The nav hides, the title compacts and the dock
+ * collapses to input + feedback so the article keeps most of the screen.
+ */
+export const KeyboardOpen: Story = {
+	args: { picked: PICKED },
+	render: () => {
+		const original = window.matchMedia;
+		window.matchMedia = (query: string) =>
+			query === "(pointer: coarse)"
+				? ({
+						matches: true,
+						media: query,
+						addEventListener: () => {},
+						removeEventListener: () => {},
+					} as unknown as MediaQueryList)
+				: original.call(window, query);
+		return (
+			<Fixture
+				progress={saved({
+					guesses: ["невядома", "мінск"],
+					foundLemmas: ["мінск"],
+				})}
+			/>
+		);
+	},
+	play: async ({ canvas, userEvent }) => {
+		const input = await canvas.findByLabelText("Увядзіце слова");
+		await userEvent.click(input);
+		await expect(document.documentElement.dataset.keyboard).toBe("open");
+		await expect(canvas.getByText("Падказка")).not.toBeVisible();
+		await expect(input).toBeVisible();
+	},
+};
+/**
+ * Only 300px of height, keyboard closed: what is left of a small phone under
+ * the keyboard, or a landscape phone. The dock collapses to icon actions and
+ * the input; guesses stay reachable in the list below the article.
+ */
+export const ShortViewport: Story = {
+	args: { picked: PICKED },
+	parameters: { viewport: { defaultViewport: "mobile360short" } },
+	render: () => (
+		<Fixture
+			progress={saved({
+				guesses: ["невядома", "мінск"],
+				foundLemmas: ["мінск"],
+			})}
+		/>
+	),
+	play: async ({ canvas }) => {
+		await expect(window.innerHeight).toBeLessThanOrEqual(480);
+		await expect(canvas.getByText("Здацца")).not.toBeVisible();
+		await expect(canvas.getByRole("button", { name: "Здацца" })).toBeVisible();
+		await expect(canvas.getByLabelText("Увядзіце слова")).toBeVisible();
+		const dock = canvas
+			.getByLabelText("Увядзіце слова")
+			.closest(".fixed") as HTMLElement;
+		await expect(dock.getBoundingClientRect().height).toBeLessThan(140);
+	},
 };
 export const StaleErrorRegression: Story = {
 	args: { picked: PICKED },

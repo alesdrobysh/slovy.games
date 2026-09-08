@@ -28,8 +28,11 @@ export function ArticleActions({
 				onClick={onUseHint}
 				disabled={!hintAvailable || finished}
 				className="sm:size-md"
+				aria-label={hintAvailable ? "Падказка" : "Падказка выкарыстана"}
 			>
-				{hintAvailable ? "Падказка" : "Выкарыстана"}
+				<span className="max-md:short:hidden">
+					{hintAvailable ? "Падказка" : "Выкарыстана"}
+				</span>
 			</Button>
 			<Button
 				variant="ghost"
@@ -39,8 +42,9 @@ export function ArticleActions({
 				onClick={onGiveUp}
 				disabled={finished}
 				className="sm:size-md"
+				aria-label="Здацца"
 			>
-				Здацца
+				<span className="max-md:short:hidden">Здацца</span>
 			</Button>
 			<Button
 				variant="ghost"

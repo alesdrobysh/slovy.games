@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { scrollIntoVisualViewport } from "@/shared/lib/scrollIntoVisualViewport";
 import { buildArticleBlocks } from "../lib/articleStructure";
 import type { ArticleToken } from "../types";
 
@@ -29,9 +30,7 @@ export function RedactedText({
 	useEffect(() => {
 		if (!autoScroll || !highlighted || !containerRef.current) return;
 		const el = containerRef.current.querySelector(".bg-sakretna");
-		if (el) {
-			el.scrollIntoView({ behavior: "smooth", block: "center" });
-		}
+		if (el) scrollIntoVisualViewport(el);
 	}, [autoScroll, highlighted]);
 
 	const isVisible = (token: ArticleToken) =>
@@ -83,12 +82,12 @@ export function RedactedText({
 		>
 			{titleTokens.length > 0 && (
 				<header
-					className={`${stickyTitle ? "sticky top-16 z-20" : ""} -mx-inset-md sm:-mx-inset-lg -mt-inset-md sm:-mt-inset-lg mb-flow-lg px-inset-md sm:px-inset-lg py-flow-md bg-card/95 backdrop-blur-sm border-b border-rule`}
+					className={`${stickyTitle ? "sticky top-16 max-md:short:top-0 z-20" : ""} -mx-inset-md sm:-mx-inset-lg -mt-inset-md sm:-mt-inset-lg mb-flow-lg px-inset-md sm:px-inset-lg py-flow-md max-md:short:py-flow-sm bg-card/95 backdrop-blur-sm border-b border-rule`}
 				>
-					<p className="text-ink-muted text-xs uppercase tracking-widest mb-flow-xs">
+					<p className="text-ink-muted text-xs uppercase tracking-widest mb-flow-xs max-md:short:hidden">
 						Зашыфраваны артыкул
 					</p>
-					<h1 className="text-2xl sm:text-3xl font-bold leading-tight flex flex-wrap items-baseline gap-x-2 gap-y-1">
+					<h1 className="text-2xl sm:text-3xl max-md:short:text-lg font-bold leading-tight flex flex-wrap items-baseline gap-x-2 gap-y-1">
 						{titleTokens.map((token, i) => {
 							const key = `title-${token.type}-${i}-${token.text}`;
 							if (token.type === "sep") return null;

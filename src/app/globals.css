@@ -2,6 +2,23 @@
 @import "../shared/components/ui/Button.css";
 @import "tailwindcss";
 
+/* Active while useVirtualKeyboard reports an open on-screen keyboard. */
+@custom-variant keyboard (&:where(
+		[data-keyboard="open"],
+		[data-keyboard="open"] *
+	));
+
+/* Little vertical room: a short viewport (landscape phone, split screen) or
+   the on-screen keyboard eating half of it. Chrome should collapse. */
+@custom-variant short {
+	@media (max-height: 480px) {
+		@slot;
+	}
+	&:where([data-keyboard="open"], [data-keyboard="open"] *) {
+		@slot;
+	}
+}
+
 @utility font-display {
 	font-family: var(--font-d);
 }
