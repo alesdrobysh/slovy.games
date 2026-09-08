@@ -91,14 +91,28 @@ export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
 		};
 	}, []);
 
-	// Restore from localStorage once on mount
+	// Restore from localStorage once per puzzle
+	const restoredKeyRef = useRef<string | null>(null);
 	useEffect(() => {
+		const key = `${date}:${article.id}`;
+		if (restoredKeyRef.current === key) return;
+		restoredKeyRef.current = key;
 		const saved = loadProgress(date);
 		if (saved && saved.articleId === article.id) {
-			dispatch({ type: "RESTORE", progress: saved });
+			// Wins reveal the whole article, including games won before that
+			// behaviour shipped, which stored only the guessed lemmas.
+			const progress = saved.won
+				? {
+						...saved,
+						foundLemmas: [
+							...new Set([...saved.foundLemmas, ...collectLemmas(tokens)]),
+						],
+					}
+				: saved;
+			dispatch({ type: "RESTORE", progress });
 		}
 		persistedRef.current = true;
-	}, [date, article.id]);
+	}, [date, article.id, tokens]);
 
 	// Persist on every state change (after the first restoration effect runs)
 	useEffect(() => {

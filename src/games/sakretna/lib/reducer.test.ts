@@ -4,7 +4,7 @@ jest.mock("belmorph", () => belmorphMock, { virtual: true });
 
 import type { ArticleToken } from "../types";
 import { createInitialState, gameReducer, stateToProgress } from "./reducer";
-import { tokenize } from "./tokenize";
+import { collectLemmas, tokenize } from "./tokenize";
 
 const ARTICLE = "Мінск — сталіца Беларусі. Горад мае багатую гісторыю.";
 let tokens: ArticleToken[];
@@ -160,6 +160,17 @@ describe("SUBMIT_GUESS", () => {
 		});
 		expect(next.won).toBe(true);
 		expect(next.finishedAt).not.toBeNull();
+	});
+
+	it("reveals every article word on a win", () => {
+		const titleLemmas = new Set(["мінск"]);
+		const next = gameReducer(createInitialState(), {
+			type: "SUBMIT_GUESS",
+			rawGuess: "мінск",
+			tokens,
+			titleLemmas,
+		});
+		expect(new Set(next.foundLemmas)).toEqual(collectLemmas(tokens));
 	});
 
 	it("does not win while some title lemmas are still missing", () => {

@@ -1,4 +1,5 @@
 import type { GameAction, GameState, SavedProgress } from "../types";
+import { collectLemmas } from "./tokenize";
 import { normalizeGuess, validateGuess } from "./validation";
 
 export function createInitialState(): GameState {
@@ -74,12 +75,16 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 			const won =
 				action.titleLemmas.size > 0 &&
 				[...action.titleLemmas].every((l) => foundLemmas.includes(l));
+			// A win reveals the whole article, the same way giving up does.
+			const revealedLemmas = won
+				? [...new Set([...foundLemmas, ...collectLemmas(action.tokens)])]
+				: foundLemmas;
 			return {
 				...state,
 				currentInput: "",
 				errorType: null,
 				statusMessage: `Расшыфравана: ${lemma}`,
-				foundLemmas,
+				foundLemmas: revealedLemmas,
 				guesses: [...state.guesses, normalizedGuess],
 				won,
 				finishedAt: won ? new Date().toISOString() : state.finishedAt,
