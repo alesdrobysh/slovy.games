@@ -82,6 +82,48 @@ export function HubPageClient({ sakretnaUnlocked }: HubPageClientProps) {
 						</div>
 					)}
 				</section>
+
+				{/* Editorial SEO block */}
+				<section className="mt-section-gap page-narrow flex flex-col gap-section-gap">
+					<div className="flex flex-col gap-flow-lg">
+						<Typography variant="heading" as="h2">
+							Беларускія гульні ў словы анлайн
+						</Typography>
+						<Typography variant="body" as="p">
+							«Словы» — бясплатныя штодзённыя слоўныя гульні па-беларуску. Тут
+							можна адгадваць словы паводле сэнсу ў «Побач» і складаць словы з
+							літар у «Валошцы». Новыя заданні з'яўляюцца кожны дзень.
+							Рэгістрацыя не патрэбная.
+						</Typography>
+					</div>
+					<div className="flex flex-col gap-flow-lg">
+						<Typography variant="subheading" as="h3">
+							Якія беларускія слоўныя гульні тут ёсць?
+						</Typography>
+						<Typography variant="body" as="p">
+							«Побач» — адгадайце схаванае слова па сэнсавай блізкасці.
+							«Валошка» — складзіце як мага больш слоў з літар.
+						</Typography>
+					</div>
+					<div className="flex flex-col gap-flow-lg">
+						<Typography variant="subheading" as="h3">
+							Ці можна гуляць бясплатна?
+						</Typography>
+						<Typography variant="body" as="p">
+							Так, усе гульні цалкам бясплатныя. Рэгістрацыя і ўсталёўка
+							дадатковых праграм не патрэбныя — гуляйце адразу ў браўзеры.
+						</Typography>
+					</div>
+					<div className="flex flex-col gap-flow-lg">
+						<Typography variant="subheading" as="h3">
+							Калі з'яўляецца новае заданне?
+						</Typography>
+						<Typography variant="body" as="p">
+							Новыя заданні з'яўляюцца кожны дзень, таму вы можаце вяртацца
+							штодня і атрымліваць свежую галаваломку.
+						</Typography>
+					</div>
+				</section>
 			</div>
 		</>
 	);

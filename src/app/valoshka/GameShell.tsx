@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useCallback, useEffect, useState } from "react";
 import { GamePage } from "@/games/valoshka/components/GamePage";
 import { HowToPlay } from "@/games/valoshka/components/HowToPlay";
@@ -12,9 +13,10 @@ import { Button } from "@/shared/components/ui/Button";
 interface Props {
 	puzzle: Puzzle;
 	currentDate: string;
+	children?: ReactNode;
 }
 
-export function GameShell({ puzzle, currentDate }: Props) {
+export function GameShell({ puzzle, currentDate, children }: Props) {
 	const [inspectorOpen, setInspectorOpen] = useState(false);
 	const [showHelp, setShowHelp] = useState(false);
 	const [yesterdayOpen, setYesterdayOpen] = useState(false);
@@ -47,6 +49,7 @@ export function GameShell({ puzzle, currentDate }: Props) {
 			/>
 			<main>
 				<GamePage puzzle={puzzle} />
+				{children}
 			</main>
 			<StorageInspector
 				open={inspectorOpen}
