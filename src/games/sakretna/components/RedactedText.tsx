@@ -35,11 +35,11 @@ export function RedactedText({
 
 	const isVisible = (token: ArticleToken) =>
 		token.isFree || foundLemmas.has(token.lemma ?? "");
-	const renderTokens = (blockTokens: ArticleToken[], forceVisible = false) =>
+	const renderTokens = (blockTokens: ArticleToken[]) =>
 		blockTokens.map((token, index) => {
 			const key = `${token.type}-${index}-${token.text}`;
 			if (token.type === "sep") return <span key={key}>{token.text}</span>;
-			if (forceVisible || isVisible(token)) {
+			if (isVisible(token)) {
 				const isHighlighted = token.lemma === highlighted;
 				return (
 					<span
@@ -137,7 +137,7 @@ export function RedactedText({
 								key={`heading-${blockKey}`}
 								className="font-semibold text-ink mt-flow-lg"
 							>
-								{renderTokens(block.tokens, true)}
+								{renderTokens(block.tokens)}
 							</Heading>
 						);
 					}

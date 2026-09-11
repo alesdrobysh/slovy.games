@@ -53,6 +53,25 @@ describe("RedactedText title", () => {
 		).toBeInTheDocument();
 	});
 });
+
+describe("RedactedText headings", () => {
+	it("hides article headings until their words are found", () => {
+		const headingTokens: ArticleToken[] = [
+			{ type: "word", text: "Гісторыя", lemma: "гісторыя" },
+		];
+
+		render(
+			<RedactedText
+				tokens={[{ type: "sep", text: "\n\n" }, ...headingTokens]}
+				foundLemmas={new Set()}
+				titleTokens={[]}
+			/>
+		);
+
+		expect(screen.queryByText("Гісторыя")).not.toBeInTheDocument();
+		expect(screen.getByText("8", { selector: "span" })).toBeInTheDocument();
+	});
+});
 describe("ProgressLine", () => {
 	it("uses the genitive plural for the total article word count", () => {
 		render(<ProgressLine foundLemmas={0} totalLemmas={288} />);
