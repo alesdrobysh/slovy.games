@@ -71,6 +71,12 @@ describe("validateGuess", () => {
 		expect(result.revealedCount).toBeGreaterThan(0);
 	});
 
+	it("accepts guesses regardless of case", () => {
+		const result = validateGuess("ГОРАД", tokens, new Set());
+		expect(result.error).toBeNull();
+		expect(result.lemma).toBe("горад");
+	});
+
 	it("matches a different inflected form by lemma", () => {
 		const result = validateGuess("горада", tokens, new Set());
 		expect(result.error).toBeNull();

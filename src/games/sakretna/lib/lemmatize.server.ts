@@ -16,6 +16,7 @@ function getAnalyzer(): MorphAnalyzer {
 /** Lemmatize a single Belarusian word using the synchronous Node loader.
  *  Server-only — do not import from client components. */
 export function serverLemmaOf(word: string): string {
-	const res = getAnalyzer().parse(word);
-	return res?.[0]?.lemma ?? word.toLowerCase();
+	const normalizedWord = word.toLowerCase();
+	const res = getAnalyzer().parse(normalizedWord);
+	return res?.[0]?.lemma?.toLowerCase() ?? normalizedWord;
 }

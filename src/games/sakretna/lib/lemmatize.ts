@@ -20,9 +20,10 @@ function startLoading(): Promise<void> {
 }
 
 export function lemmaOf(word: string): string {
+	const normalizedWord = word.toLowerCase();
 	if (!analyzer) return word.toLowerCase();
-	const res = analyzer.parse(word);
-	return res?.[0]?.lemma ?? word.toLowerCase();
+	const res = analyzer.parse(normalizedWord);
+	return res?.[0]?.lemma?.toLowerCase() ?? normalizedWord;
 }
 
 export function pluralizeCount(
