@@ -100,7 +100,7 @@ export function GuessList({
 			<p className="text-ink-muted uppercase tracking-widest text-[10px] font-medium mb-flow-xs">
 				Спроб ({guesses.length} {pluralize(guesses.length, "спроба")})
 			</p>
-			<div className="grid grid-cols-1 sm:grid-cols-2 gap-flow-xs">
+			<div className="grid grid-cols-1 sm:grid-cols-2 gap-flow-xs lg:hidden">
 				{recent.map((record) => (
 					<GuessRow
 						key={record.input}
@@ -111,7 +111,7 @@ export function GuessList({
 				))}
 			</div>
 			{records.length > recent.length && (
-				<details className="mt-flow-xs">
+				<details className="mt-flow-xs lg:hidden">
 					<summary className="min-h-(--control-min-height) flex items-center cursor-pointer text-xs font-medium text-ink-muted">
 						Уся гісторыя ({records.length})
 					</summary>
@@ -127,6 +127,24 @@ export function GuessList({
 						))}
 					</ol>
 				</details>
+			)}
+			{records.length > recent.length && (
+				<>
+					<p className="hidden lg:block text-ink-muted uppercase tracking-widest text-[10px] font-medium mt-flow-xs mb-flow-xs">
+						Уся гісторыя ({records.length})
+					</p>
+					<ol className="hidden lg:grid grid-cols-1 sm:grid-cols-2 gap-flow-xs">
+						{all.map((record) => (
+							<li key={record.input}>
+								<GuessRow
+									record={record}
+									highlighted={highlighted}
+									onSelect={onSelect}
+								/>
+							</li>
+						))}
+					</ol>
+				</>
 			)}
 		</div>
 	);

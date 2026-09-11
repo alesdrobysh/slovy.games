@@ -24,7 +24,9 @@ describe("GuessList", () => {
 			/>
 		);
 
-		expect(screen.getByLabelText("горад: раскрыта 2")).toBeInTheDocument();
+		expect(
+			screen.getAllByLabelText("горад: раскрыта 2")[0]
+		).toBeInTheDocument();
 		expect(
 			screen.getByLabelText("аўтамабіль: няма ў артыкуле")
 		).toBeInTheDocument();
@@ -42,7 +44,9 @@ describe("GuessList", () => {
 			/>
 		);
 
-		fireEvent.click(screen.getByText("Уся гісторыя (4)"));
+		fireEvent.click(
+			screen.getByText("Уся гісторыя (4)", { selector: "summary" })
+		);
 		expect(screen.getAllByText("горад").length).toBeGreaterThan(0);
 		fireEvent.click(screen.getAllByLabelText("мінск: раскрыта 1")[0]);
 		expect(onSelect).toHaveBeenCalledWith("мінск");
