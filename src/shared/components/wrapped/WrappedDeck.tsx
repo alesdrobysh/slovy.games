@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Typography } from "@/shared/components/ui/Typography";
 import { buildSlides } from "@/shared/lib/wrapped/slides";
+import { ShareCardSlide } from "./ShareCardSlide";
 import { CommonSlide } from "./slides/CommonSlide";
 import { GameSlide } from "./slides/GameSlide";
 import { HeroSlide } from "./slides/HeroSlide";
@@ -95,7 +96,7 @@ export function WrappedDeck({ year }: WrappedDeckProps) {
 						return stats ? <GameSlide stats={stats} page={slide.page} /> : null;
 					})()}
 				{slide.kind === "thin" && <ThinSlide year={summary.year} />}
-				{slide.kind === "share" && <div data-testid="wrapped-share" />}
+				{slide.kind === "share" && <ShareCardSlide summary={summary} />}
 
 				<button
 					type="button"

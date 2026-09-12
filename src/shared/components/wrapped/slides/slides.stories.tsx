@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import type { GameYearStats, WrappedSummary } from "@/shared/types/wrapped";
+import { ShareCardSlide } from "../ShareCardSlide";
 import { CommonSlide } from "./CommonSlide";
 import { GameSlide } from "./GameSlide";
 import { HeroSlide } from "./HeroSlide";
@@ -64,4 +65,8 @@ export const GamePageTwo: StoryObj = {
 
 export const Thin: StoryObj = {
 	render: () => <ThinSlide year={2026} />,
+};
+
+export const Share: StoryObj = {
+	render: () => <ShareCardSlide summary={summary} />,
 };
