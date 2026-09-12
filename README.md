@@ -45,6 +45,7 @@ All optional — the app runs without them:
 | Variable | Purpose |
 | --- | --- |
 | `NEXT_PUBLIC_POSTHOG_KEY` | Enables PostHog analytics (only loaded after cookie consent) |
+| `WRAPPED_PREVIEW_TOKEN` | Server-only. Opens `/wrapped` outside its reveal window via `?wrapped=<token>` |
 
 ## Design system rules
 
