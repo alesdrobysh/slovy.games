@@ -20,3 +20,16 @@ export interface GameYearStats {
 	/** Game-specific facts. A fact that cannot be derived is omitted, never 0. */
 	highlights: WrappedHighlight[];
 }
+
+/** Cross-game recap. `activeDays` is the union across games, so a day played
+ *  in two games counts once. */
+export interface WrappedSummary {
+	year: number;
+	activeDays: string[];
+	gamesFinished: number;
+	longestStreakAnyGame: number;
+	busiestMonth: { month: number; days: number } | null;
+	gameOfTheYear: GameId | null;
+	perGame: GameYearStats[];
+	isThin: boolean;
+}
