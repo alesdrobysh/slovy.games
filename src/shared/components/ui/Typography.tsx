@@ -11,7 +11,8 @@ export type TypographyVariant =
 	| "caption"
 	| "smallSerif"
 	| "label"
-	| "gameInput";
+	| "gameInput"
+	| "statHero";
 
 interface VariantConfig {
 	style: CSSProperties;
@@ -138,6 +139,17 @@ const VARIANTS: Record<TypographyVariant, VariantConfig> = {
 			fontSize: "40px",
 			lineHeight: 1,
 			letterSpacing: "0.01em",
+			margin: 0,
+		},
+	},
+	statHero: {
+		tag: "span",
+		style: {
+			fontFamily: D,
+			fontWeight: 500,
+			fontSize: "clamp(64px, 20vw, 140px)",
+			lineHeight: 0.85,
+			letterSpacing: "-0.04em",
 			margin: 0,
 		},
 	},
