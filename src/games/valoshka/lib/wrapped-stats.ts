@@ -49,7 +49,9 @@ export function getWrappedStats(year: number): GameYearStats {
 			(
 				e
 			): e is { date: string; best: { rankIdx: number; foundCount: number } } =>
-				Number.isFinite(e.best?.rankIdx) && Number.isFinite(e.best?.foundCount)
+				Number.isFinite(e.best?.rankIdx) &&
+				e.best?.rankIdx >= 0 &&
+				Number.isFinite(e.best?.foundCount)
 		);
 
 	const daysWon = inYearBests
@@ -69,9 +71,12 @@ export function getWrappedStats(year: number): GameYearStats {
 			label: "Найвышэйшы ранг",
 			value:
 				RANKS[
-					Math.min(
-						Math.max(...inYearBests.map(({ best }) => best.rankIdx)),
-						TOP_RANK_IDX
+					Math.max(
+						0,
+						Math.min(
+							Math.max(...inYearBests.map(({ best }) => best.rankIdx)),
+							TOP_RANK_IDX
+						)
 					)
 				].name,
 		});

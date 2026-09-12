@@ -1,3 +1,4 @@
+import { RANKS } from "@/games/valoshka/lib/scoring";
 import type { GameStats } from "@/games/valoshka/types";
 import { getWrappedStats } from "./wrapped-stats";
 
@@ -104,5 +105,20 @@ describe("valoshka getWrappedStats", () => {
 			stats.highlights.map((h) => [h.key, h.value])
 		);
 		expect(byKey.vasiliokDays).toBe(1);
+	});
+
+	it("ignores a negative stored rank instead of throwing", () => {
+		seed({
+			datesPlayed: ["2026-08-01", "2026-08-02"],
+			perDateBest: {
+				"2026-08-01": { rankIdx: -1, foundCount: 4 },
+				"2026-08-02": { rankIdx: 2, foundCount: 6 },
+			},
+		});
+		const byKey = Object.fromEntries(
+			getWrappedStats(2026).highlights.map((h) => [h.key, h.value])
+		);
+		expect(byKey.bestRank).toBe(RANKS[2].name);
+		expect(byKey.wordsFound).toBe(6);
 	});
 });
