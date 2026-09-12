@@ -35,7 +35,7 @@ export function RedactedText({
 
 	const isVisible = (token: ArticleToken) =>
 		token.isFree || foundLemmas.has(token.lemma ?? "");
-	const renderTokens = (blockTokens: ArticleToken[]) =>
+	const renderTokens = (blockTokens: ArticleToken[], labelHidden = false) =>
 		blockTokens.map((token, index) => {
 			const key = `${token.type}-${index}-${token.text}`;
 			if (token.type === "sep") return <span key={key}>{token.text}</span>;
@@ -58,15 +58,21 @@ export function RedactedText({
 			return (
 				<span
 					key={key}
-					aria-hidden="true"
+					{...(labelHidden
+						? {
+								role: "img",
+								"aria-label": `${token.text.length} схаваных літар`,
+							}
+						: { "aria-hidden": "true" as const })}
 					className="inline-flex items-baseline gap-0.5 mx-[0.1em]"
 				>
 					<span
+						aria-hidden="true"
 						className="inline-block bg-ink/85 rounded-sm h-[0.9em]"
 						style={{ width: `${token.text.length * 0.6}em` }}
 					/>
 					{showLetterCounts && (
-						<span className="text-[0.65em] text-ink-muted">
+						<span aria-hidden="true" className="text-[0.65em] text-ink-muted">
 							{token.text.length}
 						</span>
 					)}
@@ -137,7 +143,7 @@ export function RedactedText({
 								key={`heading-${blockKey}`}
 								className="font-semibold text-ink mt-flow-lg"
 							>
-								{renderTokens(block.tokens)}
+								{renderTokens(block.tokens, true)}
 							</Heading>
 						);
 					}

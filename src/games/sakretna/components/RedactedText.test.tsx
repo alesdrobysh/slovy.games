@@ -55,23 +55,56 @@ describe("RedactedText title", () => {
 });
 
 describe("RedactedText headings", () => {
-	it("hides article headings until their words are found", () => {
-		const headingTokens: ArticleToken[] = [
-			{ type: "word", text: "Гісторыя", lemma: "гісторыя" },
-		];
+	const HEADING_ARTICLE: ArticleToken[] = [
+		{ type: "word", text: "Артыкул", lemma: "артыкул" },
+		{ type: "sep", text: "\n" },
+		{ type: "sep", text: "\n" },
+		{ type: "word", text: "Гісторыя", lemma: "гісторыя" },
+	];
 
+	it("hides article headings until their words are found", () => {
 		render(
 			<RedactedText
-				tokens={[{ type: "sep", text: "\n\n" }, ...headingTokens]}
+				tokens={HEADING_ARTICLE}
 				foundLemmas={new Set()}
 				titleTokens={[]}
 			/>
 		);
 
 		expect(screen.queryByText("Гісторыя")).not.toBeInTheDocument();
+		expect(screen.getByRole("heading", { level: 2 })).toBeInTheDocument();
 		expect(screen.getByText("8", { selector: "span" })).toBeInTheDocument();
 	});
+
+	it("keeps a hidden heading reachable for screen readers", () => {
+		render(
+			<RedactedText
+				tokens={HEADING_ARTICLE}
+				foundLemmas={new Set()}
+				titleTokens={[]}
+			/>
+		);
+
+		expect(
+			screen.getByRole("heading", { name: "8 схаваных літар" })
+		).toBeInTheDocument();
+	});
+
+	it("reveals the heading text once its lemma is found", () => {
+		render(
+			<RedactedText
+				tokens={HEADING_ARTICLE}
+				foundLemmas={new Set(["гісторыя"])}
+				titleTokens={[]}
+			/>
+		);
+
+		expect(
+			screen.getByRole("heading", { name: "Гісторыя" })
+		).toBeInTheDocument();
+	});
 });
+
 describe("ProgressLine", () => {
 	it("uses the genitive plural for the total article word count", () => {
 		render(<ProgressLine foundLemmas={0} totalLemmas={288} />);
