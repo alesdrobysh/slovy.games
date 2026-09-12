@@ -48,8 +48,40 @@ describe("pobach getWrappedStats", () => {
 	});
 
 	it("returns empty stats when storage is corrupt", () => {
-		localStorage.setItem(STORAGE_KEY, "{not json");
-		expect(getWrappedStats(2026).daysPlayed).toEqual([]);
+		const spy = jest.spyOn(console, "error").mockImplementation(() => {});
+		try {
+			localStorage.setItem(STORAGE_KEY, "{not json");
+			expect(getWrappedStats(2026).daysPlayed).toEqual([]);
+		} finally {
+			spy.mockRestore();
+		}
+	});
+
+	it("skips records with non-finite dayIndex and returns good records", () => {
+		const goodRecord = record("2026-03-05");
+		const badRecord = {
+			dayIndex: NaN,
+			won: true,
+			attempts: 5,
+			bestRank: 1,
+			completedAt: Date.now(),
+			guesses: [],
+		};
+		const anotherGood = record("2026-03-10");
+		const data: Pick<StorageV2, "version" | "history"> & { stats: unknown } = {
+			version: 2,
+			history: {
+				"1": goodRecord,
+				"2": badRecord as unknown as HistoryRecord,
+				"3": anotherGood,
+			},
+			stats: {},
+		};
+		localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+		expect(getWrappedStats(2026).daysPlayed).toEqual([
+			"2026-03-05",
+			"2026-03-10",
+		]);
 	});
 
 	it("converts day indices to dates and sorts them", () => {

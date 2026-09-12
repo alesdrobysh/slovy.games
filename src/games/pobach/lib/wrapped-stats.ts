@@ -26,15 +26,21 @@ export function getWrappedStats(year: number): GameYearStats {
 	}
 
 	const prefix = `${year}-`;
-	const inYear = history
-		.map((r) => ({
-			record: r,
-			date: dateForDayIndex(POBACH_EPOCH_DATE, r.dayIndex)
-				.toISOString()
-				.slice(0, 10),
-		}))
-		.filter(({ date }) => date.startsWith(prefix))
-		.sort((a, b) => a.date.localeCompare(b.date));
+	let inYear: Array<{ record: ReturnType<typeof getHistory>[0]; date: string }>;
+	try {
+		inYear = history
+			.filter((r) => Number.isFinite(r.dayIndex))
+			.map((r) => ({
+				record: r,
+				date: dateForDayIndex(POBACH_EPOCH_DATE, r.dayIndex)
+					.toISOString()
+					.slice(0, 10),
+			}))
+			.filter(({ date }) => date.startsWith(prefix))
+			.sort((a, b) => a.date.localeCompare(b.date));
+	} catch {
+		return emptyStats(year);
+	}
 
 	if (inYear.length === 0) return emptyStats(year);
 
