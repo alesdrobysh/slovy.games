@@ -25,16 +25,14 @@ export function wrappedYearFor(nowMs: number = Date.now()): number {
 	return monthDay <= WRAPPED_WINDOW.close ? year - 1 : year;
 }
 
-/** Whether `/wrapped` and its hub entry should be reachable at all. */
+/** Whether `/wrapped` should be reachable: inside the reveal window, or
+ *  explicitly unlocked for preview with `?preview=1`. */
 export function isWrappedVisible({
 	nowMs = Date.now(),
-	hasPreviewCookie,
+	hasPreview,
 }: {
 	nowMs?: number;
-	hasPreviewCookie: boolean;
+	hasPreview: boolean;
 }): boolean {
-	return hasPreviewCookie || isWrappedOpen(nowMs);
+	return hasPreview || isWrappedOpen(nowMs);
 }
-
-/** Cookie set by the preview token gate in `src/proxy.ts`. */
-export const WRAPPED_PREVIEW_COOKIE = "wrapped_preview";

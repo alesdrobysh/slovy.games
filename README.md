@@ -45,7 +45,8 @@ All optional — the app runs without them:
 | Variable | Purpose |
 | --- | --- |
 | `NEXT_PUBLIC_POSTHOG_KEY` | Enables PostHog analytics (only loaded after cookie consent) |
-| `WRAPPED_PREVIEW_TOKEN` | Server-only. Opens `/wrapped` outside its reveal window via `?wrapped=<token>` |
+
+The `/wrapped` deck is gated to its December–January reveal window. It can be opened any time with `?preview=1`, e.g. `/wrapped?preview=1`.
 
 ## Design system rules
 

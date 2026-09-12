@@ -1,12 +1,7 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { WrappedDeck } from "@/shared/components/wrapped/WrappedDeck";
-import {
-	isWrappedVisible,
-	WRAPPED_PREVIEW_COOKIE,
-	wrappedYearFor,
-} from "@/shared/lib/wrapped/window";
+import { isWrappedVisible, wrappedYearFor } from "@/shared/lib/wrapped/window";
 
 export const metadata: Metadata = {
 	title: "Твой год у Словах",
@@ -14,14 +9,16 @@ export const metadata: Metadata = {
 	robots: { index: false, follow: false },
 };
 
-export default async function WrappedRoute() {
-	const cookieStore = await cookies();
-	const hasPreviewCookie =
-		cookieStore.get(WRAPPED_PREVIEW_COOKIE)?.value === "1";
+export default async function WrappedRoute({
+	searchParams,
+}: {
+	searchParams: Promise<{ preview?: string }>;
+}) {
+	const { preview } = await searchParams;
 
 	// Defence in depth: the proxy already guards this path, but the matcher
 	// could change and this page must never render outside the window.
-	if (!isWrappedVisible({ hasPreviewCookie })) redirect("/");
+	if (!isWrappedVisible({ hasPreview: preview === "1" })) redirect("/");
 
 	return <WrappedDeck year={wrappedYearFor()} />;
 }

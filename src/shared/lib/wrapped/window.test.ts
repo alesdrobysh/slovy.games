@@ -63,21 +63,21 @@ describe("wrappedYearFor", () => {
 });
 
 describe("isWrappedVisible", () => {
-	it("is visible inside the window without a cookie", () => {
+	it("is visible inside the window without preview", () => {
 		expect(
-			isWrappedVisible({ nowMs: msk(2026, 12, 25), hasPreviewCookie: false })
+			isWrappedVisible({ nowMs: msk(2026, 12, 25), hasPreview: false })
 		).toBe(true);
 	});
 
-	it("is visible outside the window with a preview cookie", () => {
+	it("is visible outside the window with preview", () => {
 		expect(
-			isWrappedVisible({ nowMs: msk(2026, 9, 12), hasPreviewCookie: true })
+			isWrappedVisible({ nowMs: msk(2026, 9, 12), hasPreview: true })
 		).toBe(true);
 	});
 
-	it("is hidden outside the window without a cookie", () => {
+	it("is hidden outside the window without preview", () => {
 		expect(
-			isWrappedVisible({ nowMs: msk(2026, 9, 12), hasPreviewCookie: false })
+			isWrappedVisible({ nowMs: msk(2026, 9, 12), hasPreview: false })
 		).toBe(false);
 	});
 });
