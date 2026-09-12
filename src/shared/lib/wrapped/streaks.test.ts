@@ -50,4 +50,20 @@ describe("longestStreakFromDates", () => {
 	it("ignores malformed entries", () => {
 		expect(longestStreakFromDates(["nope", "2026-03-04", ""])).toBe(1);
 	});
+
+	it("rejects calendar-invalid date 2026-02-30", () => {
+		expect(
+			longestStreakFromDates(["2026-02-28", "2026-02-30", "2026-03-01"])
+		).toBe(2);
+	});
+
+	it("rejects calendar-invalid date 2026-04-31", () => {
+		expect(longestStreakFromDates(["2026-04-30", "2026-04-31"])).toBe(1);
+	});
+
+	it("accepts valid leap day", () => {
+		expect(
+			longestStreakFromDates(["2028-02-28", "2028-02-29", "2028-03-01"])
+		).toBe(3);
+	});
 });
