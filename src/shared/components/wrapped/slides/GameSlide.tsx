@@ -1,5 +1,6 @@
 import { StatCard } from "@/shared/components/ui/StatCard";
 import { Typography } from "@/shared/components/ui/Typography";
+import { useCountUp } from "@/shared/components/wrapped/useCountUp";
 import { pluralize } from "@/shared/lib/pluralize";
 import type { GameYearStats } from "@/shared/types/wrapped";
 import { SlideFrame } from "./SlideFrame";
@@ -22,6 +23,8 @@ const GAME_ACCENTS: Record<string, string> = {
 export function GameSlide({ stats, page }: GameSlideProps) {
 	const name = GAME_NAMES[stats.gameId] ?? stats.gameId;
 	const accent = GAME_ACCENTS[stats.gameId];
+	// Called unconditionally so switching pages does not change hook order.
+	const shownDays = useCountUp(stats.daysPlayed.length);
 
 	if (page === 1) {
 		return (
@@ -30,7 +33,7 @@ export function GameSlide({ stats, page }: GameSlideProps) {
 					{name}
 				</Typography>
 				<Typography variant="statHero" as="p">
-					{stats.daysPlayed.length}
+					{shownDays}
 				</Typography>
 				<Typography variant="caption" className="text-ink-muted">
 					{pluralize(stats.daysPlayed.length, "дзень")} у гульні
