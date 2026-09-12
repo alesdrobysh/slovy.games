@@ -35,3 +35,6 @@ export function isWrappedVisible({
 }): boolean {
 	return hasPreviewCookie || isWrappedOpen(nowMs);
 }
+
+/** Cookie set by the preview token gate in `src/proxy.ts`. */
+export const WRAPPED_PREVIEW_COOKIE = "wrapped_preview";

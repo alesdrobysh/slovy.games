@@ -4,6 +4,7 @@ import { GameCard } from "@/shared/components/GameCard";
 import { Nav } from "@/shared/components/Nav";
 import { Typography } from "@/shared/components/ui/Typography";
 import { useHubState } from "@/shared/hooks/useHubState";
+import { wrappedYearFor } from "@/shared/lib/wrapped/window";
 import { GAMES } from "@/shared/types";
 
 const MONTHS = [
@@ -30,9 +31,13 @@ function formatToday(): string {
 
 interface HubPageClientProps {
 	sakretnaUnlocked: boolean;
+	wrappedVisible: boolean;
 }
 
-export function HubPageClient({ sakretnaUnlocked }: HubPageClientProps) {
+export function HubPageClient({
+	sakretnaUnlocked,
+	wrappedVisible,
+}: HubPageClientProps) {
 	const hub = useHubState(GAMES);
 	const games = GAMES.filter(
 		(g) => g.enabled && (g.id !== "sakretna" || sakretnaUnlocked)
@@ -82,6 +87,23 @@ export function HubPageClient({ sakretnaUnlocked }: HubPageClientProps) {
 						</div>
 					)}
 				</section>
+
+				{wrappedVisible && (
+					<section aria-label="Год у Словах" className="mt-section-gap">
+						<a
+							href="/wrapped"
+							className="flex flex-col gap-flow-xs rounded-2xl p-inset-lg bg-card ring-1 ring-rule hover:ring-rule-strong"
+						>
+							<Typography variant="overline" className="text-ink-muted">
+								Год у Словах
+							</Typography>
+							<Typography variant="heading">Твой {wrappedYearFor()}</Typography>
+							<Typography variant="caption" className="text-ink-muted">
+								Паглядзі, як ты гуляў цэлы год
+							</Typography>
+						</a>
+					</section>
+				)}
 
 				{/* Editorial SEO block */}
 				<section className="mt-section-gap page-narrow flex flex-col gap-section-gap">
