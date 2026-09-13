@@ -1,0 +1,604 @@
+.wrapped-deck {
+	--wrapped-blue: oklch(47% 0.25 276);
+	--wrapped-blue-deep: oklch(31% 0.19 276);
+	--wrapped-orange: oklch(73% 0.2 52);
+	--wrapped-yellow: oklch(94% 0.2 111);
+	--wrapped-cream: oklch(96% 0.025 84);
+	--wrapped-ink: oklch(19% 0.025 64);
+	--wrapped-slide-bg: var(--wrapped-cream);
+	--wrapped-slide-ink: var(--wrapped-ink);
+	background: var(--wrapped-cream);
+	color: var(--wrapped-ink);
+}
+
+.wrapped-deck[data-slide-tone="hero"],
+.wrapped-deck[data-slide-tone="pobach"] {
+	--wrapped-slide-bg: var(--wrapped-blue);
+	--wrapped-slide-ink: var(--wrapped-yellow);
+}
+
+.wrapped-deck[data-slide-tone="common"] {
+	--wrapped-slide-bg: var(--wrapped-orange);
+	--wrapped-slide-ink: var(--wrapped-blue-deep);
+}
+
+.wrapped-deck[data-slide-tone="valoshka"],
+.wrapped-deck[data-slide-tone="thin"],
+.wrapped-deck[data-slide-tone="share"] {
+	--wrapped-slide-bg: var(--wrapped-yellow);
+	--wrapped-slide-ink: var(--wrapped-blue-deep);
+}
+
+.wrapped-progress {
+	position: relative;
+	z-index: 30;
+	background: var(--wrapped-slide-bg, var(--wrapped-cream));
+	color: var(--wrapped-slide-ink, var(--wrapped-ink));
+}
+
+.wrapped-progress__bar {
+	background: color-mix(in oklch, currentColor 22%, transparent);
+}
+
+.wrapped-progress__bar[data-active="true"] {
+	background: currentColor;
+}
+
+.wrapped-close {
+	display: grid;
+	width: 2.75rem;
+	height: 2.75rem;
+	flex: 0 0 2.75rem;
+	place-items: center;
+	border: 1px solid color-mix(in oklch, currentColor 38%, transparent);
+	border-radius: 999px;
+	transition:
+		transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
+		background 180ms ease;
+}
+
+.wrapped-close:hover {
+	background: color-mix(in oklch, currentColor 12%, transparent);
+	transform: rotate(5deg) scale(1.04);
+}
+
+.wrapped-frame {
+	position: relative;
+	display: flex;
+	width: 100%;
+	height: 100%;
+	min-height: calc(100dvh - 4.75rem);
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	padding: clamp(2rem, 7vw, 6rem);
+	isolation: isolate;
+	text-align: center;
+}
+
+.wrapped-frame > *:not([aria-hidden="true"]) {
+	position: relative;
+	z-index: 2;
+}
+
+.wrapped-frame--hero {
+	--wrapped-slide-bg: var(--wrapped-blue);
+	--wrapped-slide-ink: var(--wrapped-yellow);
+	background: var(--wrapped-blue);
+	color: var(--wrapped-yellow);
+}
+
+.wrapped-year-pattern {
+	position: absolute;
+	inset: -4rem -2rem;
+	display: block;
+	color: color-mix(in oklch, var(--wrapped-yellow) 19%, transparent);
+	font-family: var(--font-b);
+	font-size: clamp(3rem, 11vw, 9rem);
+	font-weight: 700;
+	line-height: 0.8;
+	text-align: justify;
+	transform: rotate(-4deg) scale(1.08);
+	user-select: none;
+	word-spacing: 0.35em;
+}
+
+.wrapped-hero-ribbon {
+	position: absolute;
+	right: -8%;
+	bottom: 7%;
+	width: 62%;
+	padding: 1rem;
+	background: var(--wrapped-orange);
+	color: var(--wrapped-blue-deep);
+	font-family: var(--font-b);
+	font-size: clamp(1rem, 3.2vw, 2.5rem);
+	font-weight: 800;
+	letter-spacing: 0.08em;
+	transform: rotate(-9deg);
+	white-space: nowrap;
+}
+
+.wrapped-burst {
+	display: flex;
+	width: min(68vw, 34rem);
+	aspect-ratio: 1;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 0.75rem;
+	padding: clamp(2.5rem, 8vw, 6rem);
+	background: var(--wrapped-yellow);
+	color: var(--wrapped-ink);
+	clip-path: polygon(
+		50% 0%,
+		59% 12%,
+		72% 4%,
+		77% 20%,
+		93% 18%,
+		91% 35%,
+		100% 44%,
+		87% 54%,
+		96% 68%,
+		79% 72%,
+		80% 89%,
+		63% 87%,
+		53% 100%,
+		43% 87%,
+		26% 95%,
+		22% 78%,
+		5% 78%,
+		12% 61%,
+		0% 51%,
+		14% 40%,
+		5% 24%,
+		23% 22%,
+		29% 6%,
+		43% 15%
+	);
+	filter: drop-shadow(1.25rem 1.25rem 0 var(--wrapped-orange));
+}
+
+.wrapped-year {
+	color: var(--wrapped-blue-deep);
+}
+
+.wrapped-frame--common {
+	--wrapped-slide-bg: var(--wrapped-orange);
+	--wrapped-slide-ink: var(--wrapped-blue-deep);
+	flex-direction: column;
+	gap: clamp(1.5rem, 4vw, 3rem);
+	background: var(--wrapped-orange);
+	color: var(--wrapped-blue-deep);
+}
+
+.wrapped-common-shape {
+	position: absolute;
+	top: -24%;
+	right: -10%;
+	display: grid;
+	width: min(55vw, 36rem);
+	aspect-ratio: 1;
+	place-items: end center;
+	border-radius: 50%;
+	background: var(--wrapped-blue);
+	color: color-mix(in oklch, var(--wrapped-yellow) 78%, transparent);
+	font-family: var(--font-b);
+	font-size: clamp(5rem, 18vw, 12rem);
+	font-weight: 800;
+	line-height: 0.8;
+	transform: rotate(12deg);
+}
+
+.wrapped-slide-title {
+	max-width: 15ch;
+	color: currentColor;
+}
+
+.wrapped-stat-grid {
+	display: grid;
+	width: min(100%, 48rem);
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: clamp(0.75rem, 2vw, 1.25rem);
+}
+
+.wrapped-deck .wrapped-stat-card {
+	min-height: 8.75rem;
+	justify-content: center;
+	border-radius: 0;
+	background: var(--wrapped-yellow);
+	color: var(--wrapped-blue-deep);
+	box-shadow: 0.45rem 0.45rem 0 var(--wrapped-blue-deep);
+	transform: rotate(-1.2deg);
+}
+
+.wrapped-deck .wrapped-stat-card:nth-child(even) {
+	background: var(--wrapped-cream);
+	transform: rotate(1.1deg);
+}
+
+.wrapped-deck .wrapped-stat-card:nth-child(3n) {
+	background: var(--wrapped-blue);
+	color: var(--wrapped-cream);
+}
+
+.wrapped-frame--game {
+	--wrapped-slide-bg: var(--wrapped-blue);
+	--wrapped-slide-ink: var(--wrapped-yellow);
+	background: var(--wrapped-blue);
+	color: var(--wrapped-yellow);
+}
+
+.wrapped-game--valoshka {
+	--wrapped-slide-bg: var(--wrapped-yellow);
+	--wrapped-slide-ink: var(--wrapped-blue-deep);
+	background: var(--wrapped-yellow);
+	color: var(--wrapped-blue-deep);
+}
+
+.wrapped-game-word {
+	position: absolute;
+	top: 9%;
+	left: -8%;
+	width: 116%;
+	padding: 0.4em;
+	background: var(--wrapped-orange);
+	color: var(--wrapped-blue-deep);
+	font-family: var(--font-b);
+	font-size: clamp(2rem, 7vw, 6rem);
+	font-weight: 800;
+	line-height: 0.9;
+	text-transform: uppercase;
+	transform: rotate(-7deg);
+	white-space: nowrap;
+}
+
+.wrapped-game-medallion {
+	display: flex;
+	width: min(66vw, 30rem);
+	aspect-ratio: 1;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	border-radius: 50%;
+	background: var(--wrapped-yellow);
+	color: var(--wrapped-blue-deep);
+	box-shadow: 1.25rem 1.25rem 0 var(--wrapped-orange);
+}
+
+.wrapped-game--valoshka .wrapped-game-medallion {
+	background: var(--wrapped-blue);
+	color: var(--wrapped-yellow);
+	box-shadow: 1.25rem 1.25rem 0 var(--wrapped-orange);
+}
+
+.wrapped-frame > .wrapped-streak-sticker {
+	position: absolute;
+	right: clamp(1.25rem, 8vw, 8rem);
+	bottom: clamp(4.5rem, 10vh, 8rem);
+	display: flex;
+	width: 8.5rem;
+	aspect-ratio: 1;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 0.2rem;
+	border-radius: 50%;
+	background: var(--wrapped-orange);
+	color: var(--wrapped-ink);
+	transform: rotate(8deg);
+}
+
+.wrapped-game--highlights {
+	flex-direction: column;
+	gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+.wrapped-highlight-shape {
+	position: absolute;
+	top: 2%;
+	left: -3%;
+	color: var(--wrapped-orange);
+	font-size: clamp(9rem, 30vw, 24rem);
+	line-height: 1;
+	transform: rotate(-13deg);
+}
+
+.wrapped-deck .wrapped-stat-grid--game .wrapped-stat-card:nth-child(odd) {
+	background: var(--wrapped-orange);
+	color: var(--wrapped-ink);
+}
+
+.wrapped-frame--thin {
+	--wrapped-slide-bg: var(--wrapped-yellow);
+	--wrapped-slide-ink: var(--wrapped-blue-deep);
+	background: var(--wrapped-yellow);
+	color: var(--wrapped-blue-deep);
+}
+
+.wrapped-thin-pattern {
+	position: absolute;
+	inset: -5%;
+	display: flex;
+	align-items: center;
+	color: color-mix(in oklch, var(--wrapped-blue) 18%, transparent);
+	font-family: var(--font-b);
+	font-size: clamp(4rem, 16vw, 12rem);
+	font-weight: 800;
+	line-height: 0.76;
+	text-align: left;
+	transform: rotate(-7deg);
+	word-spacing: 100vw;
+}
+
+.wrapped-thin-card {
+	display: flex;
+	width: min(96vw, 42rem);
+	min-height: min(105vw, 38rem);
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 1.5rem;
+	padding: clamp(4rem, 12vw, 6.5rem);
+	background: var(--wrapped-orange);
+	color: var(--wrapped-ink);
+	clip-path: polygon(
+		50% 0%,
+		60% 10%,
+		75% 3%,
+		81% 18%,
+		97% 20%,
+		91% 36%,
+		100% 50%,
+		89% 61%,
+		96% 77%,
+		79% 81%,
+		72% 97%,
+		57% 89%,
+		44% 100%,
+		34% 87%,
+		18% 95%,
+		15% 77%,
+		0% 70%,
+		10% 55%,
+		1% 41%,
+		17% 32%,
+		15% 15%,
+		34% 14%
+	);
+}
+
+.wrapped-thin-copy {
+	max-width: 28rem;
+	color: currentColor;
+}
+
+.wrapped-cta {
+	padding: 0.85rem 1.5rem;
+	border: 2px solid currentColor;
+	border-radius: 999px;
+	background: var(--wrapped-yellow);
+	font-weight: 700;
+	text-decoration: none;
+	transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.wrapped-cta:hover {
+	transform: rotate(-2deg) scale(1.04);
+}
+
+.wrapped-frame--share {
+	--wrapped-slide-bg: var(--wrapped-yellow);
+	--wrapped-slide-ink: var(--wrapped-blue-deep);
+	flex-direction: column;
+	gap: 1.25rem;
+	background: var(--wrapped-yellow);
+	color: var(--wrapped-blue-deep);
+	overflow-y: auto;
+	justify-content: safe center;
+	padding-block: 2rem 4rem;
+}
+
+.wrapped-share-ribbon {
+	position: absolute;
+	top: 45%;
+	left: -10%;
+	width: 120%;
+	padding: 0.45em;
+	background: var(--wrapped-orange);
+	color: var(--wrapped-blue-deep);
+	font-family: var(--font-b);
+	font-size: clamp(2rem, 7vw, 6rem);
+	font-weight: 800;
+	transform: rotate(8deg);
+	white-space: nowrap;
+}
+
+.wrapped-share-card {
+	max-height: 46dvh;
+	width: auto;
+	border: 0.4rem solid var(--wrapped-blue-deep);
+	border-radius: 1.5rem;
+	box-shadow: 0.75rem 0.75rem 0 var(--wrapped-orange);
+}
+
+.wrapped-share-feedback {
+	color: var(--wrapped-blue-deep);
+}
+
+.wrapped-nav-button {
+	position: absolute;
+	z-index: 20;
+	bottom: 1rem;
+	display: grid;
+	width: 3rem;
+	height: 3rem;
+	place-items: center;
+	border: 0;
+	background: transparent;
+	color: var(--wrapped-slide-ink, var(--wrapped-ink));
+	cursor: pointer;
+}
+
+.wrapped-nav-button--prev {
+	left: 1rem;
+}
+
+.wrapped-nav-button--next {
+	right: 1rem;
+}
+
+.wrapped-nav-button:disabled {
+	display: none;
+}
+
+.wrapped-nav-pill {
+	display: grid;
+	width: 2.75rem;
+	height: 2.75rem;
+	place-items: center;
+	border: 2px solid currentColor;
+	border-radius: 999px;
+	background: var(--wrapped-slide-bg, var(--wrapped-cream));
+	font-size: 1.35rem;
+	font-weight: 700;
+	transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.wrapped-nav-button:hover .wrapped-nav-pill {
+	transform: scale(1.08);
+}
+
+.wrapped-nav-button:focus {
+	outline: none;
+}
+
+.wrapped-nav-button:focus-visible .wrapped-nav-pill {
+	outline: 3px solid currentColor;
+	outline-offset: 3px;
+}
+
+.wrapped-reveal {
+	animation: wrapped-enter 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.wrapped-reveal--late {
+	animation-delay: 110ms;
+}
+
+@keyframes wrapped-enter {
+	from {
+		opacity: 0;
+		transform: translateY(1.25rem) rotate(-1.5deg) scale(0.96);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0) rotate(0) scale(1);
+	}
+}
+
+@media (max-width: 520px) {
+	.wrapped-progress {
+		padding: 0.75rem;
+	}
+
+	.wrapped-frame {
+		min-height: calc(100dvh - 4.25rem);
+		padding: 1.5rem 1.25rem 5rem;
+	}
+
+	.wrapped-year-pattern {
+		font-size: 3.75rem;
+	}
+
+	.wrapped-burst {
+		width: min(90vw, 24rem);
+		padding: 3rem;
+		filter: drop-shadow(0.75rem 0.75rem 0 var(--wrapped-orange));
+	}
+
+	.wrapped-hero-ribbon {
+		bottom: 10%;
+		width: 78%;
+	}
+
+	.wrapped-common-shape {
+		top: -10%;
+		right: -27%;
+		width: 18rem;
+	}
+
+	.wrapped-stat-grid {
+		gap: 0.7rem;
+	}
+
+	.wrapped-deck .wrapped-stat-card {
+		min-height: 6rem;
+		padding: 0.9rem;
+		box-shadow: 0.3rem 0.3rem 0 var(--wrapped-blue-deep);
+	}
+
+	.wrapped-frame--common,
+	.wrapped-game--highlights {
+		justify-content: safe center;
+		overflow-y: auto;
+	}
+
+	.wrapped-game-word {
+		top: 8%;
+		font-size: 2rem;
+	}
+
+	.wrapped-game-medallion {
+		width: min(82vw, 22rem);
+		box-shadow: 0.75rem 0.75rem 0 var(--wrapped-orange);
+	}
+
+	.wrapped-frame > .wrapped-streak-sticker {
+		right: 1rem;
+		bottom: 4.5rem;
+		width: 6.75rem;
+	}
+
+	.wrapped-frame--share {
+		padding-top: 1.5rem;
+	}
+
+	.wrapped-share-card {
+		max-width: min(68vw, 17rem);
+		max-height: 40dvh;
+	}
+}
+
+@media (max-height: 620px) {
+	.wrapped-frame {
+		padding-top: 1rem;
+		padding-bottom: 4.5rem;
+	}
+
+	.wrapped-deck .wrapped-stat-card {
+		min-height: 6.75rem;
+	}
+
+	.wrapped-burst,
+	.wrapped-game-medallion {
+		width: min(64vh, 20rem);
+	}
+
+	.wrapped-share-card {
+		max-height: 54dvh;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.wrapped-reveal {
+		animation: none;
+	}
+
+	.wrapped-close,
+	.wrapped-cta,
+	.wrapped-nav-pill {
+		transition: none;
+	}
+}

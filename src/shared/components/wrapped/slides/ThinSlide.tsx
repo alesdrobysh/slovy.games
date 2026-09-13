@@ -7,17 +7,24 @@ export interface ThinSlideProps {
 
 export function ThinSlide({ year }: ThinSlideProps) {
 	return (
-		<SlideFrame>
-			<Typography variant="title" as="h2">
-				Яшчэ мала словаў
-			</Typography>
-			<Typography variant="body" className="max-w-sm text-ink-muted">
-				У {year} годзе ты сыграў занадта мала, каб зрабіць вынікі году. Пагуляй
-				трохі — і вяртайся.
-			</Typography>
-			<a href="/" className="underline">
-				<Typography variant="label">Да гульняў</Typography>
-			</a>
+		<SlideFrame variant="thin">
+			<div className="wrapped-thin-pattern" aria-hidden="true">
+				СЛОВЫ СЛОВЫ СЛОВЫ
+			</div>
+			<div className="wrapped-thin-card wrapped-reveal">
+				<div className="wrapped-slide-title">
+					<Typography variant="displayHeading">Яшчэ мала словаў</Typography>
+				</div>
+				<div className="wrapped-thin-copy">
+					<Typography variant="bodyCentered">
+						У {year} годзе ты сыграў занадта мала, каб зрабіць вынікі году.
+						Пагуляй трохі — і вяртайся.
+					</Typography>
+				</div>
+				<a href="/" className="wrapped-cta">
+					<Typography variant="label">Да гульняў →</Typography>
+				</a>
+			</div>
 		</SlideFrame>
 	);
 }

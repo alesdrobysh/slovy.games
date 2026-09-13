@@ -16,8 +16,8 @@ export interface GameSlideProps {
 }
 
 const GAME_ACCENTS: Record<string, string> = {
-	pobach: "bg-pobach-soft",
-	valoshka: "bg-valoshka-soft",
+	pobach: "wrapped-game--pobach",
+	valoshka: "wrapped-game--valoshka",
 };
 
 export function GameSlide({ stats, page }: GameSlideProps) {
@@ -28,31 +28,46 @@ export function GameSlide({ stats, page }: GameSlideProps) {
 
 	if (page === 1) {
 		return (
-			<SlideFrame accentClassName={accent}>
-				<Typography variant="overline" className="text-ink-muted">
-					{name}
-				</Typography>
-				<Typography variant="statHero" as="p">
-					{shownDays}
-				</Typography>
-				<Typography variant="caption" className="text-ink-muted">
-					{pluralize(stats.daysPlayed.length, "дзень")} у гульні
-				</Typography>
-				<Typography variant="body" className="text-ink-muted">
-					Найдаўжэйшая серыя: {stats.longestStreakInYear}
-				</Typography>
+			<SlideFrame variant="game" accentClassName={accent}>
+				<div className="wrapped-game-word" aria-hidden="true">
+					{name} · {name} · {name}
+				</div>
+				<div className="wrapped-game-medallion wrapped-reveal">
+					<Typography variant="overline">{name}</Typography>
+					<Typography variant="displayHuge">{shownDays}</Typography>
+					<Typography variant="caption">
+						{pluralize(stats.daysPlayed.length, "дзень")} у гульні
+					</Typography>
+				</div>
+				<div className="wrapped-streak-sticker wrapped-reveal wrapped-reveal--late">
+					<Typography variant="overline">Серыя</Typography>
+					<Typography variant="metric">{stats.longestStreakInYear}</Typography>
+					<Typography variant="label">дзён запар</Typography>
+				</div>
 			</SlideFrame>
 		);
 	}
 
 	return (
-		<SlideFrame accentClassName={accent}>
-			<Typography variant="title" as="h2">
-				{name}: найлепшае
-			</Typography>
-			<div className="grid w-full max-w-md grid-cols-2 gap-flow-md">
+		<SlideFrame
+			variant="game"
+			accentClassName={`${accent} wrapped-game--highlights`}
+		>
+			<div className="wrapped-highlight-shape" aria-hidden="true">
+				★
+			</div>
+			<div className="wrapped-slide-title wrapped-reveal">
+				<Typography variant="displayHeading">{name}: найлепшае</Typography>
+			</div>
+			<div className="wrapped-stat-grid wrapped-stat-grid--game wrapped-reveal wrapped-reveal--late">
 				{stats.highlights.map((h) => (
-					<StatCard key={h.key} label={h.label} value={h.value} />
+					<StatCard
+						appearance="wrapped"
+						className="wrapped-stat-card"
+						key={h.key}
+						label={h.label}
+						value={h.value}
+					/>
 				))}
 			</div>
 		</SlideFrame>

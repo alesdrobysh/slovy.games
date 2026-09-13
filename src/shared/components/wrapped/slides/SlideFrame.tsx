@@ -2,15 +2,20 @@ import type { ReactNode } from "react";
 
 export interface SlideFrameProps {
 	children: ReactNode;
-	/** Accent token class for the background wash, e.g. `bg-pobach-soft`. */
+	/** Optional slide-specific class, e.g. a game theme. */
 	accentClassName?: string;
+	variant?: "hero" | "common" | "game" | "thin" | "share";
 }
 
-/** Full-viewport slide body: centred column, generous inset, no scroll. */
-export function SlideFrame({ children, accentClassName }: SlideFrameProps) {
+/** Full-viewport slide body with a deliberately celebratory Wrapped canvas. */
+export function SlideFrame({
+	children,
+	accentClassName,
+	variant,
+}: SlideFrameProps) {
 	return (
 		<div
-			className={`flex h-full w-full flex-col items-center justify-center gap-flow-lg p-inset-xl text-center ${accentClassName ?? "bg-paper"}`}
+			className={`wrapped-frame wrapped-frame--${variant ?? "hero"} ${accentClassName ?? ""}`}
 		>
 			{children}
 		</div>

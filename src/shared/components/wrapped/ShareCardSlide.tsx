@@ -55,16 +55,19 @@ export function ShareCardSlide({ summary }: ShareCardSlideProps) {
 	});
 
 	return (
-		<SlideFrame>
-			<Typography variant="title" as="h2">
-				Падзяліся сваім годам
-			</Typography>
+		<SlideFrame variant="share">
+			<div className="wrapped-share-ribbon" aria-hidden="true">
+				ПАДЗЯЛІСЯ · ПАДЗЯЛІСЯ
+			</div>
+			<div className="wrapped-slide-title wrapped-reveal">
+				<Typography variant="title">Падзяліся сваім годам</Typography>
+			</div>
 			<canvas
 				ref={canvasRef}
 				data-testid="wrapped-card-canvas"
 				width={CARD.w}
 				height={CARD.h}
-				className="max-h-[60dvh] w-auto rounded-2xl ring-1 ring-rule"
+				className="wrapped-share-card wrapped-reveal wrapped-reveal--late"
 			/>
 			<Button
 				variant="solid"
@@ -76,19 +79,19 @@ export function ShareCardSlide({ summary }: ShareCardSlideProps) {
 				Падзяліцца
 			</Button>
 			{showToast && (
-				<Typography variant="label" className="text-ink-muted">
-					Скапіявана
-				</Typography>
+				<div className="wrapped-share-feedback">
+					<Typography variant="label">Скапіявана</Typography>
+				</div>
 			)}
 			{feedback === "downloaded" && (
-				<Typography variant="label" className="text-ink-muted">
-					Захавана ў файл
-				</Typography>
+				<div className="wrapped-share-feedback">
+					<Typography variant="label">Захавана ў файл</Typography>
+				</div>
 			)}
 			{feedback === "failed" && (
-				<Typography variant="label" className="text-ink-muted">
-					Не атрымалася падзяліцца
-				</Typography>
+				<div className="wrapped-share-feedback">
+					<Typography variant="label">Не атрымалася падзяліцца</Typography>
+				</div>
 			)}
 		</SlideFrame>
 	);

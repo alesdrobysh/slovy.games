@@ -8,11 +8,11 @@ const MIN_FONT_PX = 24;
 /** Card palette is fixed, independent of the viewer's site theme, so a
  *  light-mode player still shares a legible dark card. */
 const CARD_COLORS = {
-	bg: "#141210",
-	bgAccent: "#252118",
-	ink: "#e5e2d6",
-	inkMuted: "#aba69c",
-	accent: "#e07b35",
+	bg: "#4328d7",
+	ink: "#f8f4dd",
+	inkMuted: "#d9f36a",
+	accent: "#ff8126",
+	lime: "#d9f36a",
 } as const;
 
 /** The largest size at or below `startPx` at which `text` fits `maxWidth`,
@@ -106,6 +106,17 @@ function cardRows(summary: WrappedSummary): Array<[string, string]> {
 			GAME_NAMES[summary.gameOfTheYear] ?? summary.gameOfTheYear,
 		]);
 	}
+	for (const game of summary.perGame) {
+		const personal = game.highlights.find((highlight) =>
+			["favoriteGuess", "favoriteWord"].includes(highlight.key)
+		);
+		if (personal) {
+			rows.push([
+				`${GAME_NAMES[game.gameId] ?? game.gameId} · ${personal.label}`,
+				String(personal.value),
+			]);
+		}
+	}
 	return rows;
 }
 
@@ -117,47 +128,75 @@ export async function drawWrappedCard(
 	const { display, body } = cardFontStacks();
 	await preloadFonts(display, body);
 
-	const gradient = ctx.createLinearGradient(0, 0, 0, CARD.h);
-	gradient.addColorStop(0, CARD_COLORS.bg);
-	gradient.addColorStop(1, CARD_COLORS.bgAccent);
-	ctx.fillStyle = gradient;
+	ctx.fillStyle = CARD_COLORS.bg;
 	ctx.fillRect(0, 0, CARD.w, CARD.h);
+
+	ctx.textAlign = "center";
+	ctx.textBaseline = "alphabetic";
+	ctx.fillStyle = "rgba(217, 243, 106, 0.12)";
+	ctx.font = `700 160px ${body}`;
+	for (let y = 110; y < CARD.h; y += 150) {
+		ctx.fillText(
+			`${summary.year}  ${summary.year}  ${summary.year}`,
+			CARD.w / 2,
+			y
+		);
+	}
+
+	ctx.save();
+	ctx.translate(50, 100);
+	ctx.rotate(-0.16);
+	ctx.fillStyle = CARD_COLORS.lime;
+	ctx.beginPath();
+	ctx.ellipse(80, 0, 470, 230, 0, 0, Math.PI * 2);
+	ctx.fill();
+	ctx.restore();
+
+	ctx.save();
+	ctx.translate(CARD.w - 60, CARD.h - 130);
+	ctx.rotate(-0.34);
+	ctx.fillStyle = CARD_COLORS.accent;
+	ctx.fillRect(-430, -100, 660, 180);
+	ctx.restore();
 
 	const margin = 96;
 	const maxWidth = CARD.w - margin * 2;
-	ctx.textAlign = "center";
-	ctx.textBaseline = "alphabetic";
 
-	ctx.fillStyle = CARD_COLORS.inkMuted;
+	ctx.fillStyle = CARD_COLORS.ink;
 	const overlineSize = fitText(ctx, "ГОД У СЛОВАХ", maxWidth, 44, body, 400);
 	ctx.font = `400 ${overlineSize}px ${body}`;
-	ctx.fillText("ГОД У СЛОВАХ", CARD.w / 2, 260);
+	ctx.fillText("ГОД У СЛОВАХ", CARD.w / 2, 230);
 
 	ctx.fillStyle = CARD_COLORS.accent;
 	const yearText = String(summary.year);
 	const yearSize = fitText(ctx, yearText, maxWidth, 280, display);
 	ctx.font = `500 ${yearSize}px ${display}`;
-	ctx.fillText(yearText, CARD.w / 2, 520);
+	ctx.fillText(yearText, CARD.w / 2, 500);
 
-	let y = 760;
-	for (const [label, value] of cardRows(summary)) {
+	const rows = cardRows(summary);
+	const rowGap = Math.min(190, 1050 / Math.max(rows.length, 1));
+	let y = 690;
+	for (const [index, [label, value]] of rows.entries()) {
 		ctx.fillStyle = CARD_COLORS.inkMuted;
-		const labelSize = fitText(ctx, label, maxWidth, 44, body, 400);
+		const labelSize = fitText(ctx, label, maxWidth, 38, body, 500);
 		ctx.font = `400 ${labelSize}px ${body}`;
-		ctx.fillText(label, CARD.w / 2, y);
+		ctx.textAlign = index % 2 === 0 ? "left" : "right";
+		const x = index % 2 === 0 ? margin : CARD.w - margin;
+		ctx.fillText(label.toUpperCase(), x, y);
 
-		ctx.fillStyle = CARD_COLORS.ink;
-		const valueSize = fitText(ctx, value, maxWidth, 96, display);
+		ctx.fillStyle = index % 3 === 1 ? CARD_COLORS.accent : CARD_COLORS.ink;
+		const valueSize = fitText(ctx, value, maxWidth, 86, display);
 		ctx.font = `500 ${valueSize}px ${display}`;
-		ctx.fillText(value, CARD.w / 2, y + 110);
+		ctx.fillText(value, x, y + 88);
 
-		y += 210;
+		y += rowGap;
 	}
 
-	ctx.fillStyle = CARD_COLORS.inkMuted;
+	ctx.textAlign = "center";
+	ctx.fillStyle = CARD_COLORS.ink;
 	const footSize = fitText(ctx, "slovy.games", maxWidth, 48, body, 400);
 	ctx.font = `400 ${footSize}px ${body}`;
-	ctx.fillText("slovy.games", CARD.w / 2, CARD.h - 140);
+	ctx.fillText("slovy.games", CARD.w / 2, CARD.h - 105);
 }
 
 /** Render the card off-screen and return it as a PNG blob. */

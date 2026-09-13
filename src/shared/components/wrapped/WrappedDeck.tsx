@@ -9,6 +9,7 @@ import { GameSlide } from "./slides/GameSlide";
 import { HeroSlide } from "./slides/HeroSlide";
 import { ThinSlide } from "./slides/ThinSlide";
 import { useWrappedSummary } from "./useWrappedSummary";
+import "./wrapped.css";
 
 export interface WrappedDeckProps {
 	year: number;
@@ -52,10 +53,13 @@ export function WrappedDeck({ year }: WrappedDeckProps) {
 	if (!summary) return <div className="min-h-dvh bg-paper" />;
 
 	const slide = slides[Math.min(index, lastIndex)];
+	const slideTone = slide.kind === "game" ? slide.gameId : slide.kind;
 
 	return (
 		<div
-			className="relative flex min-h-dvh flex-col bg-paper"
+			className="wrapped-deck relative flex min-h-dvh flex-col overflow-hidden bg-paper"
+			data-slide-kind={slide.kind}
+			data-slide-tone={slideTone}
 			onTouchStart={(e) => {
 				touchStartX.current = e.touches[0]?.clientX ?? null;
 			}}
@@ -68,16 +72,16 @@ export function WrappedDeck({ year }: WrappedDeckProps) {
 				go(end < start ? 1 : -1);
 			}}
 		>
-			<div className="flex items-center gap-flow-xs p-inset-md">
+			<div className="wrapped-progress flex items-center gap-flow-xs p-inset-md">
 				{slides.map((s, i) => (
 					<span
 						key={s.kind === "game" ? `game-${s.gameId}-${s.page}` : s.kind}
 						data-testid="wrapped-dot"
 						data-active={i === index ? "true" : "false"}
-						className={`h-1 flex-1 rounded-full ${i === index ? "bg-ink" : "bg-rule"}`}
+						className="wrapped-progress__bar h-1 flex-1 rounded-full"
 					/>
 				))}
-				<a href="/" aria-label="Зачыніць" className="pl-inset-sm">
+				<a href="/" aria-label="Зачыніць" className="wrapped-close">
 					<Typography variant="label">✕</Typography>
 				</a>
 			</div>
@@ -101,15 +105,25 @@ export function WrappedDeck({ year }: WrappedDeckProps) {
 				<button
 					type="button"
 					aria-label="Назад"
-					className="absolute inset-y-0 left-0 w-1/3 cursor-default"
+					className="wrapped-nav-button wrapped-nav-button--prev"
 					onClick={() => go(-1)}
-				/>
+					disabled={index === 0}
+				>
+					<span className="wrapped-nav-pill" aria-hidden="true">
+						←
+					</span>
+				</button>
 				<button
 					type="button"
 					aria-label="Далей"
-					className="absolute inset-y-0 right-0 w-2/3 cursor-default"
+					className="wrapped-nav-button wrapped-nav-button--next"
 					onClick={() => go(1)}
-				/>
+					disabled={index === lastIndex}
+				>
+					<span className="wrapped-nav-pill" aria-hidden="true">
+						→
+					</span>
+				</button>
 			</div>
 		</div>
 	);

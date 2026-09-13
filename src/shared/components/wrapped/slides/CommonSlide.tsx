@@ -30,25 +30,44 @@ export interface CommonSlideProps {
 
 export function CommonSlide({ summary }: CommonSlideProps) {
 	return (
-		<SlideFrame>
-			<Typography variant="title" as="h2">
-				Разам за год
-			</Typography>
-			<div className="grid w-full max-w-md grid-cols-2 gap-flow-md">
-				<StatCard label="Дзён у гульні" value={summary.activeDays.length} />
-				<StatCard label="Гульняў скончана" value={summary.gamesFinished} />
+		<SlideFrame variant="common">
+			<div className="wrapped-common-shape" aria-hidden="true">
+				ГОД
+			</div>
+			<div className="wrapped-slide-title wrapped-reveal">
+				<Typography variant="displayHeading">Разам за год</Typography>
+			</div>
+			<div className="wrapped-stat-grid wrapped-reveal wrapped-reveal--late">
 				<StatCard
+					appearance="wrapped"
+					className="wrapped-stat-card"
+					label="Дзён у гульні"
+					value={summary.activeDays.length}
+				/>
+				<StatCard
+					appearance="wrapped"
+					className="wrapped-stat-card"
+					label="Гульняў скончана"
+					value={summary.gamesFinished}
+				/>
+				<StatCard
+					appearance="wrapped"
+					className="wrapped-stat-card"
 					label="Найдаўжэйшая серыя"
 					value={`${summary.longestStreakAnyGame} ${pluralize(summary.longestStreakAnyGame, "дзень")}`}
 				/>
 				{summary.busiestMonth && (
 					<StatCard
+						appearance="wrapped"
+						className="wrapped-stat-card"
 						label="Самы актыўны месяц"
 						value={MONTHS_NOM[summary.busiestMonth.month - 1]}
 					/>
 				)}
 				{summary.gameOfTheYear && (
 					<StatCard
+						appearance="wrapped"
+						className="wrapped-stat-card"
 						label="Гульня года"
 						value={GAME_NAMES[summary.gameOfTheYear] ?? summary.gameOfTheYear}
 					/>
