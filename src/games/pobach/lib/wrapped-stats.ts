@@ -4,6 +4,22 @@ import { dateForDayIndex } from "@/shared/lib/timezone";
 import { longestStreakFromDates } from "@/shared/lib/wrapped/streaks";
 import type { GameYearStats, WrappedHighlight } from "@/shared/types/wrapped";
 
+function mostFrequentGuess(
+	guesses: Array<{ word: string; rank: number }>
+): { word: string; count: number } | null {
+	const counts = new Map<string, number>();
+	for (const guess of guesses) {
+		counts.set(guess.word, (counts.get(guess.word) ?? 0) + 1);
+	}
+	return (
+		[...counts.entries()]
+			.sort(([aWord, aCount], [bWord, bCount]) =>
+				bCount === aCount ? aWord.localeCompare(bWord, "be") : bCount - aCount
+			)
+			.map(([word, count]) => ({ word, count }))[0] ?? null
+	);
+}
+
 function emptyStats(year: number): GameYearStats {
 	return {
 		gameId: "pobach",
@@ -51,6 +67,17 @@ export function getWrappedStats(year: number): GameYearStats {
 
 	const won = inYear.filter(({ record }) => record.won);
 	const highlights: WrappedHighlight[] = [];
+	const playerGuesses = inYear.flatMap(({ record }) =>
+		Array.isArray(record.guesses)
+			? record.guesses.filter(
+					(guess) =>
+						typeof guess?.word === "string" &&
+						guess.word.length > 0 &&
+						Number.isFinite(guess.rank) &&
+						!guess.isHint
+				)
+			: []
+	);
 
 	if (won.length > 0) {
 		highlights.push({
@@ -66,14 +93,23 @@ export function getWrappedStats(year: number): GameYearStats {
 		value: `${Math.round((daysWon.length / daysPlayed.length) * 100)}%`,
 	});
 
-	const ranks = inYear
-		.map(({ record }) => record.bestRank)
-		.filter((r) => typeof r === "number" && r > 0);
-	if (ranks.length > 0) {
+	const favorite = mostFrequentGuess(playerGuesses);
+	if (favorite) {
 		highlights.push({
-			key: "bestRank",
-			label: "Найбліжэйшае слова",
-			value: Math.min(...ranks),
+			key: "favoriteGuess",
+			label: "Любімая здагадка",
+			value: `${favorite.word} ×${favorite.count}`,
+		});
+	}
+
+	const closest = playerGuesses
+		.filter((guess) => guess.rank > 1)
+		.sort((a, b) => a.rank - b.rank || a.word.localeCompare(b.word, "be"))[0];
+	if (closest) {
+		highlights.push({
+			key: "closestGuess",
+			label: "Найлепшая здагадка",
+			value: `${closest.word} · №${closest.rank}`,
 		});
 	}
 

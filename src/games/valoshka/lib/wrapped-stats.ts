@@ -1,9 +1,26 @@
 import { RANKS } from "@/games/valoshka/lib/scoring";
-import { loadStats } from "@/games/valoshka/lib/storage";
+import { loadProgress, loadStats } from "@/games/valoshka/lib/storage";
 import { longestStreakFromDates } from "@/shared/lib/wrapped/streaks";
 import type { GameYearStats, WrappedHighlight } from "@/shared/types/wrapped";
 
 const TOP_RANK_IDX = RANKS.length - 1;
+
+function mostFrequentFoundWord(days: string[]): string | null {
+	const counts = new Map<string, number>();
+	for (const date of days) {
+		const foundWords = loadProgress(date)?.foundWords;
+		if (!Array.isArray(foundWords)) continue;
+		for (const word of foundWords) {
+			if (typeof word !== "string" || word.length === 0) continue;
+			counts.set(word, (counts.get(word) ?? 0) + 1);
+		}
+	}
+	return (
+		[...counts.entries()].sort(([aWord, aCount], [bWord, bCount]) =>
+			bCount === aCount ? aWord.localeCompare(bWord, "be") : bCount - aCount
+		)[0]?.[0] ?? null
+	);
+}
 
 function emptyStats(year: number): GameYearStats {
 	return {
@@ -66,6 +83,14 @@ export function getWrappedStats(year: number): GameYearStats {
 			label: "Знойдзена слоў",
 			value: inYearBests.reduce((sum, { best }) => sum + best.foundCount, 0),
 		});
+		const favoriteWord = mostFrequentFoundWord(daysPlayed);
+		if (favoriteWord) {
+			highlights.push({
+				key: "favoriteWord",
+				label: "Часцей за ўсё",
+				value: favoriteWord,
+			});
+		}
 		highlights.push({
 			key: "bestRank",
 			label: "Найвышэйшы ранг",

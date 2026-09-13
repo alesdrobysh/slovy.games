@@ -113,18 +113,40 @@ describe("pobach getWrappedStats", () => {
 		expect(getWrappedStats(2026).longestStreakInYear).toBe(2);
 	});
 
-	it("reports fewest attempts, win rate and closest rank from won games", () => {
+	it("reports fewest attempts, win rate, favorite and closest player guesses", () => {
 		seed([
-			record("2026-03-01", { won: true, attempts: 12, bestRank: 40 }),
-			record("2026-03-02", { won: true, attempts: 4, bestRank: 1 }),
-			record("2026-03-03", { won: false, attempts: 99, bestRank: 800 }),
+			record("2026-03-01", {
+				won: true,
+				attempts: 12,
+				bestRank: 1,
+				guesses: [
+					{ word: "лес", rank: 40 },
+					{ word: "сярэдзіна", rank: 1 },
+				],
+			}),
+			record("2026-03-02", {
+				won: true,
+				attempts: 4,
+				bestRank: 1,
+				guesses: [
+					{ word: "лес", rank: 2 },
+					{ word: "падказка", rank: 3, isHint: true },
+				],
+			}),
+			record("2026-03-03", {
+				won: false,
+				attempts: 99,
+				bestRank: 800,
+				guesses: [{ word: "вада", rank: 800 }],
+			}),
 		]);
 		const byKey = Object.fromEntries(
 			getWrappedStats(2026).highlights.map((h) => [h.key, h.value])
 		);
 		expect(byKey.bestAttempts).toBe(4);
 		expect(byKey.winRate).toBe("67%");
-		expect(byKey.bestRank).toBe(1);
+		expect(byKey.favoriteGuess).toBe("лес ×2");
+		expect(byKey.closestGuess).toBe("лес · №2");
 	});
 
 	it("omits the attempts highlight when nothing was won", () => {

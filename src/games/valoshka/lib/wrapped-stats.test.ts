@@ -66,6 +66,37 @@ describe("valoshka getWrappedStats", () => {
 		expect(byKey.wordsFound).toBe(12);
 	});
 
+	it("reports the most frequently found word from in-year progress", () => {
+		seed({
+			datesPlayed: ["2026-08-01", "2026-08-02"],
+			perDateBest: {
+				"2026-08-01": { rankIdx: 3, foundCount: 2 },
+				"2026-08-02": { rankIdx: 4, foundCount: 2 },
+			},
+		});
+		localStorage.setItem(
+			"vulej_2026-08-01",
+			JSON.stringify({
+				date: "2026-08-01",
+				foundWords: ["вада", "слова"],
+				score: 2,
+			})
+		);
+		localStorage.setItem(
+			"vulej_2026-08-02",
+			JSON.stringify({
+				date: "2026-08-02",
+				foundWords: ["слова", "мова"],
+				score: 2,
+			})
+		);
+
+		const byKey = Object.fromEntries(
+			getWrappedStats(2026).highlights.map((h) => [h.key, h.value])
+		);
+		expect(byKey.favoriteWord).toBe("слова");
+	});
+
 	it("omits the words highlight when no per-date data survives", () => {
 		seed({ datesPlayed: ["2026-08-01"], perDateBest: {} });
 		const keys = getWrappedStats(2026).highlights.map((h) => h.key);
