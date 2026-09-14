@@ -34,6 +34,7 @@ export function Cornflower({
 
 	return (
 		<svg
+			className="ph-no-autocapture"
 			viewBox={`0 0 ${svgSize} ${svgSize}`}
 			style={{
 				width: "100%",

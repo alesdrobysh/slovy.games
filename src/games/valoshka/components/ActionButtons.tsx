@@ -28,7 +28,7 @@ export function ActionButtons({
 				color="neutral"
 				size="lg"
 				onClick={onDelete}
-				className="ph-no-rageclick"
+				className="ph-no-rageclick ph-no-autocapture"
 			>
 				Сцерці
 			</Button>
@@ -53,7 +53,13 @@ export function ActionButtons({
 				startIcon={<Grid3x3 size={20} />}
 			/>
 
-			<Button variant="solid" color="primary" size="lg" onClick={onSubmit}>
+			<Button
+				variant="solid"
+				color="primary"
+				size="lg"
+				onClick={onSubmit}
+				className="ph-no-autocapture"
+			>
 				Увесці
 			</Button>
 		</div>

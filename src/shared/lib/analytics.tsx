@@ -10,6 +10,7 @@ import {
 	useState,
 } from "react";
 import { useTheme } from "@/shared/hooks/useTheme";
+import { isNoisyAutocapture } from "@/shared/lib/filterAutocapture";
 
 const CONSENT_KEY = "cookie_consent";
 
@@ -42,6 +43,7 @@ function initPostHog(): boolean {
 		autocapture: true,
 		capture_pageview: true,
 		capture_pageleave: true,
+		before_send: (event) => (isNoisyAutocapture(event) ? null : event),
 	});
 	return true;
 }
