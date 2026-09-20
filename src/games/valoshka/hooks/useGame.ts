@@ -156,11 +156,12 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 		if (count === 0) {
 			return;
 		}
-		if (count > prevWordCount.current) {
+		// RESTORE_STATE changes foundWords without submitting a new word.
+		if (count > prevWordCount.current && gameState.lastFoundWord) {
 			if (prevWordCount.current === 0) {
 				trackValoshkaGameStarted(puzzle.date);
 			}
-			const latestWord = gameState.foundWords[count - 1];
+			const latestWord = gameState.lastFoundWord;
 			const isPangram = puzzle.pangrams.includes(latestWord);
 			trackValoshkaWordFound(
 				latestWord,
@@ -188,6 +189,7 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 		}
 	}, [
 		gameState.foundWords,
+		gameState.lastFoundWord,
 		gameState.score,
 		puzzle.pangrams,
 		puzzle.max_score,
