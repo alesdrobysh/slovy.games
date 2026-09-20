@@ -9,13 +9,12 @@ import {
 } from "@/games/sakretna/lib/gameplaySettings";
 import { ERROR_MESSAGES } from "@/games/sakretna/lib/validation";
 import type { PickedArticle } from "@/games/sakretna/types";
-import { Typography } from "@/shared/components/ui/Typography";
+import { GameDate } from "@/shared/components/GameDate";
 import { useVirtualKeyboard } from "@/shared/hooks/useVirtualKeyboard";
 import { ArticleActions } from "./ArticleActions";
 import { ArticleNavigator } from "./ArticleNavigator";
 import { CompletionOverlay } from "./CompletionOverlay";
 import { FinishCard } from "./FinishCard";
-import { GameMetrics } from "./GameMetrics";
 import { GameplaySettingsModal } from "./GameplaySettingsModal";
 import { GiveUpModal } from "./GiveUpModal";
 import { GuessInput } from "./GuessInput";
@@ -107,16 +106,7 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 			>
 				<div className="min-w-0 flex flex-col gap-flow-lg lg:gap-inset-xl pb-(--sakretna-dock-space) md:pb-0">
 					<header className="flex flex-col gap-flow-xs">
-						<Typography variant="overline" as="span" className="text-sakretna">
-							Сакрэтна · {date}
-						</Typography>
-						<GameMetrics
-							guesses={state.guesses.length}
-							foundLemmas={foundSet}
-							tokens={tokens}
-							title={article.title}
-							hintsUsed={state.hintsUsed}
-						/>
+						<GameDate game="sakretna" date={date} />
 						<div className="hidden" aria-hidden="true">
 							<ProgressLine
 								foundLemmas={foundCount}

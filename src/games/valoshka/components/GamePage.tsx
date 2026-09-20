@@ -3,6 +3,7 @@
 import { ChevronDown } from "lucide-react";
 import { useGame } from "@/games/valoshka/hooks/useGame";
 import type { Puzzle } from "@/games/valoshka/types";
+import { GameDate } from "@/shared/components/GameDate";
 import { Button } from "@/shared/components/ui/Button";
 import { Typography } from "@/shared/components/ui/Typography";
 import { ActionButtons } from "./ActionButtons";
@@ -25,6 +26,8 @@ export function GamePage({ puzzle }: GamePageProps) {
 
 	return (
 		<div className="mx-auto max-w-5xl px-5 sm:px-8 select-none font-sans">
+			<GameDate game="valoshka" date={puzzle.date} />
+
 			{/* Mobile: collapsible words toggle */}
 			<div className="lg:hidden border-b border-rule py-2">
 				<Button
