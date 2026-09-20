@@ -7,6 +7,7 @@ import { generateShareText } from "@/games/valoshka/lib/share-text";
 import { Badge } from "@/shared/components/ui/Badge";
 import { Button } from "@/shared/components/ui/Button";
 import { useShare } from "@/shared/hooks/useShare";
+import { GameDate } from "@/shared/components/GameDate";
 
 interface ProgressBarProps {
 	score: number;
@@ -41,6 +42,7 @@ export function ProgressBar({
 			<div className="w-full max-w-sm">
 				<div className="flex items-center justify-between mb-flow-md">
 					<div className="flex items-center gap-flow-sm">
+						<GameDate game="valoshka" date={date} />
 						<Button
 							variant="ghost"
 							color="neutral"

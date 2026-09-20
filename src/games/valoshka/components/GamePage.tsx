@@ -26,8 +26,6 @@ export function GamePage({ puzzle }: GamePageProps) {
 
 	return (
 		<div className="mx-auto max-w-5xl px-5 sm:px-8 select-none font-sans">
-			<GameDate game="valoshka" date={puzzle.date} />
-
 			{/* Mobile: collapsible words toggle */}
 			<div className="lg:hidden border-b border-rule py-2">
 				<Button
