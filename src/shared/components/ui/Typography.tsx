@@ -6,12 +6,17 @@ export type TypographyVariant =
 	| "heading"
 	| "subheading"
 	| "displaySm"
+	| "displayHeading"
+	| "displayHuge"
+	| "metric"
 	| "overline"
 	| "body"
+	| "bodyCentered"
 	| "caption"
 	| "smallSerif"
 	| "label"
-	| "gameInput";
+	| "gameInput"
+	| "statHero";
 
 interface VariantConfig {
 	style: CSSProperties;
@@ -75,6 +80,39 @@ const VARIANTS: Record<TypographyVariant, VariantConfig> = {
 			margin: 0,
 		},
 	},
+	displayHeading: {
+		tag: "h2",
+		style: {
+			fontFamily: D,
+			fontStyle: "italic",
+			fontWeight: 500,
+			fontSize: "clamp(2.4rem, 7vw, 5.5rem)",
+			lineHeight: 0.88,
+			letterSpacing: "-0.03em",
+			margin: 0,
+		},
+	},
+	displayHuge: {
+		tag: "p",
+		style: {
+			fontFamily: D,
+			fontWeight: 500,
+			fontSize: "clamp(5rem, 24vw, 12rem)",
+			lineHeight: 0.85,
+			letterSpacing: "-0.04em",
+			margin: 0,
+		},
+	},
+	metric: {
+		tag: "p",
+		style: {
+			fontFamily: D,
+			fontWeight: 500,
+			fontSize: "clamp(24px, 5vw, 48px)",
+			lineHeight: 0.95,
+			margin: 0,
+		},
+	},
 	overline: {
 		tag: "span",
 		style: {
@@ -96,6 +134,17 @@ const VARIANTS: Record<TypographyVariant, VariantConfig> = {
 			lineHeight: 1.65,
 			textAlign: "justify",
 			hyphens: "auto",
+			margin: 0,
+		},
+	},
+	bodyCentered: {
+		tag: "p",
+		style: {
+			fontFamily: B,
+			fontWeight: 400,
+			fontSize: "clamp(0.95rem, 2.6vw, 1.2rem)",
+			lineHeight: 1.65,
+			textAlign: "center",
 			margin: 0,
 		},
 	},
@@ -138,6 +187,17 @@ const VARIANTS: Record<TypographyVariant, VariantConfig> = {
 			fontSize: "40px",
 			lineHeight: 1,
 			letterSpacing: "0.01em",
+			margin: 0,
+		},
+	},
+	statHero: {
+		tag: "span",
+		style: {
+			fontFamily: D,
+			fontWeight: 500,
+			fontSize: "clamp(64px, 20vw, 140px)",
+			lineHeight: 0.85,
+			letterSpacing: "-0.04em",
 			margin: 0,
 		},
 	},

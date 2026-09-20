@@ -53,11 +53,13 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 	const [companionGridOpen, setCompanionGridOpen] = useState(false);
 	const prevVasiliokReached = useRef(false);
 	const prevRankIdx = useRef<number | null>(null);
+	const prevWordCount = useRef(0);
 
 	// Restore progress from localStorage on mount
 	useEffect(() => {
 		const saved = loadProgress(puzzle.date);
 		if (saved) {
+			prevWordCount.current = saved.foundWords.length;
 			const alreadyVasiliok =
 				saved.vasiliokReached || saved.score >= puzzle.max_score;
 			dispatch({
@@ -75,6 +77,7 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 			}
 			prevRankIdx.current = getRankIndex(saved.score, puzzle.max_score);
 		} else {
+			prevWordCount.current = 0;
 			prevRankIdx.current = 0;
 		}
 	}, [puzzle.date, puzzle.max_score]);
@@ -148,11 +151,9 @@ export function useGame(puzzle: Puzzle): UseGameReturn {
 	]);
 
 	// Track new words found and rank crossings
-	const prevWordCount = useRef(0);
 	useEffect(() => {
 		const count = gameState.foundWords.length;
 		if (count === 0) {
-			prevWordCount.current = 0;
 			return;
 		}
 		// RESTORE_STATE changes foundWords without submitting a new word.

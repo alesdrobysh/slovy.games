@@ -46,6 +46,8 @@ All optional — the app runs without them:
 | --- | --- |
 | `NEXT_PUBLIC_POSTHOG_KEY` | Enables PostHog analytics (only loaded after cookie consent) |
 
+The `/wrapped` deck is gated to its December–January reveal window. It can be opened any time with `?preview=1`, e.g. `/wrapped?preview=1`.
+
 ## Design system rules
 
 See [AGENTS.md](./AGENTS.md) for conventions around Typography, design tokens, and Storybook stories — these apply to any UI work in this repo.
