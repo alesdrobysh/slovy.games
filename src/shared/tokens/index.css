@@ -21,6 +21,9 @@
 	--control-compact-height: 1.75rem; /* 28px — compact control      */
 	--control-default-height: 2rem; /* 32px — standard control        */
 	--control-large-height: 2.25rem; /* 36px — prominent control      */
+	--panel-history-max-height: 7rem; /* 112px — four compact rows */
+	--panel-history-compact-height: 3.5rem; /* 56px — two compact rows  */
+	--panel-history-emergency-height: 1.75rem; /* 28px — latest compact row */
 }
 
 :root {

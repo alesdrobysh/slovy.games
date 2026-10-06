@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useSakretnaGame } from "@/games/sakretna/hooks/useSakretnaGame";
+import { MAX_HINTS } from "@/games/sakretna/lib/constants";
 import {
 	DEFAULT_GAMEPLAY_SETTINGS,
 	loadGameplaySettings,
@@ -13,13 +14,12 @@ import { GameDate } from "@/shared/components/GameDate";
 import { useVirtualKeyboard } from "@/shared/hooks/useVirtualKeyboard";
 import { ArticleActions } from "./ArticleActions";
 import { ArticleNavigator } from "./ArticleNavigator";
-import { CompletionOverlay } from "./CompletionOverlay";
 import { FinishCard } from "./FinishCard";
 import { GameplaySettingsModal } from "./GameplaySettingsModal";
 import { GiveUpModal } from "./GiveUpModal";
 import { GuessInput } from "./GuessInput";
 import { GuessList } from "./GuessList";
-import { HintModal } from "./HintModal";
+import { HintPickPanel, type PendingHint } from "./HintPickPanel";
 import { ProgressLine, RedactedText } from "./RedactedText";
 
 interface SakretnaPageProps {
@@ -31,21 +31,17 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 	const {
 		state,
 		lemmaSet,
+		titleLemmaSet,
 		ready,
 		setInput,
 		submitGuess,
-		previewHint,
 		useHint: revealHint,
 		giveUp,
 		setHighlight,
 	} = useSakretnaGame(picked);
 	const [showGiveUp, setShowGiveUp] = useState(false);
-	const [showResult, setShowResult] = useState(true);
-	const [hintPreview, setHintPreview] = useState<{
-		lemma: string;
-		revealedCount: number;
-	} | null>(null);
-	const [showHint, setShowHint] = useState(false);
+	const [hintMode, setHintMode] = useState(false);
+	const [pendingHint, setPendingHint] = useState<PendingHint | null>(null);
 	const [showSettings, setShowSettings] = useState(false);
 	const [settings, setSettings] = useState(DEFAULT_GAMEPLAY_SETTINGS);
 	useEffect(() => setSettings(loadGameplaySettings()), []);
@@ -66,12 +62,46 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 	const foundSet = new Set(state.foundLemmas);
 	const totalLemmas = lemmaSet.size;
 	const foundCount = state.foundLemmas.length;
-
 	const feedbackMessage = state.errorType
 		? ERROR_MESSAGES[state.errorType]
 		: state.statusMessage;
-
 	const finished = state.won || state.givenUp;
+	const hintsLeft = Math.max(0, MAX_HINTS - state.hintsUsed);
+
+	const cancelHint = () => {
+		setHintMode(false);
+		setPendingHint(null);
+	};
+	const startHint = () => {
+		if (hintsLeft === 0 || finished) return;
+		setHintMode(true);
+		setPendingHint(null);
+	};
+	const pickHintLemma = (lemma: string) => {
+		const forms = tokens.filter((t) => t.type === "word" && t.lemma === lemma);
+		if (forms.length === 0) return;
+		setPendingHint({
+			lemma,
+			length: forms[0].text.length,
+			count: forms.length,
+		});
+	};
+	const confirmHint = () => {
+		if (pendingHint) revealHint(pendingHint.lemma);
+		cancelHint();
+	};
+
+	const progress = {
+		date,
+		articleId: article.id,
+		foundLemmas: state.foundLemmas,
+		guesses: state.guesses,
+		won: state.won,
+		givenUp: state.givenUp,
+		hintsUsed: state.hintsUsed,
+		startedAt: state.startedAt,
+		finishedAt: state.finishedAt ?? undefined,
+	};
 
 	return (
 		<div
@@ -82,28 +112,7 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 				} as React.CSSProperties
 			}
 		>
-			<CompletionOverlay
-				open={finished && showResult}
-				mode={state.won ? "win" : "lose"}
-				article={article}
-				progress={{
-					date,
-					articleId: article.id,
-					foundLemmas: state.foundLemmas,
-					guesses: state.guesses,
-					won: state.won,
-					givenUp: state.givenUp,
-					hintsUsed: state.hintsUsed,
-					startedAt: state.startedAt,
-					finishedAt: state.finishedAt ?? undefined,
-				}}
-				onReadArticle={() => setShowResult(false)}
-			/>
-			<div
-				className="flex flex-col gap-flow-lg lg:grid lg:grid-cols-[1fr_320px] lg:gap-inset-xl lg:items-start"
-				aria-hidden={finished && showResult}
-				inert={finished && showResult ? true : undefined}
-			>
+			<div className="flex flex-col gap-flow-lg lg:grid lg:grid-cols-[1fr_320px] lg:gap-inset-xl lg:items-start">
 				<div className="min-w-0 flex flex-col gap-flow-lg lg:gap-inset-xl pb-(--sakretna-dock-space) md:pb-0">
 					<header className="flex flex-col gap-flow-xs">
 						<GameDate game="sakretna" date={date} />
@@ -114,6 +123,14 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 							/>
 						</div>
 					</header>
+
+					{finished && (
+						<FinishCard
+							mode={state.won ? "win" : "lose"}
+							article={article}
+							progress={progress}
+						/>
+					)}
 
 					<section
 						className="bg-card ring-1 ring-rule rounded-2xl p-inset-md sm:p-inset-lg"
@@ -127,37 +144,12 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 							stickyTitle={settings.stickyTitle}
 							autoScroll={settings.autoScroll}
 							showLetterCounts={settings.letterCounts}
+							hintMode={hintMode}
+							titleLemmas={titleLemmaSet}
+							pendingLemma={pendingHint?.lemma ?? null}
+							onPickLemma={pickHintLemma}
 						/>
 					</section>
-
-					{!finished ? (
-						state.guesses.length > 0 && (
-							<div className="md:hidden">
-								<GuessList
-									guesses={state.guesses}
-									tokens={tokens}
-									highlighted={state.highlighted}
-									onSelect={setHighlight}
-								/>
-							</div>
-						)
-					) : (
-						<FinishCard
-							mode={state.won ? "win" : "lose"}
-							article={article}
-							progress={{
-								date,
-								articleId: article.id,
-								foundLemmas: state.foundLemmas,
-								guesses: state.guesses,
-								won: state.won,
-								givenUp: state.givenUp,
-								hintsUsed: state.hintsUsed,
-								startedAt: state.startedAt,
-								finishedAt: state.finishedAt ?? undefined,
-							}}
-						/>
-					)}
 				</div>
 
 				{!finished && (
@@ -170,75 +162,78 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 							paddingBottom: "env(safe-area-inset-bottom, 0px)",
 						}}
 					>
-						<div className="mx-auto max-w-3xl md:max-w-none px-4 md:px-0 py-flow-md max-md:short:py-flow-sm md:py-0 flex flex-col gap-flow-sm">
+						{feedbackMessage && !hintMode && (
+							<p
+								key={state.errorKey}
+								role="status"
+								className={`absolute bottom-full left-4 mb-flow-xs max-w-[calc(100%-2rem)] truncate rounded-full bg-card ring-1 ring-rule px-inset-sm py-flow-xs text-xs md:static md:mb-0 md:max-w-none md:rounded-none md:bg-transparent md:ring-0 md:px-0 md:pb-flow-sm ${
+									state.errorType
+										? "text-(--color-destructive)"
+										: "text-sakretna"
+								}`}
+							>
+								{feedbackMessage}
+							</p>
+						)}
+						<div className="mx-auto max-w-3xl md:max-w-none px-4 md:px-0 py-flow-sm md:py-0 flex flex-col gap-flow-sm">
 							<div className="flex flex-wrap items-center justify-between gap-flow-sm max-md:keyboard:hidden">
 								<ArticleActions
-									onUseHint={() => {
-										setHintPreview(previewHint());
-										setShowHint(true);
-									}}
+									onUseHint={startHint}
 									onGiveUp={() => setShowGiveUp(true)}
 									onSettings={() => setShowSettings(true)}
-									hintAvailable={state.hintsUsed === 0}
+									hintsLeft={hintsLeft}
+									hintMode={hintMode}
 									finished={finished}
 								/>
 								<ArticleNavigator highlighted={state.highlighted} />
 							</div>
-							<GuessInput
-								value={state.currentInput}
-								onChange={setInput}
-								onSubmit={submitGuess}
-								disabled={!ready}
-								placeholder={ready ? "Увядзіце слова…" : "Слоўнік загружаецца…"}
-							/>
-							{feedbackMessage && (
-								<p
-									key={state.errorKey}
-									className="text-sakretna text-sm font-medium animate-fade-in"
-									role="status"
-								>
-									{feedbackMessage}
-								</p>
-							)}
-							{state.guesses.length > 0 && (
-								<div className="max-md:short:hidden">
-									<GuessList
-										guesses={state.guesses}
-										tokens={tokens}
-										highlighted={state.highlighted}
-										onSelect={setHighlight}
+							{hintMode ? (
+								<HintPickPanel
+									hintsAfter={hintsLeft - 1}
+									pending={pendingHint}
+									onConfirm={confirmHint}
+									onCancel={cancelHint}
+								/>
+							) : (
+								<>
+									<div className="overflow-hidden rounded-lg border border-rule bg-card">
+										<GuessList
+											guesses={state.guesses}
+											tokens={tokens}
+											highlighted={state.highlighted}
+											onSelect={setHighlight}
+										/>
+									</div>
+									<GuessInput
+										value={state.currentInput}
+										onChange={setInput}
+										onSubmit={submitGuess}
+										disabled={!ready}
+										placeholder={
+											ready ? "Увядзіце слова…" : "Слоўнік загружаецца…"
+										}
 									/>
-								</div>
+								</>
 							)}
 						</div>
 					</div>
 				)}
 			</div>
+
 			<GiveUpModal
 				isOpen={showGiveUp}
-				hintAvailable={state.hintsUsed === 0}
+				hintsLeft={hintsLeft}
 				guessCount={state.guesses.length}
 				onUseHint={() => {
 					setShowGiveUp(false);
-					setHintPreview(previewHint());
-					setShowHint(true);
+					startHint();
 				}}
 				onConfirm={() => {
 					setShowGiveUp(false);
+					cancelHint();
 					giveUp();
 				}}
 				onClose={() => setShowGiveUp(false)}
-			/>
-			<HintModal
-				isOpen={showHint}
-				preview={hintPreview}
-				onConfirm={() => {
-					if (hintPreview) {
-						revealHint(hintPreview.lemma, hintPreview.revealedCount);
-					}
-					setShowHint(false);
-				}}
-				onClose={() => setShowHint(false)}
 			/>
 			<GameplaySettingsModal
 				isOpen={showSettings}

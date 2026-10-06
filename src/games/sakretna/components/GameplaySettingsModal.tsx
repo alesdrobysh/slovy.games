@@ -59,7 +59,7 @@ export function GameplaySettingsModal({
 							onChange={(event) =>
 								onChange({ ...settings, [option.key]: event.target.checked })
 							}
-							className="size-6 shrink-0 accent-sakretna"
+							className="size-6 shrink-0 accent-(--accent)"
 						/>
 					</label>
 				))}

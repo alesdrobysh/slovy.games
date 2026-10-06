@@ -9,7 +9,7 @@ describe("HowToPlay", () => {
 		const rules = screen.getByRole("list", { name: "Правілы гульні" });
 		expect(rules).toHaveTextContent("усе іх формы");
 		expect(rules).toHaveTextContent("колькасць схаваных літар");
-		expect(rules).toHaveTextContent("бясплатная падказка");
+		expect(rules).toHaveTextContent("Тры падказкі");
 		expect(rules).toHaveTextContent("перамога залічыцца");
 
 		fireEvent.click(screen.getByRole("button", { name: "Прапусціць" }));

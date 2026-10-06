@@ -7,7 +7,8 @@ interface ArticleActionsProps {
 	onUseHint: () => void;
 	onGiveUp: () => void;
 	onSettings: () => void;
-	hintAvailable: boolean;
+	hintsLeft: number;
+	hintMode?: boolean;
 	finished: boolean;
 }
 
@@ -15,33 +16,36 @@ export function ArticleActions({
 	onUseHint,
 	onGiveUp,
 	onSettings,
-	hintAvailable,
+	hintsLeft,
+	hintMode = false,
 	finished,
 }: ArticleActionsProps) {
 	return (
 		<div className="flex flex-wrap items-center gap-flow-sm">
 			<Button
 				variant="outline"
-				color="neutral"
+				color={hintMode ? "primary" : "neutral"}
 				size="sm"
-				startIcon={<Eye size={14} />}
+				startIcon={<Eye />}
 				onClick={onUseHint}
-				disabled={!hintAvailable || finished}
-				className="sm:size-md"
-				aria-label={hintAvailable ? "Падказка" : "Падказка выкарыстана"}
+				disabled={hintsLeft === 0 || finished || hintMode}
+				aria-label={`Падказка, засталося ${hintsLeft}`}
 			>
-				<span className="max-md:short:hidden">
-					{hintAvailable ? "Падказка" : "Выкарыстана"}
+				<span className="max-md:short:hidden">Падказка</span>
+				<span
+					aria-hidden="true"
+					className="inline-flex min-w-3.5 h-3.5 items-center justify-center rounded-full bg-(--accent) px-1 text-[9px] leading-none text-white tabular-nums"
+				>
+					{hintsLeft}
 				</span>
 			</Button>
 			<Button
 				variant="ghost"
 				color="neutral"
 				size="sm"
-				startIcon={<Flag size={14} />}
+				startIcon={<Flag />}
 				onClick={onGiveUp}
-				disabled={finished}
-				className="sm:size-md"
+				disabled={finished || hintMode}
 				aria-label="Здацца"
 			>
 				<span className="max-md:short:hidden">Здацца</span>
@@ -50,7 +54,7 @@ export function ArticleActions({
 				variant="ghost"
 				color="neutral"
 				size="sm"
-				startIcon={<Settings size={16} />}
+				startIcon={<Settings />}
 				onClick={onSettings}
 				aria-label="Налады гульні"
 			/>

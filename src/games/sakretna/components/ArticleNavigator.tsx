@@ -44,7 +44,7 @@ export function ArticleNavigator({ highlighted }: ArticleNavigatorProps) {
 			<Button
 				variant="ghost"
 				size="sm"
-				startIcon={<ChevronsUp size={16} />}
+				startIcon={<ChevronsUp size={14} />}
 				aria-label="Да назвы артыкула"
 				onClick={() =>
 					document
@@ -57,12 +57,12 @@ export function ArticleNavigator({ highlighted }: ArticleNavigatorProps) {
 					<Button
 						variant="ghost"
 						size="sm"
-						startIcon={<ArrowUp size={16} />}
+						startIcon={<ArrowUp size={14} />}
 						aria-label="Папярэдняе супадзенне"
 						onClick={() => move(-1)}
 					/>
 					<output
-						className="min-w-12 text-center text-xs text-ink-muted"
+						className="min-w-10 text-center text-xs text-ink-muted"
 						aria-live="polite"
 					>
 						{current} / {total}
@@ -70,7 +70,7 @@ export function ArticleNavigator({ highlighted }: ArticleNavigatorProps) {
 					<Button
 						variant="ghost"
 						size="sm"
-						startIcon={<ArrowDown size={16} />}
+						startIcon={<ArrowDown size={14} />}
 						aria-label="Наступнае супадзенне"
 						onClick={() => move(1)}
 					/>

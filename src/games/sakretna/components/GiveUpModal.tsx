@@ -1,3 +1,4 @@
+import { MAX_HINTS } from "@/games/sakretna/lib/constants";
 import { Button } from "@/shared/components/ui/Button";
 import { Modal } from "@/shared/components/ui/Modal";
 import { Typography } from "@/shared/components/ui/Typography";
@@ -7,7 +8,7 @@ interface GiveUpModalProps {
 	onConfirm: () => void;
 	onClose: () => void;
 	onUseHint: () => void;
-	hintAvailable: boolean;
+	hintsLeft: number;
 	guessCount: number;
 }
 
@@ -16,7 +17,7 @@ export function GiveUpModal({
 	onConfirm,
 	onClose,
 	onUseHint,
-	hintAvailable,
+	hintsLeft,
 	guessCount,
 }: GiveUpModalProps) {
 	return (
@@ -32,18 +33,18 @@ export function GiveUpModal({
 					<div>
 						<p className="font-semibold text-ink">Падказка: адкрыць слова</p>
 						<p className="text-sm text-ink-muted">
-							{hintAvailable
-								? "Кошт: 1 з 1 бясплатнай падказкі. Спачатку пакажам слова для пацвярджэння."
-								: "Бясплатная падказка ўжо выкарыстана."}
+							{hintsLeft > 0
+								? `Засталося ${hintsLeft} з ${MAX_HINTS} падказак. Абярыце любы схаваны прастакутнік, акрамя слоў назвы.`
+								: "Усе падказкі выкарыстаны."}
 						</p>
 					</div>
 					<Button
 						variant="outline"
 						color="primary"
 						onClick={onUseHint}
-						disabled={!hintAvailable}
+						disabled={hintsLeft === 0}
 					>
-						Паглядзець падказку
+						Выбраць слова
 					</Button>
 				</div>
 				<div className="rounded-xl bg-paper p-inset-md ring-1 ring-rule">

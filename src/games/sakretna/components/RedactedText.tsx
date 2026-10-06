@@ -1,5 +1,6 @@
 "use client";
 
+import { Lock } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { scrollIntoVisualViewport } from "@/shared/lib/scrollIntoVisualViewport";
 import { buildArticleBlocks } from "../lib/articleStructure";
@@ -13,6 +14,12 @@ interface RedactedTextProps {
 	stickyTitle?: boolean;
 	autoScroll?: boolean;
 	showLetterCounts?: boolean;
+	/** Hint mode: hidden words outside the title become pick targets. */
+	hintMode?: boolean;
+	/** Lemmas of the title; they can never be opened by a hint. */
+	titleLemmas?: ReadonlySet<string>;
+	pendingLemma?: string | null;
+	onPickLemma?: (lemma: string) => void;
 }
 
 export function RedactedText({
@@ -23,6 +30,10 @@ export function RedactedText({
 	stickyTitle = true,
 	autoScroll = true,
 	showLetterCounts = true,
+	hintMode = false,
+	titleLemmas,
+	pendingLemma = null,
+	onPickLemma,
 }: RedactedTextProps) {
 	const containerRef = useRef<HTMLDivElement>(null);
 
@@ -55,30 +66,63 @@ export function RedactedText({
 					</span>
 				);
 			}
+			const length = token.text.length;
+			const counter = showLetterCounts && (
+				<span aria-hidden="true" className="text-[0.65em] text-ink-muted">
+					{length}
+				</span>
+			);
+			const lemma = token.lemma ?? "";
+			const locked = hintMode && (!lemma || titleLemmas?.has(lemma));
+			const pickable = hintMode && !locked;
+			const pending = pickable && lemma === pendingLemma;
+			const bar = (
+				<span
+					aria-hidden="true"
+					className={`inline-block rounded-sm h-[0.9em] ${
+						pending
+							? "bg-sakretna ring-2 ring-sakretna ring-offset-2 ring-offset-card"
+							: pickable
+								? "bg-ink/85 ring-2 ring-sakretna/70"
+								: locked
+									? "bg-ink/30"
+									: "bg-ink/85"
+					}`}
+					style={{ width: `${length * 0.6}em` }}
+				/>
+			);
+			if (pickable) {
+				return (
+					<button
+						key={key}
+						type="button"
+						onClick={() => onPickLemma?.(lemma)}
+						aria-label={`Адкрыць слова з ${length} літар`}
+						aria-pressed={pending}
+						className="inline-flex items-baseline gap-0.5 mx-[0.1em] cursor-pointer align-baseline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sakretna"
+					>
+						{bar}
+						{counter}
+					</button>
+				);
+			}
 			return (
 				<span
 					key={key}
 					{...(labelHidden
 						? {
 								role: "img",
-								"aria-label": `${token.text.length} схаваных літар`,
+								"aria-label": `${length} схаваных літар`,
 							}
 						: { "aria-hidden": "true" as const })}
 					className="inline-flex items-baseline gap-0.5 mx-[0.1em]"
 				>
-					<span
-						aria-hidden="true"
-						className="inline-block bg-ink/85 rounded-sm h-[0.9em]"
-						style={{ width: `${token.text.length * 0.6}em` }}
-					/>
-					{showLetterCounts && (
-						<span aria-hidden="true" className="text-[0.65em] text-ink-muted">
-							{token.text.length}
-						</span>
-					)}
+					{bar}
+					{counter}
 				</span>
 			);
 		});
+
 	const blocks = buildArticleBlocks(tokens);
 
 	return (
@@ -107,7 +151,7 @@ export function RedactedText({
 								>
 									<span
 										aria-hidden="true"
-										className="inline-block align-baseline bg-ink/85 rounded-sm h-[0.8em]"
+										className={`inline-block align-baseline rounded-sm h-[0.8em] ${hintMode ? "bg-ink/30" : "bg-ink/85"}`}
 										style={{ width: `${token.text.length * 0.6}em` }}
 									/>
 									{showLetterCounts && (
@@ -117,6 +161,13 @@ export function RedactedText({
 										>
 											{token.text.length}
 										</span>
+									)}
+									{hintMode && (
+										<Lock
+											size={12}
+											aria-hidden="true"
+											className="self-center text-ink-soft"
+										/>
 									)}
 								</span>
 							);

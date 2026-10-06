@@ -52,8 +52,8 @@ export function HowToPlay({
 							3.
 						</strong>
 						<span>
-							<strong>Адна бясплатная падказка</strong> адкрые слова пасля
-							пацвярджэння.
+							<strong>Тры падказкі:</strong> абярыце любы схаваны прастакутнік,
+							акрамя слоў назвы, і слова адкрыецца ва ўсіх формах.
 						</span>
 					</li>
 					<li className="flex gap-inset-sm">

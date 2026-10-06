@@ -1,6 +1,8 @@
 "use client";
 
+import { Search } from "lucide-react";
 import { useEffect, useRef } from "react";
+import { Button } from "@/shared/components/ui/Button";
 
 interface GuessInputProps {
 	value: string;
@@ -50,15 +52,18 @@ export function GuessInput({
 					spellCheck={false}
 					inputMode="search"
 					enterKeyHint="search"
-					className="flex-1 min-w-0 min-h-(--control-min-height) rounded-2xl border-2 border-rule bg-card px-inset-md py-flow-md text-ink font-display text-base sm:text-lg focus:outline-none focus:border-sakretna transition-colors disabled:opacity-50"
+					className="flex-1 min-w-0 h-(--control-large-height) rounded-lg border border-rule bg-card px-inset-sm text-ink font-display text-base focus:outline-none focus:border-(--accent) transition-colors disabled:opacity-50"
 				/>
-				<button
+				<Button
 					type="submit"
+					variant="solid"
+					color="primary"
+					size="lg"
 					disabled={disabled || value.trim().length === 0}
-					className="hidden sm:block shrink-0 min-h-(--control-min-height) rounded-2xl border-2 border-sakretna bg-sakretna px-inset-md sm:px-inset-lg py-flow-md text-white font-bold uppercase tracking-widest text-xs sm:text-sm hover:bg-sakretna/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sakretna/50 focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+					startIcon={<Search />}
 				>
 					Увесці
-				</button>
+				</Button>
 			</div>
 		</form>
 	);

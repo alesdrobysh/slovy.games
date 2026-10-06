@@ -44,11 +44,19 @@ describe("GuessList", () => {
 			/>
 		);
 
-		fireEvent.click(
-			screen.getByText("Уся гісторыя (4)", { selector: "summary" })
-		);
-		expect(screen.getAllByText("горад").length).toBeGreaterThan(0);
+		expect(
+			screen.getByRole("region", { name: "Гісторыя спроб" })
+		).toBeVisible();
+		expect(screen.getByText("#4")).toBeInTheDocument();
+		expect(screen.getByText("#1")).toBeInTheDocument();
+		expect(screen.getByText("горад")).toBeInTheDocument();
 		fireEvent.click(screen.getAllByLabelText("мінск: раскрыта 1")[0]);
 		expect(onSelect).toHaveBeenCalledWith("мінск");
+	});
+
+	it("keeps an empty history visible as part of the console", () => {
+		render(<GuessList guesses={[]} />);
+
+		expect(screen.getByText("Спробы з’явяцца тут")).toBeVisible();
 	});
 });

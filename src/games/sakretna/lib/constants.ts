@@ -80,3 +80,6 @@ export const MIN_REDACTED_LENGTH = 3;
 
 /** Maximum number of guesses a player can make in a single day. */
 export const MAX_GUESSES = 200;
+
+/** Maximum number of hints a player can take per game. */
+export const MAX_HINTS = 3;

@@ -2,7 +2,7 @@
 
 import { X } from "lucide-react";
 import type { ReactNode } from "react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 export interface ModalProps {
@@ -33,6 +33,17 @@ export function Modal({
 	const backdropRef = useRef<HTMLDivElement>(null);
 	const prevFocusRef = useRef<HTMLElement | null>(null);
 	const [mounted, setMounted] = useState(false);
+	// The dialog is portalled to <body>, outside any `.theme-*` wrapper. Find the
+	// theme the modal was opened from so its accent colors follow the game.
+	const [themeClass, setThemeClass] = useState("");
+	const findTheme = useCallback((anchor: HTMLSpanElement | null) => {
+		if (!anchor) return;
+		const themed = anchor.closest<HTMLElement>('[class*="theme-"]');
+		const name = themed
+			? [...themed.classList].find((c) => c.startsWith("theme-"))
+			: undefined;
+		setThemeClass(name ?? "");
+	}, []);
 
 	useEffect(() => setMounted(true), []);
 
@@ -114,46 +125,51 @@ export function Modal({
 
 	if (!isOpen || !mounted) return null;
 
-	return createPortal(
-		// biome-ignore lint/a11y/noStaticElementInteractions: presentation backdrop
-		<div
-			ref={backdropRef}
-			onClick={onClose}
-			role="presentation"
-			className="fixed inset-0 z-50 flex items-center justify-center bg-paper/70 backdrop-blur-sm p-4"
-		>
-			{/* biome-ignore lint/a11y/useKeyWithClickEvents: stopPropagation only */}
-			<div
-				ref={dialogRef}
-				tabIndex={-1}
-				onClick={(e) => e.stopPropagation()}
-				role="dialog"
-				aria-modal="true"
-				aria-labelledby={title ? "modal-title" : undefined}
-				className="bg-card ring-1 ring-rule rounded-2xl shadow-2xl w-full overflow-y-auto overflow-x-hidden focus-visible:outline-none"
-				style={{ maxWidth, maxHeight: "90vh" }}
-			>
-				{title && (
-					<div className="flex items-center justify-between px-inset-lg py-4 border-b border-rule">
-						<h2
-							id="modal-title"
-							className="font-display text-xl font-semibold text-ink"
-						>
-							{title}
-						</h2>
-						<button
-							onClick={onClose}
-							aria-label="Закрыць"
-							type="button"
-							className="size-(--control-min-height) flex items-center justify-center rounded-full text-ink-muted hover:bg-rule transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--accent) focus-visible:ring-offset-2 focus-visible:ring-offset-card"
-						>
-							<X size={18} aria-hidden="true" />
-						</button>
+	return (
+		<>
+			<span ref={findTheme} hidden />
+			{createPortal(
+				// biome-ignore lint/a11y/noStaticElementInteractions: presentation backdrop
+				<div
+					ref={backdropRef}
+					onClick={onClose}
+					role="presentation"
+					className={`${themeClass} fixed inset-0 z-50 flex items-center justify-center bg-paper/70 backdrop-blur-sm p-4`}
+				>
+					{/* biome-ignore lint/a11y/useKeyWithClickEvents: stopPropagation only */}
+					<div
+						ref={dialogRef}
+						tabIndex={-1}
+						onClick={(e) => e.stopPropagation()}
+						role="dialog"
+						aria-modal="true"
+						aria-labelledby={title ? "modal-title" : undefined}
+						className="bg-card ring-1 ring-rule rounded-2xl shadow-2xl w-full overflow-y-auto overflow-x-hidden focus-visible:outline-none"
+						style={{ maxWidth, maxHeight: "90vh" }}
+					>
+						{title && (
+							<div className="flex items-center justify-between px-inset-lg py-4 border-b border-rule">
+								<h2
+									id="modal-title"
+									className="font-display text-xl font-semibold text-ink"
+								>
+									{title}
+								</h2>
+								<button
+									onClick={onClose}
+									aria-label="Закрыць"
+									type="button"
+									className="size-(--control-min-height) flex items-center justify-center rounded-full text-ink-muted hover:bg-rule transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--accent) focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+								>
+									<X size={18} aria-hidden="true" />
+								</button>
+							</div>
+						)}
+						<div className="px-inset-lg py-4">{children}</div>
 					</div>
-				)}
-				<div className="px-inset-lg py-4">{children}</div>
-			</div>
-		</div>,
-		document.body
+				</div>,
+				document.body
+			)}
+		</>
 	);
 }

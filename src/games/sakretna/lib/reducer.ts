@@ -1,4 +1,5 @@
 import type { GameAction, GameState, SavedProgress } from "../types";
+import { MAX_HINTS } from "./constants";
 import { collectLemmas } from "./tokenize";
 import { normalizeGuess, validateGuess } from "./validation";
 
@@ -94,7 +95,11 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 
 		case "USE_HINT":
 			if (state.won || state.givenUp) return state;
-			if (state.hintsUsed >= 1) return state;
+			if (state.hintsUsed >= MAX_HINTS) return state;
+			// Words of the title are the answer itself, so no hint may open them.
+			if (action.lemma && action.titleLemmas?.has(action.lemma)) return state;
+			if (action.lemma && state.foundLemmas.includes(action.lemma))
+				return state;
 			return {
 				...state,
 				hintsUsed: state.hintsUsed + 1,

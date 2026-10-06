@@ -15,7 +15,7 @@ describe("Sakretna GiveUpModal", () => {
 				onConfirm={onConfirm}
 				onClose={onClose}
 				onUseHint={onUseHint}
-				hintAvailable
+				hintsLeft={3}
 				guessCount={2}
 			/>
 		);
@@ -27,10 +27,8 @@ describe("Sakretna GiveUpModal", () => {
 		expect(onClose).toHaveBeenCalledTimes(1);
 		expect(onConfirm).not.toHaveBeenCalled();
 
-		expect(screen.getByText(/1 з 1 бясплатнай падказкі/)).toBeInTheDocument();
-		await user.click(
-			screen.getByRole("button", { name: "Паглядзець падказку" })
-		);
+		expect(screen.getByText(/Засталося 3 з 3 падказак/)).toBeInTheDocument();
+		await user.click(screen.getByRole("button", { name: "Выбраць слова" }));
 		expect(onUseHint).toHaveBeenCalledTimes(1);
 
 		await user.click(screen.getByRole("button", { name: "Усё роўна здацца" }));

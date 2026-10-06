@@ -23,51 +23,9 @@ export interface UseSakretnaGameReturn {
 	ready: boolean;
 	setInput: (value: string) => void;
 	submitGuess: () => void;
-	previewHint: () => { lemma: string; revealedCount: number } | null;
-	useHint: (lemma: string, revealedCount: number) => void;
+	useHint: (lemma: string) => void;
 	giveUp: () => void;
 	setHighlight: (lemma: string | null) => void;
-}
-
-const REFERENCE_SECTION_LEMMAS = new Set([
-	"літаратура",
-	"спасылка",
-	"крыніца",
-	"зноска",
-	"бібліяграфія",
-]);
-
-/** Pick a random hidden Belarusian word from the article's main content. */
-export function pickHintLemma(
-	tokens: ArticleToken[],
-	foundLemmas: ReadonlySet<string>,
-	titleLemmaSet: ReadonlySet<string>
-): string | null {
-	const candidates = new Set<string>();
-	let atLineStart = true;
-	for (const t of tokens) {
-		if (t.type === "sep") {
-			if (t.text === "\n") atLineStart = true;
-			continue;
-		}
-		if (atLineStart && t.lemma && REFERENCE_SECTION_LEMMAS.has(t.lemma)) {
-			break;
-		}
-		atLineStart = false;
-		if (
-			t.lemma &&
-			!t.isFree &&
-			!foundLemmas.has(t.lemma) &&
-			!titleLemmaSet.has(t.lemma) &&
-			t.text.length >= 4 &&
-			/^[а-яёіў'’-]+$/iu.test(t.text)
-		) {
-			candidates.add(t.lemma);
-		}
-	}
-	if (candidates.size === 0) return null;
-	const pool = [...candidates];
-	return pool[Math.floor(Math.random() * pool.length)];
 }
 
 export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
@@ -126,19 +84,6 @@ export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
 
 	const lemmaSet = collectLemmas(tokens);
 	const titleLemmaSet = titleLemmas(article.title);
-	const previewHint = () => {
-		const lemma = pickHintLemma(
-			tokens,
-			new Set(state.foundLemmas),
-			titleLemmaSet
-		);
-		if (!lemma) return null;
-		const revealedCount = tokens.filter(
-			(token) => token.type === "word" && token.lemma === lemma
-		).length;
-		return { lemma, revealedCount };
-	};
-
 	return {
 		state,
 		tokens,
@@ -153,12 +98,14 @@ export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
 				tokens,
 				titleLemmas: titleLemmaSet,
 			}),
-		previewHint,
-		useHint: (lemma, revealedCount) =>
+		useHint: (lemma) =>
 			dispatch({
 				type: "USE_HINT",
 				lemma,
-				revealedCount,
+				revealedCount: tokens.filter(
+					(token) => token.type === "word" && token.lemma === lemma
+				).length,
+				titleLemmas: titleLemmaSet,
 			}),
 		giveUp: () =>
 			dispatch({

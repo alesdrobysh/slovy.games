@@ -230,20 +230,38 @@ describe("SUBMIT_GUESS", () => {
 });
 
 describe("USE_HINT", () => {
-	it("increments hintsUsed up to 1", () => {
+	it("increments hintsUsed up to the maximum of 3", () => {
+		let s = createInitialState();
+		for (const lemma of ["горад", "мінск", "гісторыя", "рака"]) {
+			s = gameReducer(s, { type: "USE_HINT", lemma, revealedCount: 1 });
+		}
+		expect(s.hintsUsed).toBe(3);
+		expect(s.foundLemmas).toEqual(["горад", "мінск", "гісторыя"]);
+	});
+
+	it("refuses to open a word of the title", () => {
 		const s = createInitialState();
-		const a = gameReducer(s, {
+		const next = gameReducer(s, {
+			type: "USE_HINT",
+			lemma: "мінск",
+			revealedCount: 1,
+			titleLemmas: new Set(["мінск"]),
+		});
+		expect(next).toBe(s);
+	});
+
+	it("refuses a word that is already open", () => {
+		const s = gameReducer(createInitialState(), {
 			type: "USE_HINT",
 			lemma: "горад",
 			revealedCount: 1,
 		});
-		expect(a.hintsUsed).toBe(1);
-		const b = gameReducer(a, {
+		const next = gameReducer(s, {
 			type: "USE_HINT",
-			lemma: "мінск",
+			lemma: "горад",
 			revealedCount: 1,
 		});
-		expect(b.hintsUsed).toBe(1);
+		expect(next).toBe(s);
 	});
 
 	it("reveals the given lemma as if it were found", () => {

@@ -1,6 +1,5 @@
 "use client";
 
-import { pluralize } from "@/shared/lib/pluralize";
 import { lemmaOf } from "../lib/lemmatize";
 import type { ArticleToken } from "../types";
 
@@ -15,6 +14,7 @@ interface GuessRecord {
 	input: string;
 	lemma: string;
 	hits: number;
+	attempt: number;
 }
 
 function GuessRow({
@@ -33,7 +33,10 @@ function GuessRow({
 			: `${record.input}: няма ў артыкуле`;
 	const content = (
 		<>
-			<span className="truncate">{record.input}</span>
+			<span className="w-8 shrink-0 text-right tabular-nums text-ink-muted">
+				#{record.attempt}
+			</span>
+			<span className="min-w-0 flex-1 truncate text-left">{record.input}</span>
 			<span
 				className={
 					record.hits > 0
@@ -50,7 +53,7 @@ function GuessRow({
 	if (record.hits === 0) {
 		return (
 			<output
-				className="flex min-w-0 min-h-(--control-min-height) items-center justify-between gap-flow-sm rounded-lg bg-secondary px-inset-sm py-flow-xs text-xs text-ink-muted"
+				className="flex w-full min-w-0 min-h-(--control-compact-height) items-center gap-flow-sm px-inset-xs text-sm text-ink-muted"
 				aria-label={label}
 			>
 				{content}
@@ -66,8 +69,8 @@ function GuessRow({
 			aria-pressed={record.lemma === highlighted}
 			className={
 				record.lemma === highlighted
-					? "flex min-w-0 min-h-(--control-min-height) items-center justify-between gap-flow-sm rounded-lg bg-sakretna text-paper px-inset-sm py-flow-xs text-xs font-sans cursor-pointer"
-					: "flex min-w-0 min-h-(--control-min-height) items-center justify-between gap-flow-sm rounded-lg bg-secondary text-ink-muted px-inset-sm py-flow-xs text-xs font-sans cursor-pointer hover:bg-secondary/80"
+					? "flex w-full min-w-0 min-h-(--control-min-height) items-center gap-flow-sm bg-sakretna-soft text-sakretna px-inset-sm py-flow-xs text-sm font-sans cursor-pointer"
+					: "flex w-full min-w-0 min-h-(--control-min-height) items-center gap-flow-sm text-ink-muted px-inset-sm py-flow-xs text-sm font-sans cursor-pointer hover:bg-secondary"
 			}
 		>
 			{content}
@@ -81,71 +84,44 @@ export function GuessList({
 	highlighted,
 	onSelect,
 }: GuessListProps) {
-	if (guesses.length === 0) return null;
 	const hitCounts = new Map<string, number>();
 	for (const token of tokens) {
 		if (token.type === "word" && token.lemma) {
 			hitCounts.set(token.lemma, (hitCounts.get(token.lemma) ?? 0) + 1);
 		}
 	}
-	const records = guesses.map((input) => {
+	const records = guesses.map((input, index) => {
 		const lemma = lemmaOf(input);
-		return { input, lemma, hits: hitCounts.get(lemma) ?? 0 };
+		return {
+			input,
+			lemma,
+			hits: hitCounts.get(lemma) ?? 0,
+			attempt: index + 1,
+		};
 	});
-	const recent = [...records].reverse().slice(0, 3);
 	const all = [...records].reverse();
-
 	return (
-		<div className="w-full">
-			<p className="text-ink-muted uppercase tracking-widest text-[10px] font-medium mb-flow-xs">
-				Спроб ({guesses.length} {pluralize(guesses.length, "спроба")})
-			</p>
-			<div className="grid grid-cols-1 sm:grid-cols-2 gap-flow-xs lg:hidden">
-				{recent.map((record) => (
-					<GuessRow
-						key={record.input}
-						record={record}
-						highlighted={highlighted}
-						onSelect={onSelect}
-					/>
-				))}
-			</div>
-			{records.length > recent.length && (
-				<details className="mt-flow-xs lg:hidden">
-					<summary className="min-h-(--control-min-height) flex items-center cursor-pointer text-xs font-medium text-ink-muted">
-						Уся гісторыя ({records.length})
-					</summary>
-					<ol className="mt-flow-xs max-h-[40vh] overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-flow-xs">
-						{all.map((record) => (
-							<li key={record.input}>
-								<GuessRow
-									record={record}
-									highlighted={highlighted}
-									onSelect={onSelect}
-								/>
-							</li>
-						))}
-					</ol>
-				</details>
+		<section className="w-full" aria-label="Гісторыя спроб">
+			{all.length === 0 ? (
+				<p className="flex min-h-(--control-compact-height) items-center px-inset-xs text-sm text-ink-muted">
+					Спробы з’явяцца тут
+				</p>
+			) : (
+				<ol
+					key={guesses.length}
+					className="max-h-(--panel-history-max-height) max-md:short:max-h-(--panel-history-emergency-height) overflow-y-auto overscroll-contain divide-y divide-rule"
+				>
+					{all.map((record) => (
+						<li key={record.input}>
+							<GuessRow
+								record={record}
+								highlighted={highlighted}
+								onSelect={onSelect}
+							/>
+						</li>
+					))}
+				</ol>
 			)}
-			{records.length > recent.length && (
-				<>
-					<p className="hidden lg:block text-ink-muted uppercase tracking-widest text-[10px] font-medium mt-flow-xs mb-flow-xs">
-						Уся гісторыя ({records.length})
-					</p>
-					<ol className="hidden lg:grid grid-cols-1 sm:grid-cols-2 gap-flow-xs">
-						{all.map((record) => (
-							<li key={record.input}>
-								<GuessRow
-									record={record}
-									highlighted={highlighted}
-									onSelect={onSelect}
-								/>
-							</li>
-						))}
-					</ol>
-				</>
-			)}
-		</div>
+		</section>
 	);
 }

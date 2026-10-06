@@ -132,8 +132,8 @@ export const Hit: Story = {
 };
 /**
  * Simulates a phone with the on-screen keyboard up: a coarse pointer plus a
- * focused guess field. The nav hides, the title compacts and the dock
- * collapses to input + feedback so the article keeps most of the screen.
+ * focused guess field. The nav hides, the title compacts and the console
+ * keeps the latest history row above its input.
  */
 export const KeyboardOpen: Story = {
 	args: { picked: PICKED },
@@ -162,13 +162,15 @@ export const KeyboardOpen: Story = {
 		await userEvent.click(input);
 		await expect(document.documentElement.dataset.keyboard).toBe("open");
 		await expect(canvas.getByText("Падказка")).not.toBeVisible();
+		await expect(canvas.getByLabelText("Гісторыя спроб")).toBeVisible();
+		await expect(canvas.getByRole("button", { name: "Увесці" })).toBeVisible();
 		await expect(input).toBeVisible();
 	},
 };
 /**
  * Only 300px of height, keyboard closed: what is left of a small phone under
- * the keyboard, or a landscape phone. The dock collapses to icon actions and
- * the input; guesses stay reachable in the list below the article.
+ * the keyboard, or a landscape phone. The console keeps icon actions, the
+ * latest history row and the input in the fixed dock.
  */
 export const ShortViewport: Story = {
 	args: { picked: PICKED },
@@ -185,11 +187,12 @@ export const ShortViewport: Story = {
 		await expect(window.innerHeight).toBeLessThanOrEqual(480);
 		await expect(canvas.getByText("Здацца")).not.toBeVisible();
 		await expect(canvas.getByRole("button", { name: "Здацца" })).toBeVisible();
+		await expect(canvas.getByLabelText("Гісторыя спроб")).toBeVisible();
 		await expect(canvas.getByLabelText("Увядзіце слова")).toBeVisible();
 		const dock = canvas
 			.getByLabelText("Увядзіце слова")
 			.closest(".fixed") as HTMLElement;
-		await expect(dock.getBoundingClientRect().height).toBeLessThan(140);
+		await expect(dock.getBoundingClientRect().height).toBeLessThan(220);
 	},
 };
 export const StaleErrorRegression: Story = {

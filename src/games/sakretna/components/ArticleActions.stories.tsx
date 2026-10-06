@@ -10,20 +10,22 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof ArticleActions>;
 
-export const Available: Story = {
+export const ThreeHints: Story = {
 	args: {
 		onUseHint: () => {},
 		onGiveUp: () => {},
-		hintAvailable: true,
+		onSettings: () => {},
+		hintsLeft: 3,
 		finished: false,
 	},
 };
 
-export const HintUsed: Story = {
+export const NoHintsLeft: Story = {
 	args: {
 		onUseHint: () => {},
 		onGiveUp: () => {},
-		hintAvailable: false,
+		onSettings: () => {},
+		hintsLeft: 0,
 		finished: false,
 	},
 };
@@ -32,7 +34,8 @@ export const Finished: Story = {
 	args: {
 		onUseHint: () => {},
 		onGiveUp: () => {},
-		hintAvailable: false,
+		onSettings: () => {},
+		hintsLeft: 0,
 		finished: true,
 	},
 };
