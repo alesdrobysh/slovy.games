@@ -57,9 +57,9 @@ const GAME_ROUTES: Record<
 const GAME_KEYS = Object.keys(GAME_ROUTES) as GameKey[];
 
 /**
- * Scroll distance after which the masthead collapses to one line. Collapsing
- * shrinks the header and shifts content up, so expanding uses a lower
- * threshold to avoid flip-flopping around a single boundary.
+ * Scroll distance after which the masthead collapses to one line. The header
+ * keeps its footprint while collapsing (see .masthead), so the gap between the
+ * thresholds only guards against toggling on small scroll jitter.
  */
 const COMPACT_AFTER_PX = 80;
 const EXPAND_BEFORE_PX = 10;
@@ -180,11 +180,9 @@ export function Nav({
 	return (
 		<header
 			data-compact={compact}
-			className={`masthead sticky top-0 z-40 bg-paper/85 backdrop-blur-md transition-shadow max-md:short:static max-md:keyboard:invisible ${compact ? "border-b border-rule shadow-lg shadow-ink/5" : ""}`}
+			className={`masthead sticky top-0 z-40 border-b bg-paper/85 backdrop-blur-md max-md:short:static max-md:keyboard:invisible ${compact ? "border-rule shadow-lg shadow-ink/5" : "border-transparent"}`}
 		>
-			<div
-				className={`mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-flow-sm sm:px-inset-md transition-[height] duration-200 ${compact ? "h-13" : "h-20 sm:h-28"}`}
-			>
+			<div className="mx-auto grid h-(--masthead-bar) max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-flow-sm sm:px-inset-md">
 				<div className="flex">
 					{game && (
 						<Button
@@ -200,7 +198,7 @@ export function Nav({
 					)}
 				</div>
 
-				<div className="flex min-w-0 flex-col items-center gap-flow-sm">
+				<div className="flex min-w-0 flex-col items-center">
 					{game ? (
 						<Typography
 							variant="masthead"
@@ -214,15 +212,22 @@ export function Nav({
 							<Typography variant="masthead">Словы</Typography>
 						</Link>
 					)}
-					{!compact && (
-						<Typography
-							variant="dateline"
-							className="text-ink-muted"
-							suppressHydrationWarning
-						>
-							{formatToday()}
-						</Typography>
-					)}
+					<div
+						aria-hidden={compact}
+						className={`grid transition-[grid-template-rows,opacity] duration-200 ease-out motion-reduce:transition-none ${compact ? "grid-rows-[0fr] opacity-0" : "grid-rows-[1fr]"}`}
+					>
+						<div className="min-h-0 overflow-hidden">
+							<div className="pt-flow-sm">
+								<Typography
+									variant="dateline"
+									className="text-ink-muted"
+									suppressHydrationWarning
+								>
+									{formatToday()}
+								</Typography>
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<div className="flex justify-end">
@@ -238,11 +243,11 @@ export function Nav({
 				</div>
 			</div>
 
-			{!compact && (
-				<div className="mx-auto max-w-7xl px-flow-lg sm:px-inset-lg">
-					<div className="border-b-3 border-double border-(--muted)" />
-				</div>
-			)}
+			<div
+				className={`mx-auto max-w-7xl px-flow-lg transition-opacity duration-200 motion-reduce:transition-none sm:px-inset-lg ${compact ? "opacity-0" : ""}`}
+			>
+				<div className="border-b-3 border-double border-(--muted)" />
+			</div>
 
 			<Modal
 				isOpen={menuOpen}

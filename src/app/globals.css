@@ -19,17 +19,45 @@
 	}
 }
 
-/* Masthead title size follows the header state (see Nav). */
+/*
+ * Masthead size follows the header state (see Nav). Both values are registered
+ * so they animate; the bottom margin grows as the bar shrinks, keeping the
+ * header's footprint constant so collapsing never shifts the page content.
+ */
+@property --masthead-size {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 1.75rem;
+}
+@property --masthead-bar {
+	syntax: "<length>";
+	inherits: true;
+	initial-value: 5rem;
+}
 .masthead {
+	--masthead-full: var(--masthead-height);
+	--masthead-bar: var(--masthead-full);
 	--masthead-size: var(--masthead-title);
+	margin-bottom: calc(var(--masthead-full) - var(--masthead-bar));
+	transition-property:
+		--masthead-bar, --masthead-size, border-color, box-shadow;
+	transition-duration: 200ms;
+	transition-timing-function: ease-out;
 }
 @media (min-width: 640px) {
 	.masthead {
+		--masthead-full: var(--masthead-height-lg);
 		--masthead-size: var(--masthead-title-lg);
 	}
 }
 .masthead[data-compact="true"] {
+	--masthead-bar: var(--masthead-height-compact);
 	--masthead-size: var(--masthead-title-compact);
+}
+@media (prefers-reduced-motion: reduce) {
+	.masthead {
+		transition-duration: 0s;
+	}
 }
 
 @utility font-display {
