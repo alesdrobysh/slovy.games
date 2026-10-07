@@ -19,6 +19,19 @@
 	}
 }
 
+/* Masthead title size follows the header state (see Nav). */
+.masthead {
+	--masthead-size: var(--masthead-title);
+}
+@media (min-width: 640px) {
+	.masthead {
+		--masthead-size: var(--masthead-title-lg);
+	}
+}
+.masthead[data-compact="true"] {
+	--masthead-size: var(--masthead-title-compact);
+}
+
 @utility font-display {
 	font-family: var(--font-d);
 }

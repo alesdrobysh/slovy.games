@@ -21,15 +21,18 @@
 	--control-compact-height: 1.75rem; /* 28px — compact control      */
 	--control-default-height: 2rem; /* 32px — standard control        */
 	--control-large-height: 2.25rem; /* 36px — prominent control      */
+	--masthead-title: 1.75rem; /* 28px — game/hub name in the masthead */
+	--masthead-title-lg: 2.75rem; /* 44px — masthead on wide screens */
+	--masthead-title-compact: 1.25rem; /* 20px — masthead after scrolling */
 	--panel-history-max-height: 7rem; /* 112px — four compact rows */
 	--panel-history-compact-height: 3.5rem; /* 56px — two compact rows  */
 	--panel-history-emergency-height: 1.75rem; /* 28px — latest compact row */
 }
 
 :root {
-	--bg: #f6f3ec;
-	--surface: #fffdf8;
-	--surface-warm: #f0ede4;
+	--bg: #f8f7f4;
+	--surface: #fefefd;
+	--surface-warm: #f1f0ec;
 	--fg: #1c1915;
 	--fg-2: #524e47;
 	--muted: #8a857c;

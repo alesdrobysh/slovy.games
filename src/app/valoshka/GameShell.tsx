@@ -1,5 +1,6 @@
 "use client";
 
+import { History } from "lucide-react";
 import type { ReactNode } from "react";
 import { useCallback, useEffect, useState } from "react";
 import { GamePage } from "@/games/valoshka/components/GamePage";
@@ -8,7 +9,6 @@ import { StorageInspector } from "@/games/valoshka/components/StorageInspector";
 import { YesterdayModal } from "@/games/valoshka/components/YesterdayModal";
 import type { Puzzle } from "@/games/valoshka/types";
 import { Nav } from "@/shared/components/Nav";
-import { Button } from "@/shared/components/ui/Button";
 
 interface Props {
 	puzzle: Puzzle;
@@ -41,11 +41,13 @@ export function GameShell({ puzzle, currentDate, children }: Props) {
 		<>
 			<Nav
 				onHelpClick={handleHelpClick}
-				extraActions={
-					<Button variant="ghost" color="neutral" onClick={handleYesterdayOpen}>
-						Учора
-					</Button>
-				}
+				menuItems={[
+					{
+						label: "Учарашнія адказы",
+						icon: History,
+						onSelect: handleYesterdayOpen,
+					},
+				]}
 			/>
 			<main>
 				<GamePage puzzle={puzzle} />

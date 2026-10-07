@@ -58,7 +58,7 @@ export default function RootLayout({
 			className={`${wixMadeforText.variable} ${literata.variable}`}
 		>
 			<body className="min-h-screen flex flex-col bg-paper text-ink">
-				<meta name="theme-color" content="#f5f0e8" />
+				<meta name="theme-color" content="#f8f7f4" />
 				<script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
 				<ThemeProvider>
 					<PostHogProvider>

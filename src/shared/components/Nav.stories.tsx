@@ -59,23 +59,7 @@ export const ValoshkaGame: Story = {
 	args: {
 		pathname: "/valoshka",
 		onHelpClick: () => {},
-		extraActions: (
-			<button
-				type="button"
-				style={{
-					fontSize: 11,
-					fontWeight: 600,
-					textTransform: "uppercase",
-					letterSpacing: "0.08em",
-					padding: "4px 10px",
-					borderRadius: 6,
-					border: "1px solid currentColor",
-					opacity: 0.7,
-				}}
-			>
-				Учора
-			</button>
-		),
+		menuItems: [{ label: "Учарашнія адказы", onSelect: () => {} }],
 	},
 };
 

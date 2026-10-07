@@ -16,6 +16,8 @@ export type TypographyVariant =
 	| "smallSerif"
 	| "label"
 	| "gameInput"
+	| "masthead"
+	| "dateline"
 	| "statHero";
 
 interface VariantConfig {
@@ -132,8 +134,7 @@ const VARIANTS: Record<TypographyVariant, VariantConfig> = {
 			fontWeight: 400,
 			fontSize: "14.5px",
 			lineHeight: 1.65,
-			textAlign: "justify",
-			hyphens: "auto",
+			textAlign: "left",
 			margin: 0,
 		},
 	},
@@ -176,6 +177,33 @@ const VARIANTS: Record<TypographyVariant, VariantConfig> = {
 			fontWeight: 500,
 			fontSize: "14px",
 			lineHeight: 1,
+			margin: 0,
+		},
+	},
+	masthead: {
+		tag: "span",
+		style: {
+			fontFamily: D,
+			fontStyle: "italic",
+			fontWeight: 500,
+			fontSize: "var(--masthead-size, var(--masthead-title))",
+			lineHeight: 1,
+			letterSpacing: "-0.02em",
+			whiteSpace: "nowrap",
+			transition: "font-size 200ms ease",
+			margin: 0,
+		},
+	},
+	dateline: {
+		tag: "span",
+		style: {
+			fontFamily: B,
+			fontWeight: 500,
+			fontSize: "13px",
+			lineHeight: 1,
+			letterSpacing: "0.08em",
+			fontVariantCaps: "all-small-caps",
+			fontVariantNumeric: "tabular-nums",
 			margin: 0,
 		},
 	},

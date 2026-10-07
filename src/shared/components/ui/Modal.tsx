@@ -11,6 +11,8 @@ export interface ModalProps {
 	title?: string;
 	children: ReactNode;
 	maxWidth?: string;
+	/** "sheet" slides up from the bottom on phones (menus); "center" is a dialog. */
+	placement?: "center" | "sheet";
 }
 
 const FOCUSABLE_SELECTOR = [
@@ -28,7 +30,9 @@ export function Modal({
 	title,
 	children,
 	maxWidth = "480px",
+	placement = "center",
 }: ModalProps) {
+	const isSheet = placement === "sheet";
 	const dialogRef = useRef<HTMLDivElement>(null);
 	const backdropRef = useRef<HTMLDivElement>(null);
 	const prevFocusRef = useRef<HTMLElement | null>(null);
@@ -134,7 +138,7 @@ export function Modal({
 					ref={backdropRef}
 					onClick={onClose}
 					role="presentation"
-					className={`${themeClass} fixed inset-0 z-50 flex items-center justify-center bg-paper/70 backdrop-blur-sm p-4`}
+					className={`${themeClass} fixed inset-0 z-50 flex justify-center bg-paper/70 backdrop-blur-sm ${isSheet ? "items-end sm:items-center sm:p-4" : "items-center p-4"}`}
 				>
 					{/* biome-ignore lint/a11y/useKeyWithClickEvents: stopPropagation only */}
 					<div
@@ -144,7 +148,7 @@ export function Modal({
 						role="dialog"
 						aria-modal="true"
 						aria-labelledby={title ? "modal-title" : undefined}
-						className="bg-card ring-1 ring-rule rounded-2xl shadow-2xl w-full overflow-y-auto overflow-x-hidden focus-visible:outline-none"
+						className={`bg-card ring-1 ring-rule shadow-2xl w-full overflow-y-auto overflow-x-hidden focus-visible:outline-none ${isSheet ? "rounded-t-2xl sm:rounded-2xl pb-[env(safe-area-inset-bottom)]" : "rounded-2xl"}`}
 						style={{ maxWidth, maxHeight: "90vh" }}
 					>
 						{title && (

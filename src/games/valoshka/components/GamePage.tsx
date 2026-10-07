@@ -3,7 +3,6 @@
 import { ChevronDown } from "lucide-react";
 import { useGame } from "@/games/valoshka/hooks/useGame";
 import type { Puzzle } from "@/games/valoshka/types";
-import { GameDate } from "@/shared/components/GameDate";
 import { Button } from "@/shared/components/ui/Button";
 import { Typography } from "@/shared/components/ui/Typography";
 import { ActionButtons } from "./ActionButtons";
@@ -32,16 +31,21 @@ export function GamePage({ puzzle }: GamePageProps) {
 					variant="ghost"
 					color="neutral"
 					onClick={actions.toggleWordsOpen}
-					className="w-full flex items-center gap-flow-xs"
+					className="w-full flex items-center justify-start gap-flow-md"
 				>
-					Словы ({state.foundWords.length}/{puzzle.answers.length})
+					<span className="shrink-0 whitespace-nowrap">
+						Словы ({state.foundWords.length}/{puzzle.answers.length})
+					</span>
 					{!state.wordsOpen && state.foundWords.length > 0 && (
-						<Typography variant="label" className="ml-flow-sm truncate min-w-0">
+						<Typography
+							variant="label"
+							className="flex-1 min-w-0 truncate text-left"
+						>
 							{state.foundWords.slice().reverse().join("  ")}
 						</Typography>
 					)}
 					<ChevronDown
-						className={`transition-transform ${state.wordsOpen ? "rotate-180" : ""}`}
+						className={`ml-auto shrink-0 transition-transform ${state.wordsOpen ? "rotate-180" : ""}`}
 						size={14}
 					/>
 				</Button>

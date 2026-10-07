@@ -10,7 +10,6 @@ import {
 } from "@/games/sakretna/lib/gameplaySettings";
 import { ERROR_MESSAGES } from "@/games/sakretna/lib/validation";
 import type { PickedArticle } from "@/games/sakretna/types";
-import { GameDate } from "@/shared/components/GameDate";
 import { useVirtualKeyboard } from "@/shared/hooks/useVirtualKeyboard";
 import { ArticleActions } from "./ArticleActions";
 import { ArticleNavigator } from "./ArticleNavigator";
@@ -114,15 +113,9 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 		>
 			<div className="flex flex-col gap-flow-lg lg:grid lg:grid-cols-[1fr_320px] lg:gap-inset-xl lg:items-start">
 				<div className="min-w-0 flex flex-col gap-flow-lg lg:gap-inset-xl pb-(--sakretna-dock-space) md:pb-0">
-					<header className="flex flex-col gap-flow-xs">
-						<GameDate game="sakretna" date={date} />
-						<div className="hidden" aria-hidden="true">
-							<ProgressLine
-								foundLemmas={foundCount}
-								totalLemmas={totalLemmas}
-							/>
-						</div>
-					</header>
+					<div className="hidden" aria-hidden="true">
+						<ProgressLine foundLemmas={foundCount} totalLemmas={totalLemmas} />
+					</div>
 
 					{finished && (
 						<FinishCard

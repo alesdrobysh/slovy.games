@@ -2,10 +2,7 @@
 
 import { useState } from "react";
 import type { GameActions, GameState } from "@/games/pobach/hooks/useGame";
-import { GameDate } from "@/shared/components/GameDate";
 import { Typography } from "@/shared/components/ui/Typography";
-import { POBACH_EPOCH_DATE } from "@/shared/config";
-import { dateForDayIndex } from "@/shared/lib/timezone";
 import FinishCard from "./FinishCard";
 import GiveUpModal from "./GiveUpModal";
 import GuessCard from "./GuessCard";
@@ -43,18 +40,9 @@ export function GamePageContent({ state, actions }: GamePageContentProps) {
 
 	const isFinished = won || gameOver;
 	const sortedGuesses = [...guesses].sort((a, b) => a.rank - b.rank);
-	const activeDayIndex = dayIndex ?? sessionDayIndex;
-	const date =
-		activeDayIndex === null
-			? null
-			: dateForDayIndex(POBACH_EPOCH_DATE, activeDayIndex)
-					.toISOString()
-					.slice(0, 10);
 
 	return (
 		<main className="page-narrow page-container pt-inset-xl pb-page-py">
-			{date && <GameDate game="pobach" date={date} />}
-
 			{/* Input form */}
 			{!isFinished && (
 				<form onSubmit={handleSubmit} className="py-flow-lg">

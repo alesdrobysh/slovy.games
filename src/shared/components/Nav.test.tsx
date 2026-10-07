@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { Nav } from "@/shared/components/Nav";
 import { ThemeProvider } from "@/shared/hooks/useTheme";
 
@@ -16,17 +16,48 @@ Object.defineProperty(window, "matchMedia", {
 });
 
 describe("Nav", () => {
-	it("allows the game title to shrink beside mobile actions", () => {
+	it("shows the game title and the menu button in game mode", () => {
+		render(
+			<ThemeProvider>
+				<Nav pathname="/valoshka" onHelpClick={jest.fn()} />
+			</ThemeProvider>
+		);
+
+		expect(screen.getByText("Валошка")).toBeInTheDocument();
+		expect(screen.getByLabelText("Усе гульні")).toBeInTheDocument();
+		expect(screen.getByLabelText("Меню")).toBeInTheDocument();
+		expect(screen.queryByLabelText("Цёмная тэма")).not.toBeInTheDocument();
+	});
+
+	it("moves help, stats, game items and theme into the menu", () => {
+		const onYesterday = jest.fn();
 		render(
 			<ThemeProvider>
 				<Nav
 					pathname="/valoshka"
 					onHelpClick={jest.fn()}
-					extraActions={<button type="button">Учора</button>}
+					menuItems={[{ label: "Учарашнія адказы", onSelect: onYesterday }]}
 				/>
 			</ThemeProvider>
 		);
 
-		expect(screen.getByText("Валошка").parentElement).toHaveClass("min-w-0");
+		fireEvent.click(screen.getByLabelText("Меню"));
+
+		expect(screen.getByText("Як гуляць")).toBeInTheDocument();
+		expect(screen.getByText("Статыстыка")).toBeInTheDocument();
+		expect(screen.getByText("Цёмная тэма")).toBeInTheDocument();
+		fireEvent.click(screen.getByText("Учарашнія адказы"));
+		expect(onYesterday).toHaveBeenCalled();
+	});
+
+	it("has no back button on the hub", () => {
+		render(
+			<ThemeProvider>
+				<Nav pathname="/" />
+			</ThemeProvider>
+		);
+
+		expect(screen.getByText("Словы")).toBeInTheDocument();
+		expect(screen.queryByLabelText("Усе гульні")).not.toBeInTheDocument();
 	});
 });

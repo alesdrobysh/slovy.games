@@ -39,7 +39,6 @@ function RulesContent() {
 							<Typography
 								variant="body"
 								as="span"
-								style={{ textAlign: "left", hyphens: "none" }}
 							>
 								{item.word} — <strong>{item.label}</strong> (&#8470;{item.rank})
 							</Typography>

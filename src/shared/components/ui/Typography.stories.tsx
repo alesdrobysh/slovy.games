@@ -47,7 +47,7 @@ const SCALE: ScaleRow[] = [
 	{
 		variant: "body",
 		label: "body",
-		spec: "Wix Madefor Text 400 · 14.5px · lh 1.65 · justify + hyphens",
+		spec: "Wix Madefor Text 400 · 14.5px · lh 1.65 · left-aligned",
 		sample:
 			"Штодня з'яўляецца новае слова — адгадай яго праз семантычна блізкія словы. Кожнае слова, якое ты ўводзіш, паказвае, наколькі яно блізкае да мэты.",
 	},

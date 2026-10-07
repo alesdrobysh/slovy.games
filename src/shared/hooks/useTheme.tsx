@@ -39,7 +39,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 		setStoredTheme(theme);
 		const meta = document.querySelector('meta[name="theme-color"]');
 		if (meta) {
-			meta.setAttribute("content", theme === "dark" ? "#0e0f1a" : "#f5f0e8");
+			meta.setAttribute("content", theme === "dark" ? "#0e0f1a" : "#f8f7f4");
 		}
 	}, [theme, mounted]);
 

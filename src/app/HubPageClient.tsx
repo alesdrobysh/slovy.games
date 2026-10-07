@@ -7,28 +7,6 @@ import { useHubState } from "@/shared/hooks/useHubState";
 import { wrappedYearFor } from "@/shared/lib/wrapped/window";
 import { GAMES } from "@/shared/types";
 
-const MONTHS = [
-	"студзеня",
-	"лютага",
-	"сакавіка",
-	"красавіка",
-	"траўня",
-	"чэрвеня",
-	"ліпеня",
-	"жніўня",
-	"верасня",
-	"кастрычніка",
-	"лістапада",
-	"снежня",
-];
-
-const WEEKDAYS = ["нд", "пн", "аў", "ср", "чц", "пт", "сб"];
-
-function formatToday(): string {
-	const now = new Date();
-	return `${WEEKDAYS[now.getDay()]}, ${now.getDate()} ${MONTHS[now.getMonth()]}`;
-}
-
 interface HubPageClientProps {
 	sakretnaUnlocked: boolean;
 	wrappedVisible: boolean;
@@ -53,11 +31,6 @@ export function HubPageClient({
 						<Typography variant="titleHero" as="h1">
 							Штодзённыя беларускія слоўныя галаваломкі
 						</Typography>
-						<div className="flex flex-wrap items-center gap-x-inset-lg gap-y-flow-md">
-							<Typography variant="caption" className="text-ink-muted">
-								{formatToday()}
-							</Typography>
-						</div>
 					</div>
 				</div>
 
