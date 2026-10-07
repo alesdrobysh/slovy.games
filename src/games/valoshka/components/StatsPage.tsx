@@ -30,11 +30,11 @@ function formatDateLabel(date: string): string {
 	const yesterday = getMskYesterdayDateString();
 	if (date === yesterday) return "Учора";
 
-	// "N дзён таму" or show the date
+	// "N дзён таму" (inflected) or show the date
 	const d = new Date(`${date}T00:00:00+03:00`);
 	const now = new Date();
 	const diffDays = Math.floor((now.getTime() - d.getTime()) / 86400000);
-	if (diffDays <= 30) return `${diffDays} дзён таму`;
+	if (diffDays <= 30) return `${diffDays} ${pluralize(diffDays, "дзень")} таму`;
 
 	return date.split("-").reverse().join(".");
 }

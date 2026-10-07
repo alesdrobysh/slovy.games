@@ -7,9 +7,14 @@ let _analyzer: MorphAnalyzer | null = null;
  *  should re-run after this settles, since it can still be loading then. */
 export const dictReady: Promise<void> =
 	typeof window !== "undefined"
-		? loadDictAsync("/dict/").then((dict) => {
-				_analyzer = new MorphAnalyzer(dict);
-			})
+		? loadDictAsync("/dict/")
+				.then((dict) => {
+					_analyzer = new MorphAnalyzer(dict);
+				})
+				.catch((err) => {
+					// Without the dictionary, pluralize() falls back to the base form.
+					console.error("Failed to load belmorph dictionary", err);
+				})
 		: Promise.resolve();
 
 export function pluralize(
