@@ -12,7 +12,7 @@ import {
 	recordResult,
 	saveProgress,
 } from "@/games/sakretna/lib/storage";
-import { collectLemmas, titleLemmas } from "@/games/sakretna/lib/tokenize";
+import { collectLemmas } from "@/games/sakretna/lib/tokenize";
 import type { ArticleToken, GameState, PickedArticle } from "../types";
 
 export interface UseSakretnaGameReturn {
@@ -29,7 +29,7 @@ export interface UseSakretnaGameReturn {
 }
 
 export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
-	const { article, tokens, date } = picked;
+	const { article, tokens, titleTokens, date } = picked;
 	const [state, dispatch] = useReducer(
 		gameReducer,
 		undefined,
@@ -57,11 +57,19 @@ export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
 		restoredKeyRef.current = key;
 		const saved = loadProgress(date);
 		if (saved && saved.articleId === article.id) {
-			// Wins reveal the whole article, including games won before that
-			// behaviour shipped, which stored only the guessed lemmas.
-			const progress = saved.won
+			// Repair games whose title was revealed but whose client-side
+			// title analysis disagreed with the rendered server tokens.
+			const required = collectLemmas(titleTokens.filter((t) => !t.isFree));
+			const won =
+				saved.won ||
+				(!saved.givenUp &&
+					required.size > 0 &&
+					[...required].every((lemma) => saved.foundLemmas.includes(lemma)));
+			const progress = won
 				? {
 						...saved,
+						won: true,
+						finishedAt: saved.finishedAt ?? new Date().toISOString(),
 						foundLemmas: [
 							...new Set([...saved.foundLemmas, ...collectLemmas(tokens)]),
 						],
@@ -70,7 +78,7 @@ export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
 			dispatch({ type: "RESTORE", progress });
 		}
 		persistedRef.current = true;
-	}, [date, article.id, tokens]);
+	}, [date, article.id, tokens, titleTokens]);
 
 	// Persist on every state change (after the first restoration effect runs)
 	useEffect(() => {
@@ -83,7 +91,8 @@ export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
 	}, [state, date, article.id, ready]);
 
 	const lemmaSet = collectLemmas(tokens);
-	const titleLemmaSet = titleLemmas(article.title);
+	// Use the same lemmas and free-word flags as the rendered title.
+	const titleLemmaSet = collectLemmas(titleTokens.filter((t) => !t.isFree));
 	return {
 		state,
 		tokens,
