@@ -9,6 +9,7 @@ import { StorageInspector } from "@/games/valoshka/components/StorageInspector";
 import { YesterdayModal } from "@/games/valoshka/components/YesterdayModal";
 import type { Puzzle } from "@/games/valoshka/types";
 import { Nav } from "@/shared/components/Nav";
+import { useStaleDayRefresh } from "@/shared/hooks/useStaleDayRefresh";
 
 interface Props {
 	puzzle: Puzzle;
@@ -20,6 +21,8 @@ export function GameShell({ puzzle, currentDate, children }: Props) {
 	const [inspectorOpen, setInspectorOpen] = useState(false);
 	const [showHelp, setShowHelp] = useState(false);
 	const [yesterdayOpen, setYesterdayOpen] = useState(false);
+
+	useStaleDayRefresh(puzzle.date);
 
 	const toggleInspector = useCallback(() => setInspectorOpen((v) => !v), []);
 	const handleHelpClick = useCallback(() => setShowHelp(true), []);
@@ -50,7 +53,7 @@ export function GameShell({ puzzle, currentDate, children }: Props) {
 				]}
 			/>
 			<main>
-				<GamePage puzzle={puzzle} />
+				<GamePage key={puzzle.date} puzzle={puzzle} />
 				{children}
 			</main>
 			<StorageInspector

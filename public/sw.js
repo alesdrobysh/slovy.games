@@ -1,4 +1,4 @@
-const CACHE_NAME = "slovy-v2";
+const CACHE_NAME = "slovy-v3";
 const OFFLINE_URL = "/offline.html";
 
 const PRECACHE_URLS = [OFFLINE_URL];
@@ -25,9 +25,27 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
+// Only content-hashed build output and static files from /public are safe to
+// serve cache-first. Anything else (notably Next.js RSC payloads for dynamic
+// pages) must hit the network, or a cached copy pins the page to the day it
+// was first fetched.
+function isStaticAsset(url) {
+  return (
+    url.pathname.startsWith("/_next/static/") ||
+    /\.(?:png|jpe?g|gif|webp|avif|svg|ico|woff2?|ttf|otf|webmanifest|txt)$/.test(
+      url.pathname,
+    )
+  );
+}
+
 self.addEventListener("fetch", (event) => {
   const { request } = event;
   const url = new URL(request.url);
+
+  if (request.method !== "GET" || url.origin !== self.location.origin) return;
+
+  // RSC payloads from client-side navigation and prefetch
+  if (request.headers.get("RSC") || url.searchParams.has("_rsc")) return;
 
   // Network-first for API calls
   if (url.pathname.startsWith("/api/")) {
@@ -53,13 +71,15 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
+  if (!isStaticAsset(url)) return;
+
   // Cache-first for static assets
   event.respondWith(
     caches.match(request).then(
       (cached) =>
         cached ||
         fetch(request).then((response) => {
-          if (response.ok && url.origin === self.location.origin) {
+          if (response.ok) {
             const clone = response.clone();
             caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
           }
