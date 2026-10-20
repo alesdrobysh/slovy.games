@@ -11,7 +11,6 @@ interface RedactedTextProps {
 	titleTokens: ArticleToken[];
 	foundLemmas: ReadonlySet<string>;
 	highlighted?: string | null;
-	stickyTitle?: boolean;
 	autoScroll?: boolean;
 	showLetterCounts?: boolean;
 	/** Hint mode: hidden words outside the title become pick targets. */
@@ -27,7 +26,6 @@ export function RedactedText({
 	titleTokens,
 	foundLemmas,
 	highlighted,
-	stickyTitle = true,
 	autoScroll = true,
 	showLetterCounts = true,
 	hintMode = false,
@@ -132,7 +130,7 @@ export function RedactedText({
 		>
 			{titleTokens.length > 0 && (
 				<header
-					className={`${stickyTitle ? "sticky top-16 max-md:short:top-0 z-20" : ""} -mx-inset-md sm:-mx-inset-lg -mt-inset-md sm:-mt-inset-lg mb-flow-lg px-inset-md sm:px-inset-lg py-flow-md max-md:short:py-flow-sm bg-card/95 backdrop-blur-sm border-b border-rule`}
+					className="sticky top-16 max-md:short:top-0 z-20 -mx-inset-md sm:-mx-inset-lg -mt-inset-md sm:-mt-inset-lg mb-flow-lg px-inset-md sm:px-inset-lg py-flow-md max-md:short:py-flow-sm bg-card/95 backdrop-blur-sm border-b border-rule"
 				>
 					<p className="text-ink-muted text-xs uppercase tracking-widest mb-flow-xs max-md:short:hidden">
 						Зашыфраваны артыкул

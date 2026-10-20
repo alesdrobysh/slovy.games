@@ -7,9 +7,8 @@ import {
 describe("gameplay settings", () => {
 	beforeEach(() => localStorage.clear());
 
-	it("persists all mobile gameplay preferences", () => {
+	it("persists the available gameplay preferences", () => {
 		const settings = {
-			stickyTitle: false,
 			autoScroll: false,
 			letterCounts: true,
 		};

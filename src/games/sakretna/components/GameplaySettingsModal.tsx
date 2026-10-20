@@ -14,11 +14,6 @@ const OPTIONS: Array<{
 	description: string;
 }> = [
 	{
-		key: "stickyTitle",
-		label: "Замацаваць назву",
-		description: "Трымаць зашыфраваную назву артыкула зверху падчас чытання.",
-	},
-	{
 		key: "autoScroll",
 		label: "Аўтапераход да слова",
 		description: "Пасля догадкі пракручваць да першага супадзення.",

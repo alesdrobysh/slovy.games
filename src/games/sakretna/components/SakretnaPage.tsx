@@ -126,7 +126,7 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 					)}
 
 					<section
-						className="bg-card ring-1 ring-rule rounded-2xl p-inset-md sm:p-inset-lg"
+						className="bg-card ring-1 ring-rule p-inset-md sm:p-inset-lg"
 						aria-label="Зашыфраваны артыкул"
 					>
 						<RedactedText
@@ -134,7 +134,6 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 							titleTokens={titleTokens}
 							foundLemmas={foundSet}
 							highlighted={state.highlighted}
-							stickyTitle={settings.stickyTitle}
 							autoScroll={settings.autoScroll}
 							showLetterCounts={settings.letterCounts}
 							hintMode={hintMode}

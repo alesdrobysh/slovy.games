@@ -1,11 +1,9 @@
 export interface GameplaySettings {
-	stickyTitle: boolean;
 	autoScroll: boolean;
 	letterCounts: boolean;
 }
 
 export const DEFAULT_GAMEPLAY_SETTINGS: GameplaySettings = {
-	stickyTitle: true,
 	autoScroll: true,
 	letterCounts: true,
 };
@@ -18,7 +16,10 @@ export function loadGameplaySettings(): GameplaySettings {
 		const stored = JSON.parse(
 			window.localStorage.getItem(SETTINGS_KEY) ?? "{}"
 		) as Partial<GameplaySettings>;
-		return { ...DEFAULT_GAMEPLAY_SETTINGS, ...stored };
+		return {
+			autoScroll: stored.autoScroll ?? DEFAULT_GAMEPLAY_SETTINGS.autoScroll,
+			letterCounts: stored.letterCounts ?? DEFAULT_GAMEPLAY_SETTINGS.letterCounts,
+		};
 	} catch {
 		return DEFAULT_GAMEPLAY_SETTINGS;
 	}
