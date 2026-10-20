@@ -78,6 +78,36 @@ describe("useVirtualKeyboard", () => {
 		expect(root.style.getPropertyValue("--keyboard-inset")).toBe("300px");
 	});
 
+	it("keeps controls at the bottom while browser toolbars change height", () => {
+		const viewport = installVisualViewport(800);
+		const { result } = renderHook(() => useVirtualKeyboard());
+
+		for (const height of [760, 721, 780, 800]) {
+			act(() => {
+				viewport.height = height;
+				viewport.emit("resize");
+				viewport.emit("scroll");
+			});
+
+			expect(result.current).toEqual({ open: false, inset: 0 });
+			expect(root.style.getPropertyValue("--keyboard-inset")).toBe("0px");
+		}
+	});
+
+	it("clears the keyboard offset when the keyboard closes with browser chrome visible", () => {
+		const viewport = installVisualViewport(460);
+		const { result } = renderHook(() => useVirtualKeyboard());
+		expect(result.current.inset).toBe(340);
+
+		act(() => {
+			viewport.height = 760;
+			viewport.emit("resize");
+		});
+
+		expect(result.current).toEqual({ open: false, inset: 0 });
+		expect(root.style.getPropertyValue("--keyboard-inset")).toBe("0px");
+	});
+
 	it("treats a focused text field on a touch device as an open keyboard", () => {
 		installVisualViewport(800);
 		installMatchMedia(true);

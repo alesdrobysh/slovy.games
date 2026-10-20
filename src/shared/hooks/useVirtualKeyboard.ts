@@ -37,7 +37,10 @@ function measure(): VirtualKeyboardState {
 	// viewport instead, so the inset stays 0. A focused text field on a touch
 	// device is the best remaining signal.
 	const touch = window.matchMedia?.("(pointer: coarse)").matches ?? false;
-	return { open: touch && isTextField(document.activeElement), inset };
+	// Browser toolbar animations can leave a small viewport difference even
+	// with no keyboard. Fixed controls already follow the browser viewport;
+	// applying that difference again lifts them away from the bottom edge.
+	return { open: touch && isTextField(document.activeElement), inset: 0 };
 }
 
 /**
