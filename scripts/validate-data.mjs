@@ -249,7 +249,7 @@ checkFileExists("vectors.bin");
 		if (a.body.length < 1000 || a.body.length > 20000) {
 			fail(`${where}.body length ${a.body.length} outside 1000..20000`);
 		}
-		for (const banned of ["[[", "]]", "{{", "}}", "<ref", "</ref>"]) {
+		for (const banned of ["[[", "]]", "{{", "}}", "<ref", "</ref>", "́"]) {
 			if (a.body.includes(banned)) {
 				fail(`${where}.body contains wiki markup: ${banned}`);
 			}

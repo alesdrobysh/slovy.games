@@ -129,9 +129,7 @@ export function RedactedText({
 			className="font-display text-ink leading-relaxed text-base sm:text-lg scroll-mt-20"
 		>
 			{titleTokens.length > 0 && (
-				<header
-					className="max-md:short:top-0 z-20 -mx-inset-md sm:-mx-inset-lg -mt-inset-md sm:-mt-inset-lg mb-flow-lg px-inset-md sm:px-inset-lg py-flow-md max-md:short:py-flow-sm bg-card/95 backdrop-blur-sm border-b border-rule"
-				>
+				<header className="max-md:short:top-0 z-20 -mx-inset-md sm:-mx-inset-lg -mt-inset-md sm:-mt-inset-lg mb-flow-lg px-inset-md sm:px-inset-lg py-flow-md max-md:short:py-flow-sm bg-card/95 backdrop-blur-sm border-b border-rule">
 					<p className="text-ink-muted text-xs uppercase tracking-widest mb-flow-xs max-md:short:hidden">
 						Зашыфраваны артыкул
 					</p>
@@ -186,7 +184,7 @@ export function RedactedText({
 									.join("")
 							: block.tokens.map((token) => token.text).join("");
 					if (block.kind === "heading") {
-						const Heading = block.level === 2 ? "h2" : "h3";
+						const Heading = `h${block.level}` as const;
 						return (
 							<Heading
 								key={`heading-${blockKey}`}

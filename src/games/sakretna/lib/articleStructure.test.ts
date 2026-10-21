@@ -11,10 +11,10 @@ function tokens(text: string): ArticleToken[] {
 }
 
 describe("buildArticleBlocks", () => {
-	it("preserves headings, paragraphs, lists and removes references", () => {
+	it("parses heading and list markers into blocks", () => {
 		const blocks = buildArticleBlocks(
 			tokens(
-				"Уступ.\n\n\nБіялогія\nТэкст абзаца.\n\nВіды:\n\nПершы від\nДругі від\n\n\nЛітаратура\nСхаваная крыніца"
+				"Уступ.\n## Біялогія\nТэкст абзаца.\n### Віды\n- Першы від\n- Другі від\n#### Падвід\nАпошні абзац."
 			)
 		);
 
@@ -22,18 +22,27 @@ describe("buildArticleBlocks", () => {
 			"paragraph",
 			"heading",
 			"paragraph",
-			"paragraph",
+			"heading",
 			"list",
+			"heading",
+			"paragraph",
 		]);
 		expect(
-			blocks.some(
-				(block) =>
-					"tokens" in block &&
-					block.tokens
-						.map((token) => token.text)
-						.join("")
-						.includes("Літаратура")
-			)
-		).toBe(false);
+			blocks.flatMap((block) => (block.kind === "heading" ? block.level : []))
+		).toEqual([2, 3, 4]);
+	});
+
+	it("strips markers from rendered text", () => {
+		const [heading, list] = buildArticleBlocks(
+			tokens("## Біялогія\n- Першы від\n- Другі від")
+		);
+		const text = (blockTokens: ArticleToken[]) =>
+			blockTokens.map((token) => token.text).join("");
+
+		expect(heading.kind === "heading" && text(heading.tokens)).toBe("Біялогія");
+		expect(list.kind === "list" && list.items.map(text)).toEqual([
+			"Першы від",
+			"Другі від",
+		]);
 	});
 });

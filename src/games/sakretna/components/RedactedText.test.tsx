@@ -58,7 +58,9 @@ describe("RedactedText headings", () => {
 	const HEADING_ARTICLE: ArticleToken[] = [
 		{ type: "word", text: "Артыкул", lemma: "артыкул" },
 		{ type: "sep", text: "\n" },
-		{ type: "sep", text: "\n" },
+		{ type: "sep", text: "#" },
+		{ type: "sep", text: "#" },
+		{ type: "sep", text: " " },
 		{ type: "word", text: "Гісторыя", lemma: "гісторыя" },
 	];
 

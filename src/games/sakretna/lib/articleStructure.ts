@@ -1,17 +1,13 @@
 import type { ArticleToken } from "../types";
 
 export type ArticleBlock =
-	| { kind: "heading"; level: 2 | 3; tokens: ArticleToken[] }
+	| { kind: "heading"; level: 2 | 3 | 4; tokens: ArticleToken[] }
 	| { kind: "paragraph"; tokens: ArticleToken[] }
 	| { kind: "list"; items: ArticleToken[][] };
 
-const REFERENCE_HEADINGS = new Set([
-	"бібліяграфія",
-	"літаратура",
-	"спасылкі",
-	"зноскі",
-	"крыніцы",
-]);
+/** Line markers written by scripts/fetch-sakretna-articles.mjs. */
+const HEADING_MARKER = /^(#{2,4}) /u;
+const LIST_MARKER = "- ";
 
 function splitLines(tokens: ArticleToken[]): ArticleToken[][] {
 	const lines: ArticleToken[][] = [[]];
@@ -26,67 +22,50 @@ function splitLines(tokens: ArticleToken[]): ArticleToken[][] {
 }
 
 function lineText(tokens: ArticleToken[]): string {
-	return tokens
-		.map((token) => token.text)
-		.join("")
-		.trim();
+	return tokens.map((token) => token.text).join("");
 }
 
-function isHeadingLine(lines: ArticleToken[][], index: number): boolean {
-	const text = lineText(lines[index]);
-	if (!text || index === 0 || lineText(lines[index - 1]) !== "") return false;
-	const wordCount = lines[index].filter(
-		(token) => token.type === "word"
-	).length;
-	return (
-		wordCount > 0 &&
-		wordCount <= 8 &&
-		text.length <= 80 &&
-		!/[.!?;:]$/u.test(text)
-	);
+/** Drop the leading separator tokens that spell out a line marker. */
+function stripMarker(
+	tokens: ArticleToken[],
+	markerLength: number
+): ArticleToken[] {
+	let consumed = 0;
+	let index = 0;
+	while (consumed < markerLength && tokens[index]?.type === "sep") {
+		consumed += tokens[index].text.length;
+		index += 1;
+	}
+	return tokens.slice(index);
 }
 
-function normalizedHeading(tokens: ArticleToken[]): string {
-	return lineText(tokens).toLowerCase().replace(/:$/u, "").trim();
-}
-
-/** Convert newline-preserving article tokens into semantic reading blocks. */
+/** Convert marker-prefixed article lines into semantic reading blocks. */
 export function buildArticleBlocks(tokens: ArticleToken[]): ArticleBlock[] {
-	const lines = splitLines(tokens);
 	const blocks: ArticleBlock[] = [];
-	let previousWasHeading = false;
 
-	for (let index = 0; index < lines.length; index += 1) {
-		const tokensInLine = lines[index];
-		const text = lineText(tokensInLine);
-		if (!text) continue;
+	for (const line of splitLines(tokens)) {
+		const text = lineText(line);
+		if (!text.trim()) continue;
 
-		if (isHeadingLine(lines, index)) {
-			if (REFERENCE_HEADINGS.has(normalizedHeading(tokensInLine))) break;
+		const heading = text.match(HEADING_MARKER);
+		if (heading) {
 			blocks.push({
 				kind: "heading",
-				level: previousWasHeading ? 3 : 2,
-				tokens: tokensInLine,
+				level: heading[1].length as 2 | 3 | 4,
+				tokens: stripMarker(line, heading[0].length),
 			});
-			previousWasHeading = true;
 			continue;
 		}
 
-		previousWasHeading = false;
-		blocks.push({ kind: "paragraph", tokens: tokensInLine });
+		if (text.startsWith(LIST_MARKER)) {
+			const item = stripMarker(line, LIST_MARKER.length);
+			const previous = blocks.at(-1);
+			if (previous?.kind === "list") previous.items.push(item);
+			else blocks.push({ kind: "list", items: [item] });
+			continue;
+		}
 
-		if (!text.endsWith(":")) continue;
-		let cursor = index + 1;
-		while (cursor < lines.length && !lineText(lines[cursor])) cursor += 1;
-		const items: ArticleToken[][] = [];
-		while (cursor < lines.length && lineText(lines[cursor])) {
-			items.push(lines[cursor]);
-			cursor += 1;
-		}
-		if (items.length >= 2) {
-			blocks.push({ kind: "list", items });
-			index = cursor - 1;
-		}
+		blocks.push({ kind: "paragraph", tokens: line });
 	}
 
 	return blocks;

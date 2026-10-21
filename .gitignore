@@ -42,3 +42,6 @@ src/data/coords.bin
 
 *storybook.log
 storybook-static
+
+# local review reports
+/.cache/
