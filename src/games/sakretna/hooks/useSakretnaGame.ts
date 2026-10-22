@@ -103,6 +103,7 @@ export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
 		submitGuess: () =>
 			dispatch({
 				type: "SUBMIT_GUESS",
+				articleId: article.id,
 				rawGuess: state.currentInput,
 				tokens,
 				titleLemmas: titleLemmaSet,

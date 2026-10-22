@@ -60,6 +60,30 @@ it("wins when the last rendered title word is guessed", async () => {
 	expect(loadStats().totalWins).toBe(1);
 });
 
+it("restores an old name prediction and uses article corrections for the final guess", async () => {
+	const named: PickedArticle = {
+		...picked,
+		article: { ...picked.article, id: "wiki-51612", title: "Кацусіка Хокусай" },
+		titleTokens: [
+			{ type: "word", text: "Кацусіка", lemma: "кацусіка" },
+			{ type: "word", text: "Хокусай", lemma: "хокусай" },
+		],
+		tokens: [{ type: "word", text: "Хокусая", lemma: "хокусай" }],
+	};
+	saveProgress({
+		...progress(["хокусаць"]),
+		articleId: named.article.id,
+		guesses: ["хокусай"],
+	});
+	const { result } = renderHook(() => useSakretnaGame(named));
+	await waitFor(() => expect(result.current.ready).toBe(true));
+	expect(result.current.state.foundLemmas).toEqual(["хокусай"]);
+	expect(result.current.state.won).toBe(false);
+	act(() => result.current.setInput("Кацусіка"));
+	act(() => result.current.submitGuess());
+	expect(result.current.state.won).toBe(true);
+});
+
 it("repairs a saved game with a fully revealed title and records it once", async () => {
 	saveProgress(progress(["арфаграфія", "беларуска", "мова"]));
 	const first = renderHook(() => useSakretnaGame(picked));

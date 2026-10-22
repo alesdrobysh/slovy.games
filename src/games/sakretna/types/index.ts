@@ -67,6 +67,7 @@ export type ValidationError =
 export type GameAction =
 	| {
 			type: "SUBMIT_GUESS";
+			articleId?: string;
 			rawGuess: string;
 			tokens: ArticleToken[];
 			titleLemmas: Set<string>;

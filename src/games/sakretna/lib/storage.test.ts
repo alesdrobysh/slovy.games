@@ -3,7 +3,13 @@ import {
 	getMskYesterdayDateString,
 } from "@/shared/lib/timezone";
 import type { SavedProgress } from "../types";
-import { DEFAULT_STATS, loadStats, recordResult } from "./storage";
+import {
+	DEFAULT_STATS,
+	loadProgress,
+	loadStats,
+	recordResult,
+	saveProgress,
+} from "./storage";
 
 function progress(date: string, won: boolean): SavedProgress {
 	return {
@@ -16,6 +22,19 @@ function progress(date: string, won: boolean): SavedProgress {
 		hintsUsed: 0,
 	};
 }
+
+it("migrates corrected lemmas without losing guesses or counting a form twice", () => {
+	const saved = {
+		...progress("2026-10-22", false),
+		foundLemmas: ["мёбіуса", "мёбіус", "стужка"],
+		guesses: ["Мёбіуса", "Мёбіус", "стужка"],
+	};
+	saveProgress(saved);
+	expect(loadProgress(saved.date)).toEqual({
+		...saved,
+		foundLemmas: ["мёбіус", "стужка"],
+	});
+});
 
 describe("recordResult streaks", () => {
 	beforeEach(() => localStorage.clear());

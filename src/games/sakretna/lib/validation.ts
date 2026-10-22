@@ -1,13 +1,14 @@
 import type { ArticleToken, ValidationError } from "../types";
+import { normalizeLemmaWord } from "./lemmaOverrides";
 import { lemmaOf } from "./lemmatize";
 import { collectLemmas } from "./tokenize";
 
 /** Normalize a player guess: trim, lowercase, drop surrounding punctuation. */
 export function normalizeGuess(raw: string): string {
-	return raw
-		.trim()
-		.toLowerCase()
-		.replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, "");
+	return normalizeLemmaWord(raw.trim()).replace(
+		/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu,
+		""
+	);
 }
 
 export interface ValidationResult {
@@ -21,7 +22,8 @@ export function validateGuess(
 	rawGuess: string,
 	tokens: ArticleToken[],
 	foundLemmas: ReadonlySet<string>,
-	titleLemmas: ReadonlySet<string> = new Set()
+	titleLemmas: ReadonlySet<string> = new Set(),
+	articleId?: string
 ): ValidationResult {
 	const normalized = normalizeGuess(rawGuess);
 	if (normalized.length === 0) {
@@ -36,7 +38,7 @@ export function validateGuess(
 	if (!/[\p{L}\p{N}]/u.test(normalized)) {
 		return { error: "no_letters", lemma: null, revealedCount: 0 };
 	}
-	const lemma = lemmaOf(normalized);
+	const lemma = lemmaOf(normalized, articleId);
 	if (foundLemmas.has(lemma)) {
 		return { error: "already_found", lemma, revealedCount: 0 };
 	}

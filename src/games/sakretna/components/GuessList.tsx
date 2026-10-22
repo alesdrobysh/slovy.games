@@ -4,6 +4,7 @@ import { lemmaOf } from "../lib/lemmatize";
 import type { ArticleToken } from "../types";
 
 interface GuessListProps {
+	articleId?: string;
 	guesses: string[];
 	tokens?: ArticleToken[];
 	highlighted?: string | null;
@@ -79,6 +80,7 @@ function GuessRow({
 }
 
 export function GuessList({
+	articleId,
 	guesses,
 	tokens = [],
 	highlighted,
@@ -91,7 +93,7 @@ export function GuessList({
 		}
 	}
 	const records = guesses.map((input, index) => {
-		const lemma = lemmaOf(input);
+		const lemma = lemmaOf(input, articleId);
 		return {
 			input,
 			lemma,

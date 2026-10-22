@@ -1,4 +1,5 @@
 import { type CaseName, MorphAnalyzer } from "belmorph";
+import { lemmaOverrideOf } from "./lemmaOverrides";
 
 const isBrowser = typeof window !== "undefined";
 
@@ -19,7 +20,9 @@ function startLoading(): Promise<void> {
 	return loadingPromise;
 }
 
-export function lemmaOf(word: string): string {
+export function lemmaOf(word: string, articleId?: string): string {
+	const override = lemmaOverrideOf(word, articleId);
+	if (override) return override;
 	const normalizedWord = word.toLowerCase();
 	if (!analyzer) return word.toLowerCase();
 	const res = analyzer.parse(normalizedWord);

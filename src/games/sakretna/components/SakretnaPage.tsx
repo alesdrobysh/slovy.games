@@ -190,6 +190,7 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 								<>
 									<div className="overflow-hidden rounded-lg border border-rule bg-card">
 										<GuessList
+											articleId={article.id}
 											guesses={state.guesses}
 											tokens={tokens}
 											highlighted={state.highlighted}

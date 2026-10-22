@@ -3,6 +3,7 @@ import {
 	getMskYesterdayDateString,
 } from "@/shared/lib/timezone";
 import type { GameStats, SavedProgress } from "../types";
+import { migrateFoundLemmas } from "./lemmaOverrides";
 
 const STORAGE_KEY = (date: string) => `sakretna_${date}`;
 export const STATS_KEY = "sakretna_stats";
@@ -25,7 +26,14 @@ export function loadProgress(date: string): SavedProgress | null {
 		if (!raw) return null;
 		const parsed = JSON.parse(raw) as SavedProgress;
 		if (parsed.date !== date) return null;
-		return parsed;
+		return {
+			...parsed,
+			foundLemmas: migrateFoundLemmas(
+				parsed.foundLemmas,
+				parsed.guesses,
+				parsed.articleId
+			),
+		};
 	} catch {
 		return null;
 	}

@@ -8,6 +8,8 @@ import { lemmaOf as clientLemmaOf } from "./lemmatize";
  * characters fall into the separator bucket.
  */
 const LETTER_RUN = /[\p{Letter}\p{M}]+/u;
+// An internal apostrophe belongs to the word (e.g. Аліг’еры), unlike quotes.
+const WORD_RUN = /^[\p{Letter}\p{M}]+(?:['‘’ʼ][\p{Letter}\p{M}]+)*/u;
 
 /**
  * Tokenize plain text into word/separator tokens, computing a lemma and
@@ -25,7 +27,7 @@ export function tokenize(
 	while (i < text.length) {
 		const ch = text[i];
 		if (LETTER_RUN.test(ch)) {
-			const match = text.slice(i).match(LETTER_RUN);
+			const match = text.slice(i).match(WORD_RUN);
 			if (!match) break;
 			const word = match[0];
 			const lemma = lemmaFn(word);

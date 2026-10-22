@@ -52,7 +52,8 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 				action.rawGuess,
 				action.tokens,
 				new Set(state.foundLemmas),
-				action.titleLemmas
+				action.titleLemmas,
+				action.articleId
 			);
 			const normalizedGuess = normalizeGuess(action.rawGuess);
 			const isRepeatedMiss =

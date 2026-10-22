@@ -16,8 +16,10 @@ export default async function PlayArticlePage({ params }: Props) {
 	if (!article) notFound();
 	const picked = {
 		article,
-		tokens: tokenize(article.body, serverLemmaOf),
-		titleTokens: tokenize(article.title, serverLemmaOf),
+		tokens: tokenize(article.body, (word) => serverLemmaOf(word, article.id)),
+		titleTokens: tokenize(article.title, (word) =>
+			serverLemmaOf(word, article.id)
+		),
 		date: "custom",
 	};
 	return <GameShell picked={picked} />;
