@@ -32,17 +32,28 @@ export function useAnalytics(): AnalyticsContextValue {
 
 function initPostHog(): boolean {
 	const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
-	if (!key) return false;
+	const host = process.env.NEXT_PUBLIC_POSTHOG_HOST;
+	if (!key || !host) {
+		if (process.env.NODE_ENV !== "production") {
+			const variable = key
+				? "NEXT_PUBLIC_POSTHOG_HOST"
+				: "NEXT_PUBLIC_POSTHOG_KEY";
+			throw new Error(
+				`${variable} variable required by PostHog is missing or un-configured, this causes events to be silently missed. This error stops appearing once ${variable} is configured`
+			);
+		}
+		return false;
+	}
 	// biome-ignore lint/suspicious/noExplicitAny: posthog internal property
 	if ((posthog as any).__loaded) return true;
 	posthog.init(key, {
 		api_host: "/a",
-		ui_host: "https://eu.i.posthog.com",
 		person_profiles: "identified_only",
 		persistence: "localStorage",
 		autocapture: true,
 		capture_pageview: true,
 		capture_pageleave: true,
+		capture_exceptions: true,
 		before_send: (event) => (isNoisyAutocapture(event) ? null : event),
 	});
 	return true;

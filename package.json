@@ -17,6 +17,7 @@
 		"test-storybook:visual": "chromatic --exit-zero-on-changes --only-changed"
 	},
 	"dependencies": {
+		"@posthog/nextjs-config": "^1.11.6",
 		"@tailwindcss/postcss": "^4.1.18",
 		"@vercel/analytics": "^1.6.1",
 		"belmorph": "^1.1.4",
@@ -24,6 +25,7 @@
 		"lucide-react": "^0.562.0",
 		"next": "16.1.7",
 		"posthog-js": "^1.333.0",
+		"posthog-node": "^5.57.0",
 		"react": "19.2.3",
 		"react-dom": "19.2.3"
 	},

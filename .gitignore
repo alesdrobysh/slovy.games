@@ -45,3 +45,4 @@ storybook-static
 
 # local review reports
 /.cache/
+.env
