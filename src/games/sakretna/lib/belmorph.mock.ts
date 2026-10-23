@@ -5,7 +5,7 @@
  * without Jest trying to resolve the real package first.
  *
  * The mock exposes a tiny custom lemma dictionary controlled via
- * `setLemma(word, lemma)`; if a word has no entry, its lemma is its
+ * `setLemma(word, ...lemmas)`; if a word has no entry, its lemma is its
  * lowercase form (a faithful-enough approximation for tests that only
  * need same-form matching).
  */
@@ -15,24 +15,24 @@ type MockParseResult = {
 	pluralize: (count: number, targetCase: string) => { word: string } | null;
 };
 
-const lemmaMap = new Map<string, string>();
+const lemmaMap = new Map<string, string[]>();
 
-const defaultParse = (word: string): MockParseResult[] => {
-	const lemma = lemmaMap.get(word.toLowerCase()) ?? word.toLowerCase();
-	return [
-		{
-			lemma,
-			pluralize: (count: number, targetCase: string) => ({
-				word: `${targetCase}:${count}:${lemma}`,
-			}),
-		},
-	];
-};
+const defaultParse = (word: string): MockParseResult[] =>
+	(lemmaMap.get(word.toLowerCase()) ?? [word.toLowerCase()]).map((lemma) => ({
+		lemma,
+		pluralize: (count: number, targetCase: string) => ({
+			word: `${targetCase}:${count}:${lemma}`,
+		}),
+	}));
 
 let parseImpl: (word: string) => MockParseResult[] = defaultParse;
 
-export function setLemma(word: string, lemma: string): void {
-	lemmaMap.set(word.toLowerCase(), lemma.toLowerCase());
+/** Several lemmas model an ambiguous form, most likely first. */
+export function setLemma(word: string, ...lemmas: string[]): void {
+	lemmaMap.set(
+		word.toLowerCase(),
+		lemmas.map((lemma) => lemma.toLowerCase())
+	);
 }
 
 export function resetLemmas(): void {

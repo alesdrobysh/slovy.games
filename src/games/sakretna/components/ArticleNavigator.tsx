@@ -6,17 +6,21 @@ import { Button } from "@/shared/components/ui/Button";
 import { scrollIntoVisualViewport } from "@/shared/lib/scrollIntoVisualViewport";
 
 interface ArticleNavigatorProps {
-	highlighted?: string | null;
+	highlighted?: readonly string[];
 }
 
-function matchingHits(lemma: string | null | undefined): HTMLElement[] {
-	if (!lemma) return [];
+const NONE: readonly string[] = [];
+
+function matchingHits(lemmas: readonly string[]): HTMLElement[] {
+	if (lemmas.length === 0) return [];
 	return Array.from(
 		document.querySelectorAll<HTMLElement>("[data-sakretna-lemma]")
-	).filter((element) => element.dataset.sakretnaLemma === lemma);
+	).filter((element) => lemmas.includes(element.dataset.sakretnaLemma ?? ""));
 }
 
-export function ArticleNavigator({ highlighted }: ArticleNavigatorProps) {
+export function ArticleNavigator({
+	highlighted = NONE,
+}: ArticleNavigatorProps) {
 	const [current, setCurrent] = useState(0);
 	const [total, setTotal] = useState(0);
 

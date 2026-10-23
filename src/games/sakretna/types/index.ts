@@ -51,7 +51,7 @@ export interface GameState {
 	hintsUsed: number;
 	startedAt: string;
 	finishedAt: string | null;
-	highlighted: string | null;
+	highlighted: string[];
 }
 
 export type ValidationError =
@@ -82,7 +82,7 @@ export type GameAction =
 	| { type: "RESTORE"; progress: SavedProgress }
 	| { type: "CLEAR_ERROR" }
 	| { type: "SET_INPUT"; value: string }
-	| { type: "SET_HIGHLIGHT"; lemma: string | null };
+	| { type: "SET_HIGHLIGHT"; lemmas: string[] };
 
 export interface PickedArticle {
 	article: Article;

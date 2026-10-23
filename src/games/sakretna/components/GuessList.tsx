@@ -1,32 +1,37 @@
 "use client";
 
-import { lemmaOf } from "../lib/lemmatize";
+import { lemmasOf } from "../lib/lemmatize";
 import type { ArticleToken } from "../types";
 
 interface GuessListProps {
 	articleId?: string;
 	guesses: string[];
 	tokens?: ArticleToken[];
-	highlighted?: string | null;
-	onSelect?: (lemma: string) => void;
+	highlighted?: readonly string[];
+	onSelect?: (lemmas: string[]) => void;
 }
 
 interface GuessRecord {
 	input: string;
-	lemma: string;
+	/** The guess's lemmas that occur in the article. */
+	lemmas: string[];
 	hits: number;
 	attempt: number;
 }
 
 function GuessRow({
 	record,
-	highlighted,
+	highlighted = [],
 	onSelect,
 }: {
 	record: GuessRecord;
-	highlighted?: string | null;
-	onSelect?: (lemma: string) => void;
+	highlighted?: readonly string[];
+	onSelect?: (lemmas: string[]) => void;
 }) {
+	const selected =
+		record.lemmas.length > 0 &&
+		record.lemmas.length === highlighted.length &&
+		record.lemmas.every((lemma) => highlighted.includes(lemma));
 	const result = record.hits > 0 ? `✓ ${record.hits}` : "× 0";
 	const label =
 		record.hits > 0
@@ -65,11 +70,11 @@ function GuessRow({
 	return (
 		<button
 			type="button"
-			onClick={() => onSelect?.(record.lemma)}
+			onClick={() => onSelect?.(record.lemmas)}
 			aria-label={label}
-			aria-pressed={record.lemma === highlighted}
+			aria-pressed={selected}
 			className={
-				record.lemma === highlighted
+				selected
 					? "flex w-full min-w-0 min-h-(--control-min-height) items-center gap-flow-sm bg-sakretna-soft text-sakretna px-inset-sm py-flow-xs text-sm font-sans cursor-pointer"
 					: "flex w-full min-w-0 min-h-(--control-min-height) items-center gap-flow-sm text-ink-muted px-inset-sm py-flow-xs text-sm font-sans cursor-pointer hover:bg-secondary"
 			}
@@ -93,11 +98,11 @@ export function GuessList({
 		}
 	}
 	const records = guesses.map((input, index) => {
-		const lemma = lemmaOf(input, articleId);
+		const lemmas = lemmasOf(input, articleId).filter((l) => hitCounts.has(l));
 		return {
 			input,
-			lemma,
-			hits: hitCounts.get(lemma) ?? 0,
+			lemmas,
+			hits: lemmas.reduce((sum, l) => sum + (hitCounts.get(l) ?? 0), 0),
 			attempt: index + 1,
 		};
 	});

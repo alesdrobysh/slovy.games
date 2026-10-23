@@ -10,7 +10,7 @@ interface RedactedTextProps {
 	tokens: ArticleToken[];
 	titleTokens: ArticleToken[];
 	foundLemmas: ReadonlySet<string>;
-	highlighted?: string | null;
+	highlighted?: readonly string[];
 	autoScroll?: boolean;
 	showLetterCounts?: boolean;
 	/** Hint mode: hidden words outside the title become pick targets. */
@@ -25,7 +25,7 @@ export function RedactedText({
 	tokens,
 	titleTokens,
 	foundLemmas,
-	highlighted,
+	highlighted = [],
 	autoScroll = true,
 	showLetterCounts = true,
 	hintMode = false,
@@ -37,7 +37,8 @@ export function RedactedText({
 
 	// When highlighted changes, scroll to the first matching highlighted span
 	useEffect(() => {
-		if (!autoScroll || !highlighted || !containerRef.current) return;
+		if (!autoScroll || highlighted.length === 0 || !containerRef.current)
+			return;
 		const el = containerRef.current.querySelector(".bg-sakretna");
 		if (el) scrollIntoVisualViewport(el);
 	}, [autoScroll, highlighted]);
@@ -49,7 +50,7 @@ export function RedactedText({
 			const key = `${token.type}-${index}-${token.text}`;
 			if (token.type === "sep") return <span key={key}>{token.text}</span>;
 			if (isVisible(token)) {
-				const isHighlighted = token.lemma === highlighted;
+				const isHighlighted = highlighted.includes(token.lemma ?? "");
 				return (
 					<span
 						key={key}

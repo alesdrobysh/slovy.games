@@ -1,6 +1,6 @@
 import type { ArticleToken, ValidationError } from "../types";
 import { normalizeLemmaWord } from "./lemmaOverrides";
-import { lemmaOf } from "./lemmatize";
+import { lemmasOf } from "./lemmatize";
 import { collectLemmas } from "./tokenize";
 
 /** Normalize a player guess: trim, lowercase, drop surrounding punctuation. */
@@ -14,6 +14,8 @@ export function normalizeGuess(raw: string): string {
 export interface ValidationResult {
 	error: ValidationError | null;
 	lemma: string | null;
+	/** Newly revealed lemmas; a form like беларускі can open several. */
+	lemmas: string[];
 	revealedCount: number;
 }
 
@@ -27,30 +29,50 @@ export function validateGuess(
 ): ValidationResult {
 	const normalized = normalizeGuess(rawGuess);
 	if (normalized.length === 0) {
-		return { error: "empty", lemma: null, revealedCount: 0 };
+		return { error: "empty", lemma: null, lemmas: [], revealedCount: 0 };
 	}
 	if (normalized.length < 2) {
-		return { error: "too_short", lemma: null, revealedCount: 0 };
+		return { error: "too_short", lemma: null, lemmas: [], revealedCount: 0 };
 	}
 	if (!/^[а-яёіў'’-]+$/iu.test(normalized)) {
-		return { error: "invalid_characters", lemma: null, revealedCount: 0 };
+		return {
+			error: "invalid_characters",
+			lemma: null,
+			lemmas: [],
+			revealedCount: 0,
+		};
 	}
 	if (!/[\p{L}\p{N}]/u.test(normalized)) {
-		return { error: "no_letters", lemma: null, revealedCount: 0 };
+		return { error: "no_letters", lemma: null, lemmas: [], revealedCount: 0 };
 	}
-	const lemma = lemmaOf(normalized, articleId);
-	if (foundLemmas.has(lemma)) {
-		return { error: "already_found", lemma, revealedCount: 0 };
-	}
+	const candidates = lemmasOf(normalized, articleId);
 	const articleLemmas = collectLemmas(tokens);
-	if (!articleLemmas.has(lemma) && !titleLemmas.has(lemma)) {
-		return { error: "not_in_article", lemma, revealedCount: 0 };
+	const present = candidates.filter(
+		(l) => articleLemmas.has(l) || titleLemmas.has(l)
+	);
+	if (present.length === 0) {
+		return {
+			error: "not_in_article",
+			lemma: candidates[0],
+			lemmas: [],
+			revealedCount: 0,
+		};
+	}
+	const lemmas = present.filter((l) => !foundLemmas.has(l));
+	if (lemmas.length === 0) {
+		return {
+			error: "already_found",
+			lemma: present[0],
+			lemmas: [],
+			revealedCount: 0,
+		};
 	}
 	let revealedCount = 0;
 	for (const t of tokens) {
-		if (t.type === "word" && t.lemma === lemma) revealedCount += 1;
+		if (t.type === "word" && t.lemma && lemmas.includes(t.lemma))
+			revealedCount += 1;
 	}
-	return { error: null, lemma, revealedCount };
+	return { error: null, lemma: lemmas[0], lemmas, revealedCount };
 }
 
 export const ERROR_MESSAGES: Record<ValidationError, string> = {

@@ -64,6 +64,22 @@ describe("SUBMIT_GUESS", () => {
 		expect(next.guesses).toContain("горада");
 	});
 
+	it("reveals and highlights every lemma of an ambiguous form", () => {
+		setLemma("беларускі", "беларуска", "беларускі");
+		const next = gameReducer(createInitialState(), {
+			type: "SUBMIT_GUESS",
+			rawGuess: "беларускі",
+			tokens: [
+				{ type: "word", text: "беларуская", lemma: "беларускі" },
+				{ type: "word", text: "беларусцы", lemma: "беларуска" },
+			],
+			titleLemmas: NO_TITLE,
+		});
+		expect(next.foundLemmas).toEqual(["беларуска", "беларускі"]);
+		expect(next.highlighted).toEqual(["беларуска", "беларускі"]);
+		expect(next.statusMessage).toBe("Расшыфравана: беларуска, беларускі");
+	});
+
 	it("rejects duplicates", () => {
 		const s = createInitialState();
 		const a = gameReducer(s, {
@@ -272,7 +288,7 @@ describe("USE_HINT", () => {
 			revealedCount: 1,
 		});
 		expect(next.foundLemmas).toContain("горад");
-		expect(next.highlighted).toBe("горад");
+		expect(next.highlighted).toEqual(["горад"]);
 		expect(next.statusMessage).toBe("Падказка: «горад» — раскрыта 1");
 	});
 

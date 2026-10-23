@@ -10,7 +10,7 @@ describe("ArticleNavigator", () => {
 			<span data-sakretna-lemma="мінск">Мінск</span>
 			<span data-sakretna-lemma="мінск">Мінску</span>
 		`;
-		render(<ArticleNavigator highlighted="мінск" />);
+		render(<ArticleNavigator highlighted={["мінск"]} />);
 
 		expect(screen.getByText("1 / 2")).toBeInTheDocument();
 		fireEvent.click(

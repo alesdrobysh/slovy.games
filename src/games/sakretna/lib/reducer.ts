@@ -16,7 +16,7 @@ export function createInitialState(): GameState {
 		hintsUsed: 0,
 		startedAt: new Date().toISOString(),
 		finishedAt: null,
-		highlighted: null,
+		highlighted: [],
 	};
 }
 
@@ -28,7 +28,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 				currentInput: action.value,
 				errorType: null,
 				statusMessage: null,
-				highlighted: null,
+				highlighted: [],
 			};
 
 		case "CLEAR_ERROR":
@@ -36,7 +36,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 				...state,
 				errorType: null,
 				statusMessage: null,
-				highlighted: null,
+				highlighted: [],
 			};
 
 		case "SUBMIT_GUESS": {
@@ -71,9 +71,8 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 					statusMessage: null,
 				};
 			}
-			if (!result.lemma) return state;
-			const lemma = result.lemma;
-			const foundLemmas = [...state.foundLemmas, lemma];
+			if (result.lemmas.length === 0) return state;
+			const foundLemmas = [...state.foundLemmas, ...result.lemmas];
 			const won =
 				action.titleLemmas.size > 0 &&
 				[...action.titleLemmas].every((l) => foundLemmas.includes(l));
@@ -85,12 +84,12 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 				...state,
 				currentInput: "",
 				errorType: null,
-				statusMessage: `Расшыфравана: ${lemma}`,
+				statusMessage: `Расшыфравана: ${result.lemmas.join(", ")}`,
 				foundLemmas: revealedLemmas,
 				guesses: [...state.guesses, normalizedGuess],
 				won,
 				finishedAt: won ? new Date().toISOString() : state.finishedAt,
-				highlighted: lemma,
+				highlighted: result.lemmas,
 			};
 		}
 
@@ -111,7 +110,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 				foundLemmas: action.lemma
 					? [...state.foundLemmas, action.lemma]
 					: state.foundLemmas,
-				highlighted: action.lemma,
+				highlighted: action.lemma ? [action.lemma] : [],
 			};
 
 		case "GIVE_UP":
@@ -129,7 +128,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 			return progressToState(action.progress);
 
 		case "SET_HIGHLIGHT":
-			return { ...state, highlighted: action.lemma };
+			return { ...state, highlighted: action.lemmas };
 
 		default:
 			return state;
@@ -149,7 +148,7 @@ export function progressToState(p: SavedProgress): GameState {
 		hintsUsed: p.hintsUsed,
 		startedAt: p.startedAt ?? p.finishedAt ?? new Date().toISOString(),
 		finishedAt: p.finishedAt ?? null,
-		highlighted: null,
+		highlighted: [],
 	};
 }
 

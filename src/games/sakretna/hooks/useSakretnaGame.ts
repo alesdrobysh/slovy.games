@@ -25,7 +25,7 @@ export interface UseSakretnaGameReturn {
 	submitGuess: () => void;
 	useHint: (lemma: string) => void;
 	giveUp: () => void;
-	setHighlight: (lemma: string | null) => void;
+	setHighlight: (lemmas: string[]) => void;
 }
 
 export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
@@ -122,7 +122,7 @@ export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
 				type: "GIVE_UP",
 				lemmas: [...lemmaSet],
 			}),
-		setHighlight: (lemma: string | null) =>
-			dispatch({ type: "SET_HIGHLIGHT", lemma }),
+		setHighlight: (lemmas: string[]) =>
+			dispatch({ type: "SET_HIGHLIGHT", lemmas }),
 	};
 }

@@ -60,6 +60,7 @@ describe.each(titleNames)("title name $lemma in $articleId", ({
 			expect(result).toEqual({
 				error: null,
 				lemma,
+				lemmas: [lemma],
 				revealedCount: matching.length,
 			});
 			expect(
@@ -118,7 +119,12 @@ it("matches the title and every body form with one guess", () => {
 	const title = tokenize("Стужка Мёбіуса", serverLemmaOf);
 	const body = tokenize("Мёбіуса Мёбіусам Мёбіус", serverLemmaOf);
 	const result = validateGuess("Мёбіус", body, new Set(), collectLemmas(title));
-	expect(result).toEqual({ error: null, lemma: "мёбіус", revealedCount: 3 });
+	expect(result).toEqual({
+		error: null,
+		lemma: "мёбіус",
+		lemmas: ["мёбіус"],
+		revealedCount: 3,
+	});
 	expect(title.find((token) => token.text === "Мёбіуса")?.lemma).toBe(
 		result.lemma
 	);

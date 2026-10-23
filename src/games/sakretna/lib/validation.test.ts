@@ -83,6 +83,31 @@ describe("validateGuess", () => {
 		expect(result.lemma).toBe("горад");
 	});
 
+	it("reveals every lemma an ambiguous form belongs to", () => {
+		setLemma("беларускі", "беларуска", "беларускі");
+		const ambiguous: ArticleToken[] = [
+			{ type: "word", text: "беларуская", lemma: "беларускі" },
+			{ type: "word", text: "беларускі", lemma: "беларуска" },
+			{ type: "word", text: "беларусцы", lemma: "беларуска" },
+		];
+		expect(validateGuess("беларускі", ambiguous, new Set())).toEqual({
+			error: null,
+			lemma: "беларуска",
+			lemmas: ["беларуска", "беларускі"],
+			revealedCount: 3,
+		});
+		expect(
+			validateGuess("беларускі", ambiguous, new Set(["беларуска"])).lemmas
+		).toEqual(["беларускі"]);
+		expect(
+			validateGuess("беларускі", ambiguous, new Set(["беларуска", "беларускі"]))
+				.error
+		).toBe("already_found");
+		expect(
+			validateGuess("беларускі", ambiguous.slice(0, 1), new Set()).lemmas
+		).toEqual(["беларускі"]);
+	});
+
 	it("accepts a required title lemma that is missing from the body", () => {
 		setLemma("ельскі", "ельскі");
 		const result = validateGuess(
@@ -95,6 +120,7 @@ describe("validateGuess", () => {
 		expect(result).toEqual({
 			error: null,
 			lemma: "ельскі",
+			lemmas: ["ельскі"],
 			revealedCount: 0,
 		});
 	});
