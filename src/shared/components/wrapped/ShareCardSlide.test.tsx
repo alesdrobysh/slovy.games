@@ -7,7 +7,7 @@ jest.mock("posthog-js", () => ({ capture: jest.fn() }));
 const summary: WrappedSummary = {
 	year: 2026,
 	activeDays: ["2026-03-01", "2026-03-02"],
-	gamesFinished: 2,
+	gamesPerDay: { "2026-03-01": 1, "2026-03-02": 1 },
 	longestStreakAnyGame: 2,
 	busiestMonth: { month: 3, days: 2 },
 	gameOfTheYear: "pobach",

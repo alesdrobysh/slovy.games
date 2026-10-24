@@ -4,6 +4,8 @@ import { POBACH_EPOCH_DATE } from "@/shared/config";
 import { dayIndexForDate } from "@/shared/lib/timezone";
 import { WrappedDeck } from "./WrappedDeck";
 
+const SECRETS = ["сонца", "калыханка", "рака", "лета", "песня"];
+
 function seedPobach(dates: string[]): void {
 	const history: Record<string, HistoryRecord> = {};
 	dates.forEach((date, i) => {
@@ -14,7 +16,12 @@ function seedPobach(dates: string[]): void {
 			attempts: 3 + (i % 9),
 			bestRank: 1 + (i % 50),
 			completedAt: Date.parse(`${date}T12:00:00Z`),
-			guesses: [],
+			guesses: [
+				{ word: "мова", rank: 40 + (i % 9) },
+				...(i % 4 !== 0
+					? [{ word: SECRETS[i % SECRETS.length], rank: 1 }]
+					: []),
+			],
 		};
 	});
 	localStorage.setItem(

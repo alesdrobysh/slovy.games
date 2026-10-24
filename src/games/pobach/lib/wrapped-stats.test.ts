@@ -43,6 +43,7 @@ describe("pobach getWrappedStats", () => {
 			daysPlayed: [],
 			daysWon: [],
 			longestStreakInYear: 0,
+			headline: { value: 0, caption: "" },
 			highlights: [],
 		});
 	});
@@ -113,7 +114,7 @@ describe("pobach getWrappedStats", () => {
 		expect(getWrappedStats(2026).longestStreakInYear).toBe(2);
 	});
 
-	it("reports fewest attempts, win rate, favorite and closest player guesses", () => {
+	it("reports best and hardest wins, favorite guess and win rate", () => {
 		seed([
 			record("2026-03-01", {
 				won: true,
@@ -131,6 +132,7 @@ describe("pobach getWrappedStats", () => {
 				guesses: [
 					{ word: "лес", rank: 2 },
 					{ word: "падказка", rank: 3, isHint: true },
+					{ word: "сонца", rank: 1 },
 				],
 			}),
 			record("2026-03-03", {
@@ -140,19 +142,33 @@ describe("pobach getWrappedStats", () => {
 				guesses: [{ word: "вада", rank: 800 }],
 			}),
 		]);
-		const byKey = Object.fromEntries(
-			getWrappedStats(2026).highlights.map((h) => [h.key, h.value])
-		);
-		expect(byKey.bestAttempts).toBe(4);
-		expect(byKey.winRate).toBe("67%");
-		expect(byKey.favoriteGuess).toBe("лес ×2");
-		expect(byKey.closestGuess).toBe("лес · №2");
+		const stats = getWrappedStats(2026);
+		const byKey = Object.fromEntries(stats.highlights.map((h) => [h.key, h]));
+		expect(stats.headline.value).toBe(2);
+		expect(byKey.bestWin.value).toBe("сонца");
+		expect(byKey.bestWin.caption).toContain("4");
+		expect(byKey.hardestWin.value).toBe("сярэдзіна");
+		expect(byKey.favoriteGuess.value).toBe("лес");
+		expect(byKey.favoriteGuess.caption).toContain("2");
+		expect(byKey.winRate.value).toBe("67%");
+		expect(byKey.winRate.caption).toMatch(/^2 з 3 /);
+	});
+
+	it("does not repeat a single win as the hardest one", () => {
+		seed([
+			record("2026-03-01", {
+				guesses: [{ word: "сонца", rank: 1 }],
+			}),
+		]);
+		const keys = getWrappedStats(2026).highlights.map((h) => h.key);
+		expect(keys).toContain("bestWin");
+		expect(keys).not.toContain("hardestWin");
 	});
 
 	it("omits the attempts highlight when nothing was won", () => {
 		seed([record("2026-03-01", { won: false })]);
 		const keys = getWrappedStats(2026).highlights.map((h) => h.key);
-		expect(keys).not.toContain("bestAttempts");
+		expect(keys).not.toContain("bestWin");
 		expect(keys).toContain("winRate");
 	});
 });

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { listArticles } from "@/games/sakretna/lib/puzzles";
 import { WrappedDeck } from "@/shared/components/wrapped/WrappedDeck";
 import { isWrappedVisible, wrappedYearFor } from "@/shared/lib/wrapped/window";
 
@@ -20,5 +21,13 @@ export default async function WrappedRoute({
 	// could change and this page must never render outside the window.
 	if (!isWrappedVisible({ hasPreview: preview === "1" })) redirect("/");
 
-	return <WrappedDeck year={wrappedYearFor()} />;
+	// Сакрэтна progress stores only the article id; the full article list is
+	// too large for the client, so ship just the titles.
+	const sakretnaTitles = Object.fromEntries(
+		listArticles().map((a) => [a.id, a.title])
+	);
+
+	return (
+		<WrappedDeck year={wrappedYearFor()} sakretnaTitles={sakretnaTitles} />
+	);
 }

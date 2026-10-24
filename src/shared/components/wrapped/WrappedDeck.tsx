@@ -1,9 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Typography } from "@/shared/components/ui/Typography";
 import { buildSlides } from "@/shared/lib/wrapped/slides";
 import { ShareCardSlide } from "./ShareCardSlide";
+import { CalendarSlide } from "./slides/CalendarSlide";
 import { CommonSlide } from "./slides/CommonSlide";
 import { GameSlide } from "./slides/GameSlide";
 import { HeroSlide } from "./slides/HeroSlide";
@@ -13,12 +14,20 @@ import "./wrapped.css";
 
 export interface WrappedDeckProps {
 	year: number;
+	/** Сакрэтна article titles by id; see `WrappedProviderContext`. */
+	sakretnaTitles?: Record<string, string>;
 }
+
+const NO_TITLES: Record<string, string> = {};
 
 const SWIPE_THRESHOLD_PX = 40;
 
-export function WrappedDeck({ year }: WrappedDeckProps) {
-	const summary = useWrappedSummary(year);
+export function WrappedDeck({
+	year,
+	sakretnaTitles = NO_TITLES,
+}: WrappedDeckProps) {
+	const context = useMemo(() => ({ sakretnaTitles }), [sakretnaTitles]);
+	const summary = useWrappedSummary(year, context);
 	const [index, setIndex] = useState(0);
 	const touchStartX = useRef<number | null>(null);
 
@@ -92,6 +101,7 @@ export function WrappedDeck({ year }: WrappedDeckProps) {
 					<HeroSlide year={slide.year} activeDays={summary.activeDays.length} />
 				)}
 				{slide.kind === "common" && <CommonSlide summary={summary} />}
+				{slide.kind === "calendar" && <CalendarSlide summary={summary} />}
 				{slide.kind === "game" &&
 					(() => {
 						const stats = summary.perGame.find(

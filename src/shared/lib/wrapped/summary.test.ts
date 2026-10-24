@@ -12,6 +12,7 @@ function game(
 		daysPlayed,
 		daysWon,
 		longestStreakInYear: 0,
+		headline: { value: 0, caption: "" },
 		highlights: [],
 	};
 }
@@ -20,7 +21,7 @@ describe("computeWrappedSummary", () => {
 	it("handles no games at all", () => {
 		const s = computeWrappedSummary([], 2026);
 		expect(s.activeDays).toEqual([]);
-		expect(s.gamesFinished).toBe(0);
+		expect(s.gamesPerDay).toEqual({});
 		expect(s.gameOfTheYear).toBeNull();
 		expect(s.busiestMonth).toBeNull();
 		expect(s.isThin).toBe(true);
@@ -53,15 +54,20 @@ describe("computeWrappedSummary", () => {
 		expect(s.activeDays).toEqual(["2026-03-01", "2026-03-02", "2026-03-03"]);
 	});
 
-	it("counts games finished as the total of per-game days played", () => {
+	it("counts how many games were played on each day", () => {
 		const s = computeWrappedSummary(
 			[
 				game("pobach", ["2026-03-01", "2026-03-02"]),
 				game("valoshka", ["2026-03-02"]),
+				game("sakretna", ["2026-03-02", "2026-03-03"]),
 			],
 			2026
 		);
-		expect(s.gamesFinished).toBe(3);
+		expect(s.gamesPerDay).toEqual({
+			"2026-03-01": 1,
+			"2026-03-02": 3,
+			"2026-03-03": 1,
+		});
 	});
 
 	it("computes the cross-game streak from the union of days", () => {

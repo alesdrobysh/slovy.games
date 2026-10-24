@@ -1,48 +1,41 @@
 import { StatCard } from "@/shared/components/ui/StatCard";
 import { Typography } from "@/shared/components/ui/Typography";
 import { useCountUp } from "@/shared/components/wrapped/useCountUp";
-import { pluralize } from "@/shared/lib/pluralize";
+import { gameName } from "@/shared/lib/wrapped/format";
 import type { GameYearStats } from "@/shared/types/wrapped";
 import { SlideFrame } from "./SlideFrame";
-
-const GAME_NAMES: Record<string, string> = {
-	pobach: "Побач",
-	valoshka: "Валошка",
-};
 
 export interface GameSlideProps {
 	stats: GameYearStats;
 	page: 1 | 2;
 }
 
-const GAME_ACCENTS: Record<string, string> = {
-	pobach: "wrapped-game--pobach",
-	valoshka: "wrapped-game--valoshka",
-};
+/** The leading highlights get full-width cards; the rest pair up below. */
+const WIDE_HIGHLIGHTS = 2;
 
 export function GameSlide({ stats, page }: GameSlideProps) {
-	const name = GAME_NAMES[stats.gameId] ?? stats.gameId;
-	const accent = GAME_ACCENTS[stats.gameId];
+	const name = gameName(stats.gameId);
+	const accent = `wrapped-game--${stats.gameId}`;
 	// Called unconditionally so switching pages does not change hook order.
-	const shownDays = useCountUp(stats.daysPlayed.length);
+	const shown = useCountUp(stats.headline.value);
 
 	if (page === 1) {
 		return (
 			<SlideFrame variant="game" accentClassName={accent}>
 				<div className="wrapped-game-word" aria-hidden="true">
-					{name} · {name} · {name}
+					{stats.gameId === "sakretna" ? (
+						<>
+							{name} <span className="wrapped-redaction" /> {name}{" "}
+							<span className="wrapped-redaction" />
+						</>
+					) : (
+						`${name} · ${name} · ${name}`
+					)}
 				</div>
 				<div className="wrapped-game-medallion wrapped-reveal">
 					<Typography variant="overline">{name}</Typography>
-					<Typography variant="displayHuge">{shownDays}</Typography>
-					<Typography variant="caption">
-						{pluralize(stats.daysPlayed.length, "дзень")} у гульні
-					</Typography>
-				</div>
-				<div className="wrapped-streak-sticker wrapped-reveal wrapped-reveal--late">
-					<Typography variant="overline">Серыя</Typography>
-					<Typography variant="metric">{stats.longestStreakInYear}</Typography>
-					<Typography variant="label">дзён запар</Typography>
+					<Typography variant="displayHuge">{shown}</Typography>
+					<Typography variant="caption">{stats.headline.caption}</Typography>
 				</div>
 			</SlideFrame>
 		);
@@ -60,13 +53,16 @@ export function GameSlide({ stats, page }: GameSlideProps) {
 				<Typography variant="displayHeading">{name}: найлепшае</Typography>
 			</div>
 			<div className="wrapped-stat-grid wrapped-stat-grid--game wrapped-reveal wrapped-reveal--late">
-				{stats.highlights.map((h) => (
+				{stats.highlights.map((h, i) => (
 					<StatCard
 						appearance="wrapped"
-						className="wrapped-stat-card"
+						className={`wrapped-stat-card ${i < WIDE_HIGHLIGHTS ? "wrapped-stat-card--wide" : ""}`}
 						key={h.key}
 						label={h.label}
 						value={h.value}
+						caption={h.caption}
+						words={h.words}
+						prominent={i < WIDE_HIGHLIGHTS}
 					/>
 				))}
 			</div>

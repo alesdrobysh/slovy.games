@@ -6,6 +6,7 @@ export type TypographyVariant =
 	| "heading"
 	| "subheading"
 	| "displaySm"
+	| "displayMd"
 	| "displayHeading"
 	| "displayHuge"
 	| "metric"
@@ -79,6 +80,16 @@ const VARIANTS: Record<TypographyVariant, VariantConfig> = {
 			fontWeight: 500,
 			fontSize: "16px",
 			lineHeight: 1.2,
+			margin: 0,
+		},
+	},
+	displayMd: {
+		tag: "p",
+		style: {
+			fontFamily: D,
+			fontWeight: 500,
+			fontSize: "clamp(2.5rem, 10vw, 4rem)",
+			lineHeight: 0.95,
 			margin: 0,
 		},
 	},

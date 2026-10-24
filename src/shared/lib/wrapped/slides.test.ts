@@ -16,6 +16,7 @@ function game(
 		),
 		daysWon: [],
 		longestStreakInYear: count,
+		headline: { value: 0, caption: "" },
 		highlights: [],
 	};
 }
@@ -25,13 +26,14 @@ function summaryFor(...games: GameYearStats[]): WrappedSummary {
 }
 
 describe("buildSlides", () => {
-	it("builds hero, common, two slides per game, then share", () => {
+	it("builds hero, common, calendar, two slides per game, then share", () => {
 		const slides = buildSlides(
 			summaryFor(game("pobach", 6), game("valoshka", 6, 10))
 		);
 		expect(slides).toEqual([
 			{ kind: "hero", year: 2026 },
 			{ kind: "common" },
+			{ kind: "calendar" },
 			{ kind: "game", gameId: "pobach", page: 1 },
 			{ kind: "game", gameId: "pobach", page: 2 },
 			{ kind: "game", gameId: "valoshka", page: 1 },
@@ -40,14 +42,25 @@ describe("buildSlides", () => {
 		]);
 	});
 
-	it("puts pobach slides before valoshka slides", () => {
+	it("orders game slides Побач, Валошка, Сакрэтна", () => {
 		const slides = buildSlides(
-			summaryFor(game("valoshka", 6, 10), game("pobach", 6))
+			summaryFor(
+				game("sakretna", 6, 20),
+				game("valoshka", 6, 10),
+				game("pobach", 6)
+			)
 		);
 		const gameOrder = slides
 			.filter((s) => s.kind === "game")
 			.map((s) => (s.kind === "game" ? s.gameId : null));
-		expect(gameOrder).toEqual(["pobach", "pobach", "valoshka", "valoshka"]);
+		expect(gameOrder).toEqual([
+			"pobach",
+			"pobach",
+			"valoshka",
+			"valoshka",
+			"sakretna",
+			"sakretna",
+		]);
 	});
 
 	it("drops a game group entirely when it has no days", () => {
@@ -55,6 +68,7 @@ describe("buildSlides", () => {
 		expect(slides.map((s) => s.kind)).toEqual([
 			"hero",
 			"common",
+			"calendar",
 			"game",
 			"game",
 			"share",

@@ -29,6 +29,7 @@ describe("valoshka getWrappedStats", () => {
 			daysPlayed: [],
 			daysWon: [],
 			longestStreakInYear: 0,
+			headline: { value: 0, caption: "" },
 			highlights: [],
 		});
 	});
@@ -60,10 +61,7 @@ describe("valoshka getWrappedStats", () => {
 			},
 			totalWordsFound: 111,
 		});
-		const byKey = Object.fromEntries(
-			getWrappedStats(2026).highlights.map((h) => [h.key, h.value])
-		);
-		expect(byKey.wordsFound).toBe(12);
+		expect(getWrappedStats(2026).headline.value).toBe(12);
 	});
 
 	it("reports the most frequently found word from in-year progress", () => {
@@ -92,15 +90,21 @@ describe("valoshka getWrappedStats", () => {
 		);
 
 		const byKey = Object.fromEntries(
-			getWrappedStats(2026).highlights.map((h) => [h.key, h.value])
+			getWrappedStats(2026).highlights.map((h) => [h.key, h])
 		);
-		expect(byKey.favoriteWord).toBe("слова");
+		expect(byKey.favoriteWord.value).toBe("слова");
+		expect(byKey.collection.value).toBe(3);
+		expect(byKey.collection.words).toEqual(["слова", "вада", "мова"]);
+		expect(byKey.bestDay.caption).toBe("1 жніўня");
 	});
 
-	it("omits the words highlight when no per-date data survives", () => {
+	it("omits per-day highlights when no per-date data survives", () => {
 		seed({ datesPlayed: ["2026-08-01"], perDateBest: {} });
-		const keys = getWrappedStats(2026).highlights.map((h) => h.key);
-		expect(keys).not.toContain("wordsFound");
+		const stats = getWrappedStats(2026);
+		expect(stats.headline.value).toBe(0);
+		const keys = stats.highlights.map((h) => h.key);
+		expect(keys).not.toContain("bestDay");
+		expect(keys).not.toContain("bestRank");
 	});
 
 	it("survives malformed entries instead of throwing", () => {
@@ -116,10 +120,7 @@ describe("valoshka getWrappedStats", () => {
 		);
 		const stats = getWrappedStats(2026);
 		expect(stats.daysPlayed).toEqual(["2026-08-01", "2026-08-03"]);
-		const byKey = Object.fromEntries(
-			stats.highlights.map((h) => [h.key, h.value])
-		);
-		expect(byKey.wordsFound).toBe(9);
+		expect(stats.headline.value).toBe(9);
 	});
 
 	it("counts days that reached the top rank as wins", () => {
@@ -132,10 +133,9 @@ describe("valoshka getWrappedStats", () => {
 		});
 		const stats = getWrappedStats(2026);
 		expect(stats.daysWon).toEqual(["2026-08-01"]);
-		const byKey = Object.fromEntries(
-			stats.highlights.map((h) => [h.key, h.value])
-		);
-		expect(byKey.vasiliokDays).toBe(1);
+		const bestRank = stats.highlights.find((h) => h.key === "bestRank");
+		expect(bestRank?.value).toBe(RANKS[RANKS.length - 1].name);
+		expect(bestRank?.caption).toContain("1");
 	});
 
 	it("ignores a negative stored rank instead of throwing", () => {
@@ -150,6 +150,6 @@ describe("valoshka getWrappedStats", () => {
 			getWrappedStats(2026).highlights.map((h) => [h.key, h.value])
 		);
 		expect(byKey.bestRank).toBe(RANKS[2].name);
-		expect(byKey.wordsFound).toBe(6);
+		expect(getWrappedStats(2026).headline.value).toBe(6);
 	});
 });

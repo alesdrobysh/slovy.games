@@ -20,7 +20,11 @@ export function computeWrappedSummary(
 				WRAPPED_GAME_ORDER.indexOf(b.gameId)
 		);
 
-	const activeDays = [...new Set(perGame.flatMap((g) => g.daysPlayed))].sort();
+	const gamesPerDay: Record<string, number> = {};
+	for (const day of perGame.flatMap((g) => g.daysPlayed)) {
+		gamesPerDay[day] = (gamesPerDay[day] ?? 0) + 1;
+	}
+	const activeDays = Object.keys(gamesPerDay).sort();
 
 	// Per-month day counts are only needed to pick the busiest month, so they
 	// stay local rather than widening the summary with an unused field.
@@ -54,7 +58,7 @@ export function computeWrappedSummary(
 	return {
 		year,
 		activeDays,
-		gamesFinished: perGame.reduce((sum, g) => sum + g.daysPlayed.length, 0),
+		gamesPerDay,
 		longestStreakAnyGame: longestStreakFromDates(activeDays),
 		busiestMonth,
 		gameOfTheYear,

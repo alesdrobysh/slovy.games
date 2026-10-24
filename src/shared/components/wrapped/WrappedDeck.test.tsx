@@ -47,8 +47,8 @@ describe("WrappedDeck", () => {
 	it("renders one dot per slide and drops the valoshka group", async () => {
 		seedPobach(SIX_DAYS);
 		render(<WrappedDeck year={2026} />);
-		// hero + common + 2 pobach + share
-		expect(await screen.findAllByTestId("wrapped-dot")).toHaveLength(5);
+		// hero + common + calendar + 2 pobach + share
+		expect(await screen.findAllByTestId("wrapped-dot")).toHaveLength(6);
 	});
 
 	it("advances on right-arrow and stops at the last slide", async () => {
@@ -58,6 +58,9 @@ describe("WrappedDeck", () => {
 
 		await userEvent.keyboard("{ArrowRight}");
 		expect(screen.getByText("Разам за год")).toBeInTheDocument();
+
+		await userEvent.keyboard("{ArrowRight}");
+		expect(screen.getByText("Каляндар года")).toBeInTheDocument();
 
 		for (let i = 0; i < 10; i++) await userEvent.keyboard("{ArrowRight}");
 		const dots = screen.getAllByTestId("wrapped-dot");

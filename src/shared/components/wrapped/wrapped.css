@@ -7,6 +7,7 @@
 	--wrapped-ink: oklch(19% 0.025 64);
 	--wrapped-slide-bg: var(--wrapped-cream);
 	--wrapped-slide-ink: var(--wrapped-ink);
+	--wrapped-card-shadow: var(--wrapped-blue-deep);
 	background: var(--wrapped-cream);
 	color: var(--wrapped-ink);
 }
@@ -15,6 +16,16 @@
 .wrapped-deck[data-slide-tone="pobach"] {
 	--wrapped-slide-bg: var(--wrapped-blue);
 	--wrapped-slide-ink: var(--wrapped-yellow);
+}
+
+.wrapped-deck[data-slide-tone="sakretna"] {
+	--wrapped-slide-bg: var(--wrapped-blue-deep);
+	--wrapped-slide-ink: var(--wrapped-cream);
+}
+
+.wrapped-deck[data-slide-tone="calendar"] {
+	--wrapped-slide-bg: var(--wrapped-cream);
+	--wrapped-slide-ink: var(--wrapped-blue-deep);
 }
 
 .wrapped-deck[data-slide-tone="common"] {
@@ -205,10 +216,11 @@
 .wrapped-deck .wrapped-stat-card {
 	min-height: 8.75rem;
 	justify-content: center;
+	overflow-wrap: anywhere;
 	border-radius: 0;
 	background: var(--wrapped-yellow);
 	color: var(--wrapped-blue-deep);
-	box-shadow: 0.45rem 0.45rem 0 var(--wrapped-blue-deep);
+	box-shadow: 0.45rem 0.45rem 0 var(--wrapped-card-shadow);
 	transform: rotate(-1.2deg);
 }
 
@@ -220,6 +232,12 @@
 .wrapped-deck .wrapped-stat-card:nth-child(3n) {
 	background: var(--wrapped-blue);
 	color: var(--wrapped-cream);
+}
+
+.wrapped-deck .wrapped-stat-card--wide,
+.wrapped-deck
+	.wrapped-stat-card:not(.wrapped-stat-card--wide):last-child:nth-child(odd) {
+	grid-column: span 2;
 }
 
 .wrapped-frame--game {
@@ -234,6 +252,13 @@
 	--wrapped-slide-ink: var(--wrapped-blue-deep);
 	background: var(--wrapped-yellow);
 	color: var(--wrapped-blue-deep);
+}
+
+.wrapped-game--sakretna {
+	--wrapped-slide-bg: var(--wrapped-blue-deep);
+	--wrapped-slide-ink: var(--wrapped-cream);
+	background: var(--wrapped-blue-deep);
+	color: var(--wrapped-cream);
 }
 
 .wrapped-game-word {
@@ -273,21 +298,19 @@
 	box-shadow: 1.25rem 1.25rem 0 var(--wrapped-orange);
 }
 
-.wrapped-frame > .wrapped-streak-sticker {
-	position: absolute;
-	right: clamp(1.25rem, 8vw, 8rem);
-	bottom: clamp(4.5rem, 10vh, 8rem);
-	display: flex;
-	width: 8.5rem;
-	aspect-ratio: 1;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	gap: 0.2rem;
-	border-radius: 50%;
-	background: var(--wrapped-orange);
-	color: var(--wrapped-ink);
-	transform: rotate(8deg);
+.wrapped-game--sakretna .wrapped-game-medallion {
+	background: var(--wrapped-cream);
+	color: var(--wrapped-blue-deep);
+}
+
+/* A blacked-out word, as Сакрэтна hides the article. */
+.wrapped-redaction {
+	display: inline-block;
+	width: 2.9em;
+	height: 0.72em;
+	border-radius: 2px;
+	background: var(--wrapped-blue-deep);
+	vertical-align: -0.02em;
 }
 
 .wrapped-game--highlights {
@@ -308,6 +331,122 @@
 .wrapped-deck .wrapped-stat-grid--game .wrapped-stat-card:nth-child(odd) {
 	background: var(--wrapped-orange);
 	color: var(--wrapped-ink);
+}
+
+.wrapped-game--sakretna .wrapped-stat-grid {
+	--wrapped-card-shadow: var(--wrapped-yellow);
+}
+
+/* Mixed in sRGB: blue to cream in oklch would swing through pink. */
+.wrapped-frame--calendar {
+	--wrapped-slide-bg: var(--wrapped-cream);
+	--wrapped-slide-ink: var(--wrapped-blue-deep);
+	--wrapped-heat-0: color-mix(
+		in oklch,
+		var(--wrapped-blue-deep) 8%,
+		transparent
+	);
+	--wrapped-heat-1: color-mix(
+		in srgb,
+		var(--wrapped-blue) 38%,
+		var(--wrapped-cream)
+	);
+	--wrapped-heat-2: color-mix(
+		in srgb,
+		var(--wrapped-blue) 72%,
+		var(--wrapped-cream)
+	);
+	--wrapped-heat-3: var(--wrapped-blue-deep);
+	flex-direction: column;
+	gap: clamp(1.5rem, 4vw, 2.5rem);
+	background: var(--wrapped-cream);
+	color: var(--wrapped-blue-deep);
+}
+
+.wrapped-calendar-year {
+	position: absolute;
+	right: -2.5rem;
+	bottom: 1.5rem;
+	color: color-mix(in oklch, var(--wrapped-blue) 8%, transparent);
+	font-family: var(--font-b);
+	font-size: clamp(10rem, 44vw, 22rem);
+	font-weight: 800;
+	line-height: 0.8;
+	transform: rotate(-8deg);
+	white-space: nowrap;
+}
+
+.wrapped-calendar {
+	display: grid;
+	width: min(100%, 48rem);
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 0.875rem;
+}
+
+@media (min-width: 900px) {
+	.wrapped-calendar {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+}
+
+.wrapped-calendar-month {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.375rem;
+}
+
+.wrapped-calendar-name {
+	line-height: 0.9375rem;
+	white-space: nowrap;
+}
+
+.wrapped-calendar-name[data-top="true"] {
+	padding: 0 0.375rem;
+	border-radius: 999px;
+	background: var(--wrapped-orange);
+	color: var(--wrapped-ink);
+}
+
+.wrapped-calendar-days {
+	--wrapped-cell: clamp(0.8125rem, min(2.4vw, 1.9vh), 1.25rem);
+	display: grid;
+	grid-template-columns: repeat(7, var(--wrapped-cell));
+	gap: 2px;
+}
+
+.wrapped-calendar-cell {
+	display: block;
+	width: var(--wrapped-cell, 0.8125rem);
+	height: var(--wrapped-cell, 0.8125rem);
+	border-radius: 3px;
+	background: var(--wrapped-heat-0);
+}
+
+.wrapped-calendar-cell[data-level="1"] {
+	background: var(--wrapped-heat-1);
+}
+
+.wrapped-calendar-cell[data-level="2"] {
+	background: var(--wrapped-heat-2);
+}
+
+.wrapped-calendar-cell[data-level="3"] {
+	background: var(--wrapped-heat-3);
+}
+
+.wrapped-calendar-legend {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 0.625rem;
+}
+
+.wrapped-calendar-legend-item {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
 }
 
 .wrapped-frame--thin {
@@ -536,13 +675,21 @@
 	.wrapped-deck .wrapped-stat-card {
 		min-height: 6rem;
 		padding: 0.9rem;
-		box-shadow: 0.3rem 0.3rem 0 var(--wrapped-blue-deep);
+		box-shadow: 0.3rem 0.3rem 0 var(--wrapped-card-shadow);
 	}
 
 	.wrapped-frame--common,
+	.wrapped-frame--calendar,
 	.wrapped-game--highlights {
 		justify-content: safe center;
 		overflow-y: auto;
+	}
+
+	.wrapped-game--sakretna {
+		--wrapped-slide-bg: var(--wrapped-blue-deep);
+		--wrapped-slide-ink: var(--wrapped-cream);
+		background: var(--wrapped-blue-deep);
+		color: var(--wrapped-cream);
 	}
 
 	.wrapped-game-word {
@@ -553,12 +700,6 @@
 	.wrapped-game-medallion {
 		width: min(82vw, 22rem);
 		box-shadow: 0.75rem 0.75rem 0 var(--wrapped-orange);
-	}
-
-	.wrapped-frame > .wrapped-streak-sticker {
-		right: 1rem;
-		bottom: 4.5rem;
-		width: 6.75rem;
 	}
 
 	.wrapped-frame--share {
