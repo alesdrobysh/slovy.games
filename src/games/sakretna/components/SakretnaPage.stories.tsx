@@ -127,7 +127,7 @@ export const Miss: Story = {
 export const Hit: Story = {
 	args: { picked: PICKED },
 	render: () => (
-		<Fixture progress={saved({ guesses: ["мінск"], foundLemmas: ["мінск"] })} />
+		<Fixture progress={saved({ guesses: ["горад"], foundLemmas: ["горад"] })} />
 	),
 };
 /**
@@ -151,8 +151,8 @@ export const KeyboardOpen: Story = {
 		return (
 			<Fixture
 				progress={saved({
-					guesses: ["невядома", "мінск"],
-					foundLemmas: ["мінск"],
+					guesses: ["невядома", "горад"],
+					foundLemmas: ["горад"],
 				})}
 			/>
 		);
@@ -178,8 +178,8 @@ export const ShortViewport: Story = {
 	render: () => (
 		<Fixture
 			progress={saved({
-				guesses: ["невядома", "мінск"],
-				foundLemmas: ["мінск"],
+				guesses: ["невядома", "горад"],
+				foundLemmas: ["горад"],
 			})}
 		/>
 	),
@@ -200,8 +200,8 @@ export const StaleErrorRegression: Story = {
 	render: () => (
 		<Fixture
 			progress={saved({
-				guesses: ["невядома", "мінск"],
-				foundLemmas: ["мінск"],
+				guesses: ["невядома", "горад"],
+				foundLemmas: ["горад"],
 			})}
 		/>
 	),
