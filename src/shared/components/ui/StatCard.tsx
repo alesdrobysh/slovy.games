@@ -13,6 +13,20 @@ export interface StatCardProps {
 	appearance?: "default" | "wrapped";
 }
 
+/** Past this many letters a word no longer fits a half-width Wrapped card
+ *  at the regular size, and would otherwise break mid-word. */
+const LONG_WORD = 9;
+/** Past this many characters a lead value, such as an article title, runs
+ *  to three lines at the prominent size. */
+const LONG_VALUE = 18;
+
+function wrappedValueVariant(value: string | number, prominent: boolean) {
+	const text = String(value);
+	if (prominent) return text.length > LONG_VALUE ? "metric" : "displayMd";
+	const longest = Math.max(...text.split(/[\s-]/).map((w) => w.length));
+	return longest > LONG_WORD ? "displaySm" : "metric";
+}
+
 export function StatCard({
 	label,
 	value,
@@ -23,11 +37,9 @@ export function StatCard({
 	appearance = "default",
 }: StatCardProps) {
 	const wrapped = appearance === "wrapped";
-	const valueVariant = !wrapped
-		? "heading"
-		: prominent
-			? "displayMd"
-			: "metric";
+	const valueVariant = wrapped
+		? wrappedValueVariant(value, prominent)
+		: "heading";
 	return (
 		<div
 			className={`flex flex-col gap-flow-xs p-inset-md ${wrapped ? "" : "rounded-2xl bg-card text-ink ring-1 ring-rule"} ${className ?? ""}`}

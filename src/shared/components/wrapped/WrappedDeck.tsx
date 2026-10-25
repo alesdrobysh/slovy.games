@@ -59,14 +59,14 @@ export function WrappedDeck({
 		if (summary?.isThin) setIndex(lastIndex);
 	}, [summary?.isThin, lastIndex]);
 
-	if (!summary) return <div className="min-h-dvh bg-paper" />;
+	if (!summary) return <div className="h-dvh bg-paper" />;
 
 	const slide = slides[Math.min(index, lastIndex)];
 	const slideTone = slide.kind === "game" ? slide.gameId : slide.kind;
 
 	return (
 		<div
-			className="wrapped-deck relative flex min-h-dvh flex-col overflow-hidden bg-paper"
+			className="wrapped-deck relative flex h-dvh flex-col overflow-hidden bg-paper"
 			data-slide-kind={slide.kind}
 			data-slide-tone={slideTone}
 			onTouchStart={(e) => {
@@ -96,7 +96,7 @@ export function WrappedDeck({
 			</div>
 
 			{/* Tap zones: left third goes back, the rest advances. */}
-			<div className="relative flex-1" data-testid="wrapped-slide">
+			<div className="relative min-h-0 flex-1" data-testid="wrapped-slide">
 				{slide.kind === "hero" && (
 					<HeroSlide year={slide.year} activeDays={summary.activeDays.length} />
 				)}

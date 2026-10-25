@@ -88,7 +88,8 @@ const VARIANTS: Record<TypographyVariant, VariantConfig> = {
 		style: {
 			fontFamily: D,
 			fontWeight: 500,
-			fontSize: "clamp(2.5rem, 10vw, 4rem)",
+			// Capped by height too: Wrapped slides must fit short phones.
+			fontSize: "clamp(1.75rem, min(10vw, 5.5dvh), 4rem)",
 			lineHeight: 0.95,
 			margin: 0,
 		},
@@ -99,7 +100,7 @@ const VARIANTS: Record<TypographyVariant, VariantConfig> = {
 			fontFamily: D,
 			fontStyle: "italic",
 			fontWeight: 500,
-			fontSize: "clamp(2.4rem, 7vw, 5.5rem)",
+			fontSize: "clamp(2rem, min(7vw, 6dvh), 5.5rem)",
 			lineHeight: 0.88,
 			letterSpacing: "-0.03em",
 			margin: 0,

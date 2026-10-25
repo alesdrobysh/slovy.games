@@ -1,6 +1,10 @@
 import { Typography } from "@/shared/components/ui/Typography";
 import { pluralize } from "@/shared/lib/pluralize";
-import { MONTHS_LOC, MONTHS_NOM } from "@/shared/lib/wrapped/format";
+import {
+	MONTHS_LOC,
+	MONTHS_NOM,
+	MONTHS_SHORT,
+} from "@/shared/lib/wrapped/format";
 import type { WrappedSummary } from "@/shared/types/wrapped";
 import { SlideFrame } from "./SlideFrame";
 
@@ -70,7 +74,12 @@ export function CalendarSlide({ summary }: CalendarSlideProps) {
 							data-top={month === top ? "true" : undefined}
 						>
 							<Typography variant="overline">
-								{MONTHS_NOM[month - 1]}
+								<span className="wrapped-calendar-name-full">
+									{MONTHS_NOM[month - 1]}
+								</span>
+								<span className="wrapped-calendar-name-short">
+									{MONTHS_SHORT[month - 1]}
+								</span>
 							</Typography>
 						</span>
 						<div className="wrapped-calendar-days">

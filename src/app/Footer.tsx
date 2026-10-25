@@ -1,7 +1,15 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Typography } from "@/shared/components/ui/Typography";
 
 export function Footer() {
+	const pathname = usePathname();
+
+	// Wrapped is a full-screen story deck; the site chrome stays out of it.
+	if (pathname?.startsWith("/wrapped")) return null;
+
 	return (
 		<footer className="border-t border-rule mt-section-gap">
 			<div className="page-container py-page-py flex flex-col sm:flex-row items-center sm:items-start justify-between gap-inset-lg">

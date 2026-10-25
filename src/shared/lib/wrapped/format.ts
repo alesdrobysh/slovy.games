@@ -16,6 +16,23 @@ export const MONTHS_NOM = [
 	"Снежань",
 ];
 
+/** Calendar labels for narrow screens, where a full name outgrows its
+ *  month's column. */
+export const MONTHS_SHORT = [
+	"Студз",
+	"Лют",
+	"Сак",
+	"Крас",
+	"Трав",
+	"Чэрв",
+	"Ліп",
+	"Жнів",
+	"Вер",
+	"Кастр",
+	"Ліст",
+	"Снеж",
+];
+
 /** "14 сакавіка" */
 const MONTHS_GEN = [
 	"студзеня",
