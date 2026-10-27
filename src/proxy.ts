@@ -24,11 +24,6 @@ export function proxy(request: NextRequest) {
 		return response;
 	}
 
-	const isUnlocked = request.cookies.get(COOKIE_NAME)?.value === "1";
-	if (pathname.startsWith("/sakretna") && !isUnlocked) {
-		return NextResponse.redirect(new URL("/", request.url));
-	}
-
 	if (pathname.startsWith("/wrapped")) {
 		const hasPreview = searchParams.get("preview") === "1";
 		if (!isWrappedVisible({ hasPreview })) {
