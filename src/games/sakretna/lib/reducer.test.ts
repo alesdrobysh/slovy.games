@@ -261,7 +261,7 @@ describe("USE_HINT", () => {
 			type: "USE_HINT",
 			lemma: "мінск",
 			revealedCount: 1,
-			titleLemmas: new Set(["мінск"]),
+			lockedLemmas: new Set(["мінск"]),
 		});
 		expect(next).toBe(s);
 	});

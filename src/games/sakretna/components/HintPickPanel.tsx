@@ -38,7 +38,7 @@ export function HintPickPanel({
 				<Typography variant="label" as="p" className="text-ink-muted">
 					{pending
 						? `Усе формы слова адкрыюцца ў артыкуле. Пасля гэтага застанецца падказак: ${hintsAfter}.`
-						: "Адкрыецца слова ва ўсіх формах. Словы назвы адкрыць нельга."}
+						: "Адкрыецца слова ва ўсіх формах. Словы назвы і іх пераклады адкрыць нельга."}
 				</Typography>
 			</div>
 			<div className="flex items-center justify-end gap-flow-sm">

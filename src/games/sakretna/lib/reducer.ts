@@ -53,7 +53,8 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 				action.tokens,
 				new Set(state.foundLemmas),
 				action.titleLemmas,
-				action.articleId
+				action.articleId,
+				action.translationLemmas
 			);
 			const normalizedGuess = normalizeGuess(action.rawGuess);
 			const isRepeatedMiss =
@@ -96,8 +97,9 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 		case "USE_HINT":
 			if (state.won || state.givenUp) return state;
 			if (state.hintsUsed >= MAX_HINTS) return state;
-			// Words of the title are the answer itself, so no hint may open them.
-			if (action.lemma && action.titleLemmas?.has(action.lemma)) return state;
+			// Words of the title, or their translations such as Camelus for
+			// вярблюды, give the answer away, so no hint may open them.
+			if (action.lemma && action.lockedLemmas?.has(action.lemma)) return state;
 			if (action.lemma && state.foundLemmas.includes(action.lemma))
 				return state;
 			return {

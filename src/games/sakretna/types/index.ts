@@ -71,12 +71,15 @@ export type GameAction =
 			rawGuess: string;
 			tokens: ArticleToken[];
 			titleLemmas: Set<string>;
+			/** Translations of the title, which a guess must not open. */
+			translationLemmas?: ReadonlySet<string>;
 	  }
 	| {
 			type: "USE_HINT";
 			lemma: string | null;
 			revealedCount: number;
-			titleLemmas?: ReadonlySet<string>;
+			/** Title words and their translations, which no hint may open. */
+			lockedLemmas?: ReadonlySet<string>;
 	  }
 	| { type: "GIVE_UP"; lemmas: string[] }
 	| { type: "RESTORE"; progress: SavedProgress }

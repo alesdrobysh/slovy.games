@@ -30,7 +30,7 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 	const {
 		state,
 		lemmaSet,
-		titleLemmaSet,
+		lockedLemmaSet,
 		ready,
 		setInput,
 		submitGuess,
@@ -137,7 +137,7 @@ export function SakretnaPage({ picked }: SakretnaPageProps) {
 							autoScroll={settings.autoScroll}
 							showLetterCounts={settings.letterCounts}
 							hintMode={hintMode}
-							titleLemmas={titleLemmaSet}
+							lockedLemmas={lockedLemmaSet}
 							pendingLemma={pendingHint?.lemma ?? null}
 							onPickLemma={pickHintLemma}
 						/>

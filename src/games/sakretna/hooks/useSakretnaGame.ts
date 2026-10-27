@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useReducer, useRef, useState } from "react";
+import { useEffect, useMemo, useReducer, useRef, useState } from "react";
 import { lemmaReady } from "@/games/sakretna/lib/lemmatize";
 import {
 	createInitialState,
@@ -12,6 +12,7 @@ import {
 	recordResult,
 	saveProgress,
 } from "@/games/sakretna/lib/storage";
+import { titleTranslationLemmas } from "@/games/sakretna/lib/titleTranslations";
 import { collectLemmas } from "@/games/sakretna/lib/tokenize";
 import type { ArticleToken, GameState, PickedArticle } from "../types";
 
@@ -19,7 +20,8 @@ export interface UseSakretnaGameReturn {
 	state: GameState;
 	tokens: ArticleToken[];
 	lemmaSet: Set<string>;
-	titleLemmaSet: Set<string>;
+	/** Title words and their translations, which no hint may open. */
+	lockedLemmaSet: Set<string>;
 	ready: boolean;
 	setInput: (value: string) => void;
 	submitGuess: () => void;
@@ -93,11 +95,16 @@ export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
 	const lemmaSet = collectLemmas(tokens);
 	// Use the same lemmas and free-word flags as the rendered title.
 	const titleLemmaSet = collectLemmas(titleTokens.filter((t) => !t.isFree));
+	const translationLemmaSet = useMemo(
+		() => titleTranslationLemmas(tokens, titleTokens),
+		[tokens, titleTokens]
+	);
+	const lockedLemmaSet = new Set([...titleLemmaSet, ...translationLemmaSet]);
 	return {
 		state,
 		tokens,
 		lemmaSet,
-		titleLemmaSet,
+		lockedLemmaSet,
 		ready,
 		setInput: (value) => dispatch({ type: "SET_INPUT", value }),
 		submitGuess: () =>
@@ -107,6 +114,7 @@ export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
 				rawGuess: state.currentInput,
 				tokens,
 				titleLemmas: titleLemmaSet,
+				translationLemmas: translationLemmaSet,
 			}),
 		useHint: (lemma) =>
 			dispatch({
@@ -115,7 +123,7 @@ export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
 				revealedCount: tokens.filter(
 					(token) => token.type === "word" && token.lemma === lemma
 				).length,
-				titleLemmas: titleLemmaSet,
+				lockedLemmas: lockedLemmaSet,
 			}),
 		giveUp: () =>
 			dispatch({

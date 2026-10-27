@@ -15,8 +15,8 @@ interface RedactedTextProps {
 	showLetterCounts?: boolean;
 	/** Hint mode: hidden words outside the title become pick targets. */
 	hintMode?: boolean;
-	/** Lemmas of the title; they can never be opened by a hint. */
-	titleLemmas?: ReadonlySet<string>;
+	/** Lemmas of the title and its translations; no hint can open them. */
+	lockedLemmas?: ReadonlySet<string>;
 	pendingLemma?: string | null;
 	onPickLemma?: (lemma: string) => void;
 }
@@ -29,7 +29,7 @@ export function RedactedText({
 	autoScroll = true,
 	showLetterCounts = true,
 	hintMode = false,
-	titleLemmas,
+	lockedLemmas,
 	pendingLemma = null,
 	onPickLemma,
 }: RedactedTextProps) {
@@ -72,7 +72,7 @@ export function RedactedText({
 				</span>
 			);
 			const lemma = token.lemma ?? "";
-			const locked = hintMode && (!lemma || titleLemmas?.has(lemma));
+			const locked = hintMode && (!lemma || lockedLemmas?.has(lemma));
 			const pickable = hintMode && !locked;
 			const pending = pickable && lemma === pendingLemma;
 			const bar = (

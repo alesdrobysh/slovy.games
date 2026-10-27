@@ -25,7 +25,8 @@ export function validateGuess(
 	tokens: ArticleToken[],
 	foundLemmas: ReadonlySet<string>,
 	titleLemmas: ReadonlySet<string> = new Set(),
-	articleId?: string
+	articleId?: string,
+	translationLemmas: ReadonlySet<string> = new Set()
 ): ValidationResult {
 	const normalized = normalizeGuess(rawGuess);
 	if (normalized.length === 0) {
@@ -47,8 +48,11 @@ export function validateGuess(
 	}
 	const candidates = lemmasOf(normalized, articleId);
 	const articleLemmas = collectLemmas(tokens);
+	// A translation of the title, such as руск. «Война», gives the answer
+	// away, so guessing it misses like any word absent from the article.
 	const present = candidates.filter(
-		(l) => articleLemmas.has(l) || titleLemmas.has(l)
+		(l) =>
+			titleLemmas.has(l) || (articleLemmas.has(l) && !translationLemmas.has(l))
 	);
 	if (present.length === 0) {
 		return {

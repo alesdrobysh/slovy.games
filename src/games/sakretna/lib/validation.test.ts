@@ -124,4 +124,21 @@ describe("validateGuess", () => {
 			revealedCount: 0,
 		});
 	});
+
+	it("misses a translation of the title as if it were absent", () => {
+		setLemma("война", "война");
+		setLemma("мир", "мир");
+		const translated = tokenize("Вайна і мір (руск.: «Война и мир»).");
+		const result = validateGuess(
+			"война",
+			translated,
+			new Set(),
+			new Set(["вайна", "мір"]),
+			undefined,
+			new Set(["война", "мир"])
+		);
+
+		expect(result.error).toBe("not_in_article");
+		expect(result.lemmas).toEqual([]);
+	});
 });
