@@ -12,7 +12,7 @@ export function getHubStatus(): GameHubStatus {
 
 	if (progress?.won) {
 		status = "won";
-		progressText = "Здагадана";
+		progressText = "Адгадана";
 	} else if (progress?.givenUp) {
 		status = "given_up";
 		progressText = "Здаліся";

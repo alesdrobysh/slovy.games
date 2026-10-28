@@ -81,7 +81,7 @@ export function SakretnaStatsPage() {
 			[
 				"Мая статыстыка ў «Сакрэтна»:",
 				`Гульняў: ${stats.totalPlayed}`,
-				`Здагадана: ${stats.totalWins} (${winRate}%)`,
+				`Адгадана: ${stats.totalWins} (${winRate}%)`,
 				`Бягучая серыя: ${stats.currentStreak}`,
 				`Макс. серыя: ${stats.longestStreak}`,
 				`Падказак: ${stats.hintsUsedCount}`,
@@ -110,7 +110,7 @@ export function SakretnaStatsPage() {
 			<div className="grid grid-cols-2 sm:grid-cols-3 gap-flow-md">
 				<StatCard label="Гульняў" value={stats.totalPlayed} />
 				<StatCard
-					label="Здагадана"
+					label="Адгадана"
 					value={`${stats.totalWins} (${winRate}%)`}
 				/>
 				<StatCard label="Серыя" value={stats.currentStreak} />

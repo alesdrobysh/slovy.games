@@ -47,7 +47,7 @@ export function buildShareText(
 	return [
 		`Сакрэтна ${number ? `#${number}` : "· вольная гульня"} · ${progress.date}`,
 		pattern,
-		`${mode === "win" ? "Здагадана" : "Здача"} · ${guesses} спроб · падказка: ${progress.hintsUsed > 0 ? "так" : "не"} · ${shareDuration(progress)}`,
+		`${mode === "win" ? "Адгадана" : "Здача"} · ${guesses} спроб · падказка: ${progress.hintsUsed > 0 ? "так" : "не"} · ${shareDuration(progress)}`,
 		link,
 	].join("\n");
 }
