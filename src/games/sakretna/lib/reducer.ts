@@ -63,6 +63,8 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 			if (result.error) {
 				return {
 					...state,
+					currentInput:
+						result.error === "not_in_article" ? "" : state.currentInput,
 					guesses:
 						result.error === "not_in_article" && !isRepeatedMiss
 							? [...state.guesses, normalizedGuess]

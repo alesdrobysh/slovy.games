@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useReducer, useRef, useState } from "react";
+import { triggerConfetti } from "@/games/sakretna/lib/confetti";
+import { vibrate } from "@/games/sakretna/lib/haptics";
 import { lemmaReady } from "@/games/sakretna/lib/lemmatize";
 import {
 	createInitialState,
@@ -92,6 +94,28 @@ export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
 		}
 	}, [state, date, article.id, ready]);
 
+	// Confetti on every win, haptics only for a win from a guess
+	const guessSubmittedRef = useRef(false);
+	useEffect(() => {
+		if (!state.won) return;
+		if (guessSubmittedRef.current) {
+			guessSubmittedRef.current = false;
+			vibrate("long");
+		}
+		triggerConfetti();
+	}, [state.won]);
+
+	// errorKey grows with each rejected guess, so back-to-back misses vibrate
+	useEffect(() => {
+		if (state.errorKey === 0) return;
+		if (
+			state.errorType === "not_in_article" ||
+			state.errorType === "already_tried"
+		) {
+			vibrate("short");
+		}
+	}, [state.errorKey, state.errorType]);
+
 	const lemmaSet = collectLemmas(tokens);
 	// Use the same lemmas and free-word flags as the rendered title.
 	const titleLemmaSet = collectLemmas(titleTokens.filter((t) => !t.isFree));
@@ -107,7 +131,8 @@ export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
 		lockedLemmaSet,
 		ready,
 		setInput: (value) => dispatch({ type: "SET_INPUT", value }),
-		submitGuess: () =>
+		submitGuess: () => {
+			guessSubmittedRef.current = true;
 			dispatch({
 				type: "SUBMIT_GUESS",
 				articleId: article.id,
@@ -115,7 +140,8 @@ export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
 				tokens,
 				titleLemmas: titleLemmaSet,
 				translationLemmas: translationLemmaSet,
-			}),
+			});
+		},
 		useHint: (lemma) =>
 			dispatch({
 				type: "USE_HINT",

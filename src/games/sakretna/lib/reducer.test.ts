@@ -122,6 +122,17 @@ describe("SUBMIT_GUESS", () => {
 		expect(next.guesses).toEqual(["аўтамабіль"]);
 	});
 
+	it("clears the input after a word missing from the article", () => {
+		const s = { ...createInitialState(), currentInput: "аўтамабіль" };
+		const next = gameReducer(s, {
+			type: "SUBMIT_GUESS",
+			rawGuess: "аўтамабіль",
+			tokens,
+			titleLemmas: NO_TITLE,
+		});
+		expect(next.currentInput).toBe("");
+	});
+
 	it("counts only unique valid guesses", () => {
 		const miss = gameReducer(createInitialState(), {
 			type: "SUBMIT_GUESS",

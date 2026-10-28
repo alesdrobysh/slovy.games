@@ -3,6 +3,15 @@ import { belmorphMock } from "../lib/belmorph.mock";
 import type { PickedArticle, SavedProgress } from "../types";
 
 jest.mock("belmorph", () => belmorphMock, { virtual: true });
+jest.mock("@/games/sakretna/lib/confetti", () => ({
+	triggerConfetti: jest.fn(),
+}));
+jest.mock("@/games/sakretna/lib/haptics", () => ({
+	vibrate: jest.fn(),
+}));
+
+import { triggerConfetti } from "@/games/sakretna/lib/confetti";
+import { vibrate } from "@/games/sakretna/lib/haptics";
 
 import {
 	DEFAULT_STATS,
@@ -45,6 +54,7 @@ function progress(foundLemmas: string[]): SavedProgress {
 }
 
 beforeEach(() => {
+	jest.clearAllMocks();
 	localStorage.clear();
 	localStorage.setItem(STATS_KEY, JSON.stringify(DEFAULT_STATS));
 });
@@ -58,6 +68,28 @@ it("wins when the last rendered title word is guessed", async () => {
 	expect(result.current.state.won).toBe(true);
 	expect(result.current.state.foundLemmas).toContain("тэкст");
 	expect(loadStats().totalWins).toBe(1);
+	expect(triggerConfetti).toHaveBeenCalledTimes(1);
+	expect(vibrate).toHaveBeenCalledWith("long");
+});
+
+it("vibrates briefly on each wrong guess", async () => {
+	const { result } = renderHook(() => useSakretnaGame(picked));
+	await waitFor(() => expect(result.current.ready).toBe(true));
+	act(() => result.current.setInput("аўтамабіль"));
+	act(() => result.current.submitGuess());
+	act(() => result.current.setInput("аўтамабіль"));
+	act(() => result.current.submitGuess());
+	expect(vibrate).toHaveBeenCalledTimes(2);
+	expect(vibrate).toHaveBeenCalledWith("short");
+});
+
+it("replays confetti without haptics for a win restored from storage", async () => {
+	saveProgress({ ...progress(["арфаграфія", "беларуска", "мова"]), won: true });
+	const { result } = renderHook(() => useSakretnaGame(picked));
+	await waitFor(() => expect(result.current.ready).toBe(true));
+	expect(result.current.state.won).toBe(true);
+	expect(triggerConfetti).toHaveBeenCalledTimes(1);
+	expect(vibrate).not.toHaveBeenCalled();
 });
 
 it("restores an old name prediction and uses article corrections for the final guess", async () => {
