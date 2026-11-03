@@ -8,18 +8,14 @@ import { wrappedYearFor } from "@/shared/lib/wrapped/window";
 import { GAMES } from "@/shared/types";
 
 interface HubPageClientProps {
-	sakretnaUnlocked: boolean;
 	wrappedVisible: boolean;
 }
 
 export function HubPageClient({
-	sakretnaUnlocked,
 	wrappedVisible,
 }: HubPageClientProps) {
 	const hub = useHubState(GAMES);
-	const games = GAMES.filter(
-		(g) => g.enabled && (g.id !== "sakretna" || sakretnaUnlocked)
-	);
+	const games = GAMES.filter((g) => g.enabled);
 
 	return (
 		<>

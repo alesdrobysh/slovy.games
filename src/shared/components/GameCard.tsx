@@ -120,6 +120,11 @@ export function GameCard({
 							<Typography variant="overline" as="span" className={accentText}>
 								{game.name}
 							</Typography>
+							{game.id === "sakretna" && (
+								<span className="rounded-lg border border-[#a16207] bg-[#facc15] px-inset-sm py-1 text-xs font-extrabold tracking-[0.08em] text-[#1c1915]">
+									новае
+								</span>
+							)}
 						</div>
 
 						<div className="flex flex-col gap-inset-lg">

@@ -37,6 +37,19 @@ export interface HubGameStatus {
 
 export const GAMES: GameInfo[] = [
 	{
+		id: "sakretna",
+		name: "Sakretna",
+		nameBel: "Сакрэтна",
+		description:
+			"Здагадайцеся, пра які артыкул Вікіпедыі ідзе гаворка, расшыфроўваючы схаваныя словы.",
+		descriptionBel: "Здагадайцеся артыкул Вікіпедыі па расшыфраваных словах",
+		path: "/sakretna",
+		color: "#2E6B4F",
+		colorDark: "#5C9C7E",
+		icon: "📕",
+		enabled: true,
+	},
+	{
 		id: "pobach",
 		name: "Pobač",
 		nameBel: "Побач",
@@ -60,19 +73,6 @@ export const GAMES: GameInfo[] = [
 		color: "#5b6fa8",
 		colorDark: "#7a8fc8",
 		icon: "🌸",
-		enabled: true,
-	},
-	{
-		id: "sakretna",
-		name: "Sakretna",
-		nameBel: "Сакрэтна",
-		description:
-			"Здагадайцеся, пра які артыкул Вікіпедыі ідзе гаворка, расшыфроўваючы схаваныя словы.",
-		descriptionBel: "Здагадайцеся артыкул Вікіпедыі па расшыфраваных словах",
-		path: "/sakretna",
-		color: "#2E6B4F",
-		colorDark: "#5C9C7E",
-		icon: "📕",
 		enabled: true,
 	},
 ];

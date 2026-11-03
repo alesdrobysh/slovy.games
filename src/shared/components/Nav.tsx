@@ -93,17 +93,6 @@ function useCompactOnScroll() {
 	return compact;
 }
 
-function useSakretnaVisible(currentGame: GameKey | null) {
-	const [visible, setVisible] = useState(currentGame === "sakretna");
-	useEffect(() => {
-		setVisible(
-			currentGame === "sakretna" ||
-				document.cookie.split("; ").includes("sakretna_beta=1")
-		);
-	}, [currentGame]);
-	return visible;
-}
-
 function MenuRow({
 	icon: Icon,
 	children,
@@ -164,7 +153,6 @@ export function Nav({
 
 	const gameKey = getGameKey(pathname);
 	const game = gameKey ? GAME_ROUTES[gameKey] : null;
-	const sakretnaVisible = useSakretnaVisible(gameKey);
 	const segments = (pathname ?? "/").split("/");
 	segments.pop();
 	const backHref = segments.join("/") || "/";
@@ -284,26 +272,29 @@ export function Nav({
 					>
 						Гульні
 					</Typography>
-					{GAME_KEYS.filter((key) => key !== "sakretna" || sakretnaVisible).map(
-						(key) => (
-							<MenuRow
-								key={key}
-								href={GAME_ROUTES[key].route}
-								onClick={closeMenu}
-								current={key === gameKey}
-							>
-								<span className="flex items-center gap-flow-lg">
-									<span
-										aria-hidden="true"
-										className={`mt-1 size-2.5 rounded-full ${GAME_ROUTES[key].dotClass}`}
-									/>
-									<Typography variant="displaySm" as="span">
-										{GAME_ROUTES[key].title}
-									</Typography>
-								</span>
-							</MenuRow>
-						)
-					)}
+					{GAME_KEYS.map((key) => (
+						<MenuRow
+							key={key}
+							href={GAME_ROUTES[key].route}
+							onClick={closeMenu}
+							current={key === gameKey}
+						>
+							<span className="flex items-center gap-flow-lg">
+								<span
+									aria-hidden="true"
+									className={`mt-1 size-2.5 rounded-full ${GAME_ROUTES[key].dotClass}`}
+								/>
+								<Typography variant="displaySm" as="span">
+									{GAME_ROUTES[key].title}
+								</Typography>
+								{key === "sakretna" && (
+									<span className="rounded-lg border border-[#a16207] bg-[#facc15] px-inset-sm py-1 text-xs font-extrabold tracking-[0.08em] text-[#1c1915]">
+										новае
+									</span>
+								)}
+							</span>
+						</MenuRow>
+					))}
 
 					<div className="my-flow-sm border-t border-rule" />
 					<MenuRow icon={theme === "light" ? Moon : Sun} onClick={toggleTheme}>

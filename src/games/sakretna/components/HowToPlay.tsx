@@ -67,11 +67,6 @@ export function HowToPlay({
 					</li>
 				</ol>
 				<div className="mt-flow-sm flex flex-col-reverse sm:flex-row sm:justify-end gap-flow-xs">
-					{isFirstRun && (
-						<Button variant="ghost" onClick={onClose}>
-							Прапусціць
-						</Button>
-					)}
 					<Button variant="solid" color="primary" onClick={onClose}>
 						{isFirstRun ? "Пачаць: увесці слова" : "Зразумела"}
 					</Button>
