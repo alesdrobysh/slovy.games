@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useMemo, useReducer, useRef, useState } from "react";
+import { trackSakretnaTransition } from "@/games/sakretna/lib/analytics";
 import { triggerConfetti } from "@/games/sakretna/lib/confetti";
 import { vibrate } from "@/games/sakretna/lib/haptics";
 import { lemmaReady } from "@/games/sakretna/lib/lemmatize";
 import {
 	createInitialState,
 	gameReducer,
+	progressToState,
 	stateToProgress,
 } from "@/games/sakretna/lib/reducer";
 import {
@@ -41,6 +43,8 @@ export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
 	);
 	const [ready, setReady] = useState(false);
 	const persistedRef = useRef(false);
+	const analyticsStateRef = useRef(state);
+	const observedStateRef = useRef(state);
 
 	// Wait for belmorph dictionary to load
 	useEffect(() => {
@@ -52,6 +56,15 @@ export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
 			cancelled = true;
 		};
 	}, []);
+
+	// Run before restoration so its baseline cannot turn saved progress into events.
+	useEffect(() => {
+		if (observedStateRef.current === state) return;
+		observedStateRef.current = state;
+		const previous = analyticsStateRef.current;
+		analyticsStateRef.current = state;
+		trackSakretnaTransition(previous, state, date, article.id);
+	}, [state, date, article.id]);
 
 	// Restore from localStorage once per puzzle
 	const restoredKeyRef = useRef<string | null>(null);
@@ -79,6 +92,7 @@ export function useSakretnaGame(picked: PickedArticle): UseSakretnaGameReturn {
 						],
 					}
 				: saved;
+			analyticsStateRef.current = progressToState(progress);
 			dispatch({ type: "RESTORE", progress });
 		}
 		persistedRef.current = true;

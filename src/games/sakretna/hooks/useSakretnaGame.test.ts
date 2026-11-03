@@ -1,8 +1,11 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
+import posthog from "posthog-js";
+import { StrictMode } from "react";
 import { belmorphMock } from "../lib/belmorph.mock";
 import type { PickedArticle, SavedProgress } from "../types";
 
 jest.mock("belmorph", () => belmorphMock, { virtual: true });
+jest.mock("posthog-js", () => ({ __loaded: true, capture: jest.fn() }));
 jest.mock("@/games/sakretna/lib/confetti", () => ({
 	triggerConfetti: jest.fn(),
 }));
@@ -90,6 +93,7 @@ it("replays confetti without haptics for a win restored from storage", async () 
 	expect(result.current.state.won).toBe(true);
 	expect(triggerConfetti).toHaveBeenCalledTimes(1);
 	expect(vibrate).not.toHaveBeenCalled();
+	expect(posthog.capture).not.toHaveBeenCalled();
 });
 
 it("restores an old name prediction and uses article corrections for the final guess", async () => {
@@ -118,7 +122,9 @@ it("restores an old name prediction and uses article corrections for the final g
 
 it("repairs a saved game with a fully revealed title and records it once", async () => {
 	saveProgress(progress(["арфаграфія", "беларуска", "мова"]));
-	const first = renderHook(() => useSakretnaGame(picked));
+	const first = renderHook(() => useSakretnaGame(picked), {
+		wrapper: StrictMode,
+	});
 	await waitFor(() => expect(first.result.current.ready).toBe(true));
 	expect(first.result.current.state.won).toBe(true);
 	expect(loadProgress(picked.date)?.won).toBe(true);
@@ -127,6 +133,104 @@ it("repairs a saved game with a fully revealed title and records it once", async
 	const second = renderHook(() => useSakretnaGame(picked));
 	await waitFor(() => expect(second.result.current.ready).toBe(true));
 	expect(loadStats().totalWins).toBe(1);
+	expect(posthog.capture).not.toHaveBeenCalled();
+});
+
+it("tracks unique attempts and one start in StrictMode, including misses", async () => {
+	const { result } = renderHook(() => useSakretnaGame(picked), {
+		wrapper: StrictMode,
+	});
+	await waitFor(() => expect(result.current.ready).toBe(true));
+	expect(posthog.capture).not.toHaveBeenCalled();
+	act(() => result.current.submitGuess());
+	expect(posthog.capture).not.toHaveBeenCalled();
+	for (const word of ["аўтамабіль", "аўтамабіль", "тэкст", "тэкст"]) {
+		act(() => result.current.setInput(word));
+		act(() => result.current.submitGuess());
+	}
+	expect(jest.mocked(posthog.capture).mock.calls).toEqual([
+		[
+			"sakretna_game_started",
+			expect.objectContaining({
+				game: "sakretna",
+				date: picked.date,
+				article_id: picked.article.id,
+				attempts: 1,
+			}),
+		],
+		[
+			"sakretna_guess_submitted",
+			expect.objectContaining({
+				word: "аўтамабіль",
+				is_hit: false,
+				attempts: 1,
+			}),
+		],
+		[
+			"sakretna_guess_submitted",
+			expect.objectContaining({ word: "тэкст", is_hit: true, attempts: 2 }),
+		],
+	]);
+});
+
+it("tracks a resumed game's winning attempt without replaying its start", async () => {
+	saveProgress(progress(["беларуска", "мова"]));
+	const { result, unmount } = renderHook(() => useSakretnaGame(picked), {
+		wrapper: StrictMode,
+	});
+	await waitFor(() => expect(result.current.ready).toBe(true));
+	expect(posthog.capture).not.toHaveBeenCalled();
+	act(() => result.current.setInput("арфаграфія"));
+	act(() => result.current.submitGuess());
+	expect(jest.mocked(posthog.capture).mock.calls).toEqual([
+		[
+			"sakretna_guess_submitted",
+			expect.objectContaining({ attempts: 3, is_hit: true }),
+		],
+		[
+			"sakretna_game_won",
+			expect.objectContaining({ attempts: 3, hints_used: 0 }),
+		],
+	]);
+	unmount();
+	jest.mocked(posthog.capture).mockClear();
+	const restored = renderHook(() => useSakretnaGame(picked));
+	await waitFor(() => expect(restored.result.current.ready).toBe(true));
+	expect(posthog.capture).not.toHaveBeenCalled();
+});
+
+it("tracks only applied hints and a single surrender", async () => {
+	const { result } = renderHook(() => useSakretnaGame(picked));
+	await waitFor(() => expect(result.current.ready).toBe(true));
+	act(() => result.current.useHint("арфаграфія"));
+	expect(posthog.capture).not.toHaveBeenCalled();
+	act(() => result.current.useHint("тэкст"));
+	act(() => result.current.useHint("тэкст"));
+	act(() => result.current.giveUp());
+	act(() => result.current.giveUp());
+	act(() => result.current.setInput("мова"));
+	act(() => result.current.submitGuess());
+	expect(
+		jest.mocked(posthog.capture).mock.calls.map(([event]) => event)
+	).toEqual([
+		"sakretna_game_started",
+		"sakretna_hint_used",
+		"sakretna_game_gave_up",
+	]);
+});
+
+it("does not capture gameplay before PostHog is initialized", async () => {
+	const client = posthog as typeof posthog & { __loaded: boolean };
+	client.__loaded = false;
+	try {
+		const { result } = renderHook(() => useSakretnaGame(picked));
+		await waitFor(() => expect(result.current.ready).toBe(true));
+		act(() => result.current.setInput("тэкст"));
+		act(() => result.current.submitGuess());
+		expect(posthog.capture).not.toHaveBeenCalled();
+	} finally {
+		client.__loaded = true;
+	}
 });
 
 it.each([
