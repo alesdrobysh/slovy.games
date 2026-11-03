@@ -1,4 +1,6 @@
 import { type CaseName, MorphAnalyzer } from "belmorph";
+import posthog from "posthog-js";
+import { DICT_URL } from "@/shared/lib/dictUrl";
 import { lemmaOverrideOf } from "./lemmaOverrides";
 
 const isBrowser = typeof window !== "undefined";
@@ -6,16 +8,22 @@ const isBrowser = typeof window !== "undefined";
 let analyzer: MorphAnalyzer | null = null;
 let loadingPromise: Promise<void> | null = null;
 
-/** Resolves once the dictionary has loaded and `lemmaOf` returns real lemmas. */
+/** Resolves once the dictionary load settles. If the load fails, it still
+ *  resolves and `lemmaOf` falls back to the lowercased word. */
 export const lemmaReady: Promise<void> = startLoading();
 
 function startLoading(): Promise<void> {
 	if (!isBrowser) return Promise.resolve();
 	if (!loadingPromise) {
-		loadingPromise = import("belmorph").then(async ({ loadDictAsync }) => {
-			const dict = await loadDictAsync("/dict/");
-			analyzer = new MorphAnalyzer(dict);
-		});
+		loadingPromise = import("belmorph")
+			.then(async ({ loadDictAsync }) => {
+				const dict = await loadDictAsync(DICT_URL);
+				analyzer = new MorphAnalyzer(dict);
+			})
+			.catch((err) => {
+				console.error("Failed to load belmorph dictionary", err);
+				posthog.captureException(err);
+			});
 	}
 	return loadingPromise;
 }
