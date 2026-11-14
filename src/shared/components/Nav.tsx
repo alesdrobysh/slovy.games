@@ -17,7 +17,7 @@ import { Button } from "@/shared/components/ui/Button";
 import { Modal } from "@/shared/components/ui/Modal";
 import { Typography } from "@/shared/components/ui/Typography";
 import { useTheme } from "@/shared/hooks/useTheme";
-import { formatToday } from "@/shared/lib/formatDate";
+import { useTodayLabel } from "@/shared/hooks/useTodayLabel";
 
 type GameKey = "pobach" | "valoshka" | "sakretna";
 
@@ -149,6 +149,7 @@ export function Nav({
 	const pathname = pathnameOverride ?? routerPathname;
 	const { theme, toggleTheme } = useTheme();
 	const compact = useCompactOnScroll();
+	const todayLabel = useTodayLabel();
 	const [menuOpen, setMenuOpen] = useState(false);
 
 	const gameKey = getGameKey(pathname);
@@ -206,12 +207,8 @@ export function Nav({
 					>
 						<div className="min-h-0 overflow-hidden">
 							<div className="pt-flow-sm">
-								<Typography
-									variant="dateline"
-									className="text-ink-muted"
-									suppressHydrationWarning
-								>
-									{formatToday()}
+								<Typography variant="dateline" className="text-ink-muted">
+									{todayLabel}
 								</Typography>
 							</div>
 						</div>
