@@ -10,6 +10,7 @@ import {
 	useState,
 } from "react";
 import { useTheme } from "@/shared/hooks/useTheme";
+import { trackChunkReloadRecovery } from "@/shared/lib/chunkReload";
 import { isNoisyAutocapture } from "@/shared/lib/filterAutocapture";
 
 const CONSENT_KEY = "cookie_consent";
@@ -69,6 +70,7 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
 		setHasConsented(consented);
 		if (consented && initPostHog()) {
 			setIsInitialized(true);
+			trackChunkReloadRecovery();
 		}
 	}, []);
 
