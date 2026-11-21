@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
 	skipTrailingSlashRedirect: true,
 	outputFileTracingIncludes: {
 		"/dict/[file]": ["./node_modules/belmorph/dict/**"],
+		"/dict/v2/[file]": ["./node_modules/belmorph/dict/**"],
 	},
 
 	async rewrites() {

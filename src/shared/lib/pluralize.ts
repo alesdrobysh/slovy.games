@@ -1,4 +1,5 @@
 import { type CaseName, loadDictAsync, MorphAnalyzer } from "belmorph";
+import { DICT_URL } from "./dictUrl";
 
 let _analyzer: MorphAnalyzer | null = null;
 
@@ -7,7 +8,7 @@ let _analyzer: MorphAnalyzer | null = null;
  *  should re-run after this settles, since it can still be loading then. */
 export const dictReady: Promise<void> =
 	typeof window !== "undefined"
-		? loadDictAsync("/dict/")
+		? loadDictAsync(DICT_URL)
 				.then((dict) => {
 					_analyzer = new MorphAnalyzer(dict);
 				})
